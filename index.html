@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polímata Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.5); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(71, 85, 105, 0.8); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 1); }
+        .animate-fade-in { animation: fadeIn 0.2s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500/30">
+
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="brain" class="w-8 h-8 text-indigo-400"></i>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Polímata Hub</h1>
+            </div>
+            <div class="text-sm text-slate-400 flex items-center gap-2">
+                <i data-lucide="sparkles" class="w-4 h-4 text-yellow-400"></i>
+                <span>Sua constelação de conhecimento</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
+        <div id="wheel-container" class="flex-1 bg-slate-900/50 rounded-3xl border border-slate-800 p-4 sm:p-8 flex flex-col items-center justify-center relative min-h-[500px] lg:min-h-[700px] overflow-hidden">
+            <h2 class="absolute top-6 left-6 text-lg font-medium text-slate-300 flex items-center gap-2">
+                <i data-lucide="target" class="w-5 h-5 text-indigo-400"></i> Roda de Habilidades
+            </h2>
+            
+            <div id="polymath-wheel" class="w-full h-full relative min-h-[400px]">
+                <svg id="wheel-svg" class="absolute inset-0 w-full h-full pointer-events-none transition-all duration-500"></svg>
+                <div id="nodes-container"></div>
+            </div>
+
+            <button onclick="handleAddSkill()" class="absolute bottom-6 right-6 bg-indigo-600 hover:bg-indigo-500 text-white p-3 rounded-full shadow-lg shadow-indigo-500/20 transition-all hover:scale-110 flex items-center gap-2">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+                <span class="hidden sm:inline pr-2 font-medium">Novo Pilar</span>
+            </button>
+        </div>
+
+        <div class="w-full lg:w-96 flex flex-col gap-6">
+            <div id="editor-card" class="bg-slate-900/80 rounded-3xl border border-slate-800 p-6 shadow-xl relative overflow-hidden">
+                </div>
+
+            <div class="bg-slate-900/80 rounded-3xl border border-slate-800 p-6 flex-1 shadow-xl flex flex-col">
+                <h3 class="text-sm font-bold tracking-wider uppercase text-slate-400 mb-4 flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> Todos os Pilares (<span id="skill-count">0</span>)
+                </h3>
+                <div id="skills-list" class="space-y-2 overflow-y-auto pr-2 custom-scrollbar flex-1 max-h-[400px]"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // --- ESTADO ---
+        let mainGoal = {
+            name: "Mestre da Inovação Tecnológica e Artística",
+            description: "Unir lógica computacional com expressão criativa para criar novas mídias."
+        };
+
+        let skills = [
+            { id: 1, name: "Engenharia de Software", level: 85, color: "from-blue-500 to-cyan-400" },
+            { id: 2, name: "Filosofia Moderna", level: 60, color: "from-purple-500 to-pink-400" },
+            { id: 3, name: "Design Gráfico", level: 70, color: "from-orange-500 to-yellow-400" },
+            { id: 4, name: "Física Quântica", level: 30, color: "from-emerald-500 to-teal-400" },
+            { id: 5, name: "Música (Piano)", level: 55, color: "from-red-500 to-rose-400" },
+            { id: 6, name: "Oratória", level: 75, color: "from-indigo-500 to-violet-400" }
+        ];
+
+        let selectedNode = { type: 'main', id: null };
+        let isEditing = false;
+
+        const colorOptions = [
+            "from-blue-500 to-cyan-400", "from-purple-500 to-pink-400", 
+            "from-orange-500 to-yellow-400", "from-emerald-500 to-teal-400",
+            "from-red-500 to-rose-400", "from-indigo-500 to-violet-400"
+        ];
+
+        // --- LÓGICA ---
+        function handleAddSkill() {
+            const newSkill = {
+                id: Date.now(),
+                name: "Novo Pilar",
+                level: 10,
+                color: colorOptions[skills.length % colorOptions.length]
+            };
+            skills.push(newSkill);
+            selectedNode = { type: 'skill', id: newSkill.id };
+            isEditing = true;
+            render();
+        }
+
+        function handleDeleteSkill(id) {
+            skills = skills.filter(s => s.id !== id);
+            if (selectedNode.id === id) selectedNode = { type: 'main', id: null };
+            render();
+        }
+
+        function selectNode(type, id) {
+            selectedNode = { type, id };
+            isEditing = false;
+            render();
+        }
+
+        // --- RENDERIZAÇÃO ---
+        function render() {
+            renderWheel();
+            renderEditor();
+            renderList();
+            lucide.createIcons(); // Recarrega os ícones
+        }
+
+        function renderWheel() {
+            const container = document.getElementById('polymath-wheel');
+            const nodesContainer = document.getElementById('nodes-container');
+            const svg = document.getElementById('wheel-svg');
+            
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.max(120, Math.min(centerX, centerY) * 0.65);
+
+            nodesContainer.innerHTML = '';
+            svg.innerHTML = '';
+
+            // Desenha o Centro
+            const isMainSelected = selectedNode.type === 'main';
+            const mainDiv = document.createElement('div');
+            mainDiv.className = `absolute transform -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer transition-all duration-300 ease-out group ${isMainSelected ? 'scale-110' : 'hover:scale-105'}`;
+            mainDiv.style.left = `${centerX}px`;
+            mainDiv.style.top = `${centerY}px`;
+            mainDiv.onclick = () => selectNode('main', null);
+            mainDiv.innerHTML = `
+                <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full flex flex-col items-center justify-center p-4 text-center border-4 shadow-2xl backdrop-blur-sm ${isMainSelected ? 'border-indigo-400 bg-indigo-900/40' : 'border-slate-700 bg-slate-900/80'}">
+                    <i data-lucide="brain" class="w-8 h-8 mb-2 ${isMainSelected ? 'text-indigo-300 animate-pulse' : 'text-slate-400'}"></i>
+                    <h3 class="text-sm sm:text-base font-bold text-white line-clamp-3 leading-tight">${mainGoal.name}</h3>
+                </div>
+            `;
+            nodesContainer.appendChild(mainDiv);
+
+            // Desenha as Habilidades e Linhas
+            skills.forEach((skill, index) => {
+                const angle = (index * (2 * Math.PI)) / skills.length - Math.PI / 2;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                const isSelected = selectedNode.id === skill.id;
+
+                // Linhas SVG
+                const isActive = isMainSelected || isSelected;
+                svg.innerHTML += `
+                    <line x1="${centerX}" y1="${centerY}" x2="${x}" y2="${y}" 
+                          stroke="${isActive ? "rgba(99, 102, 241, 0.5)" : "rgba(51, 65, 85, 0.5)"}" 
+                          stroke-width="${isSelected ? 3 : 1.5}" 
+                          stroke-dasharray="${isSelected ? "none" : "4 4"}" />
+                    <circle cx="${centerX + (x - centerX) * (skill.level / 100)}" 
+                            cy="${centerY + (y - centerY) * (skill.level / 100)}" 
+                            r="${isSelected ? 4 : 2}" fill="${isActive ? "#818cf8" : "#475569"}" />
+                `;
+
+                // Nodes Satélites
+                const skillDiv = document.createElement('div');
+                skillDiv.className = `absolute transform -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer transition-all duration-500 ease-out ${isSelected ? 'scale-125 z-30' : 'hover:scale-110'}`;
+                skillDiv.style.left = `${x}px`;
+                skillDiv.style.top = `${y}px`;
+                skillDiv.onclick = () => selectNode('skill', skill.id);
+                skillDiv.innerHTML = `
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center relative shadow-xl bg-slate-900 border-2 ${isSelected ? 'border-transparent' : 'border-slate-700'}">
+                        ${isSelected ? `<div class="absolute inset-[-4px] rounded-full bg-gradient-to-br ${skill.color} opacity-70 blur-sm -z-10 animate-pulse"></div>` : ''}
+                        ${isSelected ? `<div class="absolute inset-[-2px] rounded-full bg-gradient-to-br ${skill.color} -z-10"></div>` : ''}
+                        <div class="text-center px-2 z-10">
+                            <p class="text-[10px] sm:text-xs font-semibold text-slate-300 line-clamp-2">${skill.name}</p>
+                            ${isSelected ? `<p class="text-[10px] text-slate-300 font-mono">${skill.level}%</p>` : ''}
+                        </div>
+                    </div>
+                `;
+                nodesContainer.appendChild(skillDiv);
+            });
+        }
+
+        function renderEditor() {
+            const card = document.getElementById('editor-card');
+            const activeData = selectedNode.type === 'main' ? mainGoal : skills.find(s => s.id === selectedNode.id);
+            if (!activeData) return;
+
+            const colorClass = selectedNode.type === 'skill' ? activeData.color : 'from-indigo-500 to-purple-500';
+
+            let content = `
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br ${colorClass} rounded-full blur-3xl opacity-10 pointer-events-none"></div>
+                <div class="flex items-center justify-between mb-6">
+                    <span class="text-xs font-bold tracking-wider uppercase text-slate-400">${selectedNode.type === 'main' ? 'Objetivo Central' : 'Pilar Secundário'}</span>
+                    <button onclick="toggleEdit()" class="text-slate-400 hover:text-white p-2 bg-slate-800/50 rounded-full">
+                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `;
+
+            if (isEditing) {
+                content += `
+                    <div class="space-y-4 animate-fade-in">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">Título</label>
+                            <input type="text" value="${activeData.name}" oninput="updateActiveName(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
+                        </div>
+                        ${selectedNode.type === 'main' ? `
+                            <div>
+                                <label class="block text-sm font-medium text-slate-400 mb-1">Visão</label>
+                                <textarea oninput="updateMainDesc(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-white h-24 resize-none">${activeData.description}</textarea>
+                            </div>
+                        ` : `
+                            <div>
+                                <div class="flex justify-between mb-1"><label class="text-sm font-medium text-slate-400">Nível</label><span class="text-indigo-400">${activeData.level}%</span></div>
+                                <input type="range" min="0" max="100" value="${activeData.level}" oninput="updateSkillLevel(this.value)" class="w-full accent-indigo-500">
+                            </div>
+                        `}
+                        <button onclick="toggleEdit()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 rounded-xl">Concluir</button>
+                    </div>
+                `;
+            } else {
+                content += `
+                    <div class="animate-fade-in">
+                        <h3 class="text-2xl font-bold text-white mb-2">${activeData.name}</h3>
+                        ${selectedNode.type === 'main' ? `<p class="text-slate-400">${activeData.description}</p>` : `
+                            <div class="mt-6">
+                                <div class="flex justify-between mb-2"><span class="text-sm text-slate-400">Progresso</span><span class="font-bold text-white">${activeData.level}%</span></div>
+                                <div class="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
+                                    <div class="h-3 bg-gradient-to-r ${activeData.color}" style="width: ${activeData.level}%"></div>
+                                </div>
+                            </div>
+                        `}
+                    </div>
+                `;
+            }
+            card.innerHTML = content;
+        }
+
+        function renderList() {
+            const list = document.getElementById('skills-list');
+            document.getElementById('skill-count').innerText = skills.length;
+            list.innerHTML = skills.length === 0 ? '<div class="text-center p-6 text-slate-500 text-sm">Nenhum pilar adicionado.</div>' : '';
+
+            skills.forEach(skill => {
+                const isSelected = selectedNode.id === skill.id;
+                const div = document.createElement('div');
+                div.className = `group p-3 rounded-2xl flex items-center justify-between cursor-pointer border transition-all ${isSelected ? 'bg-slate-800 border-slate-700' : 'hover:bg-slate-800/50 border-transparent'}`;
+                div.onclick = () => selectNode('skill', skill.id);
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 rounded-full bg-gradient-to-br ${skill.color}"></div>
+                        <div>
+                            <div class="font-medium text-slate-200 group-hover:text-white">${skill.name}</div>
+                            <div class="text-xs text-slate-500">Nível ${skill.level}</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100">
+                        <button onclick="event.stopPropagation(); handleDeleteSkill(${skill.id})" class="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // --- HANDLERS DE INPUT ---
+        function toggleEdit() { isEditing = !isEditing; render(); }
+        
+        function updateActiveName(val) {
+            if (selectedNode.type === 'main') mainGoal.name = val;
+            else skills.find(s => s.id === selectedNode.id).name = val;
+            renderWheel(); // Atualiza a roda em tempo real
+        }
+
+        function updateMainDesc(val) { mainGoal.description = val; }
+        
+        function updateSkillLevel(val) {
+            const skill = skills.find(s => s.id === selectedNode.id);
+            if (skill) {
+                skill.level = parseInt(val);
+                render();
+            }
+        }
+
+        // Resize
+        window.onresize = render;
+
+        // Init
+        render();
+    </script>
+</body>
+</html>
