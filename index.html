@@ -24,244 +24,508 @@
             --purple-600: #9333ea;
             --emerald-400: #34d399;
             --emerald-500: #10b981;
+            --emerald-900: #064e3b;
         }
-
-        /* --- ESTILOS DE LOGIN --- */
-        #login-screen {
-            position: fixed; inset: 0; background: var(--slate-950);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 1000; transition: opacity 0.5s;
-        }
-        .btn-google {
-            background: white; color: #0f172a; border: none; padding: 12px 24px;
-            border-radius: 12px; font-weight: 700; cursor: pointer; 
-            display: flex; align-items: center; gap: 12px; font-size: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); transition: transform 0.2s;
-        }
-        .btn-google:hover { transform: scale(1.05); }
-        .hidden { display: none !important; }
-        
-        .user-nav { display: flex; align-items: center; gap: 1rem; }
-        .user-photo { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--indigo-500); }
-        .btn-logout { background: none; border: none; color: #f87171; cursor: pointer; font-size: 12px; font-weight: 600; }
 
         /* --- RESET E BASE --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
-        body { background-color: var(--slate-950); color: var(--slate-100); min-height: 100vh; overflow-x: hidden; }
-
-        /* --- LAYOUT --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-        header { 
-            border-bottom: 1px solid var(--slate-800); background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 50;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        .header-content { height: 4.5rem; display: flex; align-items: center; justify-content: space-between; }
+
+        body {
+            background-color: var(--slate-950);
+            color: var(--slate-100);
+            min-height: 100vh;
+        }
+
+        body::selection { background: rgba(99, 102, 241, 0.3); }
+
+        /* --- SCROLLBAR CUSTOMIZADA --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.5); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(71, 85, 105, 0.8); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 1); }
+
+        /* --- ANIMAÇÕES --- */
+        .animate-slide-up { animation: slideUp 0.5s ease-out forwards; opacity: 0; }
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* --- LAYOUT E COMPONENTES --- */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid var(--slate-800);
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
         
-        .brand { display: flex; align-items: center; gap: 0.75rem; }
+        .header-content {
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand { display: flex; align-items: center; gap: 0.5rem; }
+        .brand svg { color: var(--indigo-400); width: 32px; height: 32px; }
         .brand h1 {
-            font-size: 1.25rem; font-weight: 800;
+            font-size: 1.25rem;
+            font-weight: 700;
             background: linear-gradient(to right, var(--indigo-400), var(--purple-400));
-            -webkit-background-clip: text; color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        main { padding: 2rem 0; display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        @media (min-width: 1024px) { main { grid-template-columns: 350px 1fr; } }
+        .badge-streak {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--emerald-400);
+            background: rgba(52, 211, 153, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+        .badge-streak svg { width: 16px; height: 16px; }
 
-        /* --- COMPONENTES --- */
+        /* Main Grid */
+        main {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 1024px) {
+            main { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .col-left { display: flex; flex-direction: column; gap: 1.5rem; }
+        .col-right { display: flex; flex-direction: column; gap: 1.5rem; grid-column: span 2; }
+
+        /* Card Panels */
         .panel {
-            background: rgba(15, 23, 42, 0.6); border-radius: 1.5rem;
-            border: 1px solid var(--slate-800); padding: 2rem;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 1.5rem;
+            border: 1px solid var(--slate-800);
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .profile-panel { text-align: center; position: relative; }
+        /* Profile Card Specifics */
+        .profile-panel { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .profile-bg-glow {
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 100%; height: 8rem;
+            background: linear-gradient(to bottom, rgba(99, 102, 241, 0.2), transparent);
+            pointer-events: none;
+        }
+
+        .avatar-container { position: relative; margin-bottom: 1.5rem; cursor: pointer; }
+        .avatar-glow {
+            position: absolute;
+            top: -4px; right: -4px; bottom: -4px; left: -4px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom right, var(--indigo-500), var(--purple-500));
+            opacity: 0.5;
+            filter: blur(12px);
+            transition: opacity 0.3s;
+        }
+        .avatar-container:hover .avatar-glow { opacity: 0.75; }
+        
         .avatar {
-            width: 8rem; height: 8rem; border-radius: 50%; margin: 0 auto 1.5rem;
-            border: 4px solid var(--slate-800); background: var(--slate-900);
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            width: 8rem; height: 8rem;
+            border-radius: 50%;
+            border: 4px solid var(--slate-800);
+            background: var(--slate-900);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; z-index: 10;
+            overflow: hidden; /* Garante que a imagem do Google fique redonda */
         }
+        .avatar svg { width: 4rem; height: 4rem; color: var(--slate-400); }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .edit-badge {
+            position: absolute; bottom: 0; right: 0;
+            background: var(--indigo-500);
+            border: 2px solid var(--slate-900);
+            border-radius: 50%;
+            width: 2rem; height: 2rem;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 20;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .edit-badge svg { width: 1rem; height: 1rem; color: white; }
 
-        .level-box { background: var(--slate-900); padding: 1.25rem; border-radius: 1rem; margin-top: 1.5rem; }
-        .progress-track { background: var(--slate-950); height: 8px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
-        .progress-fill { background: linear-gradient(to right, var(--indigo-500), var(--purple-500)); height: 100%; transition: width 1s; }
+        .profile-name { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.25rem; }
+        .profile-title { font-size: 0.875rem; color: var(--indigo-400); font-weight: 500; margin-bottom: 1.5rem; }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
-        .stat-item { background: var(--slate-950); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--slate-800); }
-        .stat-val { display: block; font-size: 1.25rem; font-weight: 800; color: white; }
-        .stat-label { font-size: 0.7rem; color: var(--slate-500); text-transform: uppercase; }
+        /* Level Box */
+        .level-box {
+            width: 100%;
+            background: rgba(30, 41, 59, 0.5);
+            padding: 1rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .level-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.5rem; }
+        .level-label { color: var(--slate-400); font-size: 0.875rem; font-weight: 500; }
+        .level-value { font-size: 1.5rem; font-weight: 700; color: white; }
+        
+        .progress-track {
+            width: 100%;
+            background: var(--slate-950);
+            border-radius: 9999px;
+            height: 0.75rem;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-fill {
+            position: absolute; top: 0; left: 0; height: 100%;
+            background: linear-gradient(to right, var(--indigo-500), var(--purple-500));
+            transition: width 1s ease-out;
+            border-radius: 9999px;
+        }
+        .level-footer { display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.75rem; color: var(--slate-500); }
 
+        /* Big Button */
         .btn-primary {
-            width: 100%; background: linear-gradient(to right, var(--indigo-600), var(--purple-600));
-            color: white; border: none; padding: 1rem; border-radius: 1rem; font-weight: 700;
-            cursor: pointer; margin-top: 1.5rem; transition: 0.3s;
+            width: 100%;
+            background: linear-gradient(to right, var(--indigo-600), var(--purple-600));
+            color: white;
+            font-weight: 700;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            border: none;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.25);
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(to right, var(--indigo-500), var(--purple-500));
+            transform: scale(1.02);
+        }
+        .btn-content { display: flex; align-items: center; gap: 0.75rem; font-size: 1.125rem; }
+        .btn-content svg { width: 24px; height: 24px; }
+        .btn-arrow svg { width: 20px; height: 20px; transition: transform 0.2s; }
+        .btn-primary:hover .btn-arrow svg { transform: translateX(4px); }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 0.875rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+            color: var(--slate-400); margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .section-title svg { width: 16px; height: 16px; }
+        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+        .quest-counter { font-size: 0.75rem; font-weight: 500; background: var(--slate-800); padding: 0.25rem 0.5rem; border-radius: 0.25rem; color: var(--slate-300); }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        
+        .stat-item { display: flex; flex-direction: column; gap: 0.5rem; }
+        .stat-info { display: flex; justify-content: space-between; align-items: center; }
+        .stat-name { display: flex; align-items: center; gap: 0.5rem; color: var(--slate-300); font-weight: 500; }
+        .stat-name svg { width: 16px; height: 16px; color: var(--slate-400); }
+        .stat-value { color: white; font-weight: 700; }
+        .stat-track { width: 100%; background: var(--slate-950); border-radius: 9999px; height: 0.5rem; }
+        .stat-fill { height: 100%; border-radius: 9999px; transition: width 1s ease-out; }
+
+        /* Quests List */
+        .quests-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .quest-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem; border-radius: 1rem;
+            background: var(--slate-950); border: 1px solid var(--slate-800);
+            cursor: pointer; transition: all 0.2s;
+        }
+        .quest-item:hover { border-color: rgba(99, 102, 241, 0.5); }
+        .quest-left { display: flex; align-items: center; gap: 1rem; }
+        
+        .checkbox {
+            width: 1.5rem; height: 1.5rem; border-radius: 50%;
+            border: 2px solid var(--slate-600);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .quest-item:hover .checkbox { border-color: var(--indigo-400); }
+        .checkbox svg { width: 12px; height: 12px; color: var(--indigo-400); opacity: 0; transition: opacity 0.2s; }
+        
+        .quest-title { color: var(--slate-200); font-weight: 500; transition: color 0.2s; }
+        .quest-time { font-size: 0.75rem; color: var(--slate-500); }
+        .quest-reward {
+            color: var(--indigo-400); font-weight: 700; font-size: 0.875rem;
+            background: rgba(99, 102, 241, 0.1); padding: 0.25rem 0.75rem; border-radius: 0.5rem;
         }
 
-        .quest-item {
-            background: var(--slate-900); padding: 1rem; border-radius: 1rem; margin-bottom: 0.75rem;
-            display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent;
-        }
-        .quest-item.completed { border-color: var(--emerald-500); opacity: 0.7; }
+        /* Quest Completed States */
+        .quest-item.completed { border-color: rgba(16, 185, 129, 0.5); background: rgba(6, 78, 59, 0.1); }
+        .quest-item.completed .checkbox { border-color: var(--emerald-500); background: rgba(16, 185, 129, 0.2); }
+        .quest-item.completed .checkbox svg { opacity: 1; color: var(--emerald-400); }
+        .quest-item.completed .quest-title { text-decoration: line-through; color: var(--slate-500); }
+
+        /* Utilitários JS Injetados */
+        .icon { display: inline-block; }
     </style>
 </head>
 <body>
 
-    <div id="login-screen">
-        <h1 style="color: white; font-size: 2.5rem; margin-bottom: 2rem; font-weight: 900;">Polímata Hub</h1>
-        <button onclick="handleLogin()" class="btn-google">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
-            Entrar com Google
-        </button>
-    </div>
-
     <header>
         <div class="container header-content">
             <div class="brand">
+                <i data-icon="hexagon"></i>
                 <h1>Polímata Hub</h1>
             </div>
-            <div id="user-nav" class="user-nav hidden">
-                <div style="text-align: right">
-                    <div id="user-display-name" style="font-size: 0.8rem; font-weight: 700;">Usuário</div>
-                    <button onclick="handleLogout()" class="btn-logout">Sair</button>
+            <div>
+                <div class="badge-streak">
+                    <i data-icon="zap"></i>
+                    <span>12 Dias de Ofensiva</span>
                 </div>
-                <img id="user-nav-photo" class="user-photo" src="">
             </div>
         </div>
     </header>
 
     <main class="container">
-        <aside>
+        
+        <div class="col-left animate-slide-up" style="animation-delay: 0.1s;">
+            
             <div class="panel profile-panel">
-                <div class="avatar">
-                    <img id="profile-img" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar">
+                <div class="profile-bg-glow"></div>
+                
+                <div class="avatar-container" id="login-button">
+                    <div class="avatar-glow"></div>
+                    <div class="avatar" id="user-photo">
+                        <i data-icon="user"></i>
+                    </div>
+                    <div class="edit-badge">
+                        <i data-icon="edit-2"></i>
+                    </div>
                 </div>
-                <h2 class="profile-name" id="display-name">Carregando...</h2>
-                <p class="profile-title">Explorador de Conhecimento</p>
+
+                <h2 class="profile-name" id="char-name">Clique para Entrar</h2>
+                <p class="profile-title" id="user-email">Acesse sua jornada</p>
 
                 <div class="level-box">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
-                        <span>NÍVEL GERAL</span>
-                        <span id="level-txt">14</span>
+                    <div class="level-header">
+                        <span class="level-label">Nível Geral</span>
+                        <span class="level-value" id="char-level">14</span>
                     </div>
                     <div class="progress-track">
-                        <div id="exp-bar" class="progress-fill" style="width: 70%"></div>
+                        <div class="progress-fill" style="width: 0%" id="exp-bar"></div>
+                    </div>
+                    <div class="level-footer">
+                        <span>1.420 EXP</span>
+                        <span>2.000 EXP</span>
                     </div>
                 </div>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-val">24</span>
-                        <span class="stat-label">Missões</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-val">12</span>
-                        <span class="stat-label">Ofensiva</span>
-                    </div>
-                </div>
-
-                <button onclick="window.location.href='index.html'" class="btn-primary">
-                    Visualizar Roda Polímata
-                </button>
             </div>
-        </aside>
 
-        <section>
+            <button onclick="window.location.href='pilares_do_personagem.html'" class="btn-primary">
+                <div class="btn-content">
+                    <i data-icon="network"></i>
+                    <span>Gerenciar Pilares</span>
+                </div>
+                <div class="btn-arrow">
+                    <i data-icon="chevron-right"></i>
+                </div>
+            </button>
+        </div>
+
+        <div class="col-right animate-slide-up" style="animation-delay: 0.2s;">
+            
             <div class="panel">
-                <h3 style="margin-bottom: 1.5rem; font-size: 1rem; color: var(--slate-400)">MISSÕES DIÁRIAS</h3>
-                <div id="quests-container">
-                    <div class="quest-item">
-                        <div>
-                            <div style="font-weight: 700;">Estudar Engenharia de Software</div>
-                            <div style="font-size: 0.75rem; color: var(--slate-500);">60 min • Foco</div>
-                        </div>
-                        <span style="color: var(--indigo-400); font-weight: 800;">+50 XP</span>
+                <h3 class="section-title">
+                    <i data-icon="bar-chart-2"></i> Atributos Base
+                </h3>
+                <div class="stats-grid" id="stats-container">
                     </div>
-                    <div class="quest-item">
-                        <div>
-                            <div style="font-weight: 700;">Praticar Piano</div>
-                            <div style="font-size: 0.75rem; color: var(--slate-500);">30 min • Criatividade</div>
-                        </div>
-                        <span style="color: var(--indigo-400); font-weight: 800;">+30 XP</span>
-                    </div>
-                </div>
             </div>
-        </section>
+
+            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="section-header">
+                    <h3 class="section-title" style="margin-bottom: 0;">
+                        <i data-icon="target"></i> Missões Diárias
+                    </h3>
+                    <span class="quest-counter">0/3 Concluídas</span>
+                </div>
+                <div class="quests-list" id="quests-container">
+                    </div>
+            </div>
+
+        </div>
     </main>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // CONFIGURAÇÃO DO SEU FIREBASE
+        // CONFIGURAÇÃO DO FIREBASE (Substitua pelos seus dados!)
         const firebaseConfig = {
-            apiKey: "AIzaSyBFxnca6Q1AZBrwdpU07GM2OCd9XIpn4xQ",
-            authDomain: "lista-de-presenca-95526.firebaseapp.com",
-            projectId: "lista-de-presenca-95526",
-            storageBucket: "lista-de-presenca-95526.firebasestorage.app",
-            messagingSenderId: "879181560997",
-            appId: "1:879181560997:web:484b7aeb865856a7f8a14c"
+            apiKey: "SUA_API_KEY",
+            authDomain: "SEU_PROJETO.firebaseapp.com",
+            projectId: "SEU_PROJETO",
+            storageBucket: "SEU_PROJETO.appspot.com",
+            messagingSenderId: "SEU_ID",
+            appId: "SEU_APP_ID"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        // FUNÇÕES DE LOGIN
-        window.handleLogin = async () => {
+        // ELEMENTOS DA TELA
+        const loginBtn = document.getElementById('login-button');
+        const userNameDisp = document.getElementById('char-name');
+        const userEmailDisp = document.getElementById('user-email');
+        const userPhotoDisp = document.getElementById('user-photo');
+
+        // FUNÇÃO DE LOGIN
+        loginBtn.onclick = async () => {
             try {
+                // Tenta logar com Popup
                 await signInWithPopup(auth, provider);
             } catch (error) {
                 console.error("Erro ao logar:", error);
-                alert("Erro ao logar com Google. Verifique se o domínio está autorizado no Firebase.");
+                alert("Houve um erro no login. Verifique se o domínio está autorizado no Firebase.");
             }
         };
 
-        window.handleLogout = () => signOut(auth);
-
-        // MONITOR DE USUÁRIO
+        // OBSERVA MUDANÇAS NO USUÁRIO (PERSISTÊNCIA)
         onAuthStateChanged(auth, (user) => {
-            const loginScreen = document.getElementById('login-screen');
-            const userNav = document.getElementById('user-nav');
-            
             if (user) {
-                // Usuário Logado
-                loginScreen.classList.add('hidden');
-                userNav.classList.remove('hidden');
+                // Usuário logado
+                userNameDisp.innerText = user.displayName || "Viajante";
+                userEmailDisp.innerText = user.email;
                 
-                // Atualiza UI Básica
-                document.getElementById('display-name').innerText = user.displayName;
-                document.getElementById('user-display-name').innerText = user.displayName.split(' ')[0];
-                document.getElementById('profile-img').src = user.photoURL;
-                document.getElementById('user-nav-photo').src = user.photoURL;
-                
-                // Sincroniza dados do banco
-                syncUserData(user.uid);
+                // Atualiza foto
+                if (user.photoURL) {
+                    userPhotoDisp.innerHTML = `<img src="${user.photoURL}" alt="Foto de Perfil">`;
+                }
             } else {
-                // Usuário Deslogado
-                loginScreen.classList.remove('hidden');
-                userNav.classList.add('hidden');
+                // Usuário deslogado
+                userNameDisp.innerText = "Clique para Entrar";
+                userEmailDisp.innerText = "Acesse sua jornada";
+                userPhotoDisp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
             }
         });
+    </script>
 
-        // SINCRONIZAÇÃO FIRESTORE
-        function syncUserData(uid) {
-            const userRef = doc(db, "users", uid, "config", "profile");
-            
-            onSnapshot(userRef, (docSnap) => {
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    document.getElementById('level-txt').innerText = data.level || 1;
-                    document.getElementById('exp-bar').style.width = (data.exp_percent || 10) + "%";
-                } else {
-                    // Se o usuário é novo, cria o perfil dele
-                    setDoc(userRef, { 
-                        level: 1, 
-                        exp_percent: 10,
-                        created_at: new Date()
-                    });
+    <script>
+        // --- GERADOR DE ÍCONES SVG ---
+        const svgLib = {
+            'hexagon': '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>',
+            'zap': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>',
+            'user': '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>',
+            'edit-2': '<path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>',
+            'network': '<rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path>',
+            'chevron-right': '<polyline points="9 18 15 12 9 6"></polyline>',
+            'bar-chart-2': '<line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line>',
+            'target': '<circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>',
+            'brain': '<path d="M9.5 2A2.5 2.5 0 0 0 7 4.5v15a2.5 2.5 0 0 0 4.9 1.25"></path><path d="M14.5 2A2.5 2.5 0 0 1 17 4.5v15a2.5 2.5 0 0 1-4.9 1.25"></path><path d="M3 8a2 2 0 0 0 2 2v4a2 2 0 0 0-2 2"></path><path d="M21 8a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2"></path>',
+            'palette': '<circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>',
+            'crosshair': '<circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line>',
+            'shield': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>',
+            'check': '<polyline points="20 6 9 17 4 12"></polyline>'
+        };
+
+        function renderIcons() {
+            const elements = document.querySelectorAll('i[data-icon]');
+            elements.forEach(el => {
+                const iconName = el.getAttribute('data-icon');
+                if (svgLib[iconName]) {
+                    el.outerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">${svgLib[iconName]}</svg>`;
                 }
             });
+        }
+
+        // --- DADOS MOCKADOS ---
+        const charStats = [
+            { id: 'int', name: 'Intelecto', value: 65, icon: 'brain', color: '#3b82f6' },
+            { id: 'cre', name: 'Criatividade', value: 80, icon: 'palette', color: '#a855f7' },
+            { id: 'foc', name: 'Foco', value: 45, icon: 'crosshair', color: '#10b981' },
+            { id: 'res', name: 'Resiliência', value: 60, icon: 'shield', color: '#f97316' }
+        ];
+
+        const dailyQuests = [
+            { id: 1, title: 'Estudar Engenharia de Software', exp: 50, time: '1 hora', done: false },
+            { id: 2, title: 'Praticar Piano', exp: 30, time: '30 min', done: false },
+            { id: 3, title: 'Ler Filosofia Moderna', exp: 20, time: '20 min', done: false }
+        ];
+
+        // --- RENDERIZAÇÃO ---
+        setTimeout(() => {
+            document.getElementById('exp-bar').style.width = '71%';
+        }, 300);
+
+        const statsContainer = document.getElementById('stats-container');
+        charStats.forEach((stat, index) => {
+            const statHTML = `
+                <div class="stat-item">
+                    <div class="stat-info">
+                        <div class="stat-name">
+                            <i data-icon="${stat.icon}"></i>
+                            <span>${stat.name}</span>
+                        </div>
+                        <span class="stat-value">${stat.value}</span>
+                    </div>
+                    <div class="stat-track">
+                        <div class="stat-fill" style="background-color: ${stat.color}; width: 0%" id="stat-${stat.id}"></div>
+                    </div>
+                </div>
+            `;
+            statsContainer.insertAdjacentHTML('beforeend', statHTML);
+            
+            setTimeout(() => {
+                document.getElementById(`stat-${stat.id}`).style.width = `${stat.value}%`;
+            }, 400 + (index * 100));
+        });
+
+        const questsContainer = document.getElementById('quests-container');
+        dailyQuests.forEach(quest => {
+            const questHTML = `
+                <div class="quest-item" onclick="toggleQuest(this)">
+                    <div class="quest-left">
+                        <div class="checkbox">
+                            <i data-icon="check"></i>
+                        </div>
+                        <div>
+                            <div class="quest-title">${quest.title}</div>
+                            <div class="quest-time">${quest.time}</div>
+                        </div>
+                    </div>
+                    <div class="quest-reward">+${quest.exp} EXP</div>
+                </div>
+            `;
+            questsContainer.insertAdjacentHTML('beforeend', questHTML);
+        });
+
+        renderIcons();
+
+        function toggleQuest(element) {
+            element.classList.toggle('completed');
         }
     </script>
 </body>
