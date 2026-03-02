@@ -18,12 +18,25 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            min-height: 100vh;
-            line-height: 1.5;
+        #login-screen {
+            position: fixed; inset: 0; background: var(--bg-dark);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 100; transition: opacity 0.5s;
         }
+        .btn-login {
+            background: white; color: black; border: none; padding: 12px 24px;
+            border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px;
+        }
+        .hidden { display: none !important; }
+        #user-info { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; }
+        #user-photo { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--accent); }
+
+            body {
+                background-color: var(--bg-dark);
+                color: var(--text-main);
+                min-height: 100vh;
+                line-height: 1.5;
+            }
 
         /* Scrollbar Customizada */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
@@ -185,18 +198,24 @@
 </head>
 <body>
 
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                <h1>Polímata Hub</h1>
-            </div>
-            <div style="font-size: 0.875rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
-                <span>Sua constelação de conhecimento</span>
-            </div>
+<div id="login-screen">
+    <h1 style="margin-bottom: 2rem; background: linear-gradient(to right, #818cf8, #c084fc); background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.5rem;">Polímata Hub</h1>
+    <button onclick="handleLogin()" class="btn-login">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
+        Entrar com Google
+    </button>
+</div>
+
+<header>
+    <div class="header-container">
+        <div class="logo"><h1>Polímata Hub</h1></div>
+        <div id="user-info" class="hidden">
+            <span id="user-name"></span>
+            <img id="user-photo" src="">
+            <button onclick="handleLogout()" style="background:none; border:none; color:#f87171; cursor:pointer; font-size: 10px;">Sair</button>
         </div>
-    </header>
+    </div>
+</header>
 
     <main>
         <div id="wheel-container">
@@ -229,242 +248,272 @@
         </div>
     </main>
 
-    <script>
-        // --- ESTADO ---
-        let mainGoal = {
-            name: "Mestre da Inovação Tecnológica e Artística",
-            description: "Unir lógica computacional com expressão criativa para criar novas mídias."
-        };
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        let skills = [
-            { id: 1, name: "Engenharia de Software", level: 85, color: "grad-blue" },
-            { id: 2, name: "Filosofia Moderna", level: 60, color: "grad-purple" },
-            { id: 3, name: "Design Gráfico", level: 70, color: "grad-orange" },
-            { id: 4, name: "Física Quântica", level: 30, color: "grad-emerald" },
-            { id: 5, name: "Música (Piano)", level: 55, color: "grad-red" },
-            { id: 6, name: "Oratória", level: 75, color: "grad-indigo" }
-        ];
+// 1. Configuração (Suas credenciais)
+const firebaseConfig = {
+    apiKey: "AIzaSyBFxnca6Q1AZBrwdpU07GM2OCd9XIpn4xQ",
+    authDomain: "lista-de-presenca-95526.firebaseapp.com",
+    projectId: "lista-de-presenca-95526",
+    storageBucket: "lista-de-presenca-95526.firebasestorage.app",
+    messagingSenderId: "879181560997",
+    appId: "1:879181560997:web:484b7aeb865856a7f8a14c"
+};
 
-        let selectedNode = { type: 'main', id: null };
-        let isEditing = false;
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-        const colorOptions = ["grad-blue", "grad-purple", "grad-orange", "grad-emerald", "grad-red", "grad-indigo"];
+// 2. Estado Global
+let currentUser = null;
+let mainGoal = { name: "Carregando...", description: "" };
+let skills = [];
+let selectedNode = { type: 'main', id: null };
+let isEditing = false;
+let unsubscribeSkills = null;
+let unsubscribeGoal = null;
 
-        // --- LÓGICA ---
-        function handleAddSkill() {
-            const newSkill = {
-                id: Date.now(),
-                name: "Novo Pilar",
-                level: 10,
-                color: colorOptions[skills.length % colorOptions.length]
-            };
-            skills.push(newSkill);
-            selectedNode = { type: 'skill', id: newSkill.id };
-            isEditing = true;
-            render();
-        }
+const colorOptions = ["grad-blue", "grad-purple", "grad-orange", "grad-emerald", "grad-red", "grad-indigo"];
 
-        function handleDeleteSkill(id) {
-            skills = skills.filter(s => s.id !== id);
-            if (selectedNode.id === id) selectedNode = { type: 'main', id: null };
-            render();
-        }
+// --- 3. GESTÃO DE USUÁRIO (LOGIN/LOGOUT) ---
 
-        function selectNode(type, id) {
-            selectedNode = { type, id };
-            isEditing = false;
-            render();
-        }
+window.handleLogin = async () => {
+    try {
+        await signInWithPopup(auth, provider);
+    } catch (error) {
+        console.error("Erro no login:", error);
+    }
+};
 
-        // --- RENDERIZAÇÃO ---
-        function render() {
-            renderWheel();
-            renderEditor();
-            renderList();
-        }
+window.handleLogout = () => signOut(auth);
 
-        function renderWheel() {
-            const container = document.getElementById('polymath-wheel');
-            const nodesContainer = document.getElementById('nodes-container');
-            const svg = document.getElementById('wheel-svg');
-            
-            const width = container.offsetWidth;
-            const height = container.offsetHeight;
-            const centerX = width / 2;
-            const centerY = height / 2;
-            const radius = Math.max(120, Math.min(centerX, centerY) * 0.65);
+onAuthStateChanged(auth, (user) => {
+    const loginScreen = document.getElementById('login-screen');
+    const userInfo = document.getElementById('user-info');
 
-            nodesContainer.innerHTML = '';
-            svg.innerHTML = '';
+    if (user) {
+        currentUser = user;
+        loginScreen.classList.add('hidden');
+        userInfo.classList.remove('hidden');
+        document.getElementById('user-name').innerText = user.displayName.split(' ')[0];
+        document.getElementById('user-photo').src = user.photoURL;
+        startSync(user.uid);
+    } else {
+        currentUser = null;
+        loginScreen.classList.remove('hidden');
+        userInfo.classList.add('hidden');
+        if (unsubscribeSkills) unsubscribeSkills();
+        if (unsubscribeGoal) unsubscribeGoal();
+    }
+});
 
-            // Centro
-            const isMainSelected = selectedNode.type === 'main';
-            const mainDiv = document.createElement('div');
-            mainDiv.style.cssText = `position: absolute; left: ${centerX}px; top: ${centerY}px; transform: translate(-50%, -50%); z-index: 20; cursor: pointer; transition: all 0.3s;`;
-            if (isMainSelected) mainDiv.style.transform += " scale(1.1)";
+// --- 4. SINCRONIZAÇÃO EM TEMPO REAL (FIRESTORE) ---
 
-            mainDiv.onclick = () => selectNode('main', null);
-            mainDiv.innerHTML = `
-                <div style="width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; text-align: center; border: 4px solid ${isMainSelected ? '#818cf8' : '#334155'}; background: ${isMainSelected ? 'rgba(49, 46, 129, 0.6)' : 'rgba(15, 23, 42, 0.9)'}; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="${isMainSelected ? '#a5b4fc' : '#64748b'}" stroke-width="2" style="margin-bottom: 8px;"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54Z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54Z"></path></svg>
-                    <h3 style="font-size: 0.85rem; font-weight: bold; color: white; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2;">${mainGoal.name}</h3>
-                </div>
-            `;
-            nodesContainer.appendChild(mainDiv);
-
-            // Skills
-            skills.forEach((skill, index) => {
-                const angle = (index * (2 * Math.PI)) / skills.length - Math.PI / 2;
-                const x = centerX + radius * Math.cos(angle);
-                const y = centerY + radius * Math.sin(angle);
-                const isSelected = selectedNode.id === skill.id;
-
-                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-                line.setAttribute("x1", centerX); line.setAttribute("y1", centerY);
-                line.setAttribute("x2", x); line.setAttribute("y2", y);
-                line.setAttribute("stroke", isSelected || isMainSelected ? "rgba(99, 102, 241, 0.5)" : "rgba(51, 65, 85, 0.5)");
-                line.setAttribute("stroke-width", isSelected ? "3" : "1.5");
-                if (!isSelected) line.setAttribute("stroke-dasharray", "4 4");
-                svg.appendChild(line);
-
-                const skillDiv = document.createElement('div');
-                skillDiv.style.cssText = `position: absolute; left: ${x}px; top: ${y}px; transform: translate(-50%, -50%); z-index: 10; cursor: pointer; transition: all 0.5s;`;
-                if (isSelected) skillDiv.style.zIndex = "30";
-                
-                skillDiv.onclick = () => selectNode('skill', skill.id);
-                skillDiv.innerHTML = `
-                    <div style="width: 90px; height: 90px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; background: #0f172a; border: 2px solid ${isSelected ? 'transparent' : '#334155'}; transform: ${isSelected ? 'scale(1.2)' : 'scale(1)'}">
-                        ${isSelected ? `<div class="${skill.color}" style="position: absolute; inset: -4px; border-radius: 50%; opacity: 0.6; filter: blur(4px); z-index: -1;"></div>` : ''}
-                        ${isSelected ? `<div class="${skill.color}" style="position: absolute; inset: -2px; border-radius: 50%; z-index: -1;"></div>` : ''}
-                        <div style="text-align: center; padding: 0 8px; z-index: 10;">
-                            <p style="font-size: 10px; font-weight: 600; color: #cbd5e1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${skill.name}</p>
-                            ${isSelected ? `<p style="font-size: 10px; color: #94a3b8; font-family: monospace;">${skill.level}%</p>` : ''}
-                        </div>
-                    </div>
-                `;
-                nodesContainer.appendChild(skillDiv);
+function startSync(uid) {
+    // Sincronizar Objetivo Principal
+    const goalRef = doc(db, "users", uid, "config", "mainGoal");
+    unsubscribeGoal = onSnapshot(goalRef, (docSnap) => {
+        if (docSnap.exists()) {
+            mainGoal = docSnap.data();
+        } else {
+            // Cria um perfil padrão para novos usuários
+            setDoc(goalRef, { 
+                name: "Mestre da Polimatia", 
+                description: "Minha visão de mundo e convergência de conhecimentos." 
             });
         }
-
-        function renderEditor() {
-            const card = document.getElementById('editor-card');
-            const activeData = selectedNode.type === 'main' ? mainGoal : skills.find(s => s.id === selectedNode.id);
-            if (!activeData) return;
-
-            const isMain = selectedNode.type === 'main';
-
-            let content = `
-                <div style="position: absolute; top: -100px; right: -100px; width: 200px; height: 200px; border-radius: 50%; filter: blur(60px); opacity: 0.15; pointer-events: none;" class="${isMain ? 'grad-indigo' : activeData.color}"></div>
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
-                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">${isMain ? 'Objetivo Central' : 'Pilar Secundário'}</span>
-                    <button onclick="toggleEdit()" class="btn-icon" style="background: rgba(30,41,59,0.5); padding: 8px;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
-                    </button>
-                </div>
-            `;
-
-            if (isEditing) {
-                content += `
-                    <div class="animate-fade-in" style="display: flex; flex-direction: column; gap: 1rem;">
-                        <div>
-                            <label style="font-size: 0.875rem; color: var(--text-muted);">Título</label>
-                            <input type="text" value="${activeData.name}" oninput="updateActiveName(this.value)">
-                        </div>
-                        ${isMain ? `
-                            <div>
-                                <label style="font-size: 0.875rem; color: var(--text-muted);">Visão</label>
-                                <textarea oninput="updateMainDesc(this.value)" style="height: 100px; resize: none;">${activeData.description}</textarea>
-                            </div>
-                        ` : `
-                            <div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                    <label style="font-size: 0.875rem; color: var(--text-muted);">Nível</label>
-                                    <span style="color: var(--accent); font-weight: bold;">${activeData.level}%</span>
-                                </div>
-                                <input type="range" min="0" max="100" value="${activeData.level}" oninput="updateSkillLevel(this.value)">
-                            </div>
-                        `}
-                        <button onclick="toggleEdit()" style="width: 100%; background: #1e293b; color: white; border: none; padding: 0.6rem; border-radius: 0.75rem; cursor: pointer; margin-top: 0.5rem;">Concluir</button>
-                    </div>
-                `;
-            } else {
-                content += `
-                    <div class="animate-fade-in">
-                        <h3 style="font-size: 1.5rem; font-weight: bold; color: white; margin-bottom: 0.5rem;">${activeData.name}</h3>
-                        ${isMain ? `<p style="color: var(--text-muted);">${activeData.description}</p>` : `
-                            <div style="margin-top: 1.5rem;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                    <span style="font-size: 0.875rem; color: var(--text-muted);">Progresso</span>
-                                    <span style="font-weight: bold; color: white;">${activeData.level}%</span>
-                                </div>
-                                <div style="width: 100%; background: #1e293b; height: 12px; border-radius: 999px; overflow: hidden;">
-                                    <div class="${activeData.color}" style="height: 100%; width: ${activeData.level}%; transition: width 0.3s;"></div>
-                                </div>
-                            </div>
-                        `}
-                    </div>
-                `;
-            }
-            card.innerHTML = content;
-        }
-
-        function renderList() {
-            const list = document.getElementById('skills-list');
-            document.getElementById('skill-count').innerText = skills.length;
-            
-            if (skills.length === 0) {
-                list.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.875rem;">Nenhum pilar adicionado.</div>';
-                return;
-            }
-
-            list.innerHTML = '';
-            skills.forEach(skill => {
-                const isSelected = selectedNode.id === skill.id;
-                const div = document.createElement('div');
-                div.className = `skill-item ${isSelected ? 'active' : ''}`;
-                div.onclick = () => selectNode('skill', skill.id);
-                div.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                        <div class="dot ${skill.color}"></div>
-                        <div>
-                            <div style="font-weight: 500; color: ${isSelected ? 'white' : '#e2e8f0'};">${skill.name}</div>
-                            <div style="font-size: 0.75rem; color: var(--text-muted);">Nível ${skill.level}%</div>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <button onclick="event.stopPropagation(); handleDeleteSkill(${skill.id})" class="btn-icon">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
-                `;
-                list.appendChild(div);
-            });
-        }
-
-        // --- HANDLERS ---
-        function toggleEdit() { isEditing = !isEditing; render(); }
-        
-        function updateActiveName(val) {
-            if (selectedNode.type === 'main') mainGoal.name = val;
-            else {
-                const skill = skills.find(s => s.id === selectedNode.id);
-                if (skill) skill.name = val;
-            }
-            renderWheel(); 
-        }
-
-        function updateMainDesc(val) { mainGoal.description = val; }
-        
-        function updateSkillLevel(val) {
-            const skill = skills.find(s => s.id === selectedNode.id);
-            if (skill) {
-                skill.level = parseInt(val);
-                render();
-            }
-        }
-
-        window.onresize = render;
         render();
-    </script>
+    });
+
+    // Sincronizar Pilares (Skills)
+    const skillsRef = collection(db, "users", uid, "skills");
+    unsubscribeSkills = onSnapshot(skillsRef, (snapshot) => {
+        skills = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+        render();
+    });
+}
+
+// --- 5. OPERAÇÕES DE DADOS (CRUD) ---
+
+window.handleAddSkill = async () => {
+    if (!currentUser) return;
+    const newSkill = {
+        name: "Novo Pilar",
+        level: 10,
+        color: colorOptions[skills.length % colorOptions.length]
+    };
+    const docRef = await addDoc(collection(db, "users", currentUser.uid, "skills"), newSkill);
+    selectedNode = { type: 'skill', id: docRef.id };
+    isEditing = true;
+};
+
+window.handleDeleteSkill = async (id) => {
+    if (confirm("Deseja remover este pilar da sua constelação?")) {
+        await deleteDoc(doc(db, "users", currentUser.uid, "skills", id));
+        if (selectedNode.id === id) selectedNode = { type: 'main', id: null };
+    }
+};
+
+window.updateActiveName = async (val) => {
+    if (!currentUser) return;
+    const ref = selectedNode.type === 'main' 
+        ? doc(db, "users", currentUser.uid, "config", "mainGoal")
+        : doc(db, "users", currentUser.uid, "skills", selectedNode.id);
+    await updateDoc(ref, { name: val });
+};
+
+window.updateMainDesc = async (val) => {
+    if (selectedNode.type === 'main') {
+        await updateDoc(doc(db, "users", currentUser.uid, "config", "mainGoal"), { description: val });
+    }
+};
+
+window.updateSkillLevel = async (val) => {
+    if (selectedNode.type === 'skill') {
+        await updateDoc(doc(db, "users", currentUser.uid, "skills", selectedNode.id), { level: parseInt(val) });
+    }
+};
+
+// --- 6. RENDERIZAÇÃO DA INTERFACE ---
+
+window.selectNode = (type, id) => {
+    selectedNode = { type, id };
+    isEditing = false;
+    render();
+};
+
+window.toggleEdit = () => { isEditing = !isEditing; render(); };
+
+function render() {
+    renderWheel();
+    renderEditor();
+    renderList();
+}
+
+function renderWheel() {
+    const container = document.getElementById('polymath-wheel');
+    const nodesContainer = document.getElementById('nodes-container');
+    const svg = document.getElementById('wheel-svg');
+    if (!container) return;
+
+    const width = container.offsetWidth;
+    const height = container.offsetHeight;
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = Math.max(120, Math.min(centerX, centerY) * 0.65);
+
+    nodesContainer.innerHTML = '';
+    svg.innerHTML = '';
+
+    // Render Pilar Central
+    const isMainSelected = selectedNode.type === 'main';
+    const mainDiv = document.createElement('div');
+    mainDiv.style.cssText = `position: absolute; left: ${centerX}px; top: ${centerY}px; transform: translate(-50%, -50%); z-index: 20; cursor: pointer; transition: all 0.3s;`;
+    if (isMainSelected) mainDiv.style.transform += " scale(1.1)";
+    mainDiv.onclick = () => selectNode('main', null);
+    mainDiv.innerHTML = `
+        <div style="width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; text-align: center; border: 4px solid ${isMainSelected ? 'var(--accent)' : '#1e293b'}; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(4px); box-shadow: 0 0 30px rgba(0,0,0,0.5);">
+            <h3 style="font-size: 0.85rem; color: white;">${mainGoal.name}</h3>
+        </div>
+    `;
+    nodesContainer.appendChild(mainDiv);
+
+    // Render Pilares Periféricos
+    skills.forEach((skill, index) => {
+        const angle = (index * (2 * Math.PI)) / skills.length - Math.PI / 2;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        const isSelected = selectedNode.id === skill.id;
+
+        // Linha de conexão
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", centerX); line.setAttribute("y1", centerY);
+        line.setAttribute("x2", x); line.setAttribute("y2", y);
+        line.setAttribute("stroke", isSelected ? "var(--accent)" : "#1e293b");
+        line.setAttribute("stroke-width", isSelected ? "2" : "1");
+        if (!isSelected) line.setAttribute("stroke-dasharray", "4 4");
+        svg.appendChild(line);
+
+        // Nó do Pilar
+        const skillDiv = document.createElement('div');
+        skillDiv.style.cssText = `position: absolute; left: ${x}px; top: ${y}px; transform: translate(-50%, -50%); z-index: 10; cursor: pointer; transition: all 0.3s;`;
+        skillDiv.onclick = () => selectNode('skill', skill.id);
+        skillDiv.innerHTML = `
+            <div class="${skill.color}" style="width: 85px; height: 85px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; color: white; font-size: 10px; font-weight: 600; border: ${isSelected ? '3px solid white' : 'none'}; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                ${skill.name}
+            </div>
+        `;
+        nodesContainer.appendChild(skillDiv);
+    });
+}
+
+function renderEditor() {
+    const card = document.getElementById('editor-card');
+    const activeData = selectedNode.type === 'main' ? mainGoal : skills.find(s => s.id === selectedNode.id);
+    if (!activeData || !card) return;
+
+    const isMain = selectedNode.type === 'main';
+
+    let content = `
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">${isMain ? 'Objetivo Central' : 'Pilar'}</span>
+            <button onclick="toggleEdit()" class="btn-icon" style="background: rgba(255,255,255,0.05); border-radius: 50%; width: 30px; height: 30px;">✎</button>
+        </div>
+    `;
+
+    if (isEditing) {
+        content += `
+            <div class="animate-fade-in" style="display: flex; flex-direction: column; gap: 1rem;">
+                <input type="text" value="${activeData.name}" oninput="updateActiveName(this.value)" placeholder="Título">
+                ${isMain ? 
+                    `<textarea oninput="updateMainDesc(this.value)" style="height: 100px;">${activeData.description}</textarea>` : 
+                    `<div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.8rem;">
+                            <label>Domínio: ${activeData.level}%</label>
+                        </div>
+                        <input type="range" min="0" max="100" value="${activeData.level}" oninput="updateSkillLevel(this.value)">
+                    </div>`
+                }
+                <button onclick="toggleEdit()" style="background: var(--accent); color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer;">Salvar</button>
+            </div>
+        `;
+    } else {
+        content += `
+            <div class="animate-fade-in">
+                <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">${activeData.name}</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">${isMain ? activeData.description : 'Seu nível de progresso neste pilar é de ' + activeData.level + '%.'}</p>
+            </div>
+        `;
+    }
+    card.innerHTML = content;
+}
+
+function renderList() {
+    const list = document.getElementById('skills-list');
+    if (!list) return;
+    document.getElementById('skill-count').innerText = skills.length;
+    
+    list.innerHTML = skills.length === 0 
+        ? '<p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 1rem;">Nenhum pilar cadastrado.</p>'
+        : skills.map(s => `
+            <div class="skill-item ${selectedNode.id === s.id ? 'active' : ''}" onclick="selectNode('skill', '${s.id}')">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="dot ${s.color}"></div>
+                    <div>
+                        <div style="font-size: 0.9rem; font-weight: 500;">${s.name}</div>
+                        <div style="font-size: 0.7rem; color: var(--text-muted);">${s.level}% Dominado</div>
+                    </div>
+                </div>
+                <button onclick="event.stopPropagation(); handleDeleteSkill('${s.id}')" class="btn-icon">✕</button>
+            </div>
+        `).join('');
+}
+
+window.onresize = render;
+</script>
 </body>
 </html>
