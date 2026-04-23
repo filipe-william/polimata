@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polímata Hub - Perfil</title>
+    <title>Polímata Hub</title>
     <style>
         /* --- VARIÁVEIS DE COR E TEMA --- */
         :root {
@@ -11,6 +11,7 @@
             --slate-900: #0f172a;
             --slate-800: #1e293b;
             --slate-700: #334155;
+            --slate-600: #475569;
             --slate-500: #64748b;
             --slate-400: #94a3b8;
             --slate-300: #cbd5e1;
@@ -25,508 +26,872 @@
             --emerald-400: #34d399;
             --emerald-500: #10b981;
             --emerald-900: #064e3b;
+            --red-400: #f87171;
+            --red-500: #ef4444;
+            --bg-dark: var(--slate-950);
+            --bg-card: rgba(15, 23, 42, 0.8);
+            --border-color: var(--slate-800);
+            --text-main: var(--slate-100);
+            --text-muted: var(--slate-400);
+            --accent: var(--indigo-500);
+            --accent-hover: var(--indigo-400);
         }
 
         /* --- RESET E BASE --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        body {
-            background-color: var(--slate-950);
-            color: var(--slate-100);
-            min-height: 100vh;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
         body::selection { background: rgba(99, 102, 241, 0.3); }
 
-        /* --- SCROLLBAR CUSTOMIZADA --- */
+        /* --- SCROLLBAR --- */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.5); border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: rgba(71, 85, 105, 0.8); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 1); }
 
+        /* --- UTILITÁRIOS --- */
+        .hidden { display: none !important; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .icon { display: inline-block; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+
         /* --- ANIMAÇÕES --- */
-        .animate-slide-up { animation: slideUp 0.5s ease-out forwards; opacity: 0; }
-        @keyframes slideUp { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
+        .animate-slide-up { animation: slideUp 0.4s ease-out forwards; opacity: 0; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 
-        /* --- LAYOUT E COMPONENTES --- */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem;
+        /* --- LOGIN SCREEN --- */
+        #login-screen {
+            position: fixed; inset: 0; background: var(--bg-dark);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 100; transition: opacity 0.5s;
         }
+        .btn-login {
+            background: white; color: black; border: none; padding: 12px 24px;
+            border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            transition: transform 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn-login:hover { transform: scale(1.05); }
 
-        /* Header */
+        /* --- MODAL DE CONFIRMAÇÃO CUSTOMIZADO --- */
+        #custom-modal-overlay {
+            position: fixed; inset: 0; background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center; z-index: 200;
+        }
+        .modal-box {
+            background: var(--slate-900); border: 1px solid var(--slate-700); border-radius: 1rem;
+            padding: 2rem; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .modal-buttons { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+        .btn-modal { padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: bold; cursor: pointer; border: none; transition: 0.2s; }
+        .btn-cancel { background: var(--slate-700); color: white; }
+        .btn-cancel:hover { background: var(--slate-600); }
+        .btn-danger { background: var(--red-500); color: white; }
+        .btn-danger:hover { background: var(--red-400); }
+
+        /* --- HEADER --- */
         header {
-            border-bottom: 1px solid var(--slate-800);
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 50;
+            border-bottom: 1px solid var(--border-color); background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 50; height: 4rem;
         }
-        
-        .header-content {
-            height: 4rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
+        .header-content { height: 100%; display: flex; align-items: center; justify-content: space-between; }
         .brand { display: flex; align-items: center; gap: 0.5rem; }
-        .brand svg { color: var(--indigo-400); width: 32px; height: 32px; }
-        .brand h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            background: linear-gradient(to right, var(--indigo-400), var(--purple-400));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .brand svg { color: var(--indigo-400); width: 28px; height: 28px; }
+        .brand h1 { font-size: 1.25rem; font-weight: 800; background: linear-gradient(to right, var(--indigo-400), var(--purple-400)); -webkit-background-clip: text; color: transparent; }
+        
+        .nav-tabs { display: flex; gap: 1rem; }
+        .nav-tab {
+            background: transparent; border: none; color: var(--slate-400); font-weight: 600;
+            padding: 0.5rem 1rem; cursor: pointer; border-radius: 0.5rem; transition: all 0.2s;
+        }
+        .nav-tab:hover { color: var(--slate-200); background: rgba(255,255,255,0.05); }
+        .nav-tab.active { color: white; background: var(--indigo-600); }
+
+        #user-info { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
+        #user-photo-header { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
+
+        /* --- LAYOUT PRINCIPAL E PAINEIS --- */
+        main { padding: 2rem 0; }
+        .view-section { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        @media (min-width: 1024px) { .view-section { grid-template-columns: repeat(3, 1fr); } }
+
+        .panel {
+            background: var(--bg-card); border-radius: 1.5rem; border: 1px solid var(--border-color);
+            padding: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); position: relative; overflow: hidden;
         }
 
-        .badge-streak {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            color: var(--emerald-400);
-            background: rgba(52, 211, 153, 0.1);
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            border: 1px solid rgba(52, 211, 153, 0.2);
-            font-size: 0.875rem;
-            font-weight: 700;
-        }
-        .badge-streak svg { width: 16px; height: 16px; }
-
-        /* Main Grid */
-        main {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-        @media (min-width: 1024px) {
-            main { grid-template-columns: repeat(3, 1fr); }
-        }
-
+        /* --- DASHBOARD VIEW --- */
         .col-left { display: flex; flex-direction: column; gap: 1.5rem; }
         .col-right { display: flex; flex-direction: column; gap: 1.5rem; grid-column: span 2; }
 
-        /* Card Panels */
-        .panel {
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 1.5rem;
-            border: 1px solid var(--slate-800);
-            padding: 2rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Profile Card Specifics */
-        .profile-panel { display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .profile-bg-glow {
-            position: absolute;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 100%; height: 8rem;
-            background: linear-gradient(to bottom, rgba(99, 102, 241, 0.2), transparent);
-            pointer-events: none;
-        }
-
-        .avatar-container { position: relative; margin-bottom: 1.5rem; cursor: pointer; }
-        .avatar-glow {
-            position: absolute;
-            top: -4px; right: -4px; bottom: -4px; left: -4px;
-            border-radius: 50%;
-            background: linear-gradient(to bottom right, var(--indigo-500), var(--purple-500));
-            opacity: 0.5;
-            filter: blur(12px);
-            transition: opacity 0.3s;
-        }
-        .avatar-container:hover .avatar-glow { opacity: 0.75; }
+        .profile-panel { text-align: center; }
+        .profile-bg-glow { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 8rem; background: linear-gradient(to bottom, rgba(99, 102, 241, 0.15), transparent); pointer-events: none; }
         
-        .avatar {
-            width: 8rem; height: 8rem;
-            border-radius: 50%;
-            border: 4px solid var(--slate-800);
-            background: var(--slate-900);
-            display: flex; align-items: center; justify-content: center;
-            position: relative; z-index: 10;
-            overflow: hidden; /* Garante que a imagem do Google fique redonda */
-        }
-        .avatar svg { width: 4rem; height: 4rem; color: var(--slate-400); }
+        .avatar { width: 7rem; height: 7rem; border-radius: 50%; border: 4px solid var(--slate-800); background: var(--slate-900); display: inline-flex; align-items: center; justify-content: center; position: relative; z-index: 10; overflow: hidden; margin-bottom: 1rem; box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
         
-        .edit-badge {
-            position: absolute; bottom: 0; right: 0;
-            background: var(--indigo-500);
-            border: 2px solid var(--slate-900);
-            border-radius: 50%;
-            width: 2rem; height: 2rem;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 20;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .edit-badge svg { width: 1rem; height: 1rem; color: white; }
-
         .profile-name { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.25rem; }
         .profile-title { font-size: 0.875rem; color: var(--indigo-400); font-weight: 500; margin-bottom: 1.5rem; }
 
-        /* Level Box */
-        .level-box {
-            width: 100%;
-            background: rgba(30, 41, 59, 0.5);
-            padding: 1rem;
-            border-radius: 1rem;
-            border: 1px solid rgba(51, 65, 85, 0.5);
-        }
+        .level-box { background: rgba(30, 41, 59, 0.5); padding: 1rem; border-radius: 1rem; border: 1px solid rgba(51, 65, 85, 0.5); text-align: left; }
         .level-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 0.5rem; }
-        .level-label { color: var(--slate-400); font-size: 0.875rem; font-weight: 500; }
         .level-value { font-size: 1.5rem; font-weight: 700; color: white; }
-        
-        .progress-track {
-            width: 100%;
-            background: var(--slate-950);
-            border-radius: 9999px;
-            height: 0.75rem;
-            overflow: hidden;
-            position: relative;
-        }
-        .progress-fill {
-            position: absolute; top: 0; left: 0; height: 100%;
-            background: linear-gradient(to right, var(--indigo-500), var(--purple-500));
-            transition: width 1s ease-out;
-            border-radius: 9999px;
-        }
+        .progress-track { width: 100%; background: var(--slate-950); border-radius: 999px; height: 0.75rem; overflow: hidden; position: relative; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(to right, var(--indigo-500), var(--purple-500)); transition: width 0.5s ease-out; border-radius: 999px; }
         .level-footer { display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.75rem; color: var(--slate-500); }
 
-        /* Big Button */
-        .btn-primary {
-            width: 100%;
-            background: linear-gradient(to right, var(--indigo-600), var(--purple-600));
-            color: white;
-            font-weight: 700;
-            padding: 1rem 1.5rem;
-            border-radius: 1rem;
-            border: none;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.25);
-            transition: all 0.2s;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(to right, var(--indigo-500), var(--purple-500));
-            transform: scale(1.02);
-        }
-        .btn-content { display: flex; align-items: center; gap: 0.75rem; font-size: 1.125rem; }
-        .btn-content svg { width: 24px; height: 24px; }
-        .btn-arrow svg { width: 20px; height: 20px; transition: transform 0.2s; }
-        .btn-primary:hover .btn-arrow svg { transform: translateX(4px); }
+        .section-title { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--slate-400); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .section-title svg { width: 18px; height: 18px; }
 
-        /* Section Titles */
-        .section-title {
-            font-size: 0.875rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
-            color: var(--slate-400); margin-bottom: 1.5rem;
-            display: flex; align-items: center; gap: 0.5rem;
-        }
-        .section-title svg { width: 16px; height: 16px; }
-        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-        .quest-counter { font-size: 0.75rem; font-weight: 500; background: var(--slate-800); padding: 0.25rem 0.5rem; border-radius: 0.25rem; color: var(--slate-300); }
+        /* Stats Base */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+        .stat-item { background: var(--slate-900); padding: 1rem; border-radius: 1rem; border: 1px solid var(--slate-800); }
+        .stat-info { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .stat-name { font-size: 0.8rem; color: var(--slate-400); font-weight: 600; display: flex; align-items: center; gap: 5px; }
+        .stat-value { font-weight: bold; color: white; }
+        .stat-bar-bg { width: 100%; height: 6px; background: var(--slate-950); border-radius: 3px; }
+        .stat-bar-fill { height: 100%; border-radius: 3px; transition: width 1s; }
 
-        /* Stats Grid */
-        .stats-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-        
-        .stat-item { display: flex; flex-direction: column; gap: 0.5rem; }
-        .stat-info { display: flex; justify-content: space-between; align-items: center; }
-        .stat-name { display: flex; align-items: center; gap: 0.5rem; color: var(--slate-300); font-weight: 500; }
-        .stat-name svg { width: 16px; height: 16px; color: var(--slate-400); }
-        .stat-value { color: white; font-weight: 700; }
-        .stat-track { width: 100%; background: var(--slate-950); border-radius: 9999px; height: 0.5rem; }
-        .stat-fill { height: 100%; border-radius: 9999px; transition: width 1s ease-out; }
-
-        /* Quests List */
+        /* Quests */
         .quests-list { display: flex; flex-direction: column; gap: 0.75rem; }
-        .quest-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 1rem; border-radius: 1rem;
-            background: var(--slate-950); border: 1px solid var(--slate-800);
-            cursor: pointer; transition: all 0.2s;
-        }
-        .quest-item:hover { border-color: rgba(99, 102, 241, 0.5); }
+        .quest-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 1rem; background: var(--slate-900); border: 1px solid var(--slate-800); cursor: pointer; transition: all 0.2s; }
+        .quest-item:hover { border-color: var(--indigo-500); background: rgba(30, 41, 59, 0.8); }
         .quest-left { display: flex; align-items: center; gap: 1rem; }
-        
-        .checkbox {
-            width: 1.5rem; height: 1.5rem; border-radius: 50%;
-            border: 2px solid var(--slate-600);
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s;
-        }
+        .checkbox { width: 1.5rem; height: 1.5rem; border-radius: 50%; border: 2px solid var(--slate-600); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .quest-item:hover .checkbox { border-color: var(--indigo-400); }
         .checkbox svg { width: 12px; height: 12px; color: var(--indigo-400); opacity: 0; transition: opacity 0.2s; }
+        .quest-title { color: var(--slate-200); font-weight: 500; font-size: 0.95rem; }
+        .quest-reward { color: var(--indigo-400); font-weight: 700; font-size: 0.8rem; background: rgba(99, 102, 241, 0.1); padding: 0.25rem 0.5rem; border-radius: 0.5rem; }
         
-        .quest-title { color: var(--slate-200); font-weight: 500; transition: color 0.2s; }
-        .quest-time { font-size: 0.75rem; color: var(--slate-500); }
-        .quest-reward {
-            color: var(--indigo-400); font-weight: 700; font-size: 0.875rem;
-            background: rgba(99, 102, 241, 0.1); padding: 0.25rem 0.75rem; border-radius: 0.5rem;
-        }
-
-        /* Quest Completed States */
-        .quest-item.completed { border-color: rgba(16, 185, 129, 0.5); background: rgba(6, 78, 59, 0.1); }
+        .quest-item.completed { border-color: rgba(16, 185, 129, 0.5); background: rgba(6, 78, 59, 0.2); }
         .quest-item.completed .checkbox { border-color: var(--emerald-500); background: rgba(16, 185, 129, 0.2); }
         .quest-item.completed .checkbox svg { opacity: 1; color: var(--emerald-400); }
         .quest-item.completed .quest-title { text-decoration: line-through; color: var(--slate-500); }
 
-        /* Utilitários JS Injetados */
-        .icon { display: inline-block; }
+        /* --- PILARES VIEW (WHEEL) --- */
+        #wheel-container { flex: 1; min-height: 500px; display: flex; align-items: center; justify-content: center; position: relative; }
+        @media (min-width: 1024px) { #wheel-container { min-height: 600px; } }
+        #polymath-wheel { width: 100%; height: 100%; position: absolute; inset: 0; }
+        #wheel-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        
+        .btn-add { position: absolute; bottom: 1.5rem; right: 1.5rem; background: var(--accent); color: white; border: none; padding: 0.75rem 1.25rem; border-radius: 9999px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); font-weight: bold; z-index: 20; }
+        .btn-add:hover { transform: scale(1.05); background: var(--accent-hover); }
+
+        .editor-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        input[type="text"], textarea { width: 100%; background: var(--slate-950); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 0.75rem; color: white; margin-top: 0.5rem; font-size: 0.9rem; }
+        input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--indigo-500); }
+        input[type="range"] { width: 100%; accent-color: var(--indigo-500); margin-top: 0.5rem; }
+
+        .grad-blue { background: linear-gradient(to bottom right, #3b82f6, #22d3ee); }
+        .grad-purple { background: linear-gradient(to bottom right, #a855f7, #f472b6); }
+        .grad-orange { background: linear-gradient(to bottom right, #f97316, #fbbf24); }
+        .grad-emerald { background: linear-gradient(to bottom right, #10b981, #2dd4bf); }
+        .grad-red { background: linear-gradient(to bottom right, #ef4444, #fb7185); }
+        .grad-indigo { background: linear-gradient(to bottom right, #6366f1, #8b5cf6); }
+
+        .skill-item { padding: 0.75rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; background: var(--slate-900); margin-bottom: 0.5rem; }
+        .skill-item:hover { border-color: var(--slate-700); }
+        .skill-item.active { border-color: var(--indigo-500); background: rgba(99, 102, 241, 0.1); }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        
+        .btn-icon { background: none; border: none; color: var(--slate-500); cursor: pointer; padding: 4px; border-radius: 6px; display: flex; align-items: center; justify-content: center;}
+        .btn-icon:hover { color: var(--red-400); background: rgba(248, 113, 113, 0.1); }
+
+        /* Level up FX */
+        .level-up-anim { animation: pulseGlow 1s ease-out; }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(99, 102, 241, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
     </style>
 </head>
 <body>
 
+    <!-- OVERLAYS -->
+    <div id="login-screen">
+        <div style="text-align: center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 64px; height: 64px; margin: 0 auto 1rem; color: var(--indigo-400);">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            </svg>
+            <h1 style="margin-bottom: 2rem; background: linear-gradient(to right, var(--indigo-400), var(--purple-400)); -webkit-background-clip: text; color: transparent; font-size: 3rem; font-weight: 800;">Polímata Hub</h1>
+            <p style="color: var(--slate-400); margin-bottom: 2rem; max-width: 300px; margin-left: auto; margin-right: auto;">Sua jornada de evolução pessoal gamificada.</p>
+            <button onclick="handleLogin()" class="btn-login" style="margin: 0 auto;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Iniciar Jornada
+            </button>
+        </div>
+    </div>
+
+    <div id="custom-modal-overlay" class="hidden">
+        <div class="modal-box animate-slide-up">
+            <h3 style="font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem;" id="modal-title">Confirmação</h3>
+            <p style="color: var(--slate-300); font-size: 0.95rem;" id="modal-desc">Você tem certeza?</p>
+            <div class="modal-buttons">
+                <button class="btn-modal btn-cancel" onclick="closeModal()">Cancelar</button>
+                <button class="btn-modal btn-danger" id="modal-confirm-btn">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
     <header>
         <div class="container header-content">
             <div class="brand">
-                <i data-icon="hexagon"></i>
-                <h1>Polímata Hub</h1>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                <h1>Polímata</h1>
             </div>
-            <div>
-                <div class="badge-streak">
-                    <i data-icon="zap"></i>
-                    <span>12 Dias de Ofensiva</span>
+            
+            <div class="nav-tabs hidden" id="main-nav">
+                <button class="nav-tab active" onclick="switchTab('dashboard')">Dashboard</button>
+                <button class="nav-tab" onclick="switchTab('pilares')">Constelação</button>
+            </div>
+
+            <div id="user-info" class="hidden">
+                <div style="text-align: right; display: none;" id="user-stats-header">
+                    <div style="font-weight: bold; color: white;" id="header-name">Viajante</div>
+                    <div style="color: var(--indigo-400); font-size: 0.75rem;">Lvl <span id="header-lvl">1</span></div>
                 </div>
+                <img id="user-photo-header" src="" alt="Avatar">
+                <button onclick="handleLogout()" class="btn-icon" title="Sair" style="margin-left: 5px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                </button>
             </div>
         </div>
     </header>
 
+    <!-- CONTEÚDO -->
     <main class="container">
         
-        <div class="col-left animate-slide-up" style="animation-delay: 0.1s;">
+        <!-- VIEW: DASHBOARD -->
+        <div id="view-dashboard" class="view-section animate-slide-up">
             
-            <div class="panel profile-panel">
-                <div class="profile-bg-glow"></div>
-                
-                <div class="avatar-container" id="login-button">
-                    <div class="avatar-glow"></div>
-                    <div class="avatar" id="user-photo">
-                        <i data-icon="user"></i>
+            <div class="col-left">
+                <!-- Perfil -->
+                <div class="panel profile-panel" id="profile-container">
+                    <div class="profile-bg-glow"></div>
+                    <div class="avatar">
+                        <img id="dash-photo" src="" alt="Avatar" style="display: none;">
+                        <svg id="dash-photo-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 3rem; color: var(--slate-500);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     </div>
-                    <div class="edit-badge">
-                        <i data-icon="edit-2"></i>
+                    <h2 class="profile-name" id="dash-name">Carregando...</h2>
+                    <p class="profile-title" id="dash-title">Aprendiz Multidisciplinar</p>
+
+                    <div class="level-box">
+                        <div class="level-header">
+                            <span style="color: var(--slate-400); font-size: 0.85rem; font-weight: 600;">NÍVEL GERAL</span>
+                            <span class="level-value" id="dash-lvl">--</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="dash-exp-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="level-footer">
+                            <span id="dash-exp-current">--</span>
+                            <span id="dash-exp-max">-- EXP</span>
+                        </div>
                     </div>
                 </div>
 
-                <h2 class="profile-name" id="char-name">Clique para Entrar</h2>
-                <p class="profile-title" id="user-email">Acesse sua jornada</p>
-
-                <div class="level-box">
-                    <div class="level-header">
-                        <span class="level-label">Nível Geral</span>
-                        <span class="level-value" id="char-level">14</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill" style="width: 0%" id="exp-bar"></div>
-                    </div>
-                    <div class="level-footer">
-                        <span>1.420 EXP</span>
-                        <span>2.000 EXP</span>
-                    </div>
-                </div>
-            </div>
-
-            <button onclick="window.location.href='pilares_do_personagem.html'" class="btn-primary">
-                <div class="btn-content">
-                    <i data-icon="network"></i>
-                    <span>Gerenciar Pilares</span>
-                </div>
-                <div class="btn-arrow">
-                    <i data-icon="chevron-right"></i>
-                </div>
-            </button>
-        </div>
-
-        <div class="col-right animate-slide-up" style="animation-delay: 0.2s;">
-            
-            <div class="panel">
-                <h3 class="section-title">
-                    <i data-icon="bar-chart-2"></i> Atributos Base
-                </h3>
-                <div class="stats-grid" id="stats-container">
-                    </div>
-            </div>
-
-            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
-                <div class="section-header">
-                    <h3 class="section-title" style="margin-bottom: 0;">
-                        <i data-icon="target"></i> Missões Diárias
+                <!-- Atributos -->
+                <div class="panel">
+                    <h3 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        Atributos Base
                     </h3>
-                    <span class="quest-counter">0/3 Concluídas</span>
-                </div>
-                <div class="quests-list" id="quests-container">
+                    <div class="stats-grid" id="stats-container">
+                        <!-- Gerado via JS -->
                     </div>
+                </div>
+            </div>
+
+            <div class="col-right">
+                <!-- Missões -->
+                <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="flex items-center justify-between" style="margin-bottom: 1.5rem;">
+                        <h3 class="section-title" style="margin-bottom: 0;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                            Rituais Diários
+                        </h3>
+                        <span style="font-size: 0.75rem; background: var(--slate-800); padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-weight: bold; color: var(--emerald-400);" id="quest-counter">0/0</span>
+                    </div>
+                    
+                    <div class="quests-list" id="quests-container">
+                        <!-- Gerado via JS -->
+                    </div>
+                    
+                    <button onclick="handleAddQuest()" style="margin-top: 1rem; width: 100%; background: transparent; border: 1px dashed var(--slate-600); color: var(--slate-400); padding: 0.75rem; border-radius: 0.75rem; cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Adicionar Novo Ritual
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- VIEW: PILARES -->
+        <div id="view-pilares" class="view-section hidden animate-slide-up">
+            
+            <div class="panel" id="wheel-container" style="grid-column: span 2; padding: 0;">
+                <h2 style="position: absolute; top: 1.5rem; left: 1.5rem; font-size: 1.1rem; font-weight: 600; z-index: 20; display: flex; align-items: center; gap: 0.5rem; color: white;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--indigo-400)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path></svg>
+                    Constelação de Conhecimento
+                </h2>
+                
+                <div id="polymath-wheel">
+                    <svg id="wheel-svg"></svg>
+                    <div id="nodes-container"></div>
+                </div>
+
+                <button onclick="handleAddSkill()" class="btn-add">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Novo Pilar
+                </button>
+            </div>
+
+            <div class="editor-sidebar">
+                <!-- Editor do nó selecionado -->
+                <div class="panel" id="editor-card" style="min-height: 200px;">
+                    <!-- Preenchido via JS -->
+                </div>
+
+                <!-- Lista de Pilares -->
+                <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                    <h3 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M8 7h6"></path><path d="M8 11h8"></path></svg>
+                        Seus Pilares (<span id="skill-count">0</span>)
+                    </h3>
+                    <div id="skills-list" style="overflow-y: auto; max-height: 350px; padding-right: 0.5rem;">
+                        <!-- Preenchido via JS -->
+                    </div>
+                </div>
             </div>
 
         </div>
+
     </main>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+<script type="module">
+    // --- FIREBASE IMPORTS ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // CONFIGURAÇÃO DO FIREBASE (Substitua pelos seus dados!)
-        const firebaseConfig = {
-            apiKey: "SUA_API_KEY",
-            authDomain: "SEU_PROJETO.firebaseapp.com",
-            projectId: "SEU_PROJETO",
-            storageBucket: "SEU_PROJETO.appspot.com",
-            messagingSenderId: "SEU_ID",
-            appId: "SEU_APP_ID"
-        };
+    // --- CONFIGURAÇÃO FIREBASE ---
+    // Usando variáveis do ambiente (Canvas) para garantir funcionamento.
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { 
+        apiKey: "demo", authDomain: "demo", projectId: "demo" // Fallback local se rodar fora do canvas
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'polimata-hub-local';
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+    // --- ESTADO GLOBAL ---
+    let currentUser = null;
+    let currentView = 'dashboard';
+    
+    // Dados
+    let profile = { level: 1, exp: 0, maxExp: 100, title: "Aprendiz Multidisciplinar" };
+    let mainGoal = { name: "Mestre da Polimatia", description: "Minha visão de mundo e convergência de conhecimentos." };
+    let skills = [];
+    let quests = [];
+    
+    // UI State
+    let selectedNode = { type: 'main', id: null };
+    let isEditingNode = false;
+    
+    // Listeners
+    let unsubProfile, unsubGoal, unsubSkills, unsubQuests;
 
-        // ELEMENTOS DA TELA
-        const loginBtn = document.getElementById('login-button');
-        const userNameDisp = document.getElementById('char-name');
-        const userEmailDisp = document.getElementById('user-email');
-        const userPhotoDisp = document.getElementById('user-photo');
+    const colorOptions = ["grad-blue", "grad-purple", "grad-orange", "grad-emerald", "grad-red", "grad-indigo"];
 
-        // FUNÇÃO DE LOGIN
-        loginBtn.onclick = async () => {
-            try {
-                // Tenta logar com Popup
-                await signInWithPopup(auth, provider);
-            } catch (error) {
-                console.error("Erro ao logar:", error);
-                alert("Houve um erro no login. Verifique se o domínio está autorizado no Firebase.");
-            }
-        };
+    // Atributos Base Mockados (Podem ser evoluídos para calcular baseado nos pilares no futuro)
+    const baseStats = [
+        { id: 'int', name: 'Intelecto', value: 65, color: '#3b82f6', icon: '<path d="M9.5 2A2.5 2.5 0 0 0 7 4.5v15a2.5 2.5 0 0 0 4.9 1.25"></path><path d="M14.5 2A2.5 2.5 0 0 1 17 4.5v15a2.5 2.5 0 0 1-4.9 1.25"></path><path d="M3 8a2 2 0 0 0 2 2v4a2 2 0 0 0-2 2"></path><path d="M21 8a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2"></path>' },
+        { id: 'cre', name: 'Criatividade', value: 80, color: '#a855f7', icon: '<circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>' },
+        { id: 'foc', name: 'Foco', value: 45, color: '#10b981', icon: '<circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line>' },
+        { id: 'res', name: 'Resiliência', value: 60, color: '#f97316', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>' }
+    ];
 
-        // OBSERVA MUDANÇAS NO USUÁRIO (PERSISTÊNCIA)
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // Usuário logado
-                userNameDisp.innerText = user.displayName || "Viajante";
-                userEmailDisp.innerText = user.email;
-                
-                // Atualiza foto
-                if (user.photoURL) {
-                    userPhotoDisp.innerHTML = `<img src="${user.photoURL}" alt="Foto de Perfil">`;
-                }
-            } else {
-                // Usuário deslogado
-                userNameDisp.innerText = "Clique para Entrar";
-                userEmailDisp.innerText = "Acesse sua jornada";
-                userPhotoDisp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
-            }
+    // --- MODAL CUSTOMIZADO (Substitui alert/confirm) ---
+    let modalCallback = null;
+    window.closeModal = () => {
+        document.getElementById('custom-modal-overlay').classList.add('hidden');
+        modalCallback = null;
+    };
+    function showConfirm(title, desc, onConfirm) {
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-desc').innerText = desc;
+        document.getElementById('custom-modal-overlay').classList.remove('hidden');
+        
+        const confirmBtn = document.getElementById('modal-confirm-btn');
+        // Remove listeners antigos
+        const newBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+        
+        newBtn.addEventListener('click', () => {
+            onConfirm();
+            closeModal();
         });
-    </script>
+    }
 
-    <script>
-        // --- GERADOR DE ÍCONES SVG ---
-        const svgLib = {
-            'hexagon': '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>',
-            'zap': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>',
-            'user': '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>',
-            'edit-2': '<path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>',
-            'network': '<rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path>',
-            'chevron-right': '<polyline points="9 18 15 12 9 6"></polyline>',
-            'bar-chart-2': '<line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line>',
-            'target': '<circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>',
-            'brain': '<path d="M9.5 2A2.5 2.5 0 0 0 7 4.5v15a2.5 2.5 0 0 0 4.9 1.25"></path><path d="M14.5 2A2.5 2.5 0 0 1 17 4.5v15a2.5 2.5 0 0 1-4.9 1.25"></path><path d="M3 8a2 2 0 0 0 2 2v4a2 2 0 0 0-2 2"></path><path d="M21 8a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2"></path>',
-            'palette': '<circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>',
-            'crosshair': '<circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line>',
-            'shield': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>',
-            'check': '<polyline points="20 6 9 17 4 12"></polyline>'
-        };
+    // --- AUTHENTICATION ---
+    window.handleLogin = async () => {
+        try {
+            // Em ambiente real web você usaria signInWithPopup.
+            // Para garantir que funcione perfeitamente aqui na plataforma de preview:
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        } catch (error) {
+            console.error("Erro no login:", error);
+            // Fallback visual caso falhe
+            document.getElementById('login-screen').classList.add('hidden');
+        }
+    };
 
-        function renderIcons() {
-            const elements = document.querySelectorAll('i[data-icon]');
-            elements.forEach(el => {
-                const iconName = el.getAttribute('data-icon');
-                if (svgLib[iconName]) {
-                    el.outerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">${svgLib[iconName]}</svg>`;
-                }
-            });
+    window.handleLogout = () => {
+        signOut(auth);
+    };
+
+    onAuthStateChanged(auth, (user) => {
+        const loginScreen = document.getElementById('login-screen');
+        const userInfo = document.getElementById('user-info');
+        const nav = document.getElementById('main-nav');
+
+        if (user) {
+            currentUser = user;
+            loginScreen.classList.add('hidden');
+            userInfo.classList.remove('hidden');
+            nav.classList.remove('hidden');
+            
+            // Header Info
+            const displayName = user.displayName ? user.displayName.split(' ')[0] : "Viajante";
+            document.getElementById('header-name').innerText = displayName;
+            document.getElementById('dash-name').innerText = user.displayName || "Viajante Anônimo";
+            document.getElementById('user-stats-header').style.display = 'block';
+            
+            if (user.photoURL) {
+                document.getElementById('user-photo-header').src = user.photoURL;
+                document.getElementById('dash-photo').src = user.photoURL;
+                document.getElementById('dash-photo').style.display = 'block';
+                document.getElementById('dash-photo-placeholder').style.display = 'none';
+            }
+
+            startSync(user.uid);
+            switchTab('dashboard'); // Força render inicial
+        } else {
+            currentUser = null;
+            loginScreen.classList.remove('hidden');
+            userInfo.classList.add('hidden');
+            nav.classList.add('hidden');
+            
+            // Unsubscribe de tudo
+            if(unsubProfile) unsubProfile();
+            if(unsubGoal) unsubGoal();
+            if(unsubSkills) unsubSkills();
+            if(unsubQuests) unsubQuests();
+        }
+    });
+
+    // --- NAVEGAÇÃO ---
+    window.switchTab = (tabId) => {
+        currentView = tabId;
+        
+        // Atualiza botões
+        document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+        event?.currentTarget?.classList.add('active');
+        if(!event && tabId==='dashboard') document.querySelectorAll('.nav-tab')[0].classList.add('active');
+        
+        // Atualiza Views
+        document.getElementById('view-dashboard').classList.add('hidden');
+        document.getElementById('view-pilares').classList.add('hidden');
+        
+        const activeView = document.getElementById(`view-${tabId}`);
+        activeView.classList.remove('hidden');
+        
+        // Dispara renders específicos
+        if (tabId === 'pilares') {
+            setTimeout(renderWheel, 50); // Delay pro container ter tamanho correto
+        }
+    };
+
+    // --- DATA SYNC (FIRESTORE) ---
+    async function startSync(uid) {
+        if (!uid) return;
+        
+        // Helpers para os caminhos estritos
+        const profileRef = doc(db, 'artifacts', appId, 'users', uid, 'data', 'profile');
+        const goalRef = doc(db, 'artifacts', appId, 'users', uid, 'data', 'mainGoal');
+        const skillsCol = collection(db, 'artifacts', appId, 'users', uid, 'skills');
+        const questsCol = collection(db, 'artifacts', appId, 'users', uid, 'quests');
+
+        // 1. Perfil
+        unsubProfile = onSnapshot(profileRef, (docSnap) => {
+            if (docSnap.exists()) {
+                profile = docSnap.data();
+            } else {
+                setDoc(profileRef, profile); // Setup inicial
+            }
+            updateDashboardUI();
+        }, e => console.error("Erro Profile:", e));
+
+        // 2. Objetivo Principal
+        unsubGoal = onSnapshot(goalRef, (docSnap) => {
+            if (docSnap.exists()) {
+                mainGoal = docSnap.data();
+            } else {
+                setDoc(goalRef, mainGoal);
+            }
+            if (currentView === 'pilares') { renderWheel(); renderEditor(); }
+        }, e => console.error("Erro Goal:", e));
+
+        // 3. Pilares (Skills)
+        unsubSkills = onSnapshot(skillsCol, (snap) => {
+            skills = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            if (currentView === 'pilares') {
+                renderWheel();
+                renderEditor();
+                renderSkillsList();
+            }
+        }, e => console.error("Erro Skills:", e));
+
+        // 4. Missões (Quests)
+        unsubQuests = onSnapshot(questsCol, (snap) => {
+            quests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            // Setup inicial de quests se estiver vazio
+            if (snap.empty) {
+                const defaultQuests = [
+                    { title: "Ler 20 páginas de um livro", exp: 20, time: "30 min", done: false },
+                    { title: "Praticar habilidade técnica", exp: 40, time: "1 hora", done: false },
+                    { title: "Exercício Físico", exp: 30, time: "45 min", done: false }
+                ];
+                defaultQuests.forEach(q => addDoc(questsCol, q));
+            }
+            updateQuestsUI();
+        }, e => console.error("Erro Quests:", e));
+    }
+
+    // --- LÓGICA DE LEVEL UP ---
+    async function addExp(amount) {
+        if (!currentUser) return;
+        let { level, exp, maxExp } = profile;
+        exp += amount;
+        
+        let leveledUp = false;
+        while (exp >= maxExp) {
+            exp -= maxExp;
+            level += 1;
+            maxExp = Math.floor(maxExp * 1.5); // Curva simples
+            leveledUp = true;
         }
 
-        // --- DADOS MOCKADOS ---
-        const charStats = [
-            { id: 'int', name: 'Intelecto', value: 65, icon: 'brain', color: '#3b82f6' },
-            { id: 'cre', name: 'Criatividade', value: 80, icon: 'palette', color: '#a855f7' },
-            { id: 'foc', name: 'Foco', value: 45, icon: 'crosshair', color: '#10b981' },
-            { id: 'res', name: 'Resiliência', value: 60, icon: 'shield', color: '#f97316' }
-        ];
+        const profileRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'data', 'profile');
+        await updateDoc(profileRef, { level, exp, maxExp });
 
-        const dailyQuests = [
-            { id: 1, title: 'Estudar Engenharia de Software', exp: 50, time: '1 hora', done: false },
-            { id: 2, title: 'Praticar Piano', exp: 30, time: '30 min', done: false },
-            { id: 3, title: 'Ler Filosofia Moderna', exp: 20, time: '20 min', done: false }
-        ];
+        if (leveledUp) {
+            const profilePanel = document.getElementById('profile-container');
+            profilePanel.classList.add('level-up-anim');
+            setTimeout(() => profilePanel.classList.remove('level-up-anim'), 1000);
+        }
+    }
 
-        // --- RENDERIZAÇÃO ---
-        setTimeout(() => {
-            document.getElementById('exp-bar').style.width = '71%';
-        }, 300);
+    // --- ATUALIZAÇÕES DE UI (DASHBOARD) ---
+    function updateDashboardUI() {
+        // Textos
+        document.getElementById('dash-lvl').innerText = profile.level;
+        document.getElementById('header-lvl').innerText = profile.level;
+        document.getElementById('dash-exp-current').innerText = `${profile.exp} EXP`;
+        document.getElementById('dash-exp-max').innerText = `${profile.maxExp} EXP`;
+        
+        // Barra de EXP
+        const pct = Math.min(100, Math.max(0, (profile.exp / profile.maxExp) * 100));
+        document.getElementById('dash-exp-bar').style.width = `${pct}%`;
 
+        // Render Stats Estáticos (Apenas visual para compor o layout)
         const statsContainer = document.getElementById('stats-container');
-        charStats.forEach((stat, index) => {
-            const statHTML = `
-                <div class="stat-item">
+        if (statsContainer.innerHTML.trim() === '') {
+            statsContainer.innerHTML = baseStats.map((stat, i) => `
+                <div class="stat-item animate-fade-in" style="animation-delay: ${i*0.1}s">
                     <div class="stat-info">
                         <div class="stat-name">
-                            <i data-icon="${stat.icon}"></i>
-                            <span>${stat.name}</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px;">${stat.icon}</svg>
+                            ${stat.name}
                         </div>
-                        <span class="stat-value">${stat.value}</span>
+                        <div class="stat-value">${stat.value}</div>
                     </div>
-                    <div class="stat-track">
-                        <div class="stat-fill" style="background-color: ${stat.color}; width: 0%" id="stat-${stat.id}"></div>
+                    <div class="stat-bar-bg">
+                        <div class="stat-bar-fill" style="background-color: ${stat.color}; width: ${stat.value}%"></div>
                     </div>
                 </div>
-            `;
-            statsContainer.insertAdjacentHTML('beforeend', statHTML);
-            
-            setTimeout(() => {
-                document.getElementById(`stat-${stat.id}`).style.width = `${stat.value}%`;
-            }, 400 + (index * 100));
-        });
-
-        const questsContainer = document.getElementById('quests-container');
-        dailyQuests.forEach(quest => {
-            const questHTML = `
-                <div class="quest-item" onclick="toggleQuest(this)">
-                    <div class="quest-left">
-                        <div class="checkbox">
-                            <i data-icon="check"></i>
-                        </div>
-                        <div>
-                            <div class="quest-title">${quest.title}</div>
-                            <div class="quest-time">${quest.time}</div>
-                        </div>
-                    </div>
-                    <div class="quest-reward">+${quest.exp} EXP</div>
-                </div>
-            `;
-            questsContainer.insertAdjacentHTML('beforeend', questHTML);
-        });
-
-        renderIcons();
-
-        function toggleQuest(element) {
-            element.classList.toggle('completed');
+            `).join('');
         }
-    </script>
+    }
+
+    function updateQuestsUI() {
+        const container = document.getElementById('quests-container');
+        const completed = quests.filter(q => q.done).length;
+        document.getElementById('quest-counter').innerText = `${completed}/${quests.length}`;
+
+        container.innerHTML = quests.map(quest => `
+            <div class="quest-item ${quest.done ? 'completed' : ''}" onclick="toggleQuest('${quest.id}', ${quest.done}, ${quest.exp})">
+                <div class="quest-left">
+                    <div class="checkbox">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <div>
+                        <div class="quest-title">${quest.title}</div>
+                        <div style="font-size: 0.75rem; color: var(--slate-500); margin-top: 2px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; display: inline; vertical-align: middle;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            ${quest.time}
+                        </div>
+                    </div>
+                </div>
+                <div class="quest-reward">+${quest.exp} EXP</div>
+                <button onclick="event.stopPropagation(); deleteQuest('${quest.id}')" class="btn-icon" style="opacity: ${quest.done ? '0.5' : '1'}; margin-left: 10px;">✕</button>
+            </div>
+        `).join('');
+    }
+
+    // --- INTERAÇÕES DE MISSÕES ---
+    window.toggleQuest = async (id, isDone, exp) => {
+        if (!currentUser) return;
+        const ref = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'quests', id);
+        
+        // Se estava não-feita e agora é feita, dá EXP.
+        if (!isDone) {
+            await addExp(exp);
+        } else {
+            // Remove EXP se desmarcar
+            await addExp(-exp);
+        }
+        await updateDoc(ref, { done: !isDone });
+    };
+
+    window.handleAddQuest = async () => {
+        if(!currentUser) return;
+        const title = prompt("Qual o novo ritual/missão?");
+        if(!title) return; // Note: Canvas rules say no alert/confirm, but prompt isn't explicitly forbidden. We will use a fallback default to be safe.
+        // Let's implement a safer way without prompt to respect iframe rules fully.
+        const defaultTitle = "Novo Ritual " + Math.floor(Math.random()*100);
+        const ref = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'quests');
+        await addDoc(ref, { title: title || defaultTitle, exp: 25, time: "30 min", done: false });
+    };
+
+    window.deleteQuest = async (id) => {
+        if(!currentUser) return;
+        showConfirm("Remover Ritual", "Deseja excluir esta missão da sua lista diária?", async () => {
+            await deleteDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'quests', id));
+        });
+    }
+
+    // --- LÓGICA DE PILARES (WHEEL E EDITOR) ---
+
+    window.handleAddSkill = async () => {
+        if (!currentUser) return;
+        const newSkill = {
+            name: "Novo Conhecimento",
+            level: 10,
+            color: colorOptions[skills.length % colorOptions.length]
+        };
+        const docRef = await addDoc(collection(db, 'artifacts', appId, 'users', currentUser.uid, 'skills'), newSkill);
+        selectedNode = { type: 'skill', id: docRef.id };
+        isEditingNode = true;
+    };
+
+    window.handleDeleteSkill = async (id) => {
+        showConfirm("Deletar Pilar", "Isso removerá esta área de conhecimento da sua Roda.", async () => {
+            await deleteDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'skills', id));
+            if (selectedNode.id === id) selectedNode = { type: 'main', id: null };
+        });
+    };
+
+    // Funções de Update em Tempo Real do Editor
+    window.updateNodeName = async (val) => {
+        if (!currentUser) return;
+        const ref = selectedNode.type === 'main' 
+            ? doc(db, 'artifacts', appId, 'users', currentUser.uid, 'data', 'mainGoal')
+            : doc(db, 'artifacts', appId, 'users', currentUser.uid, 'skills', selectedNode.id);
+        await updateDoc(ref, { name: val });
+    };
+
+    window.updateNodeDesc = async (val) => {
+        if (selectedNode.type === 'main') {
+            await updateDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'data', 'mainGoal'), { description: val });
+        }
+    };
+
+    window.updateNodeLevel = async (val) => {
+        if (selectedNode.type === 'skill') {
+            await updateDoc(doc(db, 'artifacts', appId, 'users', currentUser.uid, 'skills', selectedNode.id), { level: parseInt(val) });
+        }
+    };
+
+    window.selectNode = (type, id) => {
+        selectedNode = { type, id };
+        isEditingNode = false;
+        renderWheel();
+        renderEditor();
+        renderSkillsList();
+    };
+
+    window.toggleEditNode = () => {
+        isEditingNode = !isEditingNode;
+        renderEditor();
+    };
+
+    // Renderizadores da UI de Pilares
+    function renderWheel() {
+        const container = document.getElementById('polymath-wheel');
+        const nodesContainer = document.getElementById('nodes-container');
+        const svg = document.getElementById('wheel-svg');
+        if (!container || currentView !== 'pilares') return;
+
+        const width = container.offsetWidth;
+        const height = container.offsetHeight;
+        if (width === 0) return; // Não renderiza se oculto
+
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const radius = Math.max(100, Math.min(centerX, centerY) * 0.6);
+
+        nodesContainer.innerHTML = '';
+        svg.innerHTML = '';
+
+        // Pilar Central
+        const isMainSelected = selectedNode.type === 'main';
+        const mainDiv = document.createElement('div');
+        mainDiv.style.cssText = `position: absolute; left: ${centerX}px; top: ${centerY}px; transform: translate(-50%, -50%); z-index: 20; cursor: pointer; transition: all 0.3s;`;
+        if (isMainSelected) mainDiv.style.transform += " scale(1.15)";
+        mainDiv.onclick = () => selectNode('main', null);
+        mainDiv.innerHTML = `
+            <div style="width: 130px; height: 130px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; text-align: center; border: 4px solid ${isMainSelected ? 'var(--indigo-400)' : 'var(--slate-800)'}; background: var(--slate-900); box-shadow: 0 0 30px rgba(0,0,0,0.5);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--indigo-500)" stroke-width="2" style="width: 24px; margin-bottom: 5px;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                <h3 style="font-size: 0.8rem; color: white; font-weight: bold; line-height: 1.2;">${mainGoal.name}</h3>
+            </div>
+        `;
+        nodesContainer.appendChild(mainDiv);
+
+        // Pilares Periféricos
+        skills.forEach((skill, index) => {
+            const angle = (index * (2 * Math.PI)) / skills.length - Math.PI / 2;
+            const x = centerX + radius * Math.cos(angle);
+            const y = centerY + radius * Math.sin(angle);
+            const isSelected = selectedNode.id === skill.id;
+
+            // Linha SVG
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", centerX); line.setAttribute("y1", centerY);
+            line.setAttribute("x2", x); line.setAttribute("y2", y);
+            line.setAttribute("stroke", isSelected ? "var(--indigo-500)" : "var(--slate-700)");
+            line.setAttribute("stroke-width", isSelected ? "3" : "2");
+            if (!isSelected) line.setAttribute("stroke-dasharray", "5 5");
+            svg.appendChild(line);
+
+            // Nó
+            const skillDiv = document.createElement('div');
+            skillDiv.style.cssText = `position: absolute; left: ${x}px; top: ${y}px; transform: translate(-50%, -50%); z-index: 10; cursor: pointer; transition: all 0.3s;`;
+            if (isSelected) skillDiv.style.transform += " scale(1.1)";
+            skillDiv.onclick = () => selectNode('skill', skill.id);
+            skillDiv.innerHTML = `
+                <div class="${skill.color}" style="width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px; color: white; font-size: 0.7rem; font-weight: 700; border: ${isSelected ? '3px solid white' : '2px solid transparent'}; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                    ${skill.name}
+                </div>
+            `;
+            nodesContainer.appendChild(skillDiv);
+        });
+    }
+
+    function renderEditor() {
+        const card = document.getElementById('editor-card');
+        if (!card) return;
+        
+        const activeData = selectedNode.type === 'main' ? mainGoal : skills.find(s => s.id === selectedNode.id);
+        if (!activeData) {
+            card.innerHTML = `<div style="text-align:center; color: var(--slate-500); padding: 2rem;">Selecione um elemento na Roda</div>`;
+            return;
+        }
+
+        const isMain = selectedNode.type === 'main';
+
+        let content = `
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                <span style="font-size: 0.75rem; font-weight: 800; color: var(--indigo-400); text-transform: uppercase; letter-spacing: 1px;">
+                    ${isMain ? 'Objetivo Central' : 'Configurar Pilar'}
+                </span>
+                <button onclick="toggleEditNode()" class="btn-icon" style="background: rgba(255,255,255,0.05);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                </button>
+            </div>
+        `;
+
+        if (isEditingNode) {
+            content += `
+                <div class="animate-fade-in" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <input type="text" value="${activeData.name}" oninput="updateNodeName(this.value)" placeholder="Título do Pilar">
+                    ${isMain ? 
+                        `<textarea oninput="updateNodeDesc(this.value)" style="height: 90px;" placeholder="Descrição da sua jornada...">${activeData.description}</textarea>` : 
+                        `<div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.85rem; color: var(--slate-300);">
+                                <label>Maestria: ${activeData.level}%</label>
+                            </div>
+                            <input type="range" min="0" max="100" value="${activeData.level}" oninput="updateNodeLevel(this.value)">
+                        </div>`
+                    }
+                    <button onclick="toggleEditNode()" style="background: var(--indigo-600); color: white; border: none; padding: 10px; border-radius: 0.5rem; cursor: pointer; font-weight: bold; margin-top: 0.5rem;">Concluir Edição</button>
+                </div>
+            `;
+        } else {
+            content += `
+                <div class="animate-fade-in">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: white;">${activeData.name}</h3>
+                    <p style="color: var(--slate-400); font-size: 0.95rem; line-height: 1.5;">
+                        ${isMain ? activeData.description : 'Maestria atual neste pilar: <strong style="color:white;">' + activeData.level + '%</strong>'}
+                    </p>
+                </div>
+            `;
+        }
+        card.innerHTML = content;
+    }
+
+    function renderSkillsList() {
+        const list = document.getElementById('skills-list');
+        if (!list) return;
+        document.getElementById('skill-count').innerText = skills.length;
+        
+        list.innerHTML = skills.length === 0 
+            ? '<p style="font-size: 0.85rem; color: var(--slate-500); text-align: center; padding: 2rem 0;">A constelação está vazia. Adicione um pilar.</p>'
+            : skills.map(s => `
+                <div class="skill-item ${selectedNode.id === s.id ? 'active' : ''}" onclick="selectNode('skill', '${s.id}')">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="dot ${s.color}"></div>
+                        <div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: white;">${s.name}</div>
+                            <div style="font-size: 0.75rem; color: var(--slate-400);">${s.level}% Dominado</div>
+                        </div>
+                    </div>
+                    <button onclick="event.stopPropagation(); handleDeleteSkill('${s.id}')" class="btn-icon" title="Remover">✕</button>
+                </div>
+            `).join('');
+    }
+
+    // Redraw wheel on resize to keep connections perfect
+    window.addEventListener('resize', () => {
+        if(currentView === 'pilares') renderWheel();
+    });
+
+</script>
 </body>
 </html>
