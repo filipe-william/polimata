@@ -24,7 +24,6 @@
             --purple-600: #9333ea;
             --emerald-400: #34d399;
             --emerald-500: #10b981;
-            --emerald-900: #064e3b;
             --bg-dark: #020617;
             --bg-card: rgba(15, 23, 42, 0.8);
             --border-color: #1e293b;
@@ -109,6 +108,7 @@
 
         .user-menu { display: flex; align-items: center; gap: 1rem; }
         .logout-btn { background: none; border: none; color: #f87171; cursor: pointer; font-size: 0.875rem; font-weight: bold; }
+        #user-photo { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--indigo-400); object-fit: cover; }
 
         /* Main Content Areas */
         .view-section { padding-top: 2rem; padding-bottom: 2rem; }
@@ -125,6 +125,7 @@
         .profile-panel { display: flex; flex-direction: column; align-items: center; text-align: center; }
         .avatar-container { margin-bottom: 1.5rem; }
         .avatar { width: 8rem; height: 8rem; border-radius: 50%; border: 4px solid var(--slate-800); background: var(--slate-900); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
         .avatar svg { width: 4rem; height: 4rem; color: var(--slate-400); }
         
         .level-box { width: 100%; background: rgba(30, 41, 59, 0.5); padding: 1rem; border-radius: 1rem; border: 1px solid rgba(51, 65, 85, 0.5); margin-top: 1.5rem; }
@@ -203,10 +204,10 @@
             <h1 style="font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(to right, var(--indigo-400), var(--purple-400)); -webkit-background-clip: text; color: transparent; font-weight: 800;">Polímata Hub</h1>
             <p style="color: var(--slate-400); margin-bottom: 2rem;">Registre e gamefique sua evolução pessoal.</p>
             <button id="btn-login-action" class="btn-login">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
-                Acessar Jornada
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="Google Logo">
+                Entrar com Google
             </button>
-            <p style="font-size: 0.75rem; color: var(--slate-500); margin-top: 1rem;">Seus dados serão sincronizados na nuvem.</p>
+            <p style="font-size: 0.75rem; color: var(--slate-500); margin-top: 1rem;">Seus dados serão sincronizados no seu Firebase.</p>
         </div>
     </div>
 
@@ -225,6 +226,7 @@
 
             <div class="user-menu">
                 <span id="header-user-name" style="font-weight: 500; font-size: 0.9rem;"></span>
+                <img id="user-photo" src="" alt="Foto">
                 <button class="logout-btn" onclick="handleLogout()">Sair</button>
             </div>
         </div>
@@ -241,7 +243,7 @@
                 <div class="col-left">
                     <div class="panel profile-panel">
                         <div class="avatar-container">
-                            <div class="avatar">
+                            <div class="avatar" id="main-avatar">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                             </div>
                         </div>
@@ -273,7 +275,7 @@
                             Atributos Base (Top Pilares)
                         </h3>
                         <div id="stats-container" class="stats-grid">
-                            <!-- Injetado via JS baseado nos pilares -->
+                            <!-- Injetado via JS -->
                             <p style="color: var(--slate-500); grid-column: span 2; text-align: center; font-size: 0.9rem;">Crie pilares na aba "Meus Pilares" para ver seus atributos.</p>
                         </div>
                     </div>
@@ -338,30 +340,30 @@
     </main>
 
 <script type="module">
-    // IMPORTAÇÕES DO FIREBASE (Versão 11.6.1 conforme diretrizes)
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    // IMPORTAÇÕES OFICIAIS DO FIREBASE
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    // --- CONFIGURAÇÃO E INIT ---
-    /* * NOTA: Este código usa o ambiente de Auth seguro providenciado pelo sistema para garantir
-     * que os dados persistam de forma funcional sem erro de permissões. 
-     * Se você exportar este código para usar externamente, substitua o bloco abaixo pela sua
-     * config real e ative o `signInWithPopup` com `GoogleAuthProvider`!
-     */
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-        // Fallback genérico caso executado fora do ambiente
-        apiKey: "fake-key", authDomain: "fake.firebaseapp.com", projectId: "fake-project"
+    // --- SUAS CREDENCIAIS REAIS DO FIREBASE ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyBFxnca6Q1AZBrwdpU07GM2OCd9XIpn4xQ",
+        authDomain: "lista-de-presenca-95526.firebaseapp.com",
+        projectId: "lista-de-presenca-95526",
+        storageBucket: "lista-de-presenca-95526.firebasestorage.app",
+        messagingSenderId: "879181560997",
+        appId: "1:879181560997:web:484b7aeb865856a7f8a14c"
     };
     
+    // Inicialização do Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'polimata-hub-local';
+    const provider = new GoogleAuthProvider();
 
     // --- ESTADO GLOBAL DA APLICAÇÃO ---
     let currentUser = null;
-    let userPath = ''; // Caminho base seguro: 'artifacts'/appId/'users'/userId
+    let userPath = ''; 
     let profileData = { name: "Viajante", description: "Foco em Evolução Contínua", exp: 0 };
     let skillsData = [];
     let questsData = [];
@@ -372,23 +374,20 @@
 
     const colorOptions = ["grad-blue", "grad-purple", "grad-orange", "grad-emerald", "grad-red", "grad-indigo"];
 
-    // --- GERENCIAMENTO DE AUTENTICAÇÃO ---
-    const initAuth = async () => {
-        try {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
-                await signInAnonymously(auth);
-            }
-        } catch (error) {
-            console.error("Erro na autenticação:", error);
-        }
-    };
-
-    document.getElementById('btn-login-action').onclick = () => {
+    // --- GERENCIAMENTO DE AUTENTICAÇÃO (LOGIN GOOGLE) ---
+    document.getElementById('btn-login-action').onclick = async () => {
         const btn = document.getElementById('btn-login-action');
-        btn.innerHTML = 'Conectando...';
-        initAuth(); // Dispara o fluxo de login
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = 'Conectando ao Google...';
+        
+        try {
+            // Chama o Popup oficial do Google
+            await signInWithPopup(auth, provider);
+        } catch (error) {
+            console.error("Erro no login:", error);
+            btn.innerHTML = originalContent; // Restaura o botão se der erro/cancelar
+            alert("Não foi possível conectar. Verifique se o domínio (ex: seunetlify.app) está autorizado na aba 'Authentication > Settings > Authorized domains' do seu console Firebase.");
+        }
     };
 
     window.handleLogout = () => {
@@ -402,24 +401,31 @@
 
         if (user) {
             currentUser = user;
-            userPath = `artifacts/${appId}/users/${user.uid}`;
+            // Define a raiz dos dados no DB para este usuário específico
+            userPath = `users/${user.uid}`;
             
-            // UI Transition
+            // Transição de UI
             loginScreen.classList.add('hidden');
             appHeader.classList.remove('hidden');
             appMain.classList.remove('hidden');
-            document.getElementById('header-user-name').innerText = user.displayName || "Usuário Anon.";
             
-            loadDataAndSync(); // Inicia Sincronização
+            // Dados do Google
+            document.getElementById('header-user-name').innerText = user.displayName ? user.displayName.split(' ')[0] : "Usuário";
+            if(user.photoURL) {
+                document.getElementById('user-photo').src = user.photoURL;
+                document.getElementById('main-avatar').innerHTML = `<img src="${user.photoURL}" alt="Foto de perfil">`;
+            }
+            
+            loadDataAndSync(); // Inicia Sincronização com o Firestore
         } else {
             currentUser = null;
-            // UI Transition
+            // Transição de UI
             loginScreen.classList.remove('hidden');
-            document.getElementById('btn-login-action').innerHTML = 'Acessar Jornada';
+            document.getElementById('btn-login-action').innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="Google Logo"> Entrar com Google';
             appHeader.classList.add('hidden');
             appMain.classList.add('hidden');
             
-            // Clean listeners
+            // Limpa conexões ativas
             if (unsubProfile) unsubProfile();
             if (unsubSkills) unsubSkills();
             if (unsubQuests) unsubQuests();
@@ -441,7 +447,7 @@
             if (docSnap.exists()) {
                 profileData = docSnap.data();
                 updateProfileUI();
-                renderEditor(); // Atualiza editor se o nó central estiver selecionado
+                renderEditor(); 
             }
         }, (err) => console.error(err));
 
@@ -463,7 +469,7 @@
             // Seed quests iniciais se vazio
             if (questsData.length === 0) {
                 addRandomQuest("Ler 10 páginas de um livro", 50);
-                addRandomQuest("Praticar habilidade por 30 min", 80);
+                addRandomQuest("Praticar um pilar por 30 min", 80);
             } else {
                 updateQuestsUI();
             }
@@ -496,14 +502,17 @@
         }
     };
 
-    window.addRandomQuest = async (title = "Nova Missão Gerada", exp = 30) => {
+    window.addRandomQuest = async (title = "Nova Missão", exp = 30) => {
         if (!currentUser) return;
-        await addDoc(collection(db, userPath, 'quests'), {
-            title: title,
-            exp: exp,
-            done: false,
-            createdAt: Date.now()
-        });
+        const missao = prompt("Descreva sua nova missão ou hábito:");
+        if (missao && missao.trim() !== "") {
+            await addDoc(collection(db, userPath, 'quests'), {
+                title: missao,
+                exp: exp,
+                done: false,
+                createdAt: Date.now()
+            });
+        }
     };
 
     // --- OPERAÇÕES DE PILARES (CRUD) ---
@@ -526,7 +535,6 @@
         }
     };
 
-    // Atualizações que vêm do Editor
     window.updateNodeName = async (val) => {
         if (!currentUser) return;
         if (selectedNode.type === 'main') {
@@ -547,7 +555,6 @@
     };
 
     window.updateSkillLevelUI = (val) => {
-        // Atualiza a UI visualmente antes de salvar no DB
         const label = document.getElementById('editor-skill-label');
         if(label) label.innerText = `Domínio: ${val}%`;
     }
@@ -563,8 +570,6 @@
     window.toggleEdit = () => { isEditing = !isEditing; renderEditor(); };
 
     // --- RENDERIZAÇÃO DA UI ---
-
-    // Navegação entre abas
     window.switchTab = (tabId) => {
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         document.querySelector(`.nav-btn[onclick="switchTab('${tabId}')"]`).classList.add('active');
@@ -576,7 +581,7 @@
         targetView.classList.remove('hidden');
         targetView.classList.add('animate-fade-in');
         
-        if(tabId === 'pillars') renderWheel(); // Re-calcula SVG se ficou invisível
+        if(tabId === 'pillars') renderWheel(); 
     };
 
     function updateProfileUI() {
@@ -597,7 +602,6 @@
             return;
         }
 
-        // Pega os 4 maiores pilares para servir como "Atributos Base"
         const topSkills = [...skillsData].sort((a, b) => b.level - a.level).slice(0, 4);
         
         container.innerHTML = topSkills.map(skill => `
@@ -618,7 +622,6 @@
 
     function updateQuestsUI() {
         const container = document.getElementById('quests-container');
-        // Ordena para colocar as incompletas primeiro
         const sortedQuests = [...questsData].sort((a, b) => (a.done === b.done)? 0 : a.done ? 1 : -1);
 
         container.innerHTML = sortedQuests.map(q => `
@@ -651,7 +654,6 @@
         nodesContainer.innerHTML = '';
         svg.innerHTML = '';
 
-        // 1. Render Pilar Central (Identidade)
         const isMainSelected = selectedNode.type === 'main';
         const mainDiv = document.createElement('div');
         mainDiv.style.cssText = `position: absolute; left: ${centerX}px; top: ${centerY}px; transform: translate(-50%, -50%); z-index: 20; cursor: pointer; transition: all 0.3s;`;
@@ -665,14 +667,12 @@
         `;
         nodesContainer.appendChild(mainDiv);
 
-        // 2. Render Pilares Periféricos
         skillsData.forEach((skill, index) => {
             const angle = (index * (2 * Math.PI)) / skillsData.length - Math.PI / 2;
             const x = centerX + radius * Math.cos(angle);
             const y = centerY + radius * Math.sin(angle);
             const isSelected = selectedNode.id === skill.id;
 
-            // Desenhar Linha
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
             line.setAttribute("x1", centerX); line.setAttribute("y1", centerY);
             line.setAttribute("x2", x); line.setAttribute("y2", y);
@@ -681,7 +681,6 @@
             if (!isSelected) line.setAttribute("stroke-dasharray", "4 4");
             svg.appendChild(line);
 
-            // Desenhar Nó
             const skillDiv = document.createElement('div');
             skillDiv.style.cssText = `position: absolute; left: ${x}px; top: ${y}px; transform: translate(-50%, -50%); z-index: 10; cursor: pointer; transition: all 0.3s;`;
             if (isSelected) skillDiv.style.transform += " scale(1.15)";
@@ -775,7 +774,6 @@
         `).join('');
     }
 
-    // Redimensiona o SVG da roda ao alterar tamanho da janela
     window.addEventListener('resize', () => {
         if (!document.getElementById('view-pillars').classList.contains('hidden')) {
             renderWheel();
