@@ -2,279 +2,395 @@
 <html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polímata Hub - HUD e Avatar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Polímata Hub - Sua Jornada</title>
+    <!-- Fonte amigável e arredondada estilo Duolingo/Indie -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- VARIÁVEIS DE COR E TEMA (HIGH-TECH) --- */
+        /* --- VARIÁVEIS DE TEMA (Atmosfera Indie + iOS) --- */
         :root {
-            --slate-950: #020617;
-            --slate-900: #0f172a;
-            --slate-800: #1e293b;
-            --slate-700: #334155;
-            --slate-400: #94a3b8;
-            --slate-300: #cbd5e1;
-            --indigo-400: #818cf8;
-            --indigo-500: #6366f1;
-            --indigo-600: #4f46e5;
-            --emerald-400: #34d399;
-            --emerald-500: #10b981;
-            --cyan-400: #22d3ee;
-            --cyan-500: #06b6d4;
-            --red-500: #ef4444;
+            /* Cores Base Neutras (Glassmorphism) */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
             
-            /* Efeitos Glassmorphism e Neon */
-            --glass-bg: rgba(15, 23, 42, 0.65);
-            --glass-border: rgba(99, 102, 241, 0.15);
-            --neon-glow: 0 0 15px rgba(34, 211, 238, 0.4);
-            --neon-glow-indigo: 0 0 15px rgba(99, 102, 241, 0.4);
-            --neon-glow-success: 0 0 15px rgba(16, 185, 129, 0.5);
-            --accent: #22d3ee;
+            /* TEMA PADRÃO: Vazio (Hollow Knight - Azul Escuro/Místico) */
+            --bg-gradient-1: #0f172a;
+            --bg-gradient-2: #1e1b4b;
+            --bg-gradient-3: #312e81;
+            --accent: #818cf8;
+            --accent-dark: #4f46e5;
+            --success: #34d399;
+            --success-dark: #059669;
+        }
+
+        body.theme-journey {
+            /* TEMA: Areia (Journey - Dourado/Quente) */
+            --bg-gradient-1: #451a03;
+            --bg-gradient-2: #78350f;
+            --bg-gradient-3: #b45309;
+            --accent: #fbbf24;
+            --accent-dark: #d97706;
+            --success: #34d399;
+            --success-dark: #059669;
+        }
+
+        body.theme-forest {
+            /* TEMA: Floresta (Ori / Duolingo - Verde Vibrante/Místico) */
+            --bg-gradient-1: #064e3b;
+            --bg-gradient-2: #065f46;
+            --bg-gradient-3: #047857;
+            --accent: #a7f3d0;
+            --accent-dark: #10b981;
+            --success: #fcd34d;
+            --success-dark: #f59e0b;
+        }
+
+        body.theme-cloud {
+            /* TEMA: Nuvem (iOS Clean / Light Mode suave) */
+            --bg-gradient-1: #e0f2fe;
+            --bg-gradient-2: #bae6fd;
+            --bg-gradient-3: #7dd3fc;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --accent: #38bdf8;
+            --accent-dark: #0284c7;
+            --success: #34d399;
+            --success-dark: #059669;
         }
 
         /* --- RESET E BASE --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', system-ui, sans-serif; }
 
         body {
-            background-color: var(--slate-950);
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
-            color: #f1f5f9;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            /* Fundo Animado Atmosférico */
+            background: linear-gradient(-45deg, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
+            transition: color 0.5s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .font-mono { font-family: 'Courier New', Courier, monospace; font-weight: bold; letter-spacing: 0.05em; }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .hidden { display: none !important; }
 
-        /* --- SCROLLBAR TECH --- */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--slate-950); }
-        ::-webkit-scrollbar-thumb { background: var(--cyan-500); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--cyan-400); box-shadow: var(--neon-glow); }
+        /* --- SCROLLBAR IOS --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(150, 150, 150, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(150, 150, 150, 0.5); }
 
-        /* --- ANIMAÇÕES GERAIS --- */
-        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        /* --- ANIMAÇÕES (Bouncy & Smooth) --- */
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; opacity: 0; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
         .delay-1 { animation-delay: 0.1s; }
         .delay-2 { animation-delay: 0.2s; }
         .delay-3 { animation-delay: 0.3s; }
 
-        @keyframes scanline {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
-        }
-
-        @keyframes scanVertical {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(300px); }
-        }
-
-        .floating-exp {
-            position: fixed; color: var(--emerald-400); font-size: 1.25rem; font-weight: 800;
-            pointer-events: none; z-index: 1000; text-shadow: var(--neon-glow-success);
-            animation: floatUpAndFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes floatUpAndFade {
-            0% { opacity: 1; transform: translateY(0) scale(0.5); }
-            20% { transform: translateY(-20px) scale(1.2); }
-            100% { opacity: 0; transform: translateY(-80px) scale(1); }
+        /* Flutuação suave (Hollow Knight / Journey vibe) */
+        .float-gentle { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
         /* --- LAYOUT GLOBAL --- */
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
 
-        /* --- OVERLAYS --- */
+        /* --- BOTÕES ESTILO DUOLINGO (Bouncy & Thick) --- */
+        .btn-duo {
+            background: var(--accent);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 var(--accent-dark), 0 15px 20px rgba(0,0,0,0.2);
+            transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            text-transform: uppercase; letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        body.theme-cloud .btn-duo { color: #fff; } /* Garante texto branco no botão mesmo no tema claro */
+        
+        .btn-duo:active {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 var(--accent-dark), 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .btn-duo-success {
+            background: var(--success);
+            box-shadow: 0 6px 0 var(--success-dark), 0 15px 20px rgba(0,0,0,0.2);
+        }
+        .btn-duo-success:active {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 var(--success-dark), 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        /* --- OVERLAYS (Login & Level Up) --- */
         #login-screen {
-            position: fixed; inset: 0; background: radial-gradient(circle at center, var(--slate-900), var(--slate-950));
+            position: fixed; inset: 0; 
+            background: linear-gradient(-45deg, var(--bg-gradient-1), var(--bg-gradient-2));
             display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; transition: opacity 0.5s;
         }
         .login-card {
-            background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
-            padding: 3rem; border-radius: 1.5rem; text-align: center; box-shadow: var(--neon-glow-indigo); max-width: 400px; width: 90%;
+            background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border); padding: 3rem 2rem; border-radius: 32px;
+            text-align: center; box-shadow: var(--glass-shadow); max-width: 400px; width: 90%;
         }
-        .btn-login {
-            background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid var(--cyan-500);
-            padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px;
-            margin: 2rem auto 0; transition: all 0.3s; width: 100%; justify-content: center;
-            box-shadow: inset 0 0 10px rgba(34, 211, 238, 0.1);
-        }
-        .btn-login:hover { background: rgba(34, 211, 238, 0.2); box-shadow: var(--neon-glow); transform: translateY(-2px); }
 
         #level-up-screen {
-            position: fixed; inset: 0; background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(10px);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+            z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.4s;
         }
         #level-up-screen.active { opacity: 1; pointer-events: auto; }
-        .level-up-content { text-align: center; position: relative; display: flex; flex-direction: column; align-items: center; }
-        .tech-ring {
-            width: 250px; height: 250px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            border: 2px dashed var(--cyan-400); border-radius: 50%; opacity: 0.5; animation: spinRing 10s linear infinite; pointer-events: none;
-        }
-        @keyframes spinRing { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
-
-        .level-up-title { font-size: 3rem; font-weight: 900; letter-spacing: 0.2em; color: var(--cyan-400); text-shadow: 0 0 20px var(--cyan-400); margin-bottom: 1rem; }
-        .level-up-number { font-size: 6rem; font-weight: 900; background: linear-gradient(to bottom, #fff, var(--cyan-400)); -webkit-background-clip: text; color: transparent; text-shadow: var(--neon-glow); line-height: 1; margin-bottom: 1rem; }
-
-        /* --- HEADER --- */
-        header { border-bottom: 1px solid var(--glass-border); background: var(--glass-bg); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 50; }
-        .header-content { height: 4.5rem; display: flex; align-items: center; justify-content: space-between; }
-        .brand { display: flex; align-items: center; gap: 0.75rem; }
-        .brand h1 { font-size: 1.25rem; font-weight: 800; background: linear-gradient(to right, var(--cyan-400), var(--indigo-400)); -webkit-background-clip: text; color: transparent; letter-spacing: 0.05em; }
         
-        .nav-tabs { display: flex; gap: 1rem; background: rgba(0,0,0,0.3); padding: 0.3rem; border-radius: 0.75rem; border: 1px solid var(--slate-800); }
-        .nav-btn {
-            background: none; border: none; color: var(--slate-400); font-weight: 600; font-size: 0.9rem;
-            padding: 0.5rem 1.25rem; cursor: pointer; border-radius: 0.5rem; transition: all 0.3s;
+        .level-badge {
+            background: var(--accent); width: 150px; height: 150px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+            box-shadow: 0 10px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.4);
+            border: 6px solid rgba(255,255,255,0.2); transform: scale(0.5); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .nav-btn.active { color: var(--slate-950); background: var(--cyan-400); box-shadow: var(--neon-glow); }
-        .nav-btn:hover:not(.active) { color: var(--cyan-400); }
+        #level-up-screen.active .level-badge { transform: scale(1); }
+        .level-number { font-size: 5rem; font-weight: 900; color: white; line-height: 1; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+        /* --- HEADER (Estilo iOS Segmented Control) --- */
+        header { padding: 1rem 0; position: sticky; top: 0; z-index: 50; }
+        .header-content { 
+            background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border); border-radius: 24px;
+            height: 4.5rem; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem;
+            box-shadow: var(--glass-shadow);
+        }
+        .brand { display: flex; align-items: center; gap: 0.75rem; }
+        .brand h1 { font-size: 1.25rem; font-weight: 900; color: var(--text-main); letter-spacing: -0.5px; }
+        
+        .nav-tabs { 
+            display: flex; gap: 0.5rem; background: rgba(0,0,0,0.1); padding: 6px; border-radius: 20px; 
+            border: 1px solid var(--glass-border);
+        }
+        body.theme-cloud .nav-tabs { background: rgba(0,0,0,0.05); }
+
+        .nav-btn {
+            background: transparent; border: none; color: var(--text-muted); font-weight: 700; font-size: 0.95rem;
+            padding: 8px 20px; cursor: pointer; border-radius: 16px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-btn.active { background: var(--text-main); color: var(--bg-gradient-1); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .nav-btn:hover:not(.active) { color: var(--text-main); }
 
         .user-menu { display: flex; align-items: center; gap: 1rem; }
-        .logout-btn { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: bold; transition: all 0.2s; }
-        .logout-btn:hover { background: #ef4444; color: white; box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
-        #user-photo { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--cyan-400); object-fit: cover; box-shadow: 0 0 10px rgba(34, 211, 238, 0.3); }
+        
+        .btn-icon-soft { 
+            background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: var(--text-main); 
+            width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s; 
+        }
+        body.theme-cloud .btn-icon-soft { background: rgba(0,0,0,0.05); }
+        .btn-icon-soft:hover { transform: scale(1.1); background: var(--accent); color: white; border-color: var(--accent); }
 
-        /* --- COMPONENTES DA ABA PERFIL --- */
-        .view-section { padding-top: 2rem; padding-bottom: 2rem; }
-        .profile-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        @media (min-width: 1024px) { .profile-grid { grid-template-columns: 1fr 2fr; } }
+        #user-photo { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--glass-border); }
+
+        /* --- CARTÕES (Panels) --- */
+        .view-section { padding-top: 1.5rem; padding-bottom: 3rem; }
+        .profile-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 1024px) { .profile-grid { grid-template-columns: 350px 1fr; } }
 
         .panel {
-            background: var(--glass-bg); backdrop-filter: blur(16px); border-radius: 1.5rem;
-            border: 1px solid var(--glass-border); padding: 2rem; position: relative; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-radius: 32px; border: 1px solid var(--glass-border); padding: 2rem; 
+            box-shadow: var(--glass-shadow); position: relative;
         }
 
-        /* Editor de Perfil */
-        .profile-header-actions { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-bottom: 1rem; }
-        .btn-edit-profile {
-            background: rgba(34, 211, 238, 0.1); border: 1px solid rgba(34, 211, 238, 0.3); color: var(--cyan-400);
-            padding: 6px; border-radius: 8px; cursor: pointer; transition: all 0.2s;
+        /* --- ABA PERFIL (Editor e Avatar) --- */
+        .profile-header-actions { display: flex; justify-content: flex-end; width: 100%; margin-bottom: 1rem; }
+        
+        .avatar-container { margin-bottom: 1rem; display: flex; justify-content: center; }
+        .avatar { 
+            width: 8rem; height: 8rem; border-radius: 36px; /* Squircle feel */
+            border: 4px solid var(--glass-border); background: rgba(0,0,0,0.2); 
+            display: flex; align-items: center; justify-content: center; overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s ease;
         }
-        .btn-edit-profile:hover { background: var(--cyan-400); color: var(--slate-950); box-shadow: var(--neon-glow); }
-
-        .avatar-container { margin-bottom: 1rem; position: relative; display: flex; justify-content: center; }
-        .avatar { width: 6rem; height: 6rem; border-radius: 50%; border: 3px solid var(--cyan-500); background: var(--slate-900); display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: var(--neon-glow); }
+        body.theme-cloud .avatar { background: rgba(255,255,255,0.5); }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-        .input-tech {
-            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--slate-700); border-radius: 6px;
-            padding: 10px; color: var(--cyan-400); font-family: monospace; transition: 0.3s; margin-bottom: 10px;
+        .input-ios {
+            width: 100%; background: rgba(0,0,0,0.1); border: 2px solid transparent; border-radius: 16px;
+            padding: 14px 16px; color: var(--text-main); font-size: 1rem; font-weight: 600; transition: 0.3s; margin-bottom: 12px;
         }
-        .input-tech:focus { outline: none; border-color: var(--cyan-400); box-shadow: inset 0 0 5px rgba(34, 211, 238, 0.2); }
+        body.theme-cloud .input-ios { background: rgba(255,255,255,0.5); color: #0f172a; }
+        .input-ios::placeholder { color: var(--text-muted); }
+        .input-ios:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.15); }
 
-        /* Espaço do Avatar 3D */
+        /* Espaço do Avatar 3D (Estilo Pedestal Journey) */
         .avatar-body-space {
-            width: 100%; height: 280px; background: rgba(0,0,0,0.4); border: 1px solid var(--slate-800);
-            border-radius: 12px; margin-top: 1rem; margin-bottom: 1rem; position: relative; overflow: hidden;
+            width: 100%; height: 260px; background: radial-gradient(circle at bottom, rgba(255,255,255,0.1), transparent);
+            border-radius: 24px; margin: 1.5rem 0; position: relative; overflow: hidden;
             display: flex; align-items: center; justify-content: center; flex-direction: column;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
-        .avatar-body-space::before {
-            content: ''; position: absolute; left: 0; right: 0; height: 2px; background: var(--cyan-400);
-            opacity: 0.5; box-shadow: 0 0 10px var(--cyan-400); animation: scanVertical 3s linear infinite; pointer-events: none;
+        .pedestal-light {
+            position: absolute; bottom: -20px; width: 150px; height: 40px; border-radius: 50%;
+            background: var(--accent); filter: blur(20px); opacity: 0.5;
         }
-        .avatar-silhouette { height: 80%; opacity: 0.15; filter: drop-shadow(0 0 5px var(--cyan-400)); color: var(--cyan-400); }
+        .avatar-silhouette { height: 75%; opacity: 0.4; color: var(--text-main); z-index: 2; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2)); }
         .avatar-placeholder-text {
-            position: absolute; bottom: 15px; font-family: monospace; font-size: 0.7rem; color: var(--cyan-500);
-            letter-spacing: 2px; background: rgba(6, 182, 212, 0.1); padding: 4px 10px; border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 4px;
+            position: absolute; top: 15px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted);
+            letter-spacing: 1px; text-transform: uppercase; background: var(--glass-bg); padding: 6px 12px; border-radius: 12px;
         }
 
-        .level-box { width: 100%; background: rgba(0, 0, 0, 0.4); padding: 1.25rem; border-radius: 1rem; border: 1px solid var(--slate-800); }
-        .progress-track { width: 100%; background: var(--slate-900); border-radius: 9999px; height: 0.75rem; position: relative; overflow: hidden; margin: 0.75rem 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(90deg, var(--indigo-600), var(--cyan-400)); transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); border-radius: 9999px; box-shadow: var(--neon-glow); }
-        .progress-fill::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 50%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: scanline 2s infinite linear; }
+        /* Barra de Progresso Duolingo Style */
+        .progress-wrapper { background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 24px; }
+        body.theme-cloud .progress-wrapper { background: rgba(255,255,255,0.4); }
+        
+        .progress-track { 
+            width: 100%; background: rgba(0,0,0,0.3); border-radius: 9999px; height: 1.25rem; 
+            position: relative; overflow: hidden; margin: 0.75rem 0; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); 
+        }
+        body.theme-cloud .progress-track { background: rgba(0,0,0,0.1); }
+        
+        .progress-fill { 
+            position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); 
+            border-radius: 9999px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2); /* Brilho interno Duo style */
+        }
+        .progress-fill::after { 
+            content: ''; position: absolute; top: 4px; left: 10px; right: 10px; height: 4px; 
+            background: rgba(255,255,255,0.3); border-radius: 4px; 
+        }
 
-        /* Stats & Quests */
-        .stats-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-        .stat-item { background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 0.75rem; border: 1px solid transparent; transition: all 0.3s; }
-        .stat-item:hover { border-color: rgba(34, 211, 238, 0.3); background: rgba(34, 211, 238, 0.05); transform: translateY(-2px); }
-        .stat-track { width: 100%; background: var(--slate-900); border-radius: 9999px; height: 6px; overflow: hidden; margin-top: 0.5rem;}
-        .stat-fill { height: 100%; border-radius: 9999px; transition: width 1s ease-out; box-shadow: 0 0 8px currentColor; }
-
+        /* --- HÁBITOS E MISSÕES --- */
+        .section-title { font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px; }
+        
         .quest-item {
-            display: flex; align-items: center; justify-content: space-between; padding: 1.25rem; border-radius: 1rem;
-            background: rgba(0,0,0,0.3); border: 1px solid var(--slate-800); cursor: pointer; transition: all 0.3s; margin-bottom: 0.75rem;
-            position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-radius: 20px;
+            background: rgba(0,0,0,0.15); border: 2px solid transparent; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 12px; box-shadow: 0 4px 0 rgba(0,0,0,0.1);
         }
-        .quest-item:hover { border-color: var(--cyan-500); background: rgba(34, 211, 238, 0.05); transform: translateX(5px); }
-        .quest-item.completed { border-color: var(--emerald-500); background: rgba(16, 185, 129, 0.05); }
-        .quest-item.completed::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; background: var(--emerald-500); box-shadow: var(--neon-glow-success); }
+        body.theme-cloud .quest-item { background: rgba(255,255,255,0.5); box-shadow: 0 4px 0 rgba(0,0,0,0.05); }
         
-        .checkbox { width: 1.5rem; height: 1.5rem; border-radius: 4px; border: 2px solid var(--slate-600); display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-        .quest-item:hover .checkbox { border-color: var(--cyan-400); }
-        .quest-item.completed .checkbox { border-color: var(--emerald-500); background: rgba(16, 185, 129, 0.2); transform: rotate(10deg); }
+        .quest-item:active { transform: translateY(4px); box-shadow: 0 0px 0 rgba(0,0,0,0); }
         
-        .quest-reward { color: var(--cyan-400); font-weight: 700; font-size: 0.875rem; background: rgba(34, 211, 238, 0.1); padding: 0.3rem 0.8rem; border-radius: 6px; border: 1px solid rgba(34, 211, 238, 0.2); }
-
-        .btn-hud { background: rgba(34, 211, 238, 0.1); border: 1px solid var(--cyan-500); color: var(--cyan-400); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s; box-shadow: inset 0 0 10px rgba(34, 211, 238, 0.2); }
-        .btn-hud:hover { background: var(--cyan-500); color: var(--slate-950); box-shadow: var(--neon-glow); }
-
-        #permission-error {
-            background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #fca5a5;
-            padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; text-align: center;
-            font-family: monospace; display: none;
+        .quest-item.completed { 
+            background: var(--glass-bg); border-color: var(--success); opacity: 0.8;
+            box-shadow: 0 4px 0 var(--success-dark);
         }
+        .quest-item.completed:active { box-shadow: 0 0px 0 var(--success-dark); }
+        
+        .checkbox-bouncy { 
+            width: 28px; height: 28px; border-radius: 10px; border: 3px solid var(--text-muted); 
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            background: rgba(0,0,0,0.1);
+        }
+        .quest-item:hover .checkbox-bouncy { border-color: var(--accent); transform: scale(1.1); }
+        .quest-item.completed .checkbox-bouncy { 
+            background: var(--success); border-color: var(--success); transform: scale(1.1) rotate(10deg); 
+        }
+        
+        .quest-reward { 
+            color: var(--accent); font-weight: 800; font-size: 0.9rem; 
+            background: var(--glass-bg); padding: 4px 12px; border-radius: 12px; 
+        }
+        body.theme-cloud .quest-reward { background: rgba(0,0,0,0.05); color: var(--accent-dark); }
+        .quest-item.completed .quest-reward { color: var(--success); }
 
-        /* --- ABA PILARES --- */
-        .pillars-grid { display: flex; flex-direction: column; gap: 2rem; }
-        @media (min-width: 1024px) { .pillars-grid { flex-direction: row; } }
+        /* Stats (Atributos) */
+        .stats-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        .stat-item { background: rgba(0,0,0,0.15); padding: 1.25rem; border-radius: 20px; transition: all 0.2s; }
+        body.theme-cloud .stat-item { background: rgba(255,255,255,0.5); }
+        .stat-item:hover { transform: translateY(-4px); background: var(--glass-bg); }
 
+        /* --- ABA PILARES (Constelação) --- */
         #wheel-container {
-            flex: 1; background: var(--glass-bg); backdrop-filter: blur(16px); border-radius: 1.5rem; border: 1px solid var(--glass-border);
-            padding: 2rem; position: relative; min-height: 550px; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+            flex: 1; background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-radius: 32px; border: 1px solid var(--glass-border); padding: 2rem; position: relative; min-height: 600px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;
+            box-shadow: var(--glass-shadow);
         }
         #polymath-wheel { width: 100%; height: 100%; position: relative; min-height: 400px; }
         #wheel-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
-        .sidebar { width: 100%; display: flex; flex-direction: column; gap: 1.5rem; }
-        @media (min-width: 1024px) { .sidebar { width: 384px; } }
-
-        .btn-add {
-            position: absolute; bottom: 1.5rem; right: 1.5rem; background: var(--indigo-600); color: white;
-            border: 1px solid var(--indigo-400); padding: 0.75rem 1.25rem; border-radius: 9999px; cursor: pointer;
-            display: flex; align-items: center; gap: 0.5rem; font-weight: bold; transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8rem;
+        .btn-floating-add {
+            position: absolute; bottom: 2rem; right: 2rem; z-index: 30;
         }
-        .btn-add:hover { transform: scale(1.05); background: var(--cyan-400); border-color: white; box-shadow: 0 0 20px rgba(34, 211, 238, 0.6); color: var(--slate-950); }
 
-        .skill-item { padding: 1rem; border-radius: 1rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; margin-bottom: 0.5rem; background: rgba(0,0,0,0.3); }
-        .skill-item:hover { border-color: var(--slate-700); background: rgba(255,255,255,0.02); }
-        .skill-item.active { background: rgba(34, 211, 238, 0.1); border-color: var(--cyan-500); box-shadow: inset 0 0 10px rgba(34, 211, 238, 0.1); }
-        .dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
+        .skill-list-item { 
+            padding: 1.25rem; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; 
+            cursor: pointer; transition: all 0.2s; margin-bottom: 0.75rem; background: rgba(0,0,0,0.15); 
+        }
+        body.theme-cloud .skill-list-item { background: rgba(255,255,255,0.5); }
+        .skill-list-item:hover { transform: translateX(4px); background: var(--glass-bg); }
+        .skill-list-item.active { border: 2px solid var(--accent); background: var(--glass-bg); }
+
+        /* --- PAINEL DE TEMAS (iOS Slide Sheet) --- */
+        #theme-panel {
+            position: fixed; top: 0; right: -350px; width: 350px; height: 100vh;
+            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border-left: 1px solid rgba(255,255,255,0.1);
+            z-index: 100; padding: 2rem; transition: right 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex; flex-direction: column; gap: 1rem; color: white;
+        }
+        body.theme-cloud #theme-panel { background: rgba(255,255,255,0.85); color: #0f172a; border-left: 1px solid rgba(0,0,0,0.1); }
         
-        .btn-icon { background: none; border: none; color: var(--slate-500); cursor: pointer; padding: 6px; border-radius: 6px; transition: all 0.2s; }
-        .btn-icon:hover { color: #f87171; background: rgba(248, 113, 113, 0.1); transform: scale(1.1); }
+        #theme-panel.open { right: 0; }
+        .theme-option {
+            display: flex; align-items: center; gap: 1rem; padding: 1.25rem; border-radius: 20px;
+            cursor: pointer; border: 2px solid transparent; background: rgba(255,255,255,0.05); transition: all 0.2s;
+        }
+        body.theme-cloud .theme-option { background: rgba(0,0,0,0.05); }
+        .theme-option:hover { transform: scale(1.02); }
+        .theme-option.active { border-color: var(--accent); background: rgba(255,255,255,0.1); }
+        body.theme-cloud .theme-option.active { background: rgba(0,0,0,0.1); }
+        
+        .color-preview { width: 32px; height: 32px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-        .grad-blue { background: linear-gradient(135deg, #3b82f6, #22d3ee); color: #3b82f6; }
-        .grad-purple { background: linear-gradient(135deg, #a855f7, #f472b6); color: #a855f7; }
-        .grad-orange { background: linear-gradient(135deg, #f97316, #fbbf24); color: #f97316; }
-        .grad-emerald { background: linear-gradient(135deg, #10b981, #34d399); color: #10b981; }
-        .grad-red { background: linear-gradient(135deg, #ef4444, #f87171); color: #ef4444; }
-        .grad-indigo { background: linear-gradient(135deg, #6366f1, #818cf8); color: #6366f1; }
-        .icon-svg { display: inline-block; width: 20px; height: 20px; vertical-align: middle; }
+        /* Cores dos pilares */
+        .grad-blue { background: #3b82f6; }
+        .grad-purple { background: #a855f7; }
+        .grad-orange { background: #f97316; }
+        .grad-emerald { background: #10b981; }
+        .grad-red { background: #ef4444; }
+        .grad-indigo { background: #6366f1; }
+        
+        .icon-svg { display: inline-block; width: 24px; height: 24px; vertical-align: middle; }
     </style>
 </head>
-<body>
+<body class="theme-journey"> <!-- Tema padrão amigável (Areia/Journey) -->
 
     <!-- Overlay de Login -->
     <div id="login-screen">
         <div class="login-card animate-slide-up">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan-400)" stroke-width="2" style="width: 48px; height: 48px; margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(34,211,238,0.5));"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(to right, var(--cyan-400), var(--indigo-400)); -webkit-background-clip: text; color: transparent; font-weight: 900; letter-spacing: 0.05em;">POLÍMATA HUB</h1>
-            <p style="color: var(--slate-400); font-family: monospace; margin-bottom: 2rem;">SISTEMA_DE_PROGRESSÃO_PESSOAL_v2.0</p>
-            <button id="btn-login-action" class="btn-login">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="Google Logo">
-                <span style="font-family: monospace; letter-spacing: 1px;">INICIAR SESSÃO COM GOOGLE</span>
+            <div style="background: white; width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: rotate(-10deg);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 40px; height: 40px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            </div>
+            <h1 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; color: var(--text-main);">Polímata Hub</h1>
+            <p style="color: var(--text-muted); font-size: 1rem; font-weight: 600; margin-bottom: 2.5rem;">Sua jornada de evolução pessoal.</p>
+            
+            <button id="btn-login-action" class="btn-duo" style="width: 100%;">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="24" alt="Google" style="background: white; border-radius: 50%; padding: 2px;">
+                Continuar com Google
             </button>
         </div>
     </div>
@@ -282,36 +398,64 @@
     <!-- Animação de Level Up -->
     <div id="level-up-screen">
         <div class="level-up-content">
-            <div class="tech-ring"></div>
-            <h1 class="level-up-title">LEVEL UP</h1>
-            <p id="new-level-display" class="level-up-number font-mono">2</p>
-            <span style="color: var(--slate-300); font-family: monospace; letter-spacing: 2px; background: rgba(0,0,0,0.5); padding: 4px 12px; border-radius: 4px; border: 1px solid var(--slate-700);">SISTEMAS ATUALIZADOS</span>
-            <button onclick="closeLevelUp()" style="margin-top: 2rem; background: transparent; border: 1px solid var(--cyan-400); color: var(--cyan-400); padding: 8px 24px; font-family: monospace; cursor: pointer; transition: 0.3s; z-index: 10;">CONTINUAR</button>
+            <div class="level-badge">
+                <span style="font-size: 1rem; font-weight: 800; color: rgba(255,255,255,0.8); text-transform: uppercase;">Nível</span>
+                <div id="new-level-display" class="level-number">2</div>
+            </div>
+            <h1 style="font-size: 2.5rem; font-weight: 900; color: white; margin-top: 1.5rem; text-shadow: 0 4px 10px rgba(0,0,0,0.3);">Evolução Concluída!</h1>
+            <button onclick="closeLevelUp()" class="btn-duo" style="margin-top: 2rem; background: white; color: var(--accent-dark); box-shadow: 0 6px 0 rgba(255,255,255,0.7);">
+                Incrível!
+            </button>
+        </div>
+    </div>
+
+    <!-- Painel Lateral de Temas -->
+    <div id="theme-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 800;">Atmosfera</h3>
+            <button onclick="toggleThemePanel()" class="btn-icon-soft" style="border: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        
+        <div class="theme-option" onclick="setTheme('', this)">
+            <div class="color-preview" style="background: #1e1b4b;"></div>
+            <span style="font-weight: 700; font-size: 1rem;">O Vazio (Hollow)</span>
+        </div>
+        <div class="theme-option active" onclick="setTheme('theme-journey', this)">
+            <div class="color-preview" style="background: #b45309;"></div>
+            <span style="font-weight: 700; font-size: 1rem;">A Jornada (Areia)</span>
+        </div>
+        <div class="theme-option" onclick="setTheme('theme-forest', this)">
+            <div class="color-preview" style="background: #047857;"></div>
+            <span style="font-weight: 700; font-size: 1rem;">A Floresta (Ori)</span>
+        </div>
+        <div class="theme-option" onclick="setTheme('theme-cloud', this)">
+            <div class="color-preview" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div>
+            <span style="font-weight: 700; font-size: 1rem;">A Nuvem (Light)</span>
         </div>
     </div>
 
     <!-- Cabeçalho Principal -->
-    <header id="main-header" class="hidden">
-        <div class="container header-content">
+    <header id="main-header" class="hidden container">
+        <div class="header-content">
             <div class="brand">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-svg" style="color: var(--cyan-400); width: 28px; height: 28px; filter: drop-shadow(0 0 5px rgba(34,211,238,0.5));"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                <h1>POLÍMATA_HUB</h1>
+                <div style="background: var(--text-main); color: var(--bg-gradient-1); width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; transform: rotate(-10deg);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" style="width: 20px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path></svg>
+                </div>
+                <h1>Hub</h1>
             </div>
             
             <div class="nav-tabs">
-                <button class="nav-btn active font-mono" onclick="switchTab('profile')">RESUMO</button>
-                <button class="nav-btn font-mono" onclick="switchTab('pillars')">PILARES</button>
+                <button class="nav-btn active" onclick="switchTab('profile')">Meu Perfil</button>
+                <button class="nav-btn" onclick="switchTab('pillars')">Habilidades</button>
             </div>
 
             <div class="user-menu">
-                <div style="display: flex; flex-direction: column; text-align: right;">
-                    <span id="header-user-name" style="font-weight: 700; font-size: 0.85rem; color: var(--cyan-400); letter-spacing: 1px;"></span>
-                    <span style="font-size: 0.65rem; color: var(--emerald-400); font-family: monospace;">STATUS: ONLINE</span>
-                </div>
-                <img id="user-photo" src="" alt="Foto">
-                <button class="logout-btn" onclick="handleLogout()" title="Desconectar">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <button onclick="toggleThemePanel()" class="btn-icon-soft" title="Mudar Atmosfera">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
                 </button>
+                <img id="user-photo" src="" alt="Foto" onclick="handleLogout()" style="cursor: pointer;" title="Clique para Sair">
             </div>
         </div>
     </header>
@@ -319,44 +463,46 @@
     <!-- Área Principal -->
     <main id="app-main" class="container hidden">
 
-        <div id="permission-error">
-            ⚠️ <strong>ERRO DE PERMISSÃO (Firestore):</strong> Acesso negado. Configure as Regras do Firestore para permitir leitura/escrita.
+        <div id="permission-error" style="background: rgba(239, 68, 68, 0.9); color: white; padding: 1rem; border-radius: 16px; margin-top: 1rem; font-weight: 700; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+            ⚠️ Erro de Banco de Dados. Verifique as regras de leitura/escrita no Firestore.
         </div>
         
         <!-- ================= ABA DE PERFIL ================= -->
         <section id="view-profile" class="view-section animate-fade-in">
             <div class="profile-grid">
                 
-                <!-- Coluna Esquerda: Cartão do Personagem com Módulo Avatar -->
+                <!-- Coluna Esquerda: Cartão do Personagem -->
                 <div class="col-left delay-1 animate-slide-up">
-                    <div class="panel profile-panel" id="main-profile-panel">
-                        <!-- O conteúdo deste painel é gerado via JS para suportar o modo Edição -->
+                    <div class="panel" id="main-profile-panel" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <!-- Conteúdo injetado via JS (Editor/Visualização) -->
                     </div>
                 </div>
 
-                <!-- Coluna Direita: Atributos e Missões -->
-                <div class="col-right" style="display: flex; flex-direction: column; gap: 2rem;">
+                <!-- Coluna Direita: Missões e Atributos -->
+                <div class="col-right" style="display: flex; flex-direction: column; gap: 1.5rem;">
                     
                     <div class="panel delay-2 animate-slide-up">
-                        <h3 style="font-size: 0.85rem; font-weight: bold; font-family: monospace; letter-spacing: 2px; color: var(--slate-400); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                            ATRIBUTOS BASE (TOP)
-                        </h3>
-                        <div id="stats-container" class="stats-grid">
-                            <p style="color: var(--slate-500); grid-column: span 2; text-align: center; font-size: 0.85rem; font-family: monospace;">Aguardando dados...</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3 class="section-title" style="margin: 0;">
+                                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Hábitos Diários
+                            </h3>
+                            <button onclick="addRandomQuest()" class="btn-icon-soft" title="Novo Hábito">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </button>
+                        </div>
+                        <div id="quests-container">
+                            <p style="color: var(--text-muted); text-align: center; font-weight: 600;">Carregando sua jornada...</p>
                         </div>
                     </div>
 
-                    <div class="panel delay-3 animate-slide-up" style="flex: 1;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                            <h3 style="font-size: 0.85rem; font-weight: bold; font-family: monospace; letter-spacing: 2px; color: var(--slate-400); display: flex; align-items: center; gap: 0.5rem;">
-                                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-                                PROTOCOLOS ATIVOS
-                            </h3>
-                            <button onclick="addRandomQuest()" class="btn-hud">+ ADICIONAR</button>
-                        </div>
-                        <div id="quests-container">
-                            <p style="color: var(--slate-500); text-align: center; font-size: 0.85rem; font-family: monospace;">Sincronizando protocolos...</p>
+                    <div class="panel delay-3 animate-slide-up">
+                        <h3 class="section-title">
+                            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            Principais Habilidades
+                        </h3>
+                        <div id="stats-container" class="stats-grid">
+                            <p style="color: var(--text-muted); grid-column: span 2; text-align: center; font-weight: 600;">Explore a aba de habilidades para crescer.</p>
                         </div>
                     </div>
 
@@ -364,39 +510,34 @@
             </div>
         </section>
 
-        <!-- ================= ABA DE PILARES ================= -->
+        <!-- ================= ABA DE PILARES (Constelação) ================= -->
         <section id="view-pillars" class="view-section hidden">
-            <div class="pillars-grid">
+            <div class="profile-grid"> <!-- Usando o mesmo grid para layout consistente -->
                 
-                <div id="wheel-container" class="delay-1 animate-slide-up">
-                    <h2 style="position: absolute; top: 1.5rem; left: 1.5rem; font-size: 1rem; font-weight: bold; font-family: monospace; letter-spacing: 1px; color: var(--slate-300); display: flex; align-items: center; gap: 0.5rem;">
-                        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="var(--cyan-400)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-                        REDE NEURAL DE HABILIDADES
+                <div id="wheel-container" class="delay-1 animate-slide-up" style="grid-column: span 1; @media(min-width:1024px){grid-column: 2 / 3; order: 2;}">
+                    <h2 style="position: absolute; top: 2rem; left: 2rem; font-size: 1.25rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; z-index: 10;">
+                        Árvore de Habilidades
                     </h2>
                     
-                    <div id="polymath-wheel">
+                    <div id="polymath-wheel" class="float-gentle">
                         <svg id="wheel-svg"></svg>
                         <div id="nodes-container"></div>
                     </div>
 
-                    <button onclick="handleAddSkill()" class="btn-add">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="icon-svg"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        EXPANDIR REDE
+                    <button onclick="handleAddSkill()" class="btn-duo btn-floating-add">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="icon-svg" style="margin-right:-4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Novo Pilar
                     </button>
                 </div>
 
-                <div class="sidebar">
+                <div class="sidebar" style="grid-column: span 1; @media(min-width:1024px){grid-column: 1 / 2; order: 1;}">
                     <div id="editor-card" class="panel delay-2 animate-slide-up" style="padding: 1.5rem;">
                         <!-- Editor injetado via JS -->
                     </div>
 
                     <div class="panel delay-3 animate-slide-up" style="flex: 1; padding: 1.5rem; display: flex; flex-direction: column;">
-                        <h3 style="font-size: 0.8rem; font-weight: bold; font-family: monospace; letter-spacing: 1px; color: var(--slate-400); margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
-                            <span style="display:flex; align-items:center; gap: 0.5rem;">
-                                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M8 7h6"></path><path d="M8 11h8"></path></svg>
-                                BANCO DE DADOS
-                            </span>
-                            <span style="background: var(--slate-800); padding: 2px 8px; border-radius: 4px; color: var(--cyan-400);" id="skill-count">0</span>
+                        <h3 class="section-title" style="font-size: 1rem; margin-bottom: 1rem;">
+                            Seus Pilares (<span id="skill-count">0</span>)
                         </h3>
                         <div id="skills-list" style="overflow-y: auto; max-height: 400px; padding-right: 0.5rem;">
                             <!-- Lista injetada via JS -->
@@ -409,12 +550,10 @@
     </main>
 
 <script type="module">
-    // IMPORTAÇÕES OFICIAIS DO FIREBASE
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    // --- SUAS CREDENCIAIS REAIS DO FIREBASE ---
     const firebaseConfig = {
         apiKey: "AIzaSyBFxnca6Q1AZBrwdpU07GM2OCd9XIpn4xQ",
         authDomain: "lista-de-presenca-95526.firebaseapp.com",
@@ -432,13 +571,13 @@
     // --- ESTADO GLOBAL ---
     let currentUser = null;
     let userPath = ''; 
-    let profileData = { name: "Viajante", description: "Foco em Evolução Contínua", exp: 0, customPhotoURL: "" };
+    let profileData = { name: "Aventureiro", description: "Iniciando a jornada", exp: 0, customPhotoURL: "", theme: "theme-journey" };
     let skillsData = [];
     let questsData = [];
     
     let selectedNode = { type: 'main', id: null };
     let isEditingPillar = false;
-    let isEditingProfile = false; // Controle da edição do Perfil Principal
+    let isEditingProfile = false; 
     let unsubProfile, unsubSkills, unsubQuests;
     let currentLevelState = 1;
 
@@ -452,19 +591,33 @@
         }
     }
 
+    // --- CONTROLE DE TEMA ---
+    window.toggleThemePanel = () => { document.getElementById('theme-panel').classList.toggle('open'); }
+
+    window.setTheme = async (themeClass, element) => {
+        document.body.className = themeClass;
+        document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
+        if(element) element.classList.add('active');
+        
+        if (currentUser) {
+            profileData.theme = themeClass;
+            await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: themeClass }).catch(handleFirestoreError);
+        }
+        if (!document.getElementById('view-pillars').classList.contains('hidden')) renderWheel();
+    }
+
     // --- AUTENTICAÇÃO ---
     document.getElementById('btn-login-action').onclick = async () => {
         const btn = document.getElementById('btn-login-action');
-        btn.innerHTML = '<span style="font-family: monospace;">ESTABELECENDO CONEXÃO...</span>';
+        btn.innerHTML = 'Conectando...';
         try {
             await signInWithPopup(auth, provider);
         } catch (error) {
-            console.error("Erro no login:", error);
-            btn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"><span style="font-family: monospace; letter-spacing: 1px;">INICIAR SESSÃO COM GOOGLE</span>';
+            btn.innerHTML = 'Continuar com Google';
         }
     };
 
-    window.handleLogout = () => { if(confirm("Encerrar sessão no HUD?")) signOut(auth); };
+    window.handleLogout = () => { if(confirm("Deseja pausar sua jornada e sair?")) signOut(auth); };
 
     onAuthStateChanged(auth, (user) => {
         const loginScreen = document.getElementById('login-screen');
@@ -513,8 +666,8 @@
 
     function createFloatingEXP(x, y, amount) {
         const expEl = document.createElement('div');
-        expEl.className = 'floating-exp font-mono';
-        expEl.innerText = `+${amount} EXP`;
+        expEl.className = 'floating-exp';
+        expEl.innerText = `+${amount} XP`;
         expEl.style.left = `${x}px`;
         expEl.style.top = `${y}px`;
         document.body.appendChild(expEl);
@@ -534,6 +687,13 @@
             } else {
                 const initialData = profileSnap.data();
                 currentLevelState = getLevelInfo(initialData.exp || 0).level;
+                if(initialData.theme) {
+                    profileData.theme = initialData.theme;
+                    document.body.className = initialData.theme;
+                    document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
+                    const activeBtn = document.querySelector(`.theme-option[onclick*="${initialData.theme}"]`);
+                    if(activeBtn) activeBtn.classList.add('active');
+                }
             }
             
             unsubProfile = onSnapshot(profileRef, (docSnap) => {
@@ -545,8 +705,16 @@
                         triggerLevelUpAnimation(newLevelInfo.level);
                         currentLevelState = newLevelInfo.level;
                     }
-                    updateProfileUI(); // Atualiza a aba principal (Nome, Foto, Avatar)
-                    renderEditor();    // Atualiza aba pilares se necessário
+                    
+                    if(profileData.theme && document.body.className !== profileData.theme) {
+                        document.body.className = profileData.theme;
+                        document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
+                        const activeBtn = document.querySelector(`.theme-option[onclick*="${profileData.theme}"]`);
+                        if(activeBtn) activeBtn.classList.add('active');
+                    }
+
+                    updateProfileUI(); 
+                    renderEditor();    
                 }
             }, handleFirestoreError);
 
@@ -581,15 +749,15 @@
 
     window.addRandomQuest = async () => {
         if (!currentUser) return;
-        const missao = prompt("INSIRA O NOME DO NOVO PROTOCOLO:");
+        const missao = prompt("Que novo hábito você quer cultivar?");
         if (missao && missao.trim() !== "") {
             await addDoc(collection(db, userPath, 'quests'), {
-                title: missao.toUpperCase(), exp: 30, done: false, createdAt: Date.now()
+                title: missao, exp: 30, done: false, createdAt: Date.now()
             }).catch(handleFirestoreError);
         }
     };
 
-    // --- FUNÇÕES DE EDIÇÃO DE PERFIL PRINCIPAL ---
+    // --- EDIÇÃO DE PERFIL PRINCIPAL ---
     window.toggleEditProfileMode = () => {
         isEditingProfile = !isEditingProfile;
         updateProfileUI();
@@ -602,9 +770,7 @@
         const newPhoto = document.getElementById('input-profile-photo').value;
 
         await updateDoc(doc(db, userPath, 'profile', 'main'), {
-            name: newName,
-            description: newDesc,
-            customPhotoURL: newPhoto
+            name: newName, description: newDesc, customPhotoURL: newPhoto
         }).catch(handleFirestoreError);
         
         isEditingProfile = false;
@@ -618,76 +784,65 @@
         const panel = document.getElementById('main-profile-panel');
         const stats = getLevelInfo(profileData.exp || 0);
         
-        // Decide qual foto usar: a customizada pelo usuário ou a padrão do Google
         const displayPhotoURL = (profileData.customPhotoURL && profileData.customPhotoURL.trim() !== "") 
-                                ? profileData.customPhotoURL 
-                                : currentUser.photoURL;
+                                ? profileData.customPhotoURL : currentUser.photoURL;
 
-        // Atualiza a pequena foto no header do site
-        document.getElementById('header-user-name').innerText = (profileData.name || "USUÁRIO").split(' ')[0].toUpperCase();
         if(displayPhotoURL) document.getElementById('user-photo').src = displayPhotoURL;
 
         let html = `
             <div class="profile-header-actions">
-                <span style="font-family: monospace; color: var(--slate-500); font-size: 0.75rem; letter-spacing: 2px;">IDENTIDADE_01</span>
-                <button onclick="toggleEditProfileMode()" class="btn-edit-profile" title="Editar Perfil">
-                    ${isEditingProfile ? 'CANCELAR' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>'}
+                <button onclick="toggleEditProfileMode()" class="btn-icon-soft" title="Editar Perfil">
+                    ${isEditingProfile ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>'}
                 </button>
             </div>
         `;
 
         if (isEditingProfile) {
-            // MODO DE EDIÇÃO
             html += `
-                <div class="animate-fade-in" style="width: 100%; text-align: left;">
-                    <label style="font-size: 0.75rem; color: var(--cyan-500); font-family: monospace;">NOME DE OPERAÇÃO:</label>
-                    <input type="text" id="input-profile-name" class="input-tech" value="${profileData.name || ''}" placeholder="Seu Nome">
+                <div class="animate-fade-in" style="width: 100%; text-align: left; padding: 0 1rem;">
+                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; display: block;">Como quer ser chamado?</label>
+                    <input type="text" id="input-profile-name" class="input-ios" value="${profileData.name || ''}" placeholder="Seu Nome">
                     
-                    <label style="font-size: 0.75rem; color: var(--cyan-500); font-family: monospace;">DIRETRIZ / TÍTULO:</label>
-                    <input type="text" id="input-profile-desc" class="input-tech" value="${profileData.description || ''}" placeholder="Ex: Explorador Digital">
+                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; display: block;">Qual o seu título/foco?</label>
+                    <input type="text" id="input-profile-desc" class="input-ios" value="${profileData.description || ''}" placeholder="Ex: Explorador Digital">
                     
-                    <label style="font-size: 0.75rem; color: var(--cyan-500); font-family: monospace;">URL DA FOTO DE PERFIL (OPCIONAL):</label>
-                    <input type="text" id="input-profile-photo" class="input-tech" value="${profileData.customPhotoURL || ''}" placeholder="https://link-da-imagem.com/foto.jpg">
+                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; display: block;">URL da Foto (Opcional):</label>
+                    <input type="text" id="input-profile-photo" class="input-ios" value="${profileData.customPhotoURL || ''}" placeholder="https://link-da-imagem.com/foto.jpg">
                     
-                    <button onclick="saveProfileData()" class="btn-hud" style="width: 100%; margin-top: 1rem;">SALVAR DADOS BIOMÉTRICOS</button>
+                    <button onclick="saveProfileData()" class="btn-duo" style="width: 100%; margin-top: 1.5rem;">Salvar Perfil</button>
                 </div>
             `;
         } else {
-            // MODO DE VISUALIZAÇÃO
             html += `
                 <div class="animate-fade-in" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-                    <div class="avatar-container">
+                    <div class="avatar-container float-gentle">
                         <div class="avatar">
-                            ${displayPhotoURL ? `<img src="${displayPhotoURL}" alt="Avatar">` : `<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan-400)" stroke-width="2" style="width:40px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`}
+                            ${displayPhotoURL ? `<img src="${displayPhotoURL}" alt="Avatar">` : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:40px; color: var(--text-muted);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`}
                         </div>
                     </div>
-                    <h2 style="font-size: 1.75rem; font-weight: 900; margin-bottom: 0.25rem; letter-spacing: 1px; color: white;">${(profileData.name || 'VIAJANTE').toUpperCase()}</h2>
-                    <p style="color: var(--cyan-400); font-size: 0.85rem; font-family: monospace; background: rgba(34,211,238,0.1); padding: 2px 8px; border-radius: 4px;">${profileData.description || 'Foco em Evolução Contínua'}</p>
+                    <h2 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.25rem; color: var(--text-main); letter-spacing: -0.5px;">${profileData.name || 'Aventureiro'}</h2>
+                    <p style="color: var(--text-muted); font-size: 1rem; font-weight: 600; margin-bottom: 1.5rem;">${profileData.description || 'Iniciando a jornada'}</p>
                 </div>
             `;
         }
 
-        // Adiciona a Câmara do Avatar (Sempre visível) e a Barra de Level
         html += `
-            <div class="avatar-body-space" title="Em breve: Insira aqui o modelo 3D do seu personagem">
-                <svg class="avatar-silhouette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <div class="avatar-body-space float-gentle" title="Em breve: Insira aqui o modelo do seu personagem">
+                <div class="pedestal-light"></div>
+                <svg class="avatar-silhouette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 4a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
                     <path d="M12 4v7M8 11v11M16 11v11M8 11h8M5 6l3 5M19 6l-3 5"/>
                 </svg>
-                <div class="avatar-placeholder-text">MÓDULO_DE_AVATAR_3D [BLOQUEADO]</div>
+                <div class="avatar-placeholder-text">Seu Avatar 3D (Em breve)</div>
             </div>
 
-            <div class="level-box">
+            <div class="progress-wrapper" style="width: 100%; text-align: left;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                    <span style="color: var(--slate-400); font-size: 0.75rem; font-weight: bold; font-family: monospace; letter-spacing: 1px;">NÍVEL_GERAL</span>
-                    <span class="font-mono" style="font-size: 2rem; font-weight: 900; color: white; text-shadow: var(--neon-glow); line-height: 1;">${stats.level}</span>
+                    <span style="font-size: 1rem; font-weight: 800; color: var(--text-main);">Nível ${stats.level}</span>
+                    <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">${stats.currentExp} / ${EXP_PER_LEVEL} XP</span>
                 </div>
                 <div class="progress-track">
                     <div class="progress-fill" style="width: ${stats.progress}%"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 0.7rem; font-family: monospace; color: var(--slate-400);">
-                    <span>${stats.currentExp} EXP</span>
-                    <span>${EXP_PER_LEVEL} EXP</span>
                 </div>
             </div>
         `;
@@ -699,22 +854,22 @@
     function updateStatsUI() {
         const container = document.getElementById('stats-container');
         if (skillsData.length === 0) {
-            container.innerHTML = `<p style="color: var(--slate-500); grid-column: span 2; text-align: center; font-size: 0.85rem; font-family: monospace;">Aguardando dados dos pilares...</p>`;
+            container.innerHTML = `<p style="color: var(--text-muted); grid-column: span 2; text-align: center; font-weight: 600;">Adicione pilares para ver seus atributos.</p>`;
             return;
         }
 
         const topSkills = [...skillsData].sort((a, b) => b.level - a.level).slice(0, 4);
         container.innerHTML = topSkills.map((skill, i) => `
             <div class="stat-item animate-fade-in" style="animation-delay: ${i * 0.1}s">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom:0.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--slate-300); font-weight: bold; font-family: monospace; font-size: 0.8rem;">
-                        <div class="dot ${skill.color}" style="color:var(--cyan-400)"></div>
-                        <span>${skill.name}</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom:10px;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--text-main); font-size: 0.9rem;">
+                        <div style="width:12px; height:12px; border-radius:50%; background:var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.2);"></div>
+                        ${skill.name}
                     </div>
-                    <span class="font-mono" style="color: white; font-weight: 900; font-size:1.1rem; text-shadow:0 0 5px currentColor">${skill.level}</span>
+                    <span style="color: var(--text-main); font-weight: 900; font-size:1.1rem;">${skill.level}</span>
                 </div>
-                <div class="stat-track">
-                    <div class="stat-fill ${skill.color}" style="width: ${skill.level}%"></div>
+                <div class="progress-track" style="height: 8px; margin: 0;">
+                    <div class="progress-fill" style="width: ${skill.level}%; background: var(--accent);"></div>
                 </div>
             </div>
         `).join('');
@@ -727,19 +882,19 @@
         container.innerHTML = sortedQuests.map((q, i) => `
             <div class="quest-item ${q.done ? 'completed' : ''} animate-fade-in" style="animation-delay: ${i * 0.1}s" onclick="toggleQuest('${q.id}', ${q.done}, ${q.exp}, event)">
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div class="checkbox">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px; height:14px; color:var(--emerald-400); opacity:${q.done?1:0}; transition:0.3s;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <div class="checkbox-bouncy">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" style="width:16px; height:16px; color:white; opacity:${q.done?1:0}; transition:0.3s;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     </div>
-                    <div>
-                        <div style="color: ${q.done ? 'var(--slate-500)' : 'var(--slate-200)'}; font-weight: 700; font-family: monospace; text-decoration: ${q.done ? 'line-through' : 'none'}; font-size: 0.9rem;">${q.title}</div>
+                    <div style="color: ${q.done ? 'var(--text-muted)' : 'var(--text-main)'}; font-weight: 800; font-size: 1rem; text-decoration: ${q.done ? 'line-through' : 'none'}; transition: all 0.2s;">
+                        ${q.title}
                     </div>
                 </div>
-                <div class="quest-reward font-mono">+${q.exp} EXP</div>
+                <div class="quest-reward">+${q.exp} XP</div>
             </div>
         `).join('');
     }
 
-    // --- ABA PILARES (RODA E EDITOR) ---
+    // --- ABA PILARES (Roda e Editor) ---
     window.switchTab = (tabId) => {
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         document.querySelector(`.nav-btn[onclick="switchTab('${tabId}')"]`).classList.add('active');
@@ -754,13 +909,13 @@
     window.handleAddSkill = async () => {
         if (!currentUser) return;
         const docRef = await addDoc(collection(db, userPath, 'skills'), {
-            name: "NOVO NÓ DE DADOS", level: 10, color: colorOptions[skillsData.length % colorOptions.length]
+            name: "Nova Habilidade", level: 10, color: colorOptions[skillsData.length % colorOptions.length]
         }).catch(handleFirestoreError);
         if(docRef) { selectNode('skill', docRef.id); isEditingPillar = true; }
     };
 
     window.handleDeleteSkill = async (id) => {
-        if (confirm("ATENÇÃO: Deseja expurgar este nó de dados da rede?")) {
+        if (confirm("Remover esta habilidade da sua constelação?")) {
             await deleteDoc(doc(db, userPath, 'skills', id)).catch(handleFirestoreError);
             if (selectedNode.id === id) selectNode('main', null);
         }
@@ -768,7 +923,7 @@
 
     window.updatePillarName = async (val) => {
         if (!currentUser || selectedNode.type !== 'skill') return;
-        await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { name: val.toUpperCase() }).catch(handleFirestoreError);
+        await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { name: val }).catch(handleFirestoreError);
     };
 
     window.updateSkillLevelDB = async (val) => {
@@ -778,7 +933,7 @@
 
     window.updateSkillLevelUI = (val) => {
         const label = document.getElementById('editor-skill-label');
-        if(label) label.innerText = `EFICIÊNCIA: ${val}%`;
+        if(label) label.innerText = `Nível: ${val}%`;
     }
 
     window.selectNode = (type, id) => {
@@ -808,14 +963,14 @@
 
         const isMainSelected = selectedNode.type === 'main';
         const mainDiv = document.createElement('div');
-        mainDiv.style.cssText = `position: absolute; left: ${centerX}px; top: ${centerY}px; transform: translate(-50%, -50%); z-index: 20; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);`;
+        mainDiv.style.cssText = `position: absolute; left: ${centerX}px; top: ${centerY}px; transform: translate(-50%, -50%); z-index: 20; cursor: pointer; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);`;
         if (isMainSelected) mainDiv.style.transform += " scale(1.15)";
         
         mainDiv.onclick = () => selectNode('main', null);
         mainDiv.innerHTML = `
-            <div style="width: 130px; height: 130px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; text-align: center; border: 2px solid ${isMainSelected ? 'var(--cyan-400)' : 'var(--slate-700)'}; background: rgba(15, 23, 42, 0.9); box-shadow: ${isMainSelected ? '0 0 30px rgba(34,211,238,0.3)' : 'inset 0 0 20px rgba(0,0,0,0.8)'}; backdrop-filter: blur(5px);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan-400)" stroke-width="2" style="width:28px; margin-bottom:8px; filter: drop-shadow(0 0 5px rgba(34,211,238,0.5));"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 17 22 12"></polyline></svg>
-                <h3 style="font-size: 0.75rem; color: white; font-family: monospace; letter-spacing: 1px;">CORE_ID</h3>
+            <div style="width: 110px; height: 110px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; text-align: center; background: var(--glass-bg); backdrop-filter: blur(10px); border: 4px solid ${isMainSelected ? 'var(--accent)' : 'var(--glass-border)'}; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: all 0.3s;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="${isMainSelected ? 'var(--accent)' : 'var(--text-main)'}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:32px; margin-bottom:4px; transition: stroke 0.3s;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                <h3 style="font-size: 0.8rem; font-weight: 800; color: var(--text-main);">Origem</h3>
             </div>
         `;
         nodesContainer.appendChild(mainDiv);
@@ -829,18 +984,19 @@
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
             line.setAttribute("x1", centerX); line.setAttribute("y1", centerY);
             line.setAttribute("x2", x); line.setAttribute("y2", y);
-            line.setAttribute("stroke", isSelected ? "var(--cyan-400)" : "rgba(34, 211, 238, 0.2)");
-            line.setAttribute("stroke-width", isSelected ? "3" : "1.5");
+            line.setAttribute("stroke", isSelected ? "var(--accent)" : "rgba(255, 255, 255, 0.2)");
+            line.setAttribute("stroke-width", isSelected ? "3" : "2");
+            line.style.transition = "stroke 0.3s";
             if (!isSelected) line.setAttribute("stroke-dasharray", "4 4");
             svg.appendChild(line);
 
             const skillDiv = document.createElement('div');
-            skillDiv.style.cssText = `position: absolute; left: ${x}px; top: ${y}px; transform: translate(-50%, -50%); z-index: 10; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);`;
+            skillDiv.style.cssText = `position: absolute; left: ${x}px; top: ${y}px; transform: translate(-50%, -50%); z-index: 10; cursor: pointer; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);`;
             if (isSelected) skillDiv.style.transform += " scale(1.2)";
             
             skillDiv.onclick = () => selectNode('skill', skill.id);
             skillDiv.innerHTML = `
-                <div class="${skill.color}" style="width: 85px; height: 85px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; color: white; font-size: 0.7rem; font-family: monospace; font-weight: bold; border: ${isSelected ? '2px solid white' : '2px solid transparent'}; box-shadow: 0 5px 15px rgba(0,0,0,0.5); line-height: 1.2;">
+                <div style="width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; color: var(--text-main); font-size: 0.75rem; font-weight: 800; background: var(--glass-bg); backdrop-filter: blur(10px); border: 3px solid ${isSelected ? 'var(--accent)' : 'transparent'}; box-shadow: 0 5px 15px rgba(0,0,0,0.2); line-height: 1.2;">
                     ${skill.name}
                 </div>
             `;
@@ -853,9 +1009,10 @@
         
         if (selectedNode.type === 'main') {
             card.innerHTML = `
-                <div style="text-align: center; color: var(--slate-400); font-family: monospace; padding: 2rem 0;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan-400)" stroke-width="2" style="width:48px; margin-bottom: 1rem; opacity: 0.5;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>
-                    <p>O NÚCLEO CENTRAL (CORE_ID) é gerido na aba "RESUMO".<br>Selecione um Pilar na rede para configurá-lo aqui.</p>
+                <div style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:48px; margin-bottom: 1rem; opacity: 0.5;"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                    <p style="font-weight: 600; font-size: 1.1rem;">A Origem</p>
+                    <p style="font-size: 0.9rem; margin-top: 8px;">Selecione uma habilidade na constelação para gerenciá-la aqui.</p>
                 </div>
             `;
             return;
@@ -866,9 +1023,9 @@
 
         let content = `
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
-                <span style="font-size: 0.75rem; font-weight: bold; font-family: monospace; color: var(--cyan-400); letter-spacing: 1px;">> CONFIG_PILAR</span>
-                <button onclick="toggleEditPillar()" class="btn-icon" style="background: rgba(34,211,238,0.1); border-radius: 6px; width: 32px; height: 32px; display:flex; align-items:center; justify-content:center; color: var(--cyan-400);">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                <span style="font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Detalhes</span>
+                <button onclick="toggleEditPillar()" class="btn-icon-soft">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                 </button>
             </div>
         `;
@@ -876,26 +1033,36 @@
         if (isEditingPillar) {
             content += `
                 <div class="animate-fade-in" style="display: flex; flex-direction: column; gap: 0.5rem;">
-                    <label style="font-size: 0.75rem; font-family: monospace; color: var(--slate-400);">PARÂMETRO: NOME DA HABILIDADE</label>
-                    <input type="text" class="input-tech" value="${activeData.name || ''}" onchange="updatePillarName(this.value)">
+                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Nome da Habilidade</label>
+                    <input type="text" class="input-ios" value="${activeData.name || ''}" onchange="updatePillarName(this.value)">
                     
                     <div style="margin-top: 1rem;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                            <label id="editor-skill-label" style="font-size: 0.75rem; font-family: monospace; color: var(--cyan-400);">EFICIÊNCIA: ${activeData.level}%</label>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <label id="editor-skill-label" style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Nível Atual: ${activeData.level}%</label>
                         </div>
                         <input type="range" min="0" max="100" value="${activeData.level}" 
+                               style="width:100%; accent-color: var(--accent);"
                                oninput="updateSkillLevelUI(this.value)" 
                                onchange="updateSkillLevelDB(this.value)">
                     </div>
-                    <button onclick="toggleEditPillar()" class="btn-hud" style="margin-top: 1.5rem; width: 100%; padding: 10px;">SALVAR PARÂMETROS</button>
+                    <button onclick="toggleEditPillar()" class="btn-duo" style="margin-top: 1.5rem; width: 100%;">Feito</button>
                 </div>
             `;
         } else {
             content += `
                 <div class="animate-fade-in">
-                    <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem; color: white; font-weight: 900; letter-spacing: 1px;">${activeData.name}</h3>
-                    <p style="color: var(--slate-400); font-size: 0.9rem; line-height: 1.6; font-family: monospace;">
-                        EFICIÊNCIA ATUAL: <span style="color:var(--cyan-400); font-weight:bold; font-size: 1.1rem;">${activeData.level}%</span><br><br>Foque em concluir protocolos de missão na aba RESUMO para elevar este índice sistêmico.
+                    <h3 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--text-main); font-weight: 900;">${activeData.name}</h3>
+                    <div class="progress-wrapper" style="padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.1rem; color: var(--text-main);">
+                            <span>Domínio</span>
+                            <span>${activeData.level}%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: ${activeData.level}%;"></div>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-top: 1rem; font-weight: 600;">
+                        Complete hábitos na aba "Meu Perfil" para evoluir esta e outras habilidades organicamente.
                     </p>
                 </div>
             `;
@@ -909,16 +1076,16 @@
         if (skillsData.length === 0) { list.innerHTML = ''; return; }
 
         list.innerHTML = skillsData.map(s => `
-            <div class="skill-item ${selectedNode.id === s.id ? 'active' : ''}" onclick="selectNode('skill', '${s.id}')">
+            <div class="skill-list-item ${selectedNode.id === s.id ? 'active' : ''}" onclick="selectNode('skill', '${s.id}')">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <div class="dot ${s.color}"></div>
+                    <div style="width:12px; height:12px; border-radius:50%; background:var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.2);"></div>
                     <div>
-                        <div style="font-size: 0.85rem; font-weight: bold; font-family: monospace; color: white; letter-spacing: 1px;">${s.name}</div>
-                        <div class="font-mono" style="font-size: 0.75rem; color: var(--slate-400);">EFICIÊNCIA: ${s.level}%</div>
+                        <div style="font-size: 1rem; font-weight: 800; color: var(--text-main);">${s.name}</div>
+                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Nível: ${s.level}%</div>
                     </div>
                 </div>
-                <button onclick="event.stopPropagation(); handleDeleteSkill('${s.id}')" class="btn-icon" title="Expurgar">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;"><path d="M18 6 6 18M6 6l12 12"></path></svg>    
+                <button onclick="event.stopPropagation(); handleDeleteSkill('${s.id}')" class="btn-icon-soft" title="Remover Habilidade">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="width:16px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>    
                 </button>
             </div>
         `).join('');
