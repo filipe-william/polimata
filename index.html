@@ -138,6 +138,12 @@
         .select-ios option { background: var(--sheet-bg); color: var(--text-main); }
         .theme-cloud .select-ios option { background: #fff; color: #0f172a; }
 
+        .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 2rem; }
+        .theme-option { display: flex; align-items: center; gap: 10px; padding: 0.8rem; border-radius: 16px; cursor: pointer; border: 2px solid transparent; background: var(--glass-bg); transition: all 0.2s; }
+        .theme-option.active { border-color: var(--accent); background: rgba(0,0,0,0.3); }
+        .theme-cloud .theme-option.active { background: rgba(0,0,0,0.05); }
+        .color-preview { width: 20px; height: 20px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); flex-shrink: 0; }
+
         /* --- COMPONENTES UI (CARTÕES) --- */
         .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 1.5rem; position: relative; transition: background-color 0.5s ease, border-color 0.5s ease; }
         .identity-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 1.5rem; backdrop-filter: blur(24px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: background-color 0.5s ease, border-color 0.5s ease; }
@@ -146,13 +152,13 @@
         /* --- CARTÕES DA COMUNIDADE --- */
         .community-card {
             display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-            padding: 1.25rem; border-radius: 24px; margin-bottom: 12px;
+            padding: 1.25rem; border-radius: 24px; margin-bottom: 16px;
             background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2));
             border: 2px solid var(--glass-border); box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            color: var(--text-main); position: relative; overflow: hidden; transition: transform 0.2s;
+            color: var(--text-main); position: relative; overflow: visible; transition: transform 0.2s;
         }
         .community-card:hover { transform: translateY(-3px); border-color: var(--accent); }
-        .community-card::before { content: ''; position: absolute; inset: 0; background: var(--glass-bg); pointer-events: none; }
+        .community-card::before { content: ''; position: absolute; inset: 0; background: var(--glass-bg); pointer-events: none; border-radius: 24px;}
         .community-card > * { position: relative; z-index: 1; }
         .comm-info { display: flex; align-items: center; gap: 1rem; flex: 1; }
         .comm-photo { width: 50px; height: 50px; border-radius: 18px; object-fit: cover; border: 2px solid var(--accent); }
@@ -190,7 +196,7 @@
         
         .chat-input-area {
             padding: 1.5rem; border-top: 1px solid var(--glass-border); background: rgba(0,0,0,0.2);
-            display: flex; gap: 10px; padding-bottom: 2.5rem; /* Margem extra para iOS */
+            display: flex; gap: 10px; padding-bottom: 2.5rem;
         }
         .chat-input {
             flex: 1; background: rgba(0,0,0,0.3); border: 2px solid transparent; border-radius: 24px;
@@ -225,14 +231,8 @@
         .quest-item.completed .quest-reward { color: var(--success); border-color: transparent;}
 
         /* --- SISTEMA ISOMÉTRICO 3D (OS PILARES SVG) --- */
-        #iso-wrapper {
-            width: 100%; overflow-x: auto; overflow-y: hidden; text-align: center;
-            border-radius: 16px; padding: 20px 0;
-        }
-        #iso-world { 
-            position: relative; margin: 0 auto; perspective: 1000px;
-            transition: width 0.5s ease, height 0.5s ease;
-        }
+        #iso-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; text-align: center; border-radius: 16px; padding: 20px 0; }
+        #iso-world { position: relative; margin: 0 auto; perspective: 1000px; transition: width 0.5s ease, height 0.5s ease; }
         #iso-ground { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; }
         .iso-pillar-container { position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
         .iso-pillar-container:hover, .iso-pillar-container.active { transform: translate(-50%, -100%) scale(1.05); filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); z-index: 100 !important; }
@@ -329,7 +329,6 @@
         </div>
         
         <div id="chat-messages-container">
-            <!-- Mensagens serão injetadas aqui -->
             <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: auto; padding-top: 2rem;">
                 As mensagens trocadas aqui desaparecem assim que você fecha o aplicativo.<br>Apenas no momento presente.
             </div>
@@ -342,7 +341,7 @@
     </div>
 
     <div id="app-container" class="hidden">
-        <div id="permission-error" style="background: #ef4444; color: white; padding: 1rem; text-align: center; font-weight: 700; display: none; z-index: 200; position: absolute; top:0; width: 100%;">⚠️ Erro de permissão. Tente reconectar.</div>
+        <div id="permission-error" style="background: #ef4444; color: white; padding: 1rem; text-align: center; font-weight: 700; display: none; z-index: 200; position: absolute; top:0; width: 100%;">⚠️ Erro de Banco de Dados.</div>
 
         <main class="content-area">
             <!-- HOME -->
@@ -391,9 +390,7 @@
                     </div>
                     <div id="iso-wrapper"><div id="iso-world"><svg id="iso-ground"></svg><div id="iso-nodes"></div></div></div>
                 </div>
-
                 <div class="panel" id="editor-card"></div>
-                
                 <div class="panel">
                     <h3 style="font-size: 1rem; font-weight: 800; margin-bottom: 1rem;">Módulos Instalados (<span id="skill-count">0</span>)</h3>
                     <div id="skills-list"></div>
@@ -410,8 +407,18 @@
                 <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 1.5rem; padding-left: 0.5rem;">Seu Cartão Público</h3>
                 <div id="my-community-card-container"></div>
 
-                <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 2rem; padding-left: 0.5rem;">Exploradores</h3>
-                <div id="community-list"></div>
+                <div id="top-10-section">
+                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--success); margin-bottom: 1rem; margin-top: 2rem; padding-left: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 20px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg> 
+                        Top 10 Globais
+                    </h3>
+                    <div id="community-top10-list"></div>
+                </div>
+
+                <div id="search-results-section" class="hidden">
+                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 2rem; padding-left: 0.5rem;">Resultados da Busca</h3>
+                    <div id="community-search-list"></div>
+                </div>
             </section>
 
         </main>
@@ -424,6 +431,34 @@
             <button class="nav-item" onclick="switchTab('community', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Global</button>
             <button class="nav-item" onclick="openSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Ajustes</button>
         </nav>
+
+        <!-- CONFIGURAÇÕES (SHEET) -->
+        <div id="settings-backdrop" onclick="handleCloseSettings()"></div>
+        <div id="settings-sheet">
+            <div class="sheet-handle" onclick="handleCloseSettings()"></div>
+            <div class="sheet-content">
+                <h3 class="sheet-title">Configurações da Conta</h3>
+                
+                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Identidade</h4>
+                <input type="text" id="input-profile-name" class="input-ios" placeholder="Seu Nome">
+                <input type="text" id="input-profile-desc" class="input-ios" placeholder="Seu Título/Foco">
+                <input type="text" id="input-profile-photo" class="input-ios" placeholder="URL da foto de perfil (Opcional)">
+                <button onclick="saveProfileData()" class="btn-duo" style="margin-bottom: 2rem;">Salvar Modificações</button>
+
+                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Atmosfera</h4>
+                <div class="theme-grid">
+                    <div class="theme-option active" onclick="setTheme('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700; font-size: 0.85rem;">O Vazio</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-journey', this)"><div class="color-preview" style="background: #b45309;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Jornada</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-forest', this)"><div class="color-preview" style="background: #047857;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Floresta</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-cloud', this)"><div class="color-preview" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Nuvem</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-inferno', this)"><div class="color-preview" style="background: #7f1d1d;"></div><span style="font-weight: 700; font-size: 0.85rem;">Inferno</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-ocean', this)"><div class="color-preview" style="background: #164e63;"></div><span style="font-weight: 700; font-size: 0.85rem;">Oceano</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-arcane', this)"><div class="color-preview" style="background: #581c87;"></div><span style="font-weight: 700; font-size: 0.85rem;">Arcano</span></div>
+                </div>
+
+                <button onclick="handleLogout()" class="btn-duo" style="background: transparent; color: #ef4444; border: 2px solid #ef4444; box-shadow: none;">Desconectar</button>
+            </div>
+        </div>
     </div>
 
 <script type="module">
@@ -467,11 +502,12 @@
     let unsubProfile, unsubSkills, unsubQuests, unsubComm; let currentLevelState = 1; let initialSettingsState = {};
     const EXP_PER_LEVEL = 500;
 
-    // --- VARIÁVEIS DE SESSÃO DO CHAT ---
-    const sessionStartTime = Date.now(); // Grava a hora que o app foi aberto!
+    // --- SESSÃO DO CHAT ---
+    const sessionStartTime = Date.now();
     let activeChatRoomId = null;
     let unsubActiveChat = null;
 
+    // --- CANVAS ---
     const canvas = document.getElementById('theme-canvas'); const ctx = canvas.getContext('2d');
     let particles = []; let animationFrameId;
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -505,22 +541,13 @@
     function initParticles(themeClass) { particles = []; let c = 40; if(themeClass==='theme-cloud') c=10; if(themeClass==='theme-journey') c=80; if(themeClass==='theme-inferno') c=60; for(let i=0; i<c; i++) particles.push(new Particle(themeClass)); }
     function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); animationFrameId = requestAnimationFrame(animateParticles); }
 
+    // --- INTERAÇÕES DA UI GERAL ---
     window.switchTab = (tabId, btnElement) => {
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active')); if(btnElement) btnElement.classList.add('active');
         ['home','inventory','skills','community'].forEach(t => document.getElementById(`view-${t}`).classList.add('hidden'));
         document.getElementById(`view-${tabId}`).classList.remove('hidden');
         if(tabId === 'skills') setTimeout(renderWheel, 50); 
         if(tabId === 'inventory' || tabId === 'home') renderAvatar();
-    };
-    
-    // LÓGICA DE CRIAÇÃO DE PILARES 
-    window.openAddPillarModal = () => { document.getElementById('add-pillar-name').value = ''; document.getElementById('add-pillar-element').value = 'void'; document.getElementById('add-pillar-level').value = 1; document.getElementById('add-pillar-level-label').innerText = 'Elevação Inicial: 1%'; document.getElementById('modal-add-pillar').classList.add('active'); };
-    window.closeAddPillarModal = () => { document.getElementById('modal-add-pillar').classList.remove('active'); };
-    window.confirmAddPillar = async () => {
-        if (!currentUser) return;
-        const n = document.getElementById('add-pillar-name').value.trim(); const e = document.getElementById('add-pillar-element').value; const l = parseInt(document.getElementById('add-pillar-level').value);
-        const docRef = await addDoc(collection(db, userPath, 'skills'), { name: n === '' ? 'Novo Pilar' : n, element: e, level: l });
-        if (docRef) { closeAddPillarModal(); selectNode('skill', docRef.id); isEditingPillar = false; renderEditor(); }
     };
 
     window.openSettings = () => {
@@ -531,12 +558,14 @@
         document.getElementById('input-profile-photo').value = initialSettingsState.photo;
         sheet.classList.add('open'); backdrop.classList.add('active');
     };
+    
     window.handleCloseSettings = () => {
         const n = document.getElementById('input-profile-name').value; const d = document.getElementById('input-profile-desc').value; const p = document.getElementById('input-profile-photo').value;
         const hasChanged = (n !== initialSettingsState.name || d !== initialSettingsState.desc || p !== initialSettingsState.photo);
         if (hasChanged) { if (confirm("Existem modificações não salvas. Deseja salvar agora?")) { window.saveProfileData(); return; } }
         closeSettingsUI();
     };
+    
     function closeSettingsUI() { document.getElementById('settings-sheet').classList.remove('open'); document.getElementById('settings-backdrop').classList.remove('active'); }
 
     window.setTheme = async (themeClass, element) => {
@@ -545,6 +574,7 @@
         if (currentUser) { profileData.theme = themeClass; await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: themeClass }).catch(console.error); }
     };
 
+    // --- AUTH E BD ---
     document.getElementById('btn-login-action').onclick = async () => { try { await signInWithPopup(auth, provider); } catch (e) { console.error(e); } };
     window.handleLogout = () => { if(confirm("Deseja desconectar?")) { signOut(auth); closeSettingsUI(); } };
 
@@ -559,99 +589,6 @@
             cancelAnimationFrame(animationFrameId); if (unsubProfile) unsubProfile(); if (unsubSkills) unsubSkills(); if (unsubQuests) unsubQuests(); if(unsubComm) unsubComm();
         }
     });
-
-    function getLevelInfo(exp) { return { level: Math.floor(exp / EXP_PER_LEVEL) + 1, currentExp: exp % EXP_PER_LEVEL, progress: ((exp % EXP_PER_LEVEL) / EXP_PER_LEVEL) * 100 }; }
-    window.closeLevelUp = () => { document.getElementById('level-up-screen').classList.remove('active'); };
-    function createFloatingEXP(x, y, amount) { const el = document.createElement('div'); el.className = 'floating-exp'; el.innerText = `+${amount} XP`; el.style.left = `${x}px`; el.style.top = `${y}px`; document.body.appendChild(el); setTimeout(() => el.remove(), 1000); }
-
-    // --- COMUNIDADE & CHAT ---
-    async function syncToCommunity() {
-        if (!currentUser) return;
-        try {
-            const pubData = { uid: currentUser.uid, name: profileData.name || 'Viajante', description: profileData.description || 'Despertando...', photoURL: profileData.customPhotoURL || currentUser.photoURL || '', theme: profileData.theme || 'theme-void', level: getLevelInfo(profileData.exp || 0).level };
-            await setDoc(doc(db, 'community', currentUser.uid), pubData);
-        } catch(e) {}
-    }
-
-    window.handleSearch = () => { renderCommunityList(); };
-
-    // Lógica para Abrir, Fechar e Enviar Mensagens
-    window.openChat = (friendUid, friendName, friendPhoto) => {
-        if(!currentUser) return;
-        
-        // UI Updates
-        document.getElementById('chat-header-name').innerText = friendName;
-        const photoHtml = friendPhoto ? `<img src="${friendPhoto}" style="width:100%; height:100%; object-fit:cover;">` : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; color:var(--text-main); margin:8px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
-        document.getElementById('chat-header-photo').innerHTML = photoHtml;
-        document.getElementById('chat-modal').classList.add('open');
-        
-        // Criar ID do Quarto de forma consistente (UID1_UID2 sempre na mesma ordem)
-        activeChatRoomId = [currentUser.uid, friendUid].sort().join('_');
-        
-        // Listener de Mensagens com Filtro em Memória para ser Epêmero!
-        if(unsubActiveChat) unsubActiveChat();
-        
-        const q = query(collection(db, `chats/${activeChatRoomId}/messages`), orderBy('timestamp', 'asc'));
-        unsubActiveChat = onSnapshot(q, (snap) => {
-            const container = document.getElementById('chat-messages-container');
-            // Limpa e mantém apenas o texto de aviso
-            container.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: auto; padding-top: 2rem; margin-bottom: 1rem;">As mensagens trocadas aqui desaparecem assim que você fecha o aplicativo.<br>Apenas no momento presente.</div>`;
-            
-            // Aqui está a MÁGICA TEMPORÁRIA: Só exibe as mensagens cujo timestamp é MAIOR que a hora que você abriu o app.
-            const messages = snap.docs.map(d => d.data()).filter(m => m.timestamp >= sessionStartTime);
-            
-            messages.forEach(msg => {
-                const isMine = msg.senderId === currentUser.uid;
-                container.innerHTML += `<div class="chat-bubble ${isMine ? 'bubble-mine' : 'bubble-other'}">${msg.text}</div>`;
-            });
-            
-            // Rola para o final automaticamente
-            container.scrollTop = container.scrollHeight;
-        });
-    };
-
-    window.closeChat = () => {
-        document.getElementById('chat-modal').classList.remove('open');
-        if(unsubActiveChat) { unsubActiveChat(); unsubActiveChat = null; }
-        activeChatRoomId = null;
-    };
-
-    window.sendChatMessage = async () => {
-        if(!currentUser || !activeChatRoomId) return;
-        const input = document.getElementById('chat-input-text');
-        const text = input.value.trim();
-        if(text === '') return;
-        
-        input.value = ''; // Limpa rápido
-        await addDoc(collection(db, `chats/${activeChatRoomId}/messages`), {
-            senderId: currentUser.uid,
-            text: text,
-            timestamp: Date.now()
-        });
-    };
-
-    function createCardHTML(userObj, isMe = false) {
-        const themeClass = userObj.theme || 'theme-void';
-        const photo = userObj.photoURL ? `<img src="${userObj.photoURL}" class="comm-photo">` : `<div class="comm-photo" style="background:var(--glass-bg); display:flex; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px; color:var(--text-main);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>`;
-        
-        // Se NÃO sou eu, adiciona o botão de chat
-        const chatButton = !isMe ? `<button class="chat-btn-comm" onclick="openChat('${userObj.uid}', '${userObj.name.replace(/'/g, "\\'")}', '${(userObj.photoURL || '').replace(/'/g, "\\'")}')" title="Mensagem Epêmera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>` : '';
-
-        return `<div class="community-card ${themeClass}"><div class="comm-info">${photo}<div><div style="font-weight:900; font-size:1.1rem; line-height:1.1; margin-bottom:2px;">${userObj.name}</div><div style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">${userObj.description}</div></div></div><div style="display:flex; align-items:center; gap:10px;">${chatButton}<div class="comm-level-badge">${userObj.level}</div></div></div>`;
-    }
-
-    function renderCommunityList() {
-        const searchTerm = document.getElementById('search-community').value.toLowerCase();
-        const me = { uid: currentUser.uid, name: profileData.name, description: profileData.description, photoURL: profileData.customPhotoURL || currentUser.photoURL, theme: profileData.theme, level: currentLevelState };
-        document.getElementById('my-community-card-container').innerHTML = createCardHTML(me, true);
-
-        const container = document.getElementById('community-list');
-        // Filtra para não me mostrar nos outros, e aplica a pesquisa
-        const others = communityData.filter(u => u.uid !== currentUser.uid && (u.name.toLowerCase().includes(searchTerm) || u.description.toLowerCase().includes(searchTerm)));
-        
-        if (others.length === 0) { container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-weight:700; margin-top:2rem;">Nenhum viajante encontrado com este nome ou foco.</p>`; } 
-        else { container.innerHTML = others.map(u => createCardHTML(u)).join(''); }
-    }
 
     async function loadDataAndSync() {
         if (!currentUser) return;
@@ -676,18 +613,98 @@
             unsubSkills = onSnapshot(collection(db, userPath, 'skills'), (snap) => { skillsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderWheel(); renderSkillList(); renderEditor(); });
             unsubQuests = onSnapshot(collection(db, userPath, 'quests'), (snap) => { questsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); updateQuestsUI(); });
             
-            // Comunidade REAL sem mocks (removido o fallback pro mockCommunity)
-            unsubComm = onSnapshot(collection(db, 'community'), (snap) => { 
-                communityData = snap.docs.map(d => d.data()); 
-                renderCommunityList(); 
-            }, (err) => { 
-                console.error("Erro na comunidade (regras de segurança?):", err);
-            });
-
+            unsubComm = onSnapshot(collection(db, 'community'), (snap) => { communityData = snap.docs.map(d => d.data()); renderCommunityList(); }, (err) => console.error(err));
         } catch (error) { document.getElementById('permission-error').style.display='block'; }
     }
 
-    // --- PROGRESSO E METAS GERAIS ---
+    // --- COMUNIDADE & CHAT ---
+    async function syncToCommunity() {
+        if (!currentUser) return;
+        try {
+            const pubData = { uid: currentUser.uid, name: profileData.name || 'Viajante', description: profileData.description || 'Despertando...', photoURL: profileData.customPhotoURL || currentUser.photoURL || '', theme: profileData.theme || 'theme-void', level: getLevelInfo(profileData.exp || 0).level };
+            await setDoc(doc(db, 'community', currentUser.uid), pubData);
+        } catch(e) {}
+    }
+
+    window.handleSearch = () => { renderCommunityList(); };
+
+    function createCardHTML(userObj, isMe = false, rank = null) {
+        const themeClass = userObj.theme || 'theme-void';
+        const photo = userObj.photoURL ? `<img src="${userObj.photoURL}" class="comm-photo">` : `<div class="comm-photo" style="background:var(--glass-bg); display:flex; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px; color:var(--text-main);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>`;
+        const chatButton = !isMe ? `<button class="chat-btn-comm" onclick="openChat('${userObj.uid}', '${userObj.name.replace(/'/g, "\\'")}', '${(userObj.photoURL || '').replace(/'/g, "\\'")}')" title="Mensagem Epêmera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>` : '';
+        const rankBadge = rank ? `<div style="position: absolute; top: -10px; left: -10px; background: var(--accent); color: #fff; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid var(--glass-border); z-index: 10;">#${rank}</div>` : '';
+
+        return `<div class="community-card ${themeClass}">${rankBadge}<div class="comm-info">${photo}<div><div style="font-weight:900; font-size:1.1rem; line-height:1.1; margin-bottom:2px;">${userObj.name}</div><div style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">${userObj.description}</div></div></div><div style="display:flex; align-items:center; gap:10px;">${chatButton}<div class="comm-level-badge">${userObj.level}</div></div></div>`;
+    }
+
+    function renderCommunityList() {
+        const searchTerm = document.getElementById('search-community').value.toLowerCase().trim();
+        const me = { uid: currentUser.uid, name: profileData.name, description: profileData.description, photoURL: profileData.customPhotoURL || currentUser.photoURL, theme: profileData.theme, level: currentLevelState };
+        document.getElementById('my-community-card-container').innerHTML = createCardHTML(me, true);
+
+        const top10Container = document.getElementById('community-top10-list');
+        const searchContainer = document.getElementById('community-search-list');
+        const top10Section = document.getElementById('top-10-section');
+        const searchSection = document.getElementById('search-results-section');
+
+        // Calcula o Top 10 Globais
+        const top10 = [...communityData].sort((a, b) => b.level - a.level).slice(0, 10);
+
+        if (searchTerm === '') {
+            top10Section.classList.remove('hidden');
+            searchSection.classList.add('hidden');
+            top10Container.innerHTML = top10.map((u, index) => createCardHTML(u, u.uid === currentUser.uid, index + 1)).join('');
+        } else {
+            top10Section.classList.add('hidden');
+            searchSection.classList.remove('hidden');
+            const others = communityData.filter(u => u.uid !== currentUser.uid && (u.name.toLowerCase().includes(searchTerm) || u.description.toLowerCase().includes(searchTerm)));
+            
+            if (others.length === 0) {
+                searchContainer.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-weight:700; margin-top:2rem;">Nenhum viajante encontrado.</p>`;
+            } else {
+                searchContainer.innerHTML = others.map(u => createCardHTML(u, false)).join('');
+            }
+        }
+    }
+
+    window.openChat = (friendUid, friendName, friendPhoto) => {
+        if(!currentUser) return;
+        document.getElementById('chat-header-name').innerText = friendName;
+        const photoHtml = friendPhoto ? `<img src="${friendPhoto}" style="width:100%; height:100%; object-fit:cover;">` : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; color:var(--text-main); margin:8px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
+        document.getElementById('chat-header-photo').innerHTML = photoHtml;
+        document.getElementById('chat-modal').classList.add('open');
+        
+        activeChatRoomId = [currentUser.uid, friendUid].sort().join('_');
+        if(unsubActiveChat) unsubActiveChat();
+        
+        const q = query(collection(db, `chats/${activeChatRoomId}/messages`), orderBy('timestamp', 'asc'));
+        unsubActiveChat = onSnapshot(q, (snap) => {
+            const container = document.getElementById('chat-messages-container');
+            container.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: auto; padding-top: 2rem; margin-bottom: 1rem;">As mensagens trocadas aqui desaparecem assim que você fecha o aplicativo.<br>Apenas no momento presente.</div>`;
+            
+            const messages = snap.docs.map(d => d.data()).filter(m => m.timestamp >= sessionStartTime);
+            messages.forEach(msg => {
+                const isMine = msg.senderId === currentUser.uid;
+                container.innerHTML += `<div class="chat-bubble ${isMine ? 'bubble-mine' : 'bubble-other'}">${msg.text}</div>`;
+            });
+            container.scrollTop = container.scrollHeight;
+        });
+    };
+
+    window.closeChat = () => { document.getElementById('chat-modal').classList.remove('open'); if(unsubActiveChat) { unsubActiveChat(); unsubActiveChat = null; } activeChatRoomId = null; };
+    window.sendChatMessage = async () => {
+        if(!currentUser || !activeChatRoomId) return;
+        const input = document.getElementById('chat-input-text'); const text = input.value.trim();
+        if(text === '') return;
+        input.value = ''; 
+        await addDoc(collection(db, `chats/${activeChatRoomId}/messages`), { senderId: currentUser.uid, text: text, timestamp: Date.now() });
+    };
+
+    // --- GAMEPLAY E PROGRESSÃO ---
+    function getLevelInfo(exp) { return { level: Math.floor(exp / EXP_PER_LEVEL) + 1, currentExp: exp % EXP_PER_LEVEL, progress: ((exp % EXP_PER_LEVEL) / EXP_PER_LEVEL) * 100 }; }
+    window.closeLevelUp = () => { document.getElementById('level-up-screen').classList.remove('active'); };
+    function createFloatingEXP(x, y, amount) { const el = document.createElement('div'); el.className = 'floating-exp'; el.innerText = `+${amount} XP`; el.style.left = `${x}px`; el.style.top = `${y}px`; document.body.appendChild(el); setTimeout(() => el.remove(), 1000); }
+
     window.addExp = async (amount) => { if (currentUser) await updateDoc(doc(db, userPath, 'profile', 'main'), { exp: (profileData.exp || 0) + amount }); };
     window.toggleQuest = async (id, done, exp, event) => {
         if (!currentUser) return; let cx = event.clientX; let cy = event.clientY;
@@ -695,6 +712,7 @@
         if (!done) createFloatingEXP(cx, cy, exp); await updateDoc(doc(db, userPath, 'quests', id), { done: !done }); if (!done) await window.addExp(exp);
     };
     window.addRandomQuest = async () => { if (!currentUser) return; const missao = prompt("Novo Hábito a cultivar:"); if (missao && missao.trim() !== "") await addDoc(collection(db, userPath, 'quests'), { title: missao, exp: 30, done: false, createdAt: Date.now() }); };
+    
     window.saveProfileData = async () => {
         if (!currentUser) return;
         const n = document.getElementById('input-profile-name').value; const d = document.getElementById('input-profile-desc').value; const p = document.getElementById('input-profile-photo').value;
@@ -737,6 +755,15 @@
         c.innerHTML = sorted.map((q, i) => `<div class="quest-item ${q.done ? 'completed' : ''} animate-fade-in" style="animation-delay: ${i*0.05}s" onclick="toggleQuest('${q.id}', ${q.done}, ${q.exp}, event)"><div style="display:flex; align-items:center; gap:1rem;"><div class="checkbox-bouncy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" style="width:14px; opacity:${q.done?1:0};"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div style="color: ${q.done?'var(--text-muted)':'var(--text-main)'}; font-weight:800; font-size:0.95rem; text-decoration:${q.done?'line-through':'none'};">${q.title}</div></div><div class="quest-reward">+${q.exp}XP</div></div>`).join('');
     }
 
+    // --- PILARES E TEMPLO ---
+    window.openAddPillarModal = () => { document.getElementById('add-pillar-name').value = ''; document.getElementById('add-pillar-element').value = 'void'; document.getElementById('add-pillar-level').value = 1; document.getElementById('add-pillar-level-label').innerText = 'Elevação Inicial: 1%'; document.getElementById('modal-add-pillar').classList.add('active'); };
+    window.closeAddPillarModal = () => { document.getElementById('modal-add-pillar').classList.remove('active'); };
+    window.confirmAddPillar = async () => {
+        if (!currentUser) return;
+        const n = document.getElementById('add-pillar-name').value.trim(); const e = document.getElementById('add-pillar-element').value; const l = parseInt(document.getElementById('add-pillar-level').value);
+        const docRef = await addDoc(collection(db, userPath, 'skills'), { name: n === '' ? 'Novo Pilar' : n, element: e, level: l });
+        if (docRef) { closeAddPillarModal(); selectNode('skill', docRef.id); isEditingPillar = false; renderEditor(); }
+    };
     window.handleDeleteSkill = async (id) => { if (confirm("Desmoronar este pilar?")) { await deleteDoc(doc(db, userPath, 'skills', id)); if (selectedNode.id === id) selectNode('main', null); } };
     window.updatePillarName = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { name: val }); };
     window.updateSkillLevelDB = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { level: parseInt(val) }); };
