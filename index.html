@@ -6,57 +6,67 @@
     <title>Polímata Hub - App</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- OS 7 ELEMENTOS (TEMA) --- */
-        :root {
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.6);
-            --nav-bg: rgba(15, 23, 42, 0.85); --sheet-bg: rgba(15, 23, 42, 0.95);
-            
-            /* 1. O VAZIO (Padrão) */
+        /* --- OS 7 ELEMENTOS (TEMAS GLOBAIS E LOCAIS) --- */
+        :root, .theme-void {
             --bg-color-1: #0f172a; --bg-color-2: #1e1b4b;
             --accent: #818cf8; --accent-dark: #4f46e5;
+            --glass-bg: rgba(30, 27, 75, 0.4); --glass-border: rgba(129, 140, 248, 0.3);
+            --nav-bg: rgba(15, 23, 42, 0.85); --sheet-bg: rgba(15, 23, 42, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.6);
             --success: #34d399; --success-dark: #059669;
         }
 
-        body.theme-journey { /* 2. JORNADA (Terra/Areia) */
+        .theme-journey {
             --bg-color-1: #451a03; --bg-color-2: #78350f;
             --accent: #fbbf24; --accent-dark: #d97706;
+            --glass-bg: rgba(120, 53, 15, 0.4); --glass-border: rgba(251, 191, 36, 0.3);
+            --nav-bg: rgba(69, 26, 3, 0.85); --sheet-bg: rgba(69, 26, 3, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
         }
 
-        body.theme-forest { /* 3. FLORESTA (Natureza) */
+        .theme-forest {
             --bg-color-1: #064e3b; --bg-color-2: #065f46;
             --accent: #a7f3d0; --accent-dark: #10b981;
+            --glass-bg: rgba(6, 95, 70, 0.4); --glass-border: rgba(167, 243, 208, 0.3);
+            --nav-bg: rgba(6, 78, 59, 0.85); --sheet-bg: rgba(6, 78, 59, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
             --success: #fcd34d; --success-dark: #f59e0b;
         }
 
-        body.theme-cloud { /* 4. NUVEM (Ar/Luz) */
+        .theme-cloud {
             --bg-color-1: #e0f2fe; --bg-color-2: #bae6fd;
+            --accent: #0ea5e9; --accent-dark: #0284c7;
             --glass-bg: rgba(255, 255, 255, 0.6); --glass-border: rgba(255, 255, 255, 0.8);
-            --text-main: #0f172a; --text-muted: #475569;
             --nav-bg: rgba(255, 255, 255, 0.85); --sheet-bg: rgba(248, 250, 252, 0.95);
-            --accent: #38bdf8; --accent-dark: #0284c7;
+            --text-main: #0f172a; --text-muted: #475569;
         }
 
-        body.theme-inferno { /* 5. INFERNO (Fogo) */
+        .theme-inferno {
             --bg-color-1: #450a0a; --bg-color-2: #7f1d1d;
             --accent: #f87171; --accent-dark: #dc2626;
+            --glass-bg: rgba(127, 29, 29, 0.4); --glass-border: rgba(248, 113, 113, 0.3);
+            --nav-bg: rgba(69, 10, 10, 0.85); --sheet-bg: rgba(69, 10, 10, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
         }
 
-        body.theme-ocean { /* 6. OCEANO (Água) */
+        .theme-ocean {
             --bg-color-1: #083344; --bg-color-2: #164e63;
             --accent: #22d3ee; --accent-dark: #0891b2;
+            --glass-bg: rgba(22, 78, 99, 0.4); --glass-border: rgba(34, 211, 238, 0.3);
+            --nav-bg: rgba(8, 51, 68, 0.85); --sheet-bg: rgba(8, 51, 68, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
         }
 
-        body.theme-arcane { /* 7. ARCANO (Magia) */
+        .theme-arcane {
             --bg-color-1: #3b0764; --bg-color-2: #581c87;
             --accent: #e879f9; --accent-dark: #c026d3;
+            --glass-bg: rgba(88, 28, 135, 0.4); --glass-border: rgba(232, 121, 249, 0.3);
+            --nav-bg: rgba(59, 7, 100, 0.85); --sheet-bg: rgba(59, 7, 100, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
         }
 
         /* --- BASE APP --- */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
-
         body { background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2)); color: var(--text-main); height: 100vh; height: 100dvh; overflow: hidden; transition: color 0.5s ease, background 0.5s ease; }
         #theme-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
         .hidden { display: none !important; }
@@ -80,20 +90,20 @@
             transition: transform 0.1s, box-shadow 0.1s;
             display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; width: 100%;
         }
-        body.theme-cloud .btn-duo { color: #fff; }
+        .theme-cloud .btn-duo { color: #fff; } 
         .btn-duo:active { transform: translateY(6px); box-shadow: 0 0px 0 var(--accent-dark), 0 5px 10px rgba(0,0,0,0.2); }
 
         /* --- BOTTOM NAV --- */
         #bottom-nav {
-            position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); width: calc(100% - 2rem); max-width: 450px;
+            position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); width: calc(100% - 2rem); max-width: 500px;
             background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); border-radius: 30px; display: flex; justify-content: space-around; padding: 0.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 50;
+            border: 1px solid var(--glass-border); border-radius: 30px; display: flex; justify-content: space-between; padding: 0.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 50; transition: background-color 0.5s ease, border-color 0.5s ease;
         }
-        .nav-item { background: transparent; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0.5rem 0.8rem; border-radius: 20px; cursor: pointer; transition: all 0.3s; font-weight: 700; font-size: 0.75rem; }
-        .nav-item.active { color: var(--accent); background: rgba(0,0,0,0.1); }
-        body.theme-cloud .nav-item.active { background: rgba(0,0,0,0.05); }
-        .nav-item svg { width: 24px; height: 24px; stroke-width: 2.5; transition: transform 0.3s; }
-        .nav-item.active svg { transform: scale(1.1); }
+        .nav-item { flex: 1; background: transparent; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0.5rem 0; border-radius: 20px; cursor: pointer; transition: all 0.3s; font-weight: 700; font-size: 0.65rem; }
+        .nav-item.active { color: var(--accent); background: rgba(0,0,0,0.2); }
+        .theme-cloud .nav-item.active { background: rgba(0,0,0,0.05); }
+        .nav-item svg { width: 22px; height: 22px; stroke-width: 2.5; transition: transform 0.3s; }
+        .nav-item.active svg { transform: scale(1.15); }
 
         /* --- SETTINGS SHEET --- */
         #settings-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 90; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -101,83 +111,92 @@
         #settings-sheet {
             position: fixed; bottom: -100%; left: 0; width: 100%; height: 85vh;
             background: var(--sheet-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border-top-left-radius: 32px; border-top-right-radius: 32px; box-shadow: 0 -10px 40px rgba(0,0,0,0.3); z-index: 100; transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; flex-direction: column;
+            border-top-left-radius: 32px; border-top-right-radius: 32px; box-shadow: 0 -10px 40px rgba(0,0,0,0.3); z-index: 100; transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.5s ease; display: flex; flex-direction: column;
         }
         #settings-sheet.open { bottom: 0; }
-        .sheet-handle { width: 40px; height: 6px; background: var(--glass-border); border-radius: 3px; margin: 1rem auto; cursor: pointer; }
+        .sheet-handle { width: 40px; height: 6px; background: var(--glass-border); border-radius: 3px; margin: 1rem auto; cursor: pointer; transition: background-color 0.5s ease;}
         .sheet-content { padding: 0 1.5rem 2rem 1.5rem; overflow-y: auto; flex: 1; }
         .sheet-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; }
 
         .input-ios, .select-ios {
-            width: 100%; background: rgba(0,0,0,0.1); border: 2px solid transparent; border-radius: 16px;
+            width: 100%; background: rgba(0,0,0,0.2); border: 2px solid transparent; border-radius: 16px;
             padding: 14px 16px; color: var(--text-main); font-size: 1rem; font-weight: 600; transition: 0.3s; margin-bottom: 12px; appearance: none;
         }
-        body.theme-cloud .input-ios, body.theme-cloud .select-ios { background: rgba(0,0,0,0.05); color: #0f172a; }
+        .theme-cloud .input-ios, .theme-cloud .select-ios { background: rgba(0,0,0,0.05); color: #0f172a; }
         .input-ios::placeholder { color: var(--text-muted); }
         .input-ios:focus, .select-ios:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.1); }
         .select-ios option { background: var(--sheet-bg); color: var(--text-main); }
-        body.theme-cloud .select-ios option { background: #fff; color: #0f172a; }
+        .theme-cloud .select-ios option { background: #fff; color: #0f172a; }
 
         .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 2rem; }
         .theme-option { display: flex; align-items: center; gap: 10px; padding: 0.8rem; border-radius: 16px; cursor: pointer; border: 2px solid transparent; background: var(--glass-bg); transition: all 0.2s; }
-        .theme-option.active { border-color: var(--accent); background: rgba(0,0,0,0.2); }
+        .theme-option.active { border-color: var(--accent); background: rgba(0,0,0,0.3); }
+        .theme-cloud .theme-option.active { background: rgba(0,0,0,0.05); }
         .color-preview { width: 20px; height: 20px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); flex-shrink: 0; }
 
-        /* --- COMPONENTES UI --- */
-        .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: var(--glass-shadow); margin-bottom: 1.5rem; position: relative; }
-        .identity-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 1.5rem; backdrop-filter: blur(24px); box-shadow: var(--glass-shadow); }
-        .identity-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        /* --- COMPONENTES UI (CARTÕES) --- */
+        .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 1.5rem; position: relative; transition: background-color 0.5s ease, border-color 0.5s ease; }
+        
+        .identity-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 1.5rem; backdrop-filter: blur(24px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: background-color 0.5s ease, border-color 0.5s ease; }
+        .identity-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: border-color 0.5s ease;}
 
-        .progress-wrapper { background: rgba(0,0,0,0.15); padding: 1.25rem; border-radius: 24px; text-align: left; margin-top: 1.5rem; }
-        body.theme-cloud .progress-wrapper { background: rgba(255,255,255,0.5); }
-        .progress-track { width: 100%; background: rgba(0,0,0,0.2); border-radius: 999px; height: 1.25rem; position: relative; overflow: hidden; margin: 0.5rem 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 999px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15); }
+        /* --- CARTÕES DA COMUNIDADE --- */
+        .community-card {
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+            padding: 1.25rem; border-radius: 24px; margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2));
+            border: 2px solid var(--glass-border); box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            color: var(--text-main); position: relative; overflow: hidden; transition: transform 0.2s; cursor: pointer;
+        }
+        .community-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+        .community-card::before { content: ''; position: absolute; inset: 0; background: var(--glass-bg); pointer-events: none; }
+        .community-card > * { position: relative; z-index: 1; }
+        .comm-info { display: flex; align-items: center; gap: 1rem; flex: 1; }
+        .comm-photo { width: 50px; height: 50px; border-radius: 18px; object-fit: cover; border: 2px solid var(--accent); }
+        .comm-level-badge { background: var(--accent); color: #fff; font-weight: 900; font-size: 1.1rem; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0; }
+
+        /* Diversos */
+        .progress-wrapper { background: rgba(0,0,0,0.2); padding: 1.25rem; border-radius: 24px; text-align: left; margin-top: 1.5rem; }
+        .theme-cloud .progress-wrapper { background: rgba(255,255,255,0.5); }
+        .progress-track { width: 100%; background: rgba(0,0,0,0.3); border-radius: 999px; height: 1.25rem; position: relative; overflow: hidden; margin: 0.5rem 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+        .theme-cloud .progress-track { background: rgba(0,0,0,0.1); }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 999px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.5s ease; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15); }
 
         .section-title { font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-        .btn-icon-soft { background: var(--glass-bg); border: none; color: var(--text-main); width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
-        .btn-icon-soft:hover { transform: scale(1.1); background: var(--accent); color: white; }
+        .btn-icon-soft { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+        .btn-icon-soft:hover { transform: scale(1.1); background: var(--accent); color: white; border-color: var(--accent); }
 
-        .quest-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 20px; background: rgba(0,0,0,0.1); border: 2px solid transparent; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; }
-        body.theme-cloud .quest-item { background: rgba(255,255,255,0.4); }
+        .quest-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 20px; background: rgba(0,0,0,0.2); border: 2px solid transparent; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; }
+        .theme-cloud .quest-item { background: rgba(255,255,255,0.4); }
         .quest-item:active { transform: translateY(3px); }
         .quest-item.completed { background: var(--glass-bg); border-color: var(--success); opacity: 0.8; }
         .checkbox-bouncy { width: 26px; height: 26px; border-radius: 8px; border: 3px solid var(--text-muted); display: flex; align-items: center; justify-content: center; transition: 0.3s; background: transparent; }
         .quest-item.completed .checkbox-bouncy { background: var(--success); border-color: var(--success); transform: scale(1.1) rotate(10deg); }
-        .quest-reward { color: var(--accent); font-weight: 800; font-size: 0.85rem; background: var(--glass-bg); padding: 4px 10px; border-radius: 10px; }
-        .quest-item.completed .quest-reward { color: var(--success); }
+        .quest-reward { color: var(--accent); font-weight: 800; font-size: 0.85rem; background: var(--glass-bg); padding: 4px 10px; border-radius: 10px; border: 1px solid var(--glass-border); transition: color 0.5s ease, background-color 0.5s ease;}
+        .quest-item.completed .quest-reward { color: var(--success); border-color: transparent;}
 
-        /* --- SISTEMA ISOMÉTRICO 3D (OS PILARES) --- */
+        /* --- SISTEMA ISOMÉTRICO 3D (OS PILARES SVG) --- */
         #iso-world { width: 100%; height: 400px; position: relative; margin-bottom: 1.5rem; perspective: 1000px; }
         #iso-ground { position: absolute; inset: 0; pointer-events: none; }
-        
-        .iso-pillar-container {
-            position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: all 0.3s;
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-        }
+        .iso-pillar-container { position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
         .iso-pillar-container:hover, .iso-pillar-container.active { transform: translate(-50%, -100%) scale(1.05); filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); z-index: 100 !important; }
-        
-        .iso-top { width: 100%; height: 30px; border-radius: 50%; position: absolute; top: -15px; left: 0; z-index: 3; box-shadow: inset 0 -5px 10px rgba(0,0,0,0.2); }
-        .iso-body { width: 100%; border-radius: 0 0 30px 30px / 0 0 15px 15px; position: absolute; bottom: 0; left: 0; z-index: 2; transition: height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); background-image: linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 20%, rgba(255,255,255,0.2) 80%, rgba(0,0,0,0.1) 100%); }
-        .iso-base-shadow { width: 100%; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.5); position: absolute; bottom: -15px; left: 0; z-index: 1; filter: blur(4px); }
-        .iso-label { position: absolute; top: -45px; background: var(--glass-bg); padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; white-space: nowrap; border: 1px solid var(--glass-border); backdrop-filter: blur(4px); pointer-events: none; transition: opacity 0.3s; opacity: 0.7;}
+        .iso-label { position: absolute; background: var(--glass-bg); padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; white-space: nowrap; border: 1px solid var(--glass-border); backdrop-filter: blur(4px); pointer-events: none; transition: opacity 0.3s; opacity: 0.7;}
         .iso-pillar-container:hover .iso-label, .iso-pillar-container.active .iso-label { opacity: 1; border-color: var(--accent); }
 
-        .skill-list-item { padding: 1rem; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.2s; margin-bottom: 8px; background: rgba(0,0,0,0.1); }
-        body.theme-cloud .skill-list-item { background: rgba(255,255,255,0.4); }
+        .skill-list-item { padding: 1rem; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.2s; margin-bottom: 8px; background: rgba(0,0,0,0.2); }
+        .theme-cloud .skill-list-item { background: rgba(255,255,255,0.4); }
         .skill-list-item.active { border: 2px solid var(--accent); background: var(--glass-bg); }
 
-        /* Avatar 2D */
-        .avatar-2d-container { width: 160px; height: 160px; margin: 0 auto; position: relative; border-radius: 30px; background: radial-gradient(circle, var(--glass-bg), transparent); box-shadow: inset 0 0 20px rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; }
+        /* Avatar & Inventário */
+        .avatar-2d-container { width: 160px; height: 160px; margin: 0 auto; position: relative; border-radius: 30px; background: radial-gradient(circle, var(--glass-bg), transparent); box-shadow: inset 0 0 20px rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; transition: background 0.5s ease;}
         .avatar-character { width: 120px; height: 120px; position: relative; }
         .avatar-layer { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: flex-end; transition: all 0.3s; }
         .avatar-layer img, .avatar-layer svg { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
         .breathe-anim { animation: breathe 3s ease-in-out infinite; }
         @keyframes breathe { 0%, 100% { transform: scaleY(1) translateY(0); } 50% { transform: scaleY(0.98) translateY(2px); } }
-
-        /* Inventário */
         .inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 10px; margin-top: 1rem; }
         .inv-slot { background: rgba(0,0,0,0.2); border: 2px solid var(--glass-border); border-radius: 16px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; position: relative; overflow: hidden; }
-        body.theme-cloud .inv-slot { background: rgba(255,255,255,0.6); }
+        .theme-cloud .inv-slot { background: rgba(255,255,255,0.6); }
         .inv-slot:hover { transform: scale(1.05); background: var(--glass-bg); }
         .inv-slot.equipped { border-color: var(--success); background: rgba(52, 211, 153, 0.1); }
         .inv-slot.equipped::after { content: 'E'; position: absolute; top: 4px; right: 4px; background: var(--success); color: var(--bg-color-1); font-size: 0.6rem; font-weight: 900; padding: 2px 5px; border-radius: 6px; }
@@ -185,10 +204,10 @@
         .inv-name { font-size: 0.55rem; text-align: center; font-weight: 800; color: var(--text-muted); line-height: 1.1; padding: 0 4px; }
 
         /* Modals */
-        .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s; }
+        .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s, background-color 0.5s ease; }
         #level-up-screen { opacity: 0; pointer-events: none; transition: opacity 0.4s; }
         #level-up-screen.active { opacity: 1; pointer-events: auto; }
-        .level-badge { background: var(--accent); width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 8px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.3); border: 6px solid rgba(255,255,255,0.2); }
+        .level-badge { background: var(--accent); width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 8px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.3); border: 6px solid rgba(255,255,255,0.2); transition: background-color 0.5s ease, box-shadow 0.5s ease;}
         .floating-exp { position: fixed; color: var(--success); font-size: 1.25rem; font-weight: 900; pointer-events: none; z-index: 1000; text-shadow: 0 2px 10px rgba(0,0,0,0.3); animation: floatUpAndFade 1s forwards; }
     </style>
 </head>
@@ -198,7 +217,7 @@
 
     <div id="login-screen" class="overlay-screen">
         <div style="text-align: center; padding: 2rem; max-width: 400px; width: 100%;">
-            <div class="float-gentle" style="background: var(--text-main); color: var(--bg-color-1); width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: rotate(-10deg);">
+            <div class="float-gentle" style="background: var(--text-main); color: var(--bg-color-1); width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: rotate(-10deg); transition: color 0.5s ease, background-color 0.5s ease;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 40px; height: 40px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
             </div>
             <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem;">Polímata</h1>
@@ -260,17 +279,8 @@
             <!-- PILARES -->
             <section id="view-skills" class="hidden">
                 <div class="panel" style="padding: 1rem;">
-                    <div class="section-title" style="padding: 0.5rem;">
-                        O Templo (Pilares)
-                        <button onclick="handleAddSkill()" class="btn-icon-soft" title="Erguer Novo Pilar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
-                    </div>
-                    
-                    <!-- SISTEMA 3D DE PILARES -->
-                    <div id="iso-world">
-                        <svg id="iso-ground"></svg>
-                        <div id="iso-nodes"></div>
-                    </div>
-
+                    <div class="section-title" style="padding: 0.5rem;">O Templo (Pilares)<button onclick="handleAddSkill()" class="btn-icon-soft" title="Erguer Novo Pilar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div>
+                    <div id="iso-world"><svg id="iso-ground"></svg><div id="iso-nodes"></div></div>
                 </div>
                 <div class="panel" id="editor-card"></div>
                 <div class="panel">
@@ -278,6 +288,21 @@
                     <div id="skills-list"></div>
                 </div>
             </section>
+
+            <!-- COMUNIDADE -->
+            <section id="view-community" class="hidden">
+                <div class="panel">
+                    <div class="section-title">Encontrar Viajantes</div>
+                    <input type="text" id="search-community" class="input-ios" placeholder="Buscar por nome ou título..." oninput="handleSearch()">
+                </div>
+                
+                <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 1.5rem; padding-left: 0.5rem;">Seu Cartão Público</h3>
+                <div id="my-community-card-container"></div>
+
+                <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 2rem; padding-left: 0.5rem;">Exploradores</h3>
+                <div id="community-list"></div>
+            </section>
+
         </main>
 
         <!-- BOTTOM NAV -->
@@ -285,6 +310,7 @@
             <button class="nav-item active" onclick="switchTab('home', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Início</button>
             <button class="nav-item" onclick="switchTab('inventory', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10"></path><path d="M4 16h16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z"></path><path d="M10 10l2 2 2-2"></path></svg>Mochila</button>
             <button class="nav-item" onclick="switchTab('skills', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 17 22 12"></polyline></svg>Pilares</button>
+            <button class="nav-item" onclick="switchTab('community', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Global</button>
             <button class="nav-item" onclick="openSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Ajustes</button>
         </nav>
 
@@ -332,19 +358,14 @@
     
     const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
-    // --- CORES DOS 7 ELEMENTOS DOS PILARES ---
     const elementStyles = {
-        'void': { main: '#4f46e5', top: '#818cf8', icon: '🌌' },
-        'journey': { main: '#d97706', top: '#fbbf24', icon: '⏳' },
-        'forest': { main: '#059669', top: '#34d399', icon: '🌿' },
-        'cloud': { main: '#0284c7', top: '#38bdf8', icon: '☁️' },
-        'inferno': { main: '#dc2626', top: '#f87171', icon: '🔥' },
-        'ocean': { main: '#0891b2', top: '#22d3ee', icon: '🌊' },
+        'void': { main: '#4f46e5', top: '#818cf8', icon: '🌌' }, 'journey': { main: '#d97706', top: '#fbbf24', icon: '⏳' },
+        'forest': { main: '#059669', top: '#34d399', icon: '🌿' }, 'cloud': { main: '#0284c7', top: '#38bdf8', icon: '☁️' },
+        'inferno': { main: '#dc2626', top: '#f87171', icon: '🔥' }, 'ocean': { main: '#0891b2', top: '#22d3ee', icon: '🌊' },
         'arcane': { main: '#c026d3', top: '#e879f9', icon: '✨' }
     };
     const elementList = Object.keys(elementStyles);
 
-    // --- INVENTÁRIO DB ---
     const itemsDB = [
         { id: 'body_default', type: 'body', name: 'Corpo Base', icon: '👤', render: '<svg viewBox="0 0 100 100" fill="#fcd34d"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/></svg>' },
         { id: 'body_dark', type: 'body', name: 'Corpo Sombrio', icon: '🌑', render: '<svg viewBox="0 0 100 100" fill="#1e293b"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/><circle cx="40" cy="35" r="3" fill="#60a5fa"/><circle cx="60" cy="35" r="3" fill="#60a5fa"/></svg>' },
@@ -356,18 +377,22 @@
         { id: 'extra_cloak', type: 'extra', name: 'Capa Azul', icon: '🧥', render: '<svg viewBox="0 0 100 100" fill="#3b82f6" style="z-index: -1; position: absolute;"><path d="M30 50 L20 95 L80 95 L70 50 Z"/></svg>' }
     ];
 
-    // --- GLOBAL ---
+    const mockCommunity = [
+        { uid: 'npc1', name: 'Mago Cinzento', description: 'Buscando conhecimento.', theme: 'theme-arcane', level: 42, photoURL: '' },
+        { uid: 'npc2', name: 'Lâmina do Sol', description: 'Explorador das dunas.', theme: 'theme-journey', level: 15, photoURL: '' },
+        { uid: 'npc3', name: 'Guardiã', description: 'Protegendo a vida.', theme: 'theme-forest', level: 27, photoURL: '' },
+        { uid: 'npc4', name: 'Senhor das Chamas', description: 'Forjado no caos.', theme: 'theme-inferno', level: 50, photoURL: '' }
+    ];
+
     let currentUser = null; let userPath = ''; 
     let profileData = { name: "Viajante", description: "Despertando...", exp: 0, theme: "theme-void", customPhotoURL: "", equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
-    let skillsData = []; let questsData = [];
+    let skillsData = []; let questsData = []; let communityData = [];
     let selectedNode = { type: 'main', id: null }; let isEditingPillar = false;
-    let unsubProfile, unsubSkills, unsubQuests; let currentLevelState = 1; let initialSettingsState = {};
+    let unsubProfile, unsubSkills, unsubQuests, unsubComm; let currentLevelState = 1; let initialSettingsState = {};
     const EXP_PER_LEVEL = 500;
 
-    // --- CANVAS PARTICLES (7 THEMES) ---
     const canvas = document.getElementById('theme-canvas'); const ctx = canvas.getContext('2d');
     let particles = []; let animationFrameId;
-
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
@@ -376,7 +401,6 @@
         reset() {
             this.x = Math.random() * canvas.width; this.y = canvas.height + Math.random() * 100;
             this.size = Math.random() * 3 + 1; this.alpha = Math.random() * 0.5 + 0.1;
-            
             if (this.theme === 'theme-void') { this.vx = (Math.random() - 0.5)*0.5; this.vy = -(Math.random()*1 + 0.5); this.color = `rgba(129,140,248,${this.alpha})`; } 
             else if (this.theme === 'theme-journey') { this.x = Math.random()*canvas.width*1.5 - canvas.width*0.5; this.vx = Math.random()*3 + 1; this.vy = -(Math.random()*1 + 0.5); this.color = `rgba(251,191,36,${this.alpha})`; } 
             else if (this.theme === 'theme-forest') { this.vy = -(Math.random()*0.5 + 0.2); this.angle = Math.random()*Math.PI*2; this.vx = Math.cos(this.angle); this.color = `rgba(167,243,208,${this.alpha*1.5})`; } 
@@ -390,10 +414,8 @@
             else if (this.theme === 'theme-ocean') { this.angle += 0.1; this.x += Math.sin(this.angle)*0.5; }
             else { this.x += this.vx; }
             this.y += this.vy;
-
             if(this.theme === 'theme-arcane') { this.alpha += this.fadeDir; if(this.alpha > 1 || this.alpha < 0) this.fadeDir *= -1; this.color = `rgba(232,121,249,${this.alpha})`; }
             if (this.theme === 'theme-inferno') { this.size *= 0.95; if(this.size < 0.5) this.reset(); }
-
             if (this.theme === 'theme-cloud' && this.x > canvas.width + this.size) this.reset();
             else if (this.theme !== 'theme-cloud' && (this.y < -10 || this.x > canvas.width + 10 || this.x < -10)) this.reset();
         }
@@ -402,15 +424,13 @@
     function initParticles(themeClass) { particles = []; let c = 40; if(themeClass==='theme-cloud') c=10; if(themeClass==='theme-journey') c=80; if(themeClass==='theme-inferno') c=60; for(let i=0; i<c; i++) particles.push(new Particle(themeClass)); }
     function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); animationFrameId = requestAnimationFrame(animateParticles); }
 
-    // --- NAVEGAÇÃO E MENU INTELIGENTE ---
     window.switchTab = (tabId, btnElement) => {
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active')); if(btnElement) btnElement.classList.add('active');
-        ['home','inventory','skills'].forEach(t => document.getElementById(`view-${t}`).classList.add('hidden'));
+        ['home','inventory','skills','community'].forEach(t => document.getElementById(`view-${t}`).classList.add('hidden'));
         document.getElementById(`view-${tabId}`).classList.remove('hidden');
         if(tabId === 'skills') setTimeout(renderWheel, 50); 
         if(tabId === 'inventory' || tabId === 'home') renderAvatar();
     };
-
     window.openSettings = () => {
         const sheet = document.getElementById('settings-sheet'); const backdrop = document.getElementById('settings-backdrop');
         initialSettingsState = { name: profileData.name||'', desc: profileData.description||'', photo: profileData.customPhotoURL||'' };
@@ -419,14 +439,12 @@
         document.getElementById('input-profile-photo').value = initialSettingsState.photo;
         sheet.classList.add('open'); backdrop.classList.add('active');
     };
-
     window.handleCloseSettings = () => {
         const n = document.getElementById('input-profile-name').value; const d = document.getElementById('input-profile-desc').value; const p = document.getElementById('input-profile-photo').value;
         const hasChanged = (n !== initialSettingsState.name || d !== initialSettingsState.desc || p !== initialSettingsState.photo);
         if (hasChanged) { if (confirm("Existem modificações não salvas. Deseja salvar agora?")) { window.saveProfileData(); return; } }
         closeSettingsUI();
     };
-
     function closeSettingsUI() { document.getElementById('settings-sheet').classList.remove('open'); document.getElementById('settings-backdrop').classList.remove('active'); }
 
     window.setTheme = async (themeClass, element) => {
@@ -435,7 +453,6 @@
         if (currentUser) { profileData.theme = themeClass; await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: themeClass }).catch(console.error); }
     };
 
-    // --- AUTH E DB ---
     document.getElementById('btn-login-action').onclick = async () => { try { await signInWithPopup(auth, provider); } catch (e) { console.error(e); } };
     window.handleLogout = () => { if(confirm("Deseja desconectar?")) { signOut(auth); closeSettingsUI(); } };
 
@@ -447,13 +464,41 @@
             loadDataAndSync(); renderInventoryGrid(); 
         } else {
             currentUser = null; document.getElementById('login-screen').classList.remove('hidden'); document.getElementById('login-screen').style.opacity = '1'; document.getElementById('app-container').classList.add('hidden');
-            cancelAnimationFrame(animationFrameId); if (unsubProfile) unsubProfile(); if (unsubSkills) unsubSkills(); if (unsubQuests) unsubQuests();
+            cancelAnimationFrame(animationFrameId); if (unsubProfile) unsubProfile(); if (unsubSkills) unsubSkills(); if (unsubQuests) unsubQuests(); if(unsubComm) unsubComm();
         }
     });
 
     function getLevelInfo(exp) { return { level: Math.floor(exp / EXP_PER_LEVEL) + 1, currentExp: exp % EXP_PER_LEVEL, progress: ((exp % EXP_PER_LEVEL) / EXP_PER_LEVEL) * 100 }; }
     window.closeLevelUp = () => { document.getElementById('level-up-screen').classList.remove('active'); };
     function createFloatingEXP(x, y, amount) { const el = document.createElement('div'); el.className = 'floating-exp'; el.innerText = `+${amount} XP`; el.style.left = `${x}px`; el.style.top = `${y}px`; document.body.appendChild(el); setTimeout(() => el.remove(), 1000); }
+
+    async function syncToCommunity() {
+        if (!currentUser) return;
+        try {
+            const pubData = { uid: currentUser.uid, name: profileData.name || 'Viajante', description: profileData.description || 'Despertando...', photoURL: profileData.customPhotoURL || currentUser.photoURL || '', theme: profileData.theme || 'theme-void', level: getLevelInfo(profileData.exp || 0).level };
+            await setDoc(doc(db, 'community', currentUser.uid), pubData);
+        } catch(e) {}
+    }
+
+    window.handleSearch = () => { renderCommunityList(); };
+
+    function createCardHTML(userObj, isMe = false) {
+        const themeClass = userObj.theme || 'theme-void';
+        const photo = userObj.photoURL ? `<img src="${userObj.photoURL}" class="comm-photo">` : `<div class="comm-photo" style="background:var(--glass-bg); display:flex; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px; color:var(--text-main);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>`;
+        return `<div class="community-card ${themeClass}"><div class="comm-info">${photo}<div><div style="font-weight:900; font-size:1.1rem; line-height:1.1; margin-bottom:2px;">${userObj.name}</div><div style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">${userObj.description}</div></div></div><div class="comm-level-badge">${userObj.level}</div></div>`;
+    }
+
+    function renderCommunityList() {
+        const searchTerm = document.getElementById('search-community').value.toLowerCase();
+        const me = { uid: currentUser.uid, name: profileData.name, description: profileData.description, photoURL: profileData.customPhotoURL || currentUser.photoURL, theme: profileData.theme, level: currentLevelState };
+        document.getElementById('my-community-card-container').innerHTML = createCardHTML(me, true);
+
+        const container = document.getElementById('community-list');
+        const others = communityData.filter(u => u.uid !== currentUser.uid && (u.name.toLowerCase().includes(searchTerm) || u.description.toLowerCase().includes(searchTerm)));
+        
+        if (others.length === 0) { container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-weight:700; margin-top:2rem;">Nenhum viajante encontrado com "${searchTerm}".</p>`; } 
+        else { container.innerHTML = others.map(u => createCardHTML(u)).join(''); }
+    }
 
     async function loadDataAndSync() {
         if (!currentUser) return;
@@ -471,12 +516,13 @@
                     const newLevel = getLevelInfo(profileData.exp || 0).level;
                     if (newLevel > currentLevelState) { document.getElementById('new-level-display').innerText = newLevel; document.getElementById('level-up-screen').classList.add('active'); currentLevelState = newLevel; }
                     if(profileData.theme && document.body.className !== profileData.theme) { document.body.className = profileData.theme; initParticles(profileData.theme); }
-                    updateProfileUI(); renderAvatar(); renderInventoryGrid();
+                    updateProfileUI(); renderAvatar(); renderInventoryGrid(); syncToCommunity();
                 }
             }, (err) => document.getElementById('permission-error').style.display='block');
 
             unsubSkills = onSnapshot(collection(db, userPath, 'skills'), (snap) => { skillsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderWheel(); renderSkillList(); renderEditor(); });
             unsubQuests = onSnapshot(collection(db, userPath, 'quests'), (snap) => { questsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); updateQuestsUI(); });
+            unsubComm = onSnapshot(collection(db, 'community'), (snap) => { communityData = snap.docs.map(d => d.data()); renderCommunityList(); }, (err) => { communityData = [...mockCommunity]; renderCommunityList(); });
         } catch (error) { document.getElementById('permission-error').style.display='block'; }
     }
 
@@ -529,10 +575,8 @@
         c.innerHTML = sorted.map((q, i) => `<div class="quest-item ${q.done ? 'completed' : ''} animate-fade-in" style="animation-delay: ${i*0.05}s" onclick="toggleQuest('${q.id}', ${q.done}, ${q.exp}, event)"><div style="display:flex; align-items:center; gap:1rem;"><div class="checkbox-bouncy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" style="width:14px; opacity:${q.done?1:0};"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div style="color: ${q.done?'var(--text-muted)':'var(--text-main)'}; font-weight:800; font-size:0.95rem; text-decoration:${q.done?'line-through':'none'};">${q.title}</div></div><div class="quest-reward">+${q.exp}XP</div></div>`).join('');
     }
 
-    // --- PILARES 3D ISO ---
     window.handleAddSkill = async () => { 
         if(currentUser) { 
-            // Atribui um elemento aleatório inicial
             const randomElement = elementList[Math.floor(Math.random() * elementList.length)];
             const docRef = await addDoc(collection(db, userPath, 'skills'), { name: "Novo Pilar", level: 10, element: randomElement }); 
             if(docRef){ selectNode('skill', docRef.id); isEditingPillar = true; } 
@@ -546,37 +590,36 @@
     window.selectNode = (type, id) => { selectedNode = { type, id }; isEditingPillar = false; renderWheel(); renderEditor(); renderSkillList(); };
     window.toggleEditPillar = () => { isEditingPillar = !isEditingPillar; renderEditor(); };
 
+    // --- NOVA RENDERIZAÇÃO DOS PILARES (USANDO SVG EXTERNO) ---
     function renderWheel() {
         const nodesContainer = document.getElementById('iso-nodes'); const svg = document.getElementById('iso-ground');
         if (!nodesContainer || document.getElementById('view-skills').classList.contains('hidden')) return;
         const w = document.getElementById('iso-world').offsetWidth; const h = document.getElementById('iso-world').offsetHeight;
-        const cx = w/2; const cy = h/2 + 50; const rx = Math.max(100, w*0.35); const ry = rx * 0.45; // Isometric perspective
+        const cx = w/2; const cy = h/2 + 50; const rx = Math.max(100, w*0.35); const ry = rx * 0.45; 
         nodesContainer.innerHTML = ''; svg.innerHTML = '';
 
-        // Monta array com todos para ordenar por Y (Depth sorting 3D)
         let renderQueue = [];
-
-        // Pilar Central (Dourado/Branco)
+        
+        // PILAR CENTRAL
         renderQueue.push({
             type: 'main', id: null, x: cx, y: cy, zIndex: Math.floor(cy),
             html: `
                 <div class="iso-pillar-container ${selectedNode.type === 'main' ? 'active' : ''}" style="left:${cx}px; top:${cy}px; z-index:${Math.floor(cy)};" onclick="selectNode('main', null)">
-                    <div class="iso-label" style="top:-90px;">A Origem</div>
-                    <div class="iso-top" style="background:#ffffff; width:80px; height:40px; top:-20px; left:-10px;"></div>
-                    <div class="iso-body" style="background:#fbbf24; width:80px; height:80px; border-radius: 0 0 40px 40px / 0 0 20px 20px; left:-10px;"></div>
-                    <div class="iso-base-shadow" style="width:80px; height:40px; bottom:-20px; left:-10px;"></div>
+                    <div class="iso-label" style="top:-120px;">A Origem</div>
+                    <div style="width: 100px; height: 150px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4)); transform-origin: bottom center;"></div>
                 </div>
             `
         });
 
+        // PILARES DAS HABILIDADES
         skillsData.forEach((s, i) => {
-            const angle = (i * (2*Math.PI))/skillsData.length;
-            const px = cx + rx*Math.cos(angle); const py = cy + ry*Math.sin(angle);
-            const isSel = selectedNode.id === s.id;
-            const elStyle = elementStyles[s.element] || elementStyles['void'];
-            const pilarHeight = Math.max(20, (s.level/100) * 120); // Altura dinâmica baseada no nível
+            const angle = (i * (2*Math.PI))/skillsData.length; const px = cx + rx*Math.cos(angle); const py = cy + ry*Math.sin(angle);
+            const isSel = selectedNode.id === s.id; const elStyle = elementStyles[s.element] || elementStyles['void'];
+            
+            // Fator de escala baseado no nível da habilidade (0.5 a 1.2)
+            const scale = 0.5 + (s.level / 100) * 0.7; 
+            const labelTop = -120 * scale - 20;
 
-            // Linha no chão conectando ao centro
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
             line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", px); line.setAttribute("y2", py);
             line.setAttribute("stroke", isSel ? elStyle.main : "rgba(255, 255, 255, 0.1)"); line.setAttribute("stroke-width", isSel ? "3" : "1.5");
@@ -586,19 +629,13 @@
                 type: 'skill', id: s.id, x: px, y: py, zIndex: Math.floor(py),
                 html: `
                     <div class="iso-pillar-container ${isSel ? 'active' : ''}" style="left:${px}px; top:${py}px; z-index:${Math.floor(py)};" onclick="selectNode('skill', '${s.id}')">
-                        <div class="iso-label" style="top:-${pilarHeight + 25}px;">${elStyle.icon} ${s.name}</div>
-                        <div class="iso-top" style="background:${elStyle.top}; width:50px; height:25px; top:-12.5px; left:-25px;"></div>
-                        <div class="iso-body" style="background:${elStyle.main}; width:50px; height:${pilarHeight}px; border-radius: 0 0 25px 25px / 0 0 12.5px 12.5px; left:-25px;"></div>
-                        <div class="iso-base-shadow" style="width:50px; height:25px; bottom:-12.5px; left:-25px;"></div>
+                        <div class="iso-label" style="top:${labelTop}px;">${elStyle.icon} ${s.name}</div>
+                        <div style="width: 80px; height: 120px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; transform: scale(${scale}); transform-origin: bottom center; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.4));"></div>
                     </div>
                 `
             });
         });
-
-        // Ordena por eixo Y (fundo para frente) e injeta
-        renderQueue.sort((a, b) => a.zIndex - b.zIndex).forEach(node => {
-            nodesContainer.innerHTML += node.html;
-        });
+        renderQueue.sort((a, b) => a.zIndex - b.zIndex).forEach(node => { nodesContainer.innerHTML += node.html; });
     }
 
     function renderEditor() {
@@ -612,7 +649,6 @@
             content += `<div class="animate-fade-in" style="display:flex; flex-direction:column;">
                 <label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted);">Nome</label>
                 <input type="text" class="input-ios" value="${activeData.name||''}" onchange="updatePillarName(this.value)">
-                
                 <label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted); margin-top:5px;">Elemento de Poder</label>
                 <select class="select-ios" onchange="updateSkillElement(this.value)">
                     <option value="void" ${activeData.element === 'void' ? 'selected' : ''}>🌌 O Vazio (Foco)</option>
@@ -623,22 +659,13 @@
                     <option value="ocean" ${activeData.element === 'ocean' ? 'selected' : ''}>🌊 Oceano (Emoção/Fluxo)</option>
                     <option value="arcane" ${activeData.element === 'arcane' ? 'selected' : ''}>✨ Arcano (Intelecto/Magia)</option>
                 </select>
-
-                <div style="display:flex; justify-content:space-between; margin:10px 0 5px;">
-                    <label id="editor-skill-label" style="font-size:0.85rem; font-weight:700;">Elevação: ${activeData.level}%</label>
-                </div>
+                <div style="display:flex; justify-content:space-between; margin:10px 0 5px;"><label id="editor-skill-label" style="font-size:0.85rem; font-weight:700;">Elevação: ${activeData.level}%</label></div>
                 <input type="range" min="0" max="100" value="${activeData.level}" style="width:100%; accent-color:var(--accent);" oninput="updateSkillLevelUI(this.value)" onchange="updateSkillLevelDB(this.value)">
                 <button onclick="toggleEditPillar()" class="btn-duo" style="margin-top:1.5rem; padding:10px;">Aplicar Runas</button>
             </div>`;
         } else {
             const elStyle = elementStyles[activeData.element] || elementStyles['void'];
-            content += `<div class="animate-fade-in">
-                <h3 style="font-size:1.5rem; margin-bottom:1rem; font-weight:900; display:flex; align-items:center; gap:8px;">${elStyle.icon} ${activeData.name}</h3>
-                <div class="progress-wrapper" style="padding:1rem;">
-                    <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1rem;"><span>Construção</span><span>${activeData.level}%</span></div>
-                    <div class="progress-track" style="height:12px; margin-top:8px;"><div class="progress-fill" style="width:${activeData.level}%; background:${elStyle.main};"></div></div>
-                </div>
-            </div>`;
+            content += `<div class="animate-fade-in"><h3 style="font-size:1.5rem; margin-bottom:1rem; font-weight:900; display:flex; align-items:center; gap:8px;">${elStyle.icon} ${activeData.name}</h3><div class="progress-wrapper" style="padding:1rem;"><div style="display:flex; justify-content:space-between; font-weight:800; font-size:1rem;"><span>Construção</span><span>${activeData.level}%</span></div><div class="progress-track" style="height:12px; margin-top:8px;"><div class="progress-fill" style="width:${activeData.level}%; background:${elStyle.main};"></div></div></div></div>`;
         }
         card.innerHTML = content;
     }
