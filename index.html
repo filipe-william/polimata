@@ -80,7 +80,10 @@
         /* --- LAYOUT --- */
         #app-container { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; }
         main.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.5rem 1.5rem 6rem 1.5rem; }
-        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        
+        ::-webkit-scrollbar { width: 4px; height: 4px; } 
+        ::-webkit-scrollbar-track { background: transparent; } 
+        ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
 
         /* --- BOTÕES --- */
         .btn-duo {
@@ -92,6 +95,13 @@
         }
         .theme-cloud .btn-duo { color: #fff; } 
         .btn-duo:active { transform: translateY(6px); box-shadow: 0 0px 0 var(--accent-dark), 0 5px 10px rgba(0,0,0,0.2); }
+
+        .btn-outline {
+            background: transparent; border: 2px solid var(--text-muted); color: var(--text-main); font-weight: 800;
+            padding: 12px 24px; border-radius: 20px; cursor: pointer; transition: 0.2s; width: 100%; text-transform: uppercase;
+        }
+        .btn-outline:active { background: rgba(255,255,255,0.1); }
+        .theme-cloud .btn-outline { border-color: var(--text-muted); color: var(--text-main); }
 
         /* --- BOTTOM NAV --- */
         #bottom-nav {
@@ -105,7 +115,7 @@
         .nav-item svg { width: 22px; height: 22px; stroke-width: 2.5; transition: transform 0.3s; }
         .nav-item.active svg { transform: scale(1.15); }
 
-        /* --- SETTINGS SHEET --- */
+        /* --- INPUTS & SHEETS --- */
         #settings-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 90; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
         #settings-backdrop.active { opacity: 1; pointer-events: auto; }
         #settings-sheet {
@@ -128,15 +138,8 @@
         .select-ios option { background: var(--sheet-bg); color: var(--text-main); }
         .theme-cloud .select-ios option { background: #fff; color: #0f172a; }
 
-        .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 2rem; }
-        .theme-option { display: flex; align-items: center; gap: 10px; padding: 0.8rem; border-radius: 16px; cursor: pointer; border: 2px solid transparent; background: var(--glass-bg); transition: all 0.2s; }
-        .theme-option.active { border-color: var(--accent); background: rgba(0,0,0,0.3); }
-        .theme-cloud .theme-option.active { background: rgba(0,0,0,0.05); }
-        .color-preview { width: 20px; height: 20px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); flex-shrink: 0; }
-
         /* --- COMPONENTES UI (CARTÕES) --- */
         .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 1.5rem; position: relative; transition: background-color 0.5s ease, border-color 0.5s ease; }
-        
         .identity-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 1.5rem; backdrop-filter: blur(24px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: background-color 0.5s ease, border-color 0.5s ease; }
         .identity-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: border-color 0.5s ease;}
 
@@ -146,7 +149,7 @@
             padding: 1.25rem; border-radius: 24px; margin-bottom: 12px;
             background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2));
             border: 2px solid var(--glass-border); box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            color: var(--text-main); position: relative; overflow: hidden; transition: transform 0.2s; cursor: pointer;
+            color: var(--text-main); position: relative; overflow: hidden; transition: transform 0.2s;
         }
         .community-card:hover { transform: translateY(-3px); border-color: var(--accent); }
         .community-card::before { content: ''; position: absolute; inset: 0; background: var(--glass-bg); pointer-events: none; }
@@ -154,6 +157,52 @@
         .comm-info { display: flex; align-items: center; gap: 1rem; flex: 1; }
         .comm-photo { width: 50px; height: 50px; border-radius: 18px; object-fit: cover; border: 2px solid var(--accent); }
         .comm-level-badge { background: var(--accent); color: #fff; font-weight: 900; font-size: 1.1rem; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0; }
+        
+        .chat-btn-comm {
+            background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main);
+            width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.2s; flex-shrink: 0;
+        }
+        .chat-btn-comm:hover { background: var(--accent); border-color: var(--accent); transform: scale(1.1); }
+
+        /* --- CHAT TEMPORÁRIO (MODAL) --- */
+        #chat-modal {
+            position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            z-index: 2000; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        #chat-modal.open { transform: translateY(0); }
+        .chat-header {
+            padding: 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between;
+            background: rgba(0,0,0,0.2);
+        }
+        .chat-header-title { font-size: 1.2rem; font-weight: 900; display: flex; align-items: center; gap: 10px; }
+        .chat-status { font-size: 0.75rem; font-weight: 700; color: var(--success); background: var(--glass-bg); padding: 2px 8px; border-radius: 10px; border: 1px solid var(--glass-border); }
+        
+        #chat-messages-container {
+            flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 10px;
+        }
+        .chat-bubble {
+            max-width: 80%; padding: 12px 16px; border-radius: 20px; font-weight: 600; font-size: 0.95rem; line-height: 1.4;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        .bubble-mine { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .bubble-other { align-self: flex-start; background: var(--glass-bg); border: 1px solid var(--glass-border); border-bottom-left-radius: 4px; color: var(--text-main); }
+        
+        .chat-input-area {
+            padding: 1.5rem; border-top: 1px solid var(--glass-border); background: rgba(0,0,0,0.2);
+            display: flex; gap: 10px; padding-bottom: 2.5rem; /* Margem extra para iOS */
+        }
+        .chat-input {
+            flex: 1; background: rgba(0,0,0,0.3); border: 2px solid transparent; border-radius: 24px;
+            padding: 14px 20px; color: var(--text-main); font-size: 1rem; outline: none; transition: 0.3s;
+        }
+        .theme-cloud .chat-input { background: rgba(255,255,255,0.5); color: #0f172a; }
+        .chat-input:focus { border-color: var(--accent); background: rgba(0,0,0,0.4); }
+        .btn-send {
+            background: var(--accent); color: white; border: none; width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0;
+        }
+        .btn-send:active { transform: scale(0.9); }
 
         /* Diversos */
         .progress-wrapper { background: rgba(0,0,0,0.2); padding: 1.25rem; border-radius: 24px; text-align: left; margin-top: 1.5rem; }
@@ -176,8 +225,15 @@
         .quest-item.completed .quest-reward { color: var(--success); border-color: transparent;}
 
         /* --- SISTEMA ISOMÉTRICO 3D (OS PILARES SVG) --- */
-        #iso-world { width: 100%; height: 400px; position: relative; margin-bottom: 1.5rem; perspective: 1000px; }
-        #iso-ground { position: absolute; inset: 0; pointer-events: none; }
+        #iso-wrapper {
+            width: 100%; overflow-x: auto; overflow-y: hidden; text-align: center;
+            border-radius: 16px; padding: 20px 0;
+        }
+        #iso-world { 
+            position: relative; margin: 0 auto; perspective: 1000px;
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+        #iso-ground { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; }
         .iso-pillar-container { position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
         .iso-pillar-container:hover, .iso-pillar-container.active { transform: translate(-50%, -100%) scale(1.05); filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); z-index: 100 !important; }
         .iso-label { position: absolute; background: var(--glass-bg); padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; white-space: nowrap; border: 1px solid var(--glass-border); backdrop-filter: blur(4px); pointer-events: none; transition: opacity 0.3s; opacity: 0.7;}
@@ -203,10 +259,10 @@
         .inv-icon { font-size: 1.5rem; margin-bottom: 4px; }
         .inv-name { font-size: 0.55rem; text-align: center; font-weight: 800; color: var(--text-muted); line-height: 1.1; padding: 0 4px; }
 
-        /* Modals */
-        .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s, background-color 0.5s ease; }
-        #level-up-screen { opacity: 0; pointer-events: none; transition: opacity 0.4s; }
-        #level-up-screen.active { opacity: 1; pointer-events: auto; }
+        /* Modals Overlay */
+        .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s, background-color 0.5s ease; opacity: 0; pointer-events: none; }
+        .overlay-screen.active { opacity: 1; pointer-events: auto; }
+        
         .level-badge { background: var(--accent); width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 8px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.3); border: 6px solid rgba(255,255,255,0.2); transition: background-color 0.5s ease, box-shadow 0.5s ease;}
         .floating-exp { position: fixed; color: var(--success); font-size: 1.25rem; font-weight: 900; pointer-events: none; z-index: 1000; text-shadow: 0 2px 10px rgba(0,0,0,0.3); animation: floatUpAndFade 1s forwards; }
     </style>
@@ -215,7 +271,8 @@
 
     <canvas id="theme-canvas"></canvas>
 
-    <div id="login-screen" class="overlay-screen">
+    <!-- TELA DE LOGIN -->
+    <div id="login-screen" class="overlay-screen active" style="opacity: 1; pointer-events: auto;">
         <div style="text-align: center; padding: 2rem; max-width: 400px; width: 100%;">
             <div class="float-gentle" style="background: var(--text-main); color: var(--bg-color-1); width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: rotate(-10deg); transition: color 0.5s ease, background-color 0.5s ease;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 40px; height: 40px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
@@ -226,6 +283,7 @@
         </div>
     </div>
 
+    <!-- MODAL: LEVEL UP -->
     <div id="level-up-screen" class="overlay-screen">
         <div style="text-align: center;">
             <div class="level-badge animate-slide-up"><span style="font-size: 1rem; font-weight: 800; color: rgba(255,255,255,0.8); text-transform: uppercase;">Nível</span><div id="new-level-display" style="font-size: 4rem; font-weight: 900; color: white; line-height: 1;">2</div></div>
@@ -235,8 +293,56 @@
         </div>
     </div>
 
+    <!-- MODAL: CRIAR NOVO PILAR -->
+    <div id="modal-add-pillar" class="overlay-screen">
+        <div class="panel animate-fade-in" style="max-width: 90%; width: 380px; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 1.5rem; text-align: center;">Forjar Novo Pilar</h3>
+            <label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted);">Qual sabedoria você irá cultivar?</label>
+            <input type="text" id="add-pillar-name" class="input-ios" placeholder="Ex: Programação, Piano, Calistenia...">
+            <label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted); margin-top:10px;">Elemento de Poder</label>
+            <select id="add-pillar-element" class="select-ios">
+                <option value="void">🌌 O Vazio (Foco / Disciplina)</option>
+                <option value="journey">⏳ A Jornada (Terra / Rotina)</option>
+                <option value="forest">🌿 A Floresta (Natureza / Saúde)</option>
+                <option value="cloud">☁️ A Nuvem (Ar / Mente / Estudos)</option>
+                <option value="inferno">🔥 Inferno (Paixão / Ação / Força)</option>
+                <option value="ocean">🌊 Oceano (Emoção / Artes / Fluxo)</option>
+                <option value="arcane">✨ Arcano (Intelecto / Lógica / Magia)</option>
+            </select>
+            <div style="display:flex; justify-content:space-between; margin:15px 0 5px;"><label id="add-pillar-level-label" style="font-size:0.85rem; font-weight:700;">Elevação Inicial: 1%</label></div>
+            <input type="range" id="add-pillar-level" min="1" max="100" value="1" style="width:100%; accent-color:var(--accent); margin-bottom: 2rem;" oninput="document.getElementById('add-pillar-level-label').innerText = `Elevação Inicial: ${this.value}%`">
+            <div style="display: flex; gap: 10px;"><button onclick="closeAddPillarModal()" class="btn-outline">Cancelar</button><button onclick="confirmAddPillar()" class="btn-duo">Erguer</button></div>
+        </div>
+    </div>
+
+    <!-- MODAL: CHAT TEMPORÁRIO -->
+    <div id="chat-modal">
+        <div class="chat-header">
+            <div class="chat-header-title">
+                <div class="comm-photo" style="width:36px; height:36px; border-radius:12px; overflow:hidden;" id="chat-header-photo"></div>
+                <div>
+                    <div id="chat-header-name" style="line-height:1.2;">Viajante</div>
+                    <div class="chat-status">Sessão Temporária</div>
+                </div>
+            </div>
+            <button onclick="closeChat()" class="btn-icon-soft" style="width: 36px; height: 36px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:18px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        
+        <div id="chat-messages-container">
+            <!-- Mensagens serão injetadas aqui -->
+            <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: auto; padding-top: 2rem;">
+                As mensagens trocadas aqui desaparecem assim que você fecha o aplicativo.<br>Apenas no momento presente.
+            </div>
+        </div>
+        
+        <div class="chat-input-area">
+            <input type="text" id="chat-input-text" class="chat-input" placeholder="Escreva uma mensagem..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
+            <button onclick="sendChatMessage()" class="btn-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px; transform: translateX(-2px);"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
+        </div>
+    </div>
+
     <div id="app-container" class="hidden">
-        <div id="permission-error" style="background: #ef4444; color: white; padding: 1rem; text-align: center; font-weight: 700; display: none; z-index: 200; position: absolute; top:0; width: 100%;">⚠️ Erro de Banco de Dados.</div>
+        <div id="permission-error" style="background: #ef4444; color: white; padding: 1rem; text-align: center; font-weight: 700; display: none; z-index: 200; position: absolute; top:0; width: 100%;">⚠️ Erro de permissão. Tente reconectar.</div>
 
         <main class="content-area">
             <!-- HOME -->
@@ -279,10 +385,15 @@
             <!-- PILARES -->
             <section id="view-skills" class="hidden">
                 <div class="panel" style="padding: 1rem;">
-                    <div class="section-title" style="padding: 0.5rem;">O Templo (Pilares)<button onclick="handleAddSkill()" class="btn-icon-soft" title="Erguer Novo Pilar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div>
-                    <div id="iso-world"><svg id="iso-ground"></svg><div id="iso-nodes"></div></div>
+                    <div class="section-title" style="padding: 0.5rem;">
+                        O Templo (Pilares)
+                        <button onclick="openAddPillarModal()" class="btn-icon-soft" title="Erguer Novo Pilar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                    </div>
+                    <div id="iso-wrapper"><div id="iso-world"><svg id="iso-ground"></svg><div id="iso-nodes"></div></div></div>
                 </div>
+
                 <div class="panel" id="editor-card"></div>
+                
                 <div class="panel">
                     <h3 style="font-size: 1rem; font-weight: 800; margin-bottom: 1rem;">Módulos Instalados (<span id="skill-count">0</span>)</h3>
                     <div id="skills-list"></div>
@@ -296,7 +407,7 @@
                     <input type="text" id="search-community" class="input-ios" placeholder="Buscar por nome ou título..." oninput="handleSearch()">
                 </div>
                 
-                <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 1.5rem; padding-left: 0.5rem;">Seu Cartão</h3>
+                <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 1.5rem; padding-left: 0.5rem;">Seu Cartão Público</h3>
                 <div id="my-community-card-container"></div>
 
                 <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 2rem; padding-left: 0.5rem;">Exploradores</h3>
@@ -313,38 +424,11 @@
             <button class="nav-item" onclick="switchTab('community', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Global</button>
             <button class="nav-item" onclick="openSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Ajustes</button>
         </nav>
-
-        <div id="settings-backdrop" onclick="handleCloseSettings()"></div>
-        <div id="settings-sheet">
-            <div class="sheet-handle" onclick="handleCloseSettings()"></div>
-            <div class="sheet-content">
-                <h3 class="sheet-title">Configurações da Conta</h3>
-                
-                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Identidade</h4>
-                <input type="text" id="input-profile-name" class="input-ios" placeholder="Seu Nome">
-                <input type="text" id="input-profile-desc" class="input-ios" placeholder="Seu Título/Foco">
-                <input type="text" id="input-profile-photo" class="input-ios" placeholder="URL da foto de perfil (Opcional)">
-                <button onclick="saveProfileData()" class="btn-duo" style="margin-bottom: 2rem;">Salvar Modificações</button>
-
-                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Atmosfera</h4>
-                <div class="theme-grid">
-                    <div class="theme-option active" onclick="setTheme('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700; font-size: 0.85rem;">O Vazio</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-journey', this)"><div class="color-preview" style="background: #b45309;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Jornada</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-forest', this)"><div class="color-preview" style="background: #047857;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Floresta</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-cloud', this)"><div class="color-preview" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Nuvem</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-inferno', this)"><div class="color-preview" style="background: #7f1d1d;"></div><span style="font-weight: 700; font-size: 0.85rem;">Inferno</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-ocean', this)"><div class="color-preview" style="background: #164e63;"></div><span style="font-weight: 700; font-size: 0.85rem;">Oceano</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-arcane', this)"><div class="color-preview" style="background: #581c87;"></div><span style="font-weight: 700; font-size: 0.85rem;">Arcano</span></div>
-                </div>
-
-                <button onclick="handleLogout()" class="btn-duo" style="background: transparent; color: #ef4444; border: 2px solid #ef4444; box-shadow: none;">Desconectar</button>
-            </div>
-        </div>
     </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc, deleteDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -364,7 +448,6 @@
         'inferno': { main: '#dc2626', top: '#f87171', icon: '🔥' }, 'ocean': { main: '#0891b2', top: '#22d3ee', icon: '🌊' },
         'arcane': { main: '#c026d3', top: '#e879f9', icon: '✨' }
     };
-    const elementList = Object.keys(elementStyles);
 
     const itemsDB = [
         { id: 'body_default', type: 'body', name: 'Corpo Base', icon: '👤', render: '<svg viewBox="0 0 100 100" fill="#fcd34d"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/></svg>' },
@@ -377,19 +460,17 @@
         { id: 'extra_cloak', type: 'extra', name: 'Capa Azul', icon: '🧥', render: '<svg viewBox="0 0 100 100" fill="#3b82f6" style="z-index: -1; position: absolute;"><path d="M30 50 L20 95 L80 95 L70 50 Z"/></svg>' }
     ];
 
-    const mockCommunity = [
-        { uid: 'npc1', name: 'Mago Cinzento', description: 'Buscando conhecimento.', theme: 'theme-arcane', level: 42, photoURL: '' },
-        { uid: 'npc2', name: 'Lâmina do Sol', description: 'Explorador das dunas.', theme: 'theme-journey', level: 15, photoURL: '' },
-        { uid: 'npc3', name: 'Guardiã', description: 'Protegendo a vida.', theme: 'theme-forest', level: 27, photoURL: '' },
-        { uid: 'npc4', name: 'Senhor das Chamas', description: 'Forjado no caos.', theme: 'theme-inferno', level: 50, photoURL: '' }
-    ];
-
     let currentUser = null; let userPath = ''; 
     let profileData = { name: "Viajante", description: "Despertando...", exp: 0, theme: "theme-void", customPhotoURL: "", equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
     let skillsData = []; let questsData = []; let communityData = [];
     let selectedNode = { type: 'main', id: null }; let isEditingPillar = false;
     let unsubProfile, unsubSkills, unsubQuests, unsubComm; let currentLevelState = 1; let initialSettingsState = {};
     const EXP_PER_LEVEL = 500;
+
+    // --- VARIÁVEIS DE SESSÃO DO CHAT ---
+    const sessionStartTime = Date.now(); // Grava a hora que o app foi aberto!
+    let activeChatRoomId = null;
+    let unsubActiveChat = null;
 
     const canvas = document.getElementById('theme-canvas'); const ctx = canvas.getContext('2d');
     let particles = []; let animationFrameId;
@@ -431,6 +512,17 @@
         if(tabId === 'skills') setTimeout(renderWheel, 50); 
         if(tabId === 'inventory' || tabId === 'home') renderAvatar();
     };
+    
+    // LÓGICA DE CRIAÇÃO DE PILARES 
+    window.openAddPillarModal = () => { document.getElementById('add-pillar-name').value = ''; document.getElementById('add-pillar-element').value = 'void'; document.getElementById('add-pillar-level').value = 1; document.getElementById('add-pillar-level-label').innerText = 'Elevação Inicial: 1%'; document.getElementById('modal-add-pillar').classList.add('active'); };
+    window.closeAddPillarModal = () => { document.getElementById('modal-add-pillar').classList.remove('active'); };
+    window.confirmAddPillar = async () => {
+        if (!currentUser) return;
+        const n = document.getElementById('add-pillar-name').value.trim(); const e = document.getElementById('add-pillar-element').value; const l = parseInt(document.getElementById('add-pillar-level').value);
+        const docRef = await addDoc(collection(db, userPath, 'skills'), { name: n === '' ? 'Novo Pilar' : n, element: e, level: l });
+        if (docRef) { closeAddPillarModal(); selectNode('skill', docRef.id); isEditingPillar = false; renderEditor(); }
+    };
+
     window.openSettings = () => {
         const sheet = document.getElementById('settings-sheet'); const backdrop = document.getElementById('settings-backdrop');
         initialSettingsState = { name: profileData.name||'', desc: profileData.description||'', photo: profileData.customPhotoURL||'' };
@@ -459,11 +551,11 @@
     onAuthStateChanged(auth, (user) => {
         if (user) {
             currentUser = user; userPath = `users/${user.uid}`;
-            document.getElementById('permission-error').style.display = 'none'; document.getElementById('login-screen').style.opacity = '0';
+            document.getElementById('permission-error').style.display = 'none'; document.getElementById('login-screen').classList.remove('active');
             setTimeout(() => { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('app-container').classList.remove('hidden'); initParticles(document.body.className); animateParticles(); }, 500);
             loadDataAndSync(); renderInventoryGrid(); 
         } else {
-            currentUser = null; document.getElementById('login-screen').classList.remove('hidden'); document.getElementById('login-screen').style.opacity = '1'; document.getElementById('app-container').classList.add('hidden');
+            currentUser = null; document.getElementById('login-screen').classList.remove('hidden'); document.getElementById('login-screen').classList.add('active'); document.getElementById('app-container').classList.add('hidden');
             cancelAnimationFrame(animationFrameId); if (unsubProfile) unsubProfile(); if (unsubSkills) unsubSkills(); if (unsubQuests) unsubQuests(); if(unsubComm) unsubComm();
         }
     });
@@ -472,6 +564,7 @@
     window.closeLevelUp = () => { document.getElementById('level-up-screen').classList.remove('active'); };
     function createFloatingEXP(x, y, amount) { const el = document.createElement('div'); el.className = 'floating-exp'; el.innerText = `+${amount} XP`; el.style.left = `${x}px`; el.style.top = `${y}px`; document.body.appendChild(el); setTimeout(() => el.remove(), 1000); }
 
+    // --- COMUNIDADE & CHAT ---
     async function syncToCommunity() {
         if (!currentUser) return;
         try {
@@ -482,10 +575,69 @@
 
     window.handleSearch = () => { renderCommunityList(); };
 
+    // Lógica para Abrir, Fechar e Enviar Mensagens
+    window.openChat = (friendUid, friendName, friendPhoto) => {
+        if(!currentUser) return;
+        
+        // UI Updates
+        document.getElementById('chat-header-name').innerText = friendName;
+        const photoHtml = friendPhoto ? `<img src="${friendPhoto}" style="width:100%; height:100%; object-fit:cover;">` : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; color:var(--text-main); margin:8px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
+        document.getElementById('chat-header-photo').innerHTML = photoHtml;
+        document.getElementById('chat-modal').classList.add('open');
+        
+        // Criar ID do Quarto de forma consistente (UID1_UID2 sempre na mesma ordem)
+        activeChatRoomId = [currentUser.uid, friendUid].sort().join('_');
+        
+        // Listener de Mensagens com Filtro em Memória para ser Epêmero!
+        if(unsubActiveChat) unsubActiveChat();
+        
+        const q = query(collection(db, `chats/${activeChatRoomId}/messages`), orderBy('timestamp', 'asc'));
+        unsubActiveChat = onSnapshot(q, (snap) => {
+            const container = document.getElementById('chat-messages-container');
+            // Limpa e mantém apenas o texto de aviso
+            container.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: auto; padding-top: 2rem; margin-bottom: 1rem;">As mensagens trocadas aqui desaparecem assim que você fecha o aplicativo.<br>Apenas no momento presente.</div>`;
+            
+            // Aqui está a MÁGICA TEMPORÁRIA: Só exibe as mensagens cujo timestamp é MAIOR que a hora que você abriu o app.
+            const messages = snap.docs.map(d => d.data()).filter(m => m.timestamp >= sessionStartTime);
+            
+            messages.forEach(msg => {
+                const isMine = msg.senderId === currentUser.uid;
+                container.innerHTML += `<div class="chat-bubble ${isMine ? 'bubble-mine' : 'bubble-other'}">${msg.text}</div>`;
+            });
+            
+            // Rola para o final automaticamente
+            container.scrollTop = container.scrollHeight;
+        });
+    };
+
+    window.closeChat = () => {
+        document.getElementById('chat-modal').classList.remove('open');
+        if(unsubActiveChat) { unsubActiveChat(); unsubActiveChat = null; }
+        activeChatRoomId = null;
+    };
+
+    window.sendChatMessage = async () => {
+        if(!currentUser || !activeChatRoomId) return;
+        const input = document.getElementById('chat-input-text');
+        const text = input.value.trim();
+        if(text === '') return;
+        
+        input.value = ''; // Limpa rápido
+        await addDoc(collection(db, `chats/${activeChatRoomId}/messages`), {
+            senderId: currentUser.uid,
+            text: text,
+            timestamp: Date.now()
+        });
+    };
+
     function createCardHTML(userObj, isMe = false) {
         const themeClass = userObj.theme || 'theme-void';
         const photo = userObj.photoURL ? `<img src="${userObj.photoURL}" class="comm-photo">` : `<div class="comm-photo" style="background:var(--glass-bg); display:flex; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px; color:var(--text-main);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>`;
-        return `<div class="community-card ${themeClass}"><div class="comm-info">${photo}<div><div style="font-weight:900; font-size:1.1rem; line-height:1.1; margin-bottom:2px;">${userObj.name}</div><div style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">${userObj.description}</div></div></div><div class="comm-level-badge">${userObj.level}</div></div>`;
+        
+        // Se NÃO sou eu, adiciona o botão de chat
+        const chatButton = !isMe ? `<button class="chat-btn-comm" onclick="openChat('${userObj.uid}', '${userObj.name.replace(/'/g, "\\'")}', '${(userObj.photoURL || '').replace(/'/g, "\\'")}')" title="Mensagem Epêmera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>` : '';
+
+        return `<div class="community-card ${themeClass}"><div class="comm-info">${photo}<div><div style="font-weight:900; font-size:1.1rem; line-height:1.1; margin-bottom:2px;">${userObj.name}</div><div style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">${userObj.description}</div></div></div><div style="display:flex; align-items:center; gap:10px;">${chatButton}<div class="comm-level-badge">${userObj.level}</div></div></div>`;
     }
 
     function renderCommunityList() {
@@ -494,9 +646,10 @@
         document.getElementById('my-community-card-container').innerHTML = createCardHTML(me, true);
 
         const container = document.getElementById('community-list');
+        // Filtra para não me mostrar nos outros, e aplica a pesquisa
         const others = communityData.filter(u => u.uid !== currentUser.uid && (u.name.toLowerCase().includes(searchTerm) || u.description.toLowerCase().includes(searchTerm)));
         
-        if (others.length === 0) { container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-weight:700; margin-top:2rem;">Nenhum viajante encontrado com "${searchTerm}".</p>`; } 
+        if (others.length === 0) { container.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-weight:700; margin-top:2rem;">Nenhum viajante encontrado com este nome ou foco.</p>`; } 
         else { container.innerHTML = others.map(u => createCardHTML(u)).join(''); }
     }
 
@@ -522,10 +675,19 @@
 
             unsubSkills = onSnapshot(collection(db, userPath, 'skills'), (snap) => { skillsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderWheel(); renderSkillList(); renderEditor(); });
             unsubQuests = onSnapshot(collection(db, userPath, 'quests'), (snap) => { questsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); updateQuestsUI(); });
-            unsubComm = onSnapshot(collection(db, 'community'), (snap) => { communityData = snap.docs.map(d => d.data()); renderCommunityList(); }, (err) => { communityData = [...mockCommunity]; renderCommunityList(); });
+            
+            // Comunidade REAL sem mocks (removido o fallback pro mockCommunity)
+            unsubComm = onSnapshot(collection(db, 'community'), (snap) => { 
+                communityData = snap.docs.map(d => d.data()); 
+                renderCommunityList(); 
+            }, (err) => { 
+                console.error("Erro na comunidade (regras de segurança?):", err);
+            });
+
         } catch (error) { document.getElementById('permission-error').style.display='block'; }
     }
 
+    // --- PROGRESSO E METAS GERAIS ---
     window.addExp = async (amount) => { if (currentUser) await updateDoc(doc(db, userPath, 'profile', 'main'), { exp: (profileData.exp || 0) + amount }); };
     window.toggleQuest = async (id, done, exp, event) => {
         if (!currentUser) return; let cx = event.clientX; let cy = event.clientY;
@@ -575,13 +737,6 @@
         c.innerHTML = sorted.map((q, i) => `<div class="quest-item ${q.done ? 'completed' : ''} animate-fade-in" style="animation-delay: ${i*0.05}s" onclick="toggleQuest('${q.id}', ${q.done}, ${q.exp}, event)"><div style="display:flex; align-items:center; gap:1rem;"><div class="checkbox-bouncy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" style="width:14px; opacity:${q.done?1:0};"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div style="color: ${q.done?'var(--text-muted)':'var(--text-main)'}; font-weight:800; font-size:0.95rem; text-decoration:${q.done?'line-through':'none'};">${q.title}</div></div><div class="quest-reward">+${q.exp}XP</div></div>`).join('');
     }
 
-    window.handleAddSkill = async () => { 
-        if(currentUser) { 
-            const randomElement = elementList[Math.floor(Math.random() * elementList.length)];
-            const docRef = await addDoc(collection(db, userPath, 'skills'), { name: "Novo Pilar", level: 10, element: randomElement }); 
-            if(docRef){ selectNode('skill', docRef.id); isEditingPillar = true; } 
-        } 
-    };
     window.handleDeleteSkill = async (id) => { if (confirm("Desmoronar este pilar?")) { await deleteDoc(doc(db, userPath, 'skills', id)); if (selectedNode.id === id) selectNode('main', null); } };
     window.updatePillarName = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { name: val }); };
     window.updateSkillLevelDB = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { level: parseInt(val) }); };
@@ -590,35 +745,30 @@
     window.selectNode = (type, id) => { selectedNode = { type, id }; isEditingPillar = false; renderWheel(); renderEditor(); renderSkillList(); };
     window.toggleEditPillar = () => { isEditingPillar = !isEditingPillar; renderEditor(); };
 
-    // --- NOVA RENDERIZAÇÃO DOS PILARES (USANDO SVG EXTERNO) ---
     function renderWheel() {
-        const nodesContainer = document.getElementById('iso-nodes'); const svg = document.getElementById('iso-ground');
-        if (!nodesContainer || document.getElementById('view-skills').classList.contains('hidden')) return;
-        const w = document.getElementById('iso-world').offsetWidth; const h = document.getElementById('iso-world').offsetHeight;
-        const cx = w/2; const cy = h/2 + 50; const rx = Math.max(100, w*0.35); const ry = rx * 0.45; 
+        const wrapper = document.getElementById('iso-wrapper');
+        const nodesContainer = document.getElementById('iso-nodes'); 
+        const svg = document.getElementById('iso-ground');
+        if (!wrapper || !nodesContainer || document.getElementById('view-skills').classList.contains('hidden')) return;
+        
         nodesContainer.innerHTML = ''; svg.innerHTML = '';
+        const wrapperW = wrapper.offsetWidth; const n = skillsData.length;
+        const minRx = Math.max(120, wrapperW * 0.35); const dynamicRx = n > 6 ? minRx + ((n - 6) * 35) : minRx; const dynamicRy = dynamicRx * 0.45;
+        const worldH = Math.max(400, dynamicRy * 2 + 300); const worldW = Math.max(wrapperW, dynamicRx * 2 + 200);
 
+        const isoWorld = document.getElementById('iso-world'); isoWorld.style.width = `${worldW}px`; isoWorld.style.height = `${worldH}px`;
+        const cx = worldW / 2; const cy = (worldH / 2) + 50;
         let renderQueue = [];
         
-        // PILAR CENTRAL
         renderQueue.push({
             type: 'main', id: null, x: cx, y: cy, zIndex: Math.floor(cy),
-            html: `
-                <div class="iso-pillar-container ${selectedNode.type === 'main' ? 'active' : ''}" style="left:${cx}px; top:${cy}px; z-index:${Math.floor(cy)};" onclick="selectNode('main', null)">
-                    <div class="iso-label" style="top:-120px;">A Origem</div>
-                    <div style="width: 100px; height: 150px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4)); transform-origin: bottom center;"></div>
-                </div>
-            `
+            html: `<div class="iso-pillar-container ${selectedNode.type === 'main' ? 'active' : ''}" style="left:${cx}px; top:${cy}px; z-index:${Math.floor(cy)};" onclick="selectNode('main', null)"><div class="iso-label" style="top:-120px;">A Origem</div><div style="width: 100px; height: 150px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4)); transform-origin: bottom center;"></div></div>`
         });
 
-        // PILARES DAS HABILIDADES
         skillsData.forEach((s, i) => {
-            const angle = (i * (2*Math.PI))/skillsData.length; const px = cx + rx*Math.cos(angle); const py = cy + ry*Math.sin(angle);
+            const angle = (i * (2*Math.PI))/skillsData.length; const px = cx + dynamicRx * Math.cos(angle); const py = cy + dynamicRy * Math.sin(angle);
             const isSel = selectedNode.id === s.id; const elStyle = elementStyles[s.element] || elementStyles['void'];
-            
-            // Fator de escala baseado no nível da habilidade (0.5 a 1.2)
-            const scale = 0.5 + (s.level / 100) * 0.7; 
-            const labelTop = -120 * scale - 20;
+            const scale = 0.5 + (s.level / 100) * 0.7; const labelTop = -120 * scale - 20;
 
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
             line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", px); line.setAttribute("y2", py);
@@ -627,15 +777,11 @@
 
             renderQueue.push({
                 type: 'skill', id: s.id, x: px, y: py, zIndex: Math.floor(py),
-                html: `
-                    <div class="iso-pillar-container ${isSel ? 'active' : ''}" style="left:${px}px; top:${py}px; z-index:${Math.floor(py)};" onclick="selectNode('skill', '${s.id}')">
-                        <div class="iso-label" style="top:${labelTop}px;">${elStyle.icon} ${s.name}</div>
-                        <div style="width: 80px; height: 120px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; transform: scale(${scale}); transform-origin: bottom center; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.4));"></div>
-                    </div>
-                `
+                html: `<div class="iso-pillar-container ${isSel ? 'active' : ''}" style="left:${px}px; top:${py}px; z-index:${Math.floor(py)};" onclick="selectNode('skill', '${s.id}')"><div class="iso-label" style="top:${labelTop}px;">${elStyle.icon} ${s.name}</div><div style="width: 80px; height: 120px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; transform: scale(${scale}); transform-origin: bottom center; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.4));"></div></div>`
             });
         });
         renderQueue.sort((a, b) => a.zIndex - b.zIndex).forEach(node => { nodesContainer.innerHTML += node.html; });
+        if(worldW > wrapperW) { wrapper.scrollLeft = (worldW - wrapperW) / 2; }
     }
 
     function renderEditor() {
@@ -646,23 +792,7 @@
         let content = `<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;"><span style="font-size:1rem; font-weight:800;">Detalhes do Pilar</span><button onclick="toggleEditPillar()" class="btn-icon-soft" style="width:30px; height:30px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></button></div>`;
         
         if (isEditingPillar) {
-            content += `<div class="animate-fade-in" style="display:flex; flex-direction:column;">
-                <label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted);">Nome</label>
-                <input type="text" class="input-ios" value="${activeData.name||''}" onchange="updatePillarName(this.value)">
-                <label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted); margin-top:5px;">Elemento de Poder</label>
-                <select class="select-ios" onchange="updateSkillElement(this.value)">
-                    <option value="void" ${activeData.element === 'void' ? 'selected' : ''}>🌌 O Vazio (Foco)</option>
-                    <option value="journey" ${activeData.element === 'journey' ? 'selected' : ''}>⏳ A Jornada (Terra/Tempo)</option>
-                    <option value="forest" ${activeData.element === 'forest' ? 'selected' : ''}>🌿 A Floresta (Natureza)</option>
-                    <option value="cloud" ${activeData.element === 'cloud' ? 'selected' : ''}>☁️ A Nuvem (Ar/Mente)</option>
-                    <option value="inferno" ${activeData.element === 'inferno' ? 'selected' : ''}>🔥 Inferno (Paixão/Ação)</option>
-                    <option value="ocean" ${activeData.element === 'ocean' ? 'selected' : ''}>🌊 Oceano (Emoção/Fluxo)</option>
-                    <option value="arcane" ${activeData.element === 'arcane' ? 'selected' : ''}>✨ Arcano (Intelecto/Magia)</option>
-                </select>
-                <div style="display:flex; justify-content:space-between; margin:10px 0 5px;"><label id="editor-skill-label" style="font-size:0.85rem; font-weight:700;">Elevação: ${activeData.level}%</label></div>
-                <input type="range" min="0" max="100" value="${activeData.level}" style="width:100%; accent-color:var(--accent);" oninput="updateSkillLevelUI(this.value)" onchange="updateSkillLevelDB(this.value)">
-                <button onclick="toggleEditPillar()" class="btn-duo" style="margin-top:1.5rem; padding:10px;">Aplicar Runas</button>
-            </div>`;
+            content += `<div class="animate-fade-in" style="display:flex; flex-direction:column;"><label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted);">Nome</label><input type="text" class="input-ios" value="${activeData.name||''}" onchange="updatePillarName(this.value)"><label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted); margin-top:5px;">Elemento de Poder</label><select class="select-ios" onchange="updateSkillElement(this.value)"><option value="void" ${activeData.element === 'void' ? 'selected' : ''}>🌌 O Vazio</option><option value="journey" ${activeData.element === 'journey' ? 'selected' : ''}>⏳ A Jornada</option><option value="forest" ${activeData.element === 'forest' ? 'selected' : ''}>🌿 A Floresta</option><option value="cloud" ${activeData.element === 'cloud' ? 'selected' : ''}>☁️ A Nuvem</option><option value="inferno" ${activeData.element === 'inferno' ? 'selected' : ''}>🔥 Inferno</option><option value="ocean" ${activeData.element === 'ocean' ? 'selected' : ''}>🌊 Oceano</option><option value="arcane" ${activeData.element === 'arcane' ? 'selected' : ''}>✨ Arcano</option></select><div style="display:flex; justify-content:space-between; margin:10px 0 5px;"><label id="editor-skill-label" style="font-size:0.85rem; font-weight:700;">Elevação: ${activeData.level}%</label></div><input type="range" min="0" max="100" value="${activeData.level}" style="width:100%; accent-color:var(--accent);" oninput="updateSkillLevelUI(this.value)" onchange="updateSkillLevelDB(this.value)"><button onclick="toggleEditPillar()" class="btn-duo" style="margin-top:1.5rem; padding:10px;">Aplicar Runas</button></div>`;
         } else {
             const elStyle = elementStyles[activeData.element] || elementStyles['void'];
             content += `<div class="animate-fade-in"><h3 style="font-size:1.5rem; margin-bottom:1rem; font-weight:900; display:flex; align-items:center; gap:8px;">${elStyle.icon} ${activeData.name}</h3><div class="progress-wrapper" style="padding:1rem;"><div style="display:flex; justify-content:space-between; font-weight:800; font-size:1rem;"><span>Construção</span><span>${activeData.level}%</span></div><div class="progress-track" style="height:12px; margin-top:8px;"><div class="progress-fill" style="width:${activeData.level}%; background:${elStyle.main};"></div></div></div></div>`;
