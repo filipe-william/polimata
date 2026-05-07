@@ -265,6 +265,9 @@
         
         .level-badge { background: var(--accent); width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 8px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.3); border: 6px solid rgba(255,255,255,0.2); transition: background-color 0.5s ease, box-shadow 0.5s ease;}
         .floating-exp { position: fixed; color: var(--success); font-size: 1.25rem; font-weight: 900; pointer-events: none; z-index: 1000; text-shadow: 0 2px 10px rgba(0,0,0,0.3); animation: floatUpAndFade 1s forwards; }
+
+        /* Estilos do Modal de Escolha Inicial */
+        .warning-text { color: #ef4444; font-weight: 900; font-size: 0.9rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; background: rgba(239, 68, 68, 0.1); padding: 8px; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3); }
     </style>
 </head>
 <body class="theme-void">
@@ -280,6 +283,27 @@
             <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem;">Polímata</h1>
             <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 600; margin-bottom: 3rem;">Sua jornada épica.</p>
             <button id="btn-login-action" class="btn-duo"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="24" alt="Google" style="background: white; border-radius: 50%; padding: 2px;"> Entrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL: ESCOLHA INICIAL DO ELEMENTO (O DESPERTAR) -->
+    <div id="element-choice-screen" class="overlay-screen" style="z-index: 9999;">
+        <div class="panel" style="max-width: 95%; width: 450px; text-align: center; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.8); border: 2px solid var(--accent);">
+            <h2 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem;">O Despertar</h2>
+            <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 1rem;">Todo viajante precisa de um ponto de origem.</p>
+            <div class="warning-text">Aviso: A afinidade que você escolher será o seu tema permanente. Esta ação não pode ser desfeita.</div>
+            
+            <div class="theme-grid" id="initial-theme-grid" style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); margin-bottom: 1.5rem;">
+                <div class="theme-option" onclick="selectInitialElement('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700; font-size: 0.8rem;">O Vazio</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-journey', this)"><div class="color-preview" style="background: #b45309;"></div><span style="font-weight: 700; font-size: 0.8rem;">A Jornada</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-forest', this)"><div class="color-preview" style="background: #047857;"></div><span style="font-weight: 700; font-size: 0.8rem;">A Floresta</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-cloud', this)"><div class="color-preview" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div><span style="font-weight: 700; font-size: 0.8rem;">A Nuvem</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-inferno', this)"><div class="color-preview" style="background: #7f1d1d;"></div><span style="font-weight: 700; font-size: 0.8rem;">Inferno</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-ocean', this)"><div class="color-preview" style="background: #164e63;"></div><span style="font-weight: 700; font-size: 0.8rem;">Oceano</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-arcane', this)"><div class="color-preview" style="background: #581c87;"></div><span style="font-weight: 700; font-size: 0.8rem;">Arcano</span></div>
+            </div>
+
+            <button onclick="confirmInitialElement()" class="btn-duo" style="width: 100%; font-size: 1.1rem; padding: 16px;">Selar Meu Destino</button>
         </div>
     </div>
 
@@ -443,19 +467,32 @@
                 <input type="text" id="input-profile-name" class="input-ios" placeholder="Seu Nome">
                 <input type="text" id="input-profile-desc" class="input-ios" placeholder="Seu Título/Foco">
                 <input type="text" id="input-profile-photo" class="input-ios" placeholder="URL da foto de perfil (Opcional)">
-                <button onclick="saveProfileData()" class="btn-duo" style="margin-bottom: 2rem;">Salvar Modificações</button>
-
-                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Atmosfera</h4>
-                <div class="theme-grid">
-                    <div class="theme-option active" onclick="setTheme('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700; font-size: 0.85rem;">O Vazio</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-journey', this)"><div class="color-preview" style="background: #b45309;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Jornada</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-forest', this)"><div class="color-preview" style="background: #047857;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Floresta</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-cloud', this)"><div class="color-preview" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Nuvem</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-inferno', this)"><div class="color-preview" style="background: #7f1d1d;"></div><span style="font-weight: 700; font-size: 0.85rem;">Inferno</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-ocean', this)"><div class="color-preview" style="background: #164e63;"></div><span style="font-weight: 700; font-size: 0.85rem;">Oceano</span></div>
-                    <div class="theme-option" onclick="setTheme('theme-arcane', this)"><div class="color-preview" style="background: #581c87;"></div><span style="font-weight: 700; font-size: 0.85rem;">Arcano</span></div>
+                
+                <!-- SEÇÃO ADMIN PARA DESTRAVAR TEMA -->
+                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 16px; margin-bottom: 1.5rem; border: 1px solid var(--glass-border);">
+                    <h4 style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Acesso Administrativo</h4>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px;">Sua afinidade é permanente. Apenas um admin pode alterá-la.</p>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="password" id="input-admin-pass" class="input-ios" placeholder="Palavra-passe" style="margin-bottom: 0;">
+                        <button onclick="unlockAdminThemes()" class="btn-duo" style="width: auto; padding: 0 16px;">Destravar</button>
+                    </div>
                 </div>
 
+                <!-- GRADE DE TEMAS (ESCONDIDA POR PADRÃO) -->
+                <div id="admin-theme-area" class="hidden">
+                    <h4 style="font-size: 0.9rem; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase;">Afinidade Destravada</h4>
+                    <div class="theme-grid">
+                        <div class="theme-option active" onclick="setTheme('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700; font-size: 0.85rem;">O Vazio</span></div>
+                        <div class="theme-option" onclick="setTheme('theme-journey', this)"><div class="color-preview" style="background: #b45309;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Jornada</span></div>
+                        <div class="theme-option" onclick="setTheme('theme-forest', this)"><div class="color-preview" style="background: #047857;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Floresta</span></div>
+                        <div class="theme-option" onclick="setTheme('theme-cloud', this)"><div class="color-preview" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Nuvem</span></div>
+                        <div class="theme-option" onclick="setTheme('theme-inferno', this)"><div class="color-preview" style="background: #7f1d1d;"></div><span style="font-weight: 700; font-size: 0.85rem;">Inferno</span></div>
+                        <div class="theme-option" onclick="setTheme('theme-ocean', this)"><div class="color-preview" style="background: #164e63;"></div><span style="font-weight: 700; font-size: 0.85rem;">Oceano</span></div>
+                        <div class="theme-option" onclick="setTheme('theme-arcane', this)"><div class="color-preview" style="background: #581c87;"></div><span style="font-weight: 700; font-size: 0.85rem;">Arcano</span></div>
+                    </div>
+                </div>
+
+                <button onclick="saveProfileData()" class="btn-duo" style="margin-bottom: 2rem;">Salvar Modificações</button>
                 <button onclick="handleLogout()" class="btn-duo" style="background: transparent; color: #ef4444; border: 2px solid #ef4444; box-shadow: none;">Desconectar</button>
             </div>
         </div>
@@ -496,7 +533,7 @@
     ];
 
     let currentUser = null; let userPath = ''; 
-    let profileData = { name: "Viajante", description: "Despertando...", exp: 0, theme: "theme-void", customPhotoURL: "", equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
+    let profileData = { name: "Viajante", description: "Despertando...", exp: 0, theme: "theme-void", customPhotoURL: "", elementChosen: false, equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
     let skillsData = []; let questsData = []; let communityData = [];
     let selectedNode = { type: 'main', id: null }; let isEditingPillar = false;
     let unsubProfile, unsubSkills, unsubQuests, unsubComm; let currentLevelState = 1; let initialSettingsState = {};
@@ -541,6 +578,28 @@
     function initParticles(themeClass) { particles = []; let c = 40; if(themeClass==='theme-cloud') c=10; if(themeClass==='theme-journey') c=80; if(themeClass==='theme-inferno') c=60; for(let i=0; i<c; i++) particles.push(new Particle(themeClass)); }
     function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); animationFrameId = requestAnimationFrame(animateParticles); }
 
+    // --- ESCOLHA INICIAL DO ELEMENTO ---
+    let pendingElementChoice = null;
+    
+    window.selectInitialElement = (themeClass, element) => {
+        pendingElementChoice = themeClass;
+        document.querySelectorAll('#initial-theme-grid .theme-option').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+        document.body.className = themeClass; // Preview instantâneo
+        initParticles(themeClass);
+    };
+
+    window.confirmInitialElement = async () => {
+        if (!pendingElementChoice) return alert("Selecione um elemento para continuar!");
+        if (!currentUser) return;
+        
+        await updateDoc(doc(db, userPath, 'profile', 'main'), {
+            theme: pendingElementChoice,
+            elementChosen: true
+        });
+        document.getElementById('element-choice-screen').classList.remove('active');
+    };
+
     // --- INTERAÇÕES DA UI GERAL ---
     window.switchTab = (tabId, btnElement) => {
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active')); if(btnElement) btnElement.classList.add('active');
@@ -550,12 +609,18 @@
         if(tabId === 'inventory' || tabId === 'home') renderAvatar();
     };
 
+    // --- CONFIGURAÇÕES & ADMIN ---
     window.openSettings = () => {
         const sheet = document.getElementById('settings-sheet'); const backdrop = document.getElementById('settings-backdrop');
         initialSettingsState = { name: profileData.name||'', desc: profileData.description||'', photo: profileData.customPhotoURL||'' };
         document.getElementById('input-profile-name').value = initialSettingsState.name;
         document.getElementById('input-profile-desc').value = initialSettingsState.desc;
         document.getElementById('input-profile-photo').value = initialSettingsState.photo;
+        
+        // Reseta a área admin
+        document.getElementById('input-admin-pass').value = '';
+        document.getElementById('admin-theme-area').classList.add('hidden');
+
         sheet.classList.add('open'); backdrop.classList.add('active');
     };
     
@@ -568,8 +633,23 @@
     
     function closeSettingsUI() { document.getElementById('settings-sheet').classList.remove('open'); document.getElementById('settings-backdrop').classList.remove('active'); }
 
+    window.unlockAdminThemes = () => {
+        const pass = document.getElementById('input-admin-pass').value;
+        if(pass === 'polimata') { // Senha de Admin
+            document.getElementById('admin-theme-area').classList.remove('hidden');
+            // Deixa a opção atual selecionada na grade destravada
+            document.querySelectorAll('#admin-theme-area .theme-option').forEach(el => el.classList.remove('active'));
+            const actBtn = document.querySelector(`#admin-theme-area .theme-option[onclick*="${profileData.theme}"]`); 
+            if(actBtn) actBtn.classList.add('active');
+        } else {
+            alert("Acesso negado.");
+        }
+    };
+
     window.setTheme = async (themeClass, element) => {
-        document.body.className = themeClass; document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active')); if(element) element.classList.add('active');
+        document.body.className = themeClass; 
+        document.querySelectorAll('#admin-theme-area .theme-option').forEach(el => el.classList.remove('active')); 
+        if(element) element.classList.add('active');
         initParticles(themeClass);
         if (currentUser) { profileData.theme = themeClass; await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: themeClass }).catch(console.error); }
     };
@@ -594,17 +674,31 @@
         if (!currentUser) return;
         try {
             const profileRef = doc(db, userPath, 'profile', 'main'); const profileSnap = await getDoc(profileRef);
-            if (!profileSnap.exists()) await setDoc(profileRef, profileData);
-            else {
+            if (!profileSnap.exists()) {
+                await setDoc(profileRef, profileData);
+            } else {
                 const initialData = profileSnap.data(); currentLevelState = getLevelInfo(initialData.exp || 0).level;
-                if(!initialData.equipped) initialData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' }; profileData = initialData;
-                if(initialData.theme) { document.body.className = initialData.theme; initParticles(initialData.theme); document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active')); const actBtn = document.querySelector(`.theme-option[onclick*="${initialData.theme}"]`); if(actBtn) actBtn.classList.add('active'); }
+                if(!initialData.equipped) initialData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' }; 
+                profileData = initialData;
+                
+                // Checa se o elemento já foi escolhido na vida da conta
+                if(profileData.elementChosen !== true) {
+                    document.getElementById('element-choice-screen').classList.add('active');
+                }
+
+                if(initialData.theme) { document.body.className = initialData.theme; initParticles(initialData.theme); }
             }
+
             unsubProfile = onSnapshot(profileRef, (docSnap) => {
                 if (docSnap.exists()) {
                     profileData = docSnap.data(); if(!profileData.equipped) profileData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' };
                     const newLevel = getLevelInfo(profileData.exp || 0).level;
                     if (newLevel > currentLevelState) { document.getElementById('new-level-display').innerText = newLevel; document.getElementById('level-up-screen').classList.add('active'); currentLevelState = newLevel; }
+                    
+                    if(profileData.elementChosen === true) {
+                        document.getElementById('element-choice-screen').classList.remove('active');
+                    }
+
                     if(profileData.theme && document.body.className !== profileData.theme) { document.body.className = profileData.theme; initParticles(profileData.theme); }
                     updateProfileUI(); renderAvatar(); renderInventoryGrid(); syncToCommunity();
                 }
@@ -647,7 +741,6 @@
         const top10Section = document.getElementById('top-10-section');
         const searchSection = document.getElementById('search-results-section');
 
-        // Calcula o Top 10 Globais
         const top10 = [...communityData].sort((a, b) => b.level - a.level).slice(0, 10);
 
         if (searchTerm === '') {
