@@ -1,553 +1,389 @@
 <!DOCTYPE html>
-<html lang="pt-pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Polímata Hub - Sua Jornada</title>
-    <!-- Fonte amigável e arredondada estilo Duolingo/Indie -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Polímata Hub - App</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- VARIÁVEIS DE TEMA (Atmosfera Indie + iOS) --- */
+        /* --- VARIÁVEIS DE TEMA --- */
         :root {
-            /* Cores Base Neutras (Glassmorphism) */
             --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.15);
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
             --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --nav-bg: rgba(15, 23, 42, 0.85);
+            --sheet-bg: rgba(15, 23, 42, 0.95);
             
-            /* TEMA PADRÃO: Vazio (Hollow Knight - Azul Escuro/Místico) */
-            --bg-gradient-1: #0f172a;
-            --bg-gradient-2: #1e1b4b;
-            --bg-gradient-3: #312e81;
-            --accent: #818cf8;
-            --accent-dark: #4f46e5;
-            --success: #34d399;
-            --success-dark: #059669;
+            /* TEMA PADRÃO: O Vazio */
+            --bg-color-1: #0f172a; --bg-color-2: #1e1b4b;
+            --accent: #818cf8; --accent-dark: #4f46e5;
+            --success: #34d399; --success-dark: #059669;
         }
 
         body.theme-journey {
-            /* TEMA: Areia (Journey - Dourado/Quente) */
-            --bg-gradient-1: #451a03;
-            --bg-gradient-2: #78350f;
-            --bg-gradient-3: #b45309;
-            --accent: #fbbf24;
-            --accent-dark: #d97706;
-            --success: #34d399;
-            --success-dark: #059669;
+            --bg-color-1: #451a03; --bg-color-2: #78350f;
+            --accent: #fbbf24; --accent-dark: #d97706;
         }
 
         body.theme-forest {
-            /* TEMA: Floresta (Ori / Duolingo - Verde Vibrante/Místico) */
-            --bg-gradient-1: #064e3b;
-            --bg-gradient-2: #065f46;
-            --bg-gradient-3: #047857;
-            --accent: #a7f3d0;
-            --accent-dark: #10b981;
-            --success: #fcd34d;
-            --success-dark: #f59e0b;
+            --bg-color-1: #064e3b; --bg-color-2: #065f46;
+            --accent: #a7f3d0; --accent-dark: #10b981;
+            --success: #fcd34d; --success-dark: #f59e0b;
         }
 
         body.theme-cloud {
-            /* TEMA: Nuvem (iOS Clean / Light Mode suave) */
-            --bg-gradient-1: #e0f2fe;
-            --bg-gradient-2: #bae6fd;
-            --bg-gradient-3: #7dd3fc;
-            --glass-bg: rgba(255, 255, 255, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.8);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --accent: #38bdf8;
-            --accent-dark: #0284c7;
-            --success: #34d399;
-            --success-dark: #059669;
+            --bg-color-1: #e0f2fe; --bg-color-2: #bae6fd;
+            --glass-bg: rgba(255, 255, 255, 0.6); --glass-border: rgba(255, 255, 255, 0.8);
+            --text-main: #0f172a; --text-muted: #475569;
+            --nav-bg: rgba(255, 255, 255, 0.85); --sheet-bg: rgba(248, 250, 252, 0.95);
+            --accent: #38bdf8; --accent-dark: #0284c7;
         }
 
-        /* --- RESET E BASE --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', system-ui, sans-serif; }
+        /* --- BASE APP --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body {
-            /* Fundo Animado Atmosférico */
-            background: linear-gradient(-45deg, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3));
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2));
             color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: color 0.5s ease;
-            -webkit-tap-highlight-color: transparent;
+            height: 100vh; height: 100dvh;
+            overflow: hidden; 
+            transition: color 0.5s ease, background 0.5s ease;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        #theme-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
         .hidden { display: none !important; }
 
-        /* --- SCROLLBAR IOS --- */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(150, 150, 150, 0.3); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(150, 150, 150, 0.5); }
-
-        /* --- ANIMAÇÕES (Bouncy & Smooth) --- */
-        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; opacity: 0; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-
-        /* Flutuação suave (Hollow Knight / Journey vibe) */
+        /* --- ANIMAÇÕES --- */
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .float-gentle { animation: float 6s ease-in-out infinite; }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
 
-        /* --- LAYOUT GLOBAL --- */
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+        /* --- LAYOUT --- */
+        #app-container { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; }
+        main.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.5rem 1.5rem 6rem 1.5rem; }
+        
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
 
-        /* --- BOTÕES ESTILO DUOLINGO (Bouncy & Thick) --- */
         .btn-duo {
-            background: var(--accent);
-            color: #fff;
-            font-weight: 800;
-            font-size: 1rem;
-            padding: 14px 24px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
+            background: var(--accent); color: #fff; font-weight: 800; font-size: 1rem;
+            padding: 14px 24px; border: none; border-radius: 20px; cursor: pointer;
             box-shadow: 0 6px 0 var(--accent-dark), 0 15px 20px rgba(0,0,0,0.2);
-            transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.1s, box-shadow 0.1s;
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            text-transform: uppercase; letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-transform: uppercase; letter-spacing: 1px; width: 100%;
         }
-        body.theme-cloud .btn-duo { color: #fff; } /* Garante texto branco no botão mesmo no tema claro */
-        
-        .btn-duo:active {
-            transform: translateY(6px);
-            box-shadow: 0 0px 0 var(--accent-dark), 0 5px 10px rgba(0,0,0,0.2);
+        body.theme-cloud .btn-duo { color: #fff; }
+        .btn-duo:active { transform: translateY(6px); box-shadow: 0 0px 0 var(--accent-dark), 0 5px 10px rgba(0,0,0,0.2); }
+
+        /* --- BOTTOM NAV --- */
+        #bottom-nav {
+            position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 2rem); max-width: 450px;
+            background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            display: flex; justify-content: space-around; padding: 0.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 50;
         }
 
-        .btn-duo-success {
-            background: var(--success);
-            box-shadow: 0 6px 0 var(--success-dark), 0 15px 20px rgba(0,0,0,0.2);
+        .nav-item {
+            background: transparent; border: none; color: var(--text-muted);
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            padding: 0.5rem 0.8rem; border-radius: 20px; cursor: pointer; transition: all 0.3s;
+            font-weight: 700; font-size: 0.75rem;
         }
-        .btn-duo-success:active {
-            transform: translateY(6px);
-            box-shadow: 0 0px 0 var(--success-dark), 0 5px 10px rgba(0,0,0,0.2);
-        }
+        .nav-item.active { color: var(--accent); background: rgba(0,0,0,0.1); }
+        body.theme-cloud .nav-item.active { background: rgba(0,0,0,0.05); }
+        .nav-item svg { width: 24px; height: 24px; stroke-width: 2.5; transition: transform 0.3s; }
+        .nav-item.active svg { transform: scale(1.1); }
 
-        /* --- OVERLAYS (Login & Level Up) --- */
-        #login-screen {
-            position: fixed; inset: 0; 
-            background: linear-gradient(-45deg, var(--bg-gradient-1), var(--bg-gradient-2));
-            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; transition: opacity 0.5s;
+        /* --- SETTINGS SHEET --- */
+        #settings-sheet {
+            position: fixed; bottom: -100%; left: 0; width: 100%; height: 85vh;
+            background: var(--sheet-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border-top-left-radius: 32px; border-top-right-radius: 32px;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.3); z-index: 100;
+            transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex; flex-direction: column;
         }
-        .login-card {
-            background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border); padding: 3rem 2rem; border-radius: 32px;
-            text-align: center; box-shadow: var(--glass-shadow); max-width: 400px; width: 90%;
-        }
-
-        #level-up-screen {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.4s;
-        }
-        #level-up-screen.active { opacity: 1; pointer-events: auto; }
-        
-        .level-badge {
-            background: var(--accent); width: 150px; height: 150px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; flex-direction: column;
-            box-shadow: 0 10px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.4);
-            border: 6px solid rgba(255,255,255,0.2); transform: scale(0.5); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        #level-up-screen.active .level-badge { transform: scale(1); }
-        .level-number { font-size: 5rem; font-weight: 900; color: white; line-height: 1; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-
-        /* --- HEADER (Estilo iOS Segmented Control) --- */
-        header { padding: 1rem 0; position: sticky; top: 0; z-index: 50; }
-        .header-content { 
-            background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border); border-radius: 24px;
-            height: 4.5rem; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem;
-            box-shadow: var(--glass-shadow);
-        }
-        .brand { display: flex; align-items: center; gap: 0.75rem; }
-        .brand h1 { font-size: 1.25rem; font-weight: 900; color: var(--text-main); letter-spacing: -0.5px; }
-        
-        .nav-tabs { 
-            display: flex; gap: 0.5rem; background: rgba(0,0,0,0.1); padding: 6px; border-radius: 20px; 
-            border: 1px solid var(--glass-border);
-        }
-        body.theme-cloud .nav-tabs { background: rgba(0,0,0,0.05); }
-
-        .nav-btn {
-            background: transparent; border: none; color: var(--text-muted); font-weight: 700; font-size: 0.95rem;
-            padding: 8px 20px; cursor: pointer; border-radius: 16px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .nav-btn.active { background: var(--text-main); color: var(--bg-gradient-1); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .nav-btn:hover:not(.active) { color: var(--text-main); }
-
-        .user-menu { display: flex; align-items: center; gap: 1rem; }
-        
-        .btn-icon-soft { 
-            background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: var(--text-main); 
-            width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s; 
-        }
-        body.theme-cloud .btn-icon-soft { background: rgba(0,0,0,0.05); }
-        .btn-icon-soft:hover { transform: scale(1.1); background: var(--accent); color: white; border-color: var(--accent); }
-
-        #user-photo { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--glass-border); }
-
-        /* --- CARTÕES (Panels) --- */
-        .view-section { padding-top: 1.5rem; padding-bottom: 3rem; }
-        .profile-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 1024px) { .profile-grid { grid-template-columns: 350px 1fr; } }
-
-        .panel {
-            background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border-radius: 32px; border: 1px solid var(--glass-border); padding: 2rem; 
-            box-shadow: var(--glass-shadow); position: relative;
-        }
-
-        /* --- ABA PERFIL (Editor e Avatar) --- */
-        .profile-header-actions { display: flex; justify-content: flex-end; width: 100%; margin-bottom: 1rem; }
-        
-        .avatar-container { margin-bottom: 1rem; display: flex; justify-content: center; }
-        .avatar { 
-            width: 8rem; height: 8rem; border-radius: 36px; /* Squircle feel */
-            border: 4px solid var(--glass-border); background: rgba(0,0,0,0.2); 
-            display: flex; align-items: center; justify-content: center; overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s ease;
-        }
-        body.theme-cloud .avatar { background: rgba(255,255,255,0.5); }
-        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        #settings-sheet.open { bottom: 0; }
+        .sheet-handle { width: 40px; height: 6px; background: var(--glass-border); border-radius: 3px; margin: 1rem auto; }
+        .sheet-content { padding: 0 1.5rem 2rem 1.5rem; overflow-y: auto; flex: 1; }
+        .sheet-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; }
 
         .input-ios {
             width: 100%; background: rgba(0,0,0,0.1); border: 2px solid transparent; border-radius: 16px;
             padding: 14px 16px; color: var(--text-main); font-size: 1rem; font-weight: 600; transition: 0.3s; margin-bottom: 12px;
         }
-        body.theme-cloud .input-ios { background: rgba(255,255,255,0.5); color: #0f172a; }
+        body.theme-cloud .input-ios { background: rgba(0,0,0,0.05); color: #0f172a; }
         .input-ios::placeholder { color: var(--text-muted); }
-        .input-ios:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.15); }
+        .input-ios:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.1); }
 
-        /* Espaço do Avatar 3D (Estilo Pedestal Journey) */
-        .avatar-body-space {
-            width: 100%; height: 260px; background: radial-gradient(circle at bottom, rgba(255,255,255,0.1), transparent);
-            border-radius: 24px; margin: 1.5rem 0; position: relative; overflow: hidden;
-            display: flex; align-items: center; justify-content: center; flex-direction: column;
+        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 2rem; }
+        .theme-option {
+            display: flex; align-items: center; gap: 10px; padding: 1rem; border-radius: 16px;
+            cursor: pointer; border: 2px solid transparent; background: var(--glass-bg); transition: all 0.2s;
         }
-        .pedestal-light {
-            position: absolute; bottom: -20px; width: 150px; height: 40px; border-radius: 50%;
-            background: var(--accent); filter: blur(20px); opacity: 0.5;
-        }
-        .avatar-silhouette { height: 75%; opacity: 0.4; color: var(--text-main); z-index: 2; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2)); }
-        .avatar-placeholder-text {
-            position: absolute; top: 15px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted);
-            letter-spacing: 1px; text-transform: uppercase; background: var(--glass-bg); padding: 6px 12px; border-radius: 12px;
-        }
+        .theme-option.active { border-color: var(--accent); background: rgba(0,0,0,0.2); }
+        .color-preview { width: 20px; height: 20px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
 
-        /* Barra de Progresso Duolingo Style */
-        .progress-wrapper { background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 24px; }
-        body.theme-cloud .progress-wrapper { background: rgba(255,255,255,0.4); }
-        
-        .progress-track { 
-            width: 100%; background: rgba(0,0,0,0.3); border-radius: 9999px; height: 1.25rem; 
-            position: relative; overflow: hidden; margin: 0.75rem 0; 
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); 
-        }
-        body.theme-cloud .progress-track { background: rgba(0,0,0,0.1); }
-        
-        .progress-fill { 
-            position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); 
-            border-radius: 9999px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2); /* Brilho interno Duo style */
-        }
-        .progress-fill::after { 
-            content: ''; position: absolute; top: 4px; left: 10px; right: 10px; height: 4px; 
-            background: rgba(255,255,255,0.3); border-radius: 4px; 
+        /* --- COMPONENTES UI --- */
+        .panel {
+            background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; 
+            box-shadow: var(--glass-shadow); margin-bottom: 1.5rem; position: relative;
         }
 
-        /* --- HÁBITOS E MISSÕES --- */
-        .section-title { font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px; }
-        
-        .quest-item {
-            display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-radius: 20px;
-            background: rgba(0,0,0,0.15); border: 2px solid transparent; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-bottom: 12px; box-shadow: 0 4px 0 rgba(0,0,0,0.1);
-        }
-        body.theme-cloud .quest-item { background: rgba(255,255,255,0.5); box-shadow: 0 4px 0 rgba(0,0,0,0.05); }
-        
-        .quest-item:active { transform: translateY(4px); box-shadow: 0 0px 0 rgba(0,0,0,0); }
-        
-        .quest-item.completed { 
-            background: var(--glass-bg); border-color: var(--success); opacity: 0.8;
-            box-shadow: 0 4px 0 var(--success-dark);
-        }
-        .quest-item.completed:active { box-shadow: 0 0px 0 var(--success-dark); }
-        
-        .checkbox-bouncy { 
-            width: 28px; height: 28px; border-radius: 10px; border: 3px solid var(--text-muted); 
-            display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            background: rgba(0,0,0,0.1);
-        }
-        .quest-item:hover .checkbox-bouncy { border-color: var(--accent); transform: scale(1.1); }
-        .quest-item.completed .checkbox-bouncy { 
-            background: var(--success); border-color: var(--success); transform: scale(1.1) rotate(10deg); 
-        }
-        
-        .quest-reward { 
-            color: var(--accent); font-weight: 800; font-size: 0.9rem; 
-            background: var(--glass-bg); padding: 4px 12px; border-radius: 12px; 
-        }
-        body.theme-cloud .quest-reward { background: rgba(0,0,0,0.05); color: var(--accent-dark); }
+        .progress-wrapper { background: rgba(0,0,0,0.15); padding: 1.25rem; border-radius: 24px; text-align: left; }
+        body.theme-cloud .progress-wrapper { background: rgba(255,255,255,0.5); }
+        .progress-track { width: 100%; background: rgba(0,0,0,0.2); border-radius: 999px; height: 1.25rem; position: relative; overflow: hidden; margin: 0.5rem 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 999px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15); }
+
+        .section-title { font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .btn-icon-soft { background: var(--glass-bg); border: none; color: var(--text-main); width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+        .btn-icon-soft:hover { transform: scale(1.1); background: var(--accent); color: white; }
+
+        /* Quests */
+        .quest-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 20px; background: rgba(0,0,0,0.1); border: 2px solid transparent; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; }
+        body.theme-cloud .quest-item { background: rgba(255,255,255,0.4); }
+        .quest-item:active { transform: translateY(3px); }
+        .quest-item.completed { background: var(--glass-bg); border-color: var(--success); opacity: 0.8; }
+        .checkbox-bouncy { width: 26px; height: 26px; border-radius: 8px; border: 3px solid var(--text-muted); display: flex; align-items: center; justify-content: center; transition: 0.3s; background: transparent; }
+        .quest-item.completed .checkbox-bouncy { background: var(--success); border-color: var(--success); transform: scale(1.1) rotate(10deg); }
+        .quest-reward { color: var(--accent); font-weight: 800; font-size: 0.85rem; background: var(--glass-bg); padding: 4px 10px; border-radius: 10px; }
         .quest-item.completed .quest-reward { color: var(--success); }
 
-        /* Stats (Atributos) */
-        .stats-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-        @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-        .stat-item { background: rgba(0,0,0,0.15); padding: 1.25rem; border-radius: 20px; transition: all 0.2s; }
-        body.theme-cloud .stat-item { background: rgba(255,255,255,0.5); }
-        .stat-item:hover { transform: translateY(-4px); background: var(--glass-bg); }
-
-        /* --- ABA PILARES (Constelação) --- */
-        #wheel-container {
-            flex: 1; background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border-radius: 32px; border: 1px solid var(--glass-border); padding: 2rem; position: relative; min-height: 600px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;
-            box-shadow: var(--glass-shadow);
-        }
-        #polymath-wheel { width: 100%; height: 100%; position: relative; min-height: 400px; }
+        /* Constelação */
+        #polymath-wheel { width: 100%; height: 400px; position: relative; margin-bottom: 1.5rem; }
         #wheel-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-
-        .btn-floating-add {
-            position: absolute; bottom: 2rem; right: 2rem; z-index: 30;
-        }
-
-        .skill-list-item { 
-            padding: 1.25rem; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; 
-            cursor: pointer; transition: all 0.2s; margin-bottom: 0.75rem; background: rgba(0,0,0,0.15); 
-        }
-        body.theme-cloud .skill-list-item { background: rgba(255,255,255,0.5); }
-        .skill-list-item:hover { transform: translateX(4px); background: var(--glass-bg); }
+        .skill-list-item { padding: 1rem; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.2s; margin-bottom: 8px; background: rgba(0,0,0,0.1); }
+        body.theme-cloud .skill-list-item { background: rgba(255,255,255,0.4); }
         .skill-list-item.active { border: 2px solid var(--accent); background: var(--glass-bg); }
 
-        /* --- PAINEL DE TEMAS (iOS Slide Sheet) --- */
-        #theme-panel {
-            position: fixed; top: 0; right: -350px; width: 350px; height: 100vh;
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border-left: 1px solid rgba(255,255,255,0.1);
-            z-index: 100; padding: 2rem; transition: right 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: flex; flex-direction: column; gap: 1rem; color: white;
+        /* --- SISTEMA DE AVATAR (NOVO) --- */
+        .avatar-2d-container {
+            width: 160px; height: 160px; margin: 0 auto 1.5rem;
+            position: relative; border-radius: 30px;
+            background: radial-gradient(circle, var(--glass-bg), transparent);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px;
         }
-        body.theme-cloud #theme-panel { background: rgba(255,255,255,0.85); color: #0f172a; border-left: 1px solid rgba(0,0,0,0.1); }
         
-        #theme-panel.open { right: 0; }
-        .theme-option {
-            display: flex; align-items: center; gap: 1rem; padding: 1.25rem; border-radius: 20px;
-            cursor: pointer; border: 2px solid transparent; background: rgba(255,255,255,0.05); transition: all 0.2s;
+        /* O Avatar Base - Uma div onde as camadas se sobrepõem */
+        .avatar-character {
+            width: 120px; height: 120px; position: relative;
         }
-        body.theme-cloud .theme-option { background: rgba(0,0,0,0.05); }
-        .theme-option:hover { transform: scale(1.02); }
-        .theme-option.active { border-color: var(--accent); background: rgba(255,255,255,0.1); }
-        body.theme-cloud .theme-option.active { background: rgba(0,0,0,0.1); }
-        
-        .color-preview { width: 32px; height: 32px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        /* As camadas (ficarão umas sobre as outras) */
+        .avatar-layer {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: flex-end;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .avatar-layer img, .avatar-layer svg {
+            width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+        }
 
-        /* Cores dos pilares */
-        .grad-blue { background: #3b82f6; }
-        .grad-purple { background: #a855f7; }
-        .grad-orange { background: #f97316; }
-        .grad-emerald { background: #10b981; }
-        .grad-red { background: #ef4444; }
-        .grad-indigo { background: #6366f1; }
-        
-        .icon-svg { display: inline-block; width: 24px; height: 24px; vertical-align: middle; }
+        /* Animação de respiração suave para o personagem inteiro */
+        .breathe-anim { animation: breathe 3s ease-in-out infinite; }
+        @keyframes breathe {
+            0%, 100% { transform: scaleY(1) translateY(0); }
+            50% { transform: scaleY(0.98) translateY(2px); }
+        }
+
+        /* --- INVENTÁRIO (NOVO) --- */
+        .inv-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 10px;
+            margin-top: 1rem;
+        }
+        .inv-slot {
+            background: rgba(0,0,0,0.2); border: 2px solid var(--glass-border); border-radius: 16px;
+            aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.2s; position: relative; overflow: hidden;
+        }
+        body.theme-cloud .inv-slot { background: rgba(255,255,255,0.6); }
+        .inv-slot:hover { transform: scale(1.05); background: var(--glass-bg); }
+        .inv-slot.equipped { border-color: var(--success); background: rgba(52, 211, 153, 0.1); }
+        .inv-slot.equipped::after {
+            content: 'E'; position: absolute; top: 4px; right: 4px; background: var(--success);
+            color: var(--bg-color-1); font-size: 0.6rem; font-weight: 900; padding: 2px 5px; border-radius: 6px;
+        }
+        .inv-icon { font-size: 1.5rem; margin-bottom: 4px; }
+        .inv-name { font-size: 0.55rem; text-align: center; font-weight: 800; color: var(--text-muted); line-height: 1.1; padding: 0 4px; }
+
+        /* Modals Extras */
+        .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s; }
+        .level-badge { background: var(--accent); width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 8px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.3); border: 6px solid rgba(255,255,255,0.2); }
+        .floating-exp { position: fixed; color: var(--success); font-size: 1.25rem; font-weight: 900; pointer-events: none; z-index: 1000; text-shadow: 0 2px 10px rgba(0,0,0,0.3); animation: floatUpAndFade 1s forwards; }
+        @keyframes floatUpAndFade { 0% { opacity: 1; transform: translateY(0) scale(0.5); } 20% { transform: translateY(-10px) scale(1.2); } 100% { opacity: 0; transform: translateY(-60px) scale(1); } }
     </style>
 </head>
-<body class="theme-journey"> <!-- Tema padrão amigável (Areia/Journey) -->
+<body class="theme-void">
+
+    <canvas id="theme-canvas"></canvas>
 
     <!-- Overlay de Login -->
-    <div id="login-screen">
-        <div class="login-card animate-slide-up">
-            <div style="background: white; width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: rotate(-10deg);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 40px; height: 40px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+    <div id="login-screen" class="overlay-screen">
+        <div style="text-align: center; padding: 2rem; max-width: 400px; width: 100%;">
+            <div class="float-gentle" style="background: var(--text-main); color: var(--bg-color-1); width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: rotate(-10deg);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 40px; height: 40px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
             </div>
-            <h1 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; color: var(--text-main);">Polímata Hub</h1>
-            <p style="color: var(--text-muted); font-size: 1rem; font-weight: 600; margin-bottom: 2.5rem;">Sua jornada de evolução pessoal.</p>
+            <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem;">Polímata</h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 600; margin-bottom: 3rem;">Sua jornada começa aqui.</p>
             
-            <button id="btn-login-action" class="btn-duo" style="width: 100%;">
+            <button id="btn-login-action" class="btn-duo">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="24" alt="Google" style="background: white; border-radius: 50%; padding: 2px;">
-                Continuar com Google
+                Entrar com Google
             </button>
         </div>
     </div>
 
     <!-- Animação de Level Up -->
-    <div id="level-up-screen">
-        <div class="level-up-content">
-            <div class="level-badge">
+    <div id="level-up-screen" class="overlay-screen" style="opacity: 0; pointer-events: none;">
+        <div style="text-align: center;">
+            <div class="level-badge animate-slide-up">
                 <span style="font-size: 1rem; font-weight: 800; color: rgba(255,255,255,0.8); text-transform: uppercase;">Nível</span>
-                <div id="new-level-display" class="level-number">2</div>
+                <div id="new-level-display" style="font-size: 4rem; font-weight: 900; color: white; line-height: 1;">2</div>
             </div>
-            <h1 style="font-size: 2.5rem; font-weight: 900; color: white; margin-top: 1.5rem; text-shadow: 0 4px 10px rgba(0,0,0,0.3);">Evolução Concluída!</h1>
-            <button onclick="closeLevelUp()" class="btn-duo" style="margin-top: 2rem; background: white; color: var(--accent-dark); box-shadow: 0 6px 0 rgba(255,255,255,0.7);">
-                Incrível!
-            </button>
+            <h1 class="animate-slide-up delay-1" style="font-size: 2.5rem; font-weight: 900; margin-top: 1.5rem; color: var(--text-main);">Evoluiu!</h1>
+            <p class="animate-slide-up delay-2" style="color: var(--text-muted); font-weight: 600; margin-bottom: 2rem;">Sistemas e atributos aprimorados.</p>
+            <button onclick="closeLevelUp()" class="btn-duo animate-slide-up delay-3" style="background: var(--text-main); color: var(--bg-color-1); box-shadow: 0 6px 0 rgba(0,0,0,0.2);">Continuar</button>
         </div>
     </div>
 
-    <!-- Painel Lateral de Temas -->
-    <div id="theme-panel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-            <h3 style="font-size: 1.25rem; font-weight: 800;">Atmosfera</h3>
-            <button onclick="toggleThemePanel()" class="btn-icon-soft" style="border: none;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
+    <div id="app-container" class="hidden">
+        <div id="permission-error" style="background: #ef4444; color: white; padding: 1rem; text-align: center; font-weight: 700; display: none; z-index: 200; position: absolute; top:0; width: 100%;">
+            ⚠️ Erro: Permissões do Firestore bloqueadas.
         </div>
-        
-        <div class="theme-option" onclick="setTheme('', this)">
-            <div class="color-preview" style="background: #1e1b4b;"></div>
-            <span style="font-weight: 700; font-size: 1rem;">O Vazio (Hollow)</span>
-        </div>
-        <div class="theme-option active" onclick="setTheme('theme-journey', this)">
-            <div class="color-preview" style="background: #b45309;"></div>
-            <span style="font-weight: 700; font-size: 1rem;">A Jornada (Areia)</span>
-        </div>
-        <div class="theme-option" onclick="setTheme('theme-forest', this)">
-            <div class="color-preview" style="background: #047857;"></div>
-            <span style="font-weight: 700; font-size: 1rem;">A Floresta (Ori)</span>
-        </div>
-        <div class="theme-option" onclick="setTheme('theme-cloud', this)">
-            <div class="color-preview" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div>
-            <span style="font-weight: 700; font-size: 1rem;">A Nuvem (Light)</span>
-        </div>
-    </div>
 
-    <!-- Cabeçalho Principal -->
-    <header id="main-header" class="hidden container">
-        <div class="header-content">
-            <div class="brand">
-                <div style="background: var(--text-main); color: var(--bg-gradient-1); width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; transform: rotate(-10deg);">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" style="width: 20px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path></svg>
-                </div>
-                <h1>Hub</h1>
-            </div>
+        <main class="content-area">
             
-            <div class="nav-tabs">
-                <button class="nav-btn active" onclick="switchTab('profile')">Meu Perfil</button>
-                <button class="nav-btn" onclick="switchTab('pillars')">Habilidades</button>
-            </div>
+            <!-- VIEW: HUB INICIAL -->
+            <section id="view-home" class="animate-fade-in">
+                <div class="panel hub-header" style="text-align: center;">
+                    
+                    <!-- AVATAR 2D RENDERIZADO -->
+                    <div class="avatar-2d-container float-gentle">
+                        <div class="avatar-character breathe-anim" id="home-avatar-render">
+                            <!-- Injetado via JS -->
+                        </div>
+                    </div>
 
-            <div class="user-menu">
-                <button onclick="toggleThemePanel()" class="btn-icon-soft" title="Mudar Atmosfera">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
-                </button>
-                <img id="user-photo" src="" alt="Foto" onclick="handleLogout()" style="cursor: pointer;" title="Clique para Sair">
-            </div>
-        </div>
-    </header>
-
-    <!-- Área Principal -->
-    <main id="app-main" class="container hidden">
-
-        <div id="permission-error" style="background: rgba(239, 68, 68, 0.9); color: white; padding: 1rem; border-radius: 16px; margin-top: 1rem; font-weight: 700; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-            ⚠️ Erro de Banco de Dados. Verifique as regras de leitura/escrita no Firestore.
-        </div>
-        
-        <!-- ================= ABA DE PERFIL ================= -->
-        <section id="view-profile" class="view-section animate-fade-in">
-            <div class="profile-grid">
-                
-                <!-- Coluna Esquerda: Cartão do Personagem -->
-                <div class="col-left delay-1 animate-slide-up">
-                    <div class="panel" id="main-profile-panel" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                        <!-- Conteúdo injetado via JS (Editor/Visualização) -->
+                    <h2 id="disp-char-name" style="font-size: 1.8rem; font-weight: 900; margin-bottom: 0.2rem;">Viajante</h2>
+                    <p id="disp-char-title" style="color: var(--text-muted); font-weight: 700; font-size: 0.9rem; margin-bottom: 1.5rem;">Despertando...</p>
+                    
+                    <div class="progress-wrapper">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <span style="font-size: 1.1rem; font-weight: 800;">Nível <span id="disp-level">1</span></span>
+                            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);"><span id="disp-exp-current">0</span> / 500 XP</span>
+                        </div>
+                        <div class="progress-track">
+                            <div id="disp-exp-bar" class="progress-fill" style="width: 0%"></div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Coluna Direita: Missões e Atributos -->
-                <div class="col-right" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    
-                    <div class="panel delay-2 animate-slide-up">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                            <h3 class="section-title" style="margin: 0;">
-                                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                                Hábitos Diários
-                            </h3>
-                            <button onclick="addRandomQuest()" class="btn-icon-soft" title="Novo Hábito">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            </button>
-                        </div>
-                        <div id="quests-container">
-                            <p style="color: var(--text-muted); text-align: center; font-weight: 600;">Carregando sua jornada...</p>
-                        </div>
+                <div class="panel">
+                    <div class="section-title">
+                        Hábitos Diários
+                        <button onclick="addRandomQuest()" class="btn-icon-soft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
                     </div>
-
-                    <div class="panel delay-3 animate-slide-up">
-                        <h3 class="section-title">
-                            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                            Principais Habilidades
-                        </h3>
-                        <div id="stats-container" class="stats-grid">
-                            <p style="color: var(--text-muted); grid-column: span 2; text-align: center; font-weight: 600;">Explore a aba de habilidades para crescer.</p>
-                        </div>
-                    </div>
-
+                    <div id="quests-container"></div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- ================= ABA DE PILARES (Constelação) ================= -->
-        <section id="view-pillars" class="view-section hidden">
-            <div class="profile-grid"> <!-- Usando o mesmo grid para layout consistente -->
-                
-                <div id="wheel-container" class="delay-1 animate-slide-up" style="grid-column: span 1; @media(min-width:1024px){grid-column: 2 / 3; order: 2;}">
-                    <h2 style="position: absolute; top: 2rem; left: 2rem; font-size: 1.25rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; z-index: 10;">
-                        Árvore de Habilidades
-                    </h2>
+            <!-- VIEW: INVENTÁRIO (NOVA) -->
+            <section id="view-inventory" class="hidden">
+                <div class="panel" style="text-align: center; padding-bottom: 1rem;">
+                    <h2 style="font-weight: 900; margin-bottom: 1rem;">Equipamento</h2>
                     
+                    <!-- Previsão do Personagem -->
+                    <div class="avatar-2d-container" style="margin-bottom: 0;">
+                        <div class="avatar-character breathe-anim" id="inv-avatar-render">
+                            <!-- Injetado via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 0.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Cabeça</h3>
+                    <div class="inv-grid" id="inv-grid-head"></div>
+                    
+                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-top: 1.5rem; margin-bottom: 0.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Corpo</h3>
+                    <div class="inv-grid" id="inv-grid-body"></div>
+
+                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-top: 1.5rem; margin-bottom: 0.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Armas & Capas</h3>
+                    <div class="inv-grid" id="inv-grid-extras"></div>
+                </div>
+            </section>
+
+            <!-- VIEW: PILARES/HABILIDADES -->
+            <section id="view-skills" class="hidden">
+                <div class="panel" style="padding: 1rem;">
+                    <div class="section-title" style="padding: 0.5rem;">
+                        Sua Constelação
+                        <button onclick="handleAddSkill()" class="btn-icon-soft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                    </div>
                     <div id="polymath-wheel" class="float-gentle">
                         <svg id="wheel-svg"></svg>
                         <div id="nodes-container"></div>
                     </div>
+                </div>
+                <div class="panel" id="editor-card"></div>
+                <div class="panel">
+                    <h3 style="font-size: 1rem; font-weight: 800; margin-bottom: 1rem;">Módulos Instalados (<span id="skill-count">0</span>)</h3>
+                    <div id="skills-list"></div>
+                </div>
+            </section>
 
-                    <button onclick="handleAddSkill()" class="btn-duo btn-floating-add">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="icon-svg" style="margin-right:-4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        Novo Pilar
-                    </button>
+        </main>
+
+        <!-- BARRA DE NAVEGAÇÃO INFERIOR -->
+        <nav id="bottom-nav">
+            <button class="nav-item active" onclick="switchTab('home', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Início
+            </button>
+            <button class="nav-item" onclick="switchTab('inventory', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10"></path><path d="M4 16h16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z"></path><path d="M10 10l2 2 2-2"></path></svg>
+                Mochila
+            </button>
+            <button class="nav-item" onclick="switchTab('skills', this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
+                Pilares
+            </button>
+            <button class="nav-item" onclick="toggleSettings()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                Menu
+            </button>
+        </nav>
+
+        <!-- MENU DE CONFIGURAÇÕES -->
+        <div id="settings-sheet">
+            <div class="sheet-handle" onclick="toggleSettings()"></div>
+            <div class="sheet-content">
+                <h3 class="sheet-title">Ajustes da Conta</h3>
+                
+                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Identidade</h4>
+                <input type="text" id="input-profile-name" class="input-ios" placeholder="Seu Nome">
+                <input type="text" id="input-profile-desc" class="input-ios" placeholder="Seu Título/Foco">
+                <button onclick="saveProfileData()" class="btn-duo" style="margin-bottom: 2rem;">Salvar</button>
+
+                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Atmosfera</h4>
+                <div class="theme-grid">
+                    <div class="theme-option active" onclick="setTheme('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700;">O Vazio</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-journey', this)"><div class="color-preview" style="background: #b45309;"></div><span style="font-weight: 700;">A Jornada</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-forest', this)"><div class="color-preview" style="background: #047857;"></div><span style="font-weight: 700;">A Floresta</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-cloud', this)"><div class="color-preview" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div><span style="font-weight: 700;">A Nuvem</span></div>
                 </div>
 
-                <div class="sidebar" style="grid-column: span 1; @media(min-width:1024px){grid-column: 1 / 2; order: 1;}">
-                    <div id="editor-card" class="panel delay-2 animate-slide-up" style="padding: 1.5rem;">
-                        <!-- Editor injetado via JS -->
-                    </div>
-
-                    <div class="panel delay-3 animate-slide-up" style="flex: 1; padding: 1.5rem; display: flex; flex-direction: column;">
-                        <h3 class="section-title" style="font-size: 1rem; margin-bottom: 1rem;">
-                            Seus Pilares (<span id="skill-count">0</span>)
-                        </h3>
-                        <div id="skills-list" style="overflow-y: auto; max-height: 400px; padding-right: 0.5rem;">
-                            <!-- Lista injetada via JS -->
-                        </div>
-                    </div>
-                </div>
-
+                <button onclick="handleLogout()" class="btn-duo" style="background: transparent; color: #ef4444; border: 2px solid #ef4444; box-shadow: none;">Desconectar</button>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -568,531 +404,327 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
+    // --- BANCO DE DADOS DE ITENS (INVENTÁRIO MOCKADO) ---
+    // AQUI VOCÊ DEVE TROCAR OS SVGs por `<img src="url_da_sua_imagem_transparente.png">` DEPOIS.
+    const itemsDB = [
+        // Corpo Base
+        { id: 'body_default', type: 'body', name: 'Corpo Base', icon: '👤', render: '<svg viewBox="0 0 100 100" fill="#fcd34d"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/></svg>' },
+        { id: 'body_dark', type: 'body', name: 'Corpo Sombrio', icon: '🌑', render: '<svg viewBox="0 0 100 100" fill="#1e293b"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/><circle cx="40" cy="35" r="3" fill="#60a5fa"/><circle cx="60" cy="35" r="3" fill="#60a5fa"/></svg>' },
+        // Cabeça
+        { id: 'head_none', type: 'head', name: 'Nenhum', icon: '❌', render: '' },
+        { id: 'head_hood', type: 'head', name: 'Capuz Rogue', icon: '🥷', render: '<svg viewBox="0 0 100 100" fill="#0f172a"><path d="M25 50 C 25 10, 75 10, 75 50 Q 50 20 25 50 Z"/></svg>' },
+        { id: 'head_hair', type: 'head', name: 'Cabelo Herói', icon: '💇', render: '<svg viewBox="0 0 100 100" fill="#78350f"><path d="M20 40 Q 50 0 80 40 Q 70 20 50 25 Q 30 20 20 40 Z"/></svg>' },
+        // Extras (Armas/Capas)
+        { id: 'extra_none', type: 'extra', name: 'Nenhum', icon: '❌', render: '' },
+        { id: 'extra_sword', type: 'extra', name: 'Espada', icon: '⚔️', render: '<svg viewBox="0 0 100 100" fill="#cbd5e1" stroke="#475569" stroke-width="2"><rect x="75" y="40" width="10" height="40" transform="rotate(45 80 60)"/><rect x="65" y="70" width="30" height="5" transform="rotate(45 80 60)" fill="#fbbf24"/></svg>' },
+        { id: 'extra_cloak', type: 'extra', name: 'Capa Azul', icon: '🧥', render: '<svg viewBox="0 0 100 100" fill="#3b82f6" style="z-index: -1; position: absolute;"><path d="M30 50 L20 95 L80 95 L70 50 Z"/></svg>' }
+    ];
+
     // --- ESTADO GLOBAL ---
     let currentUser = null;
     let userPath = ''; 
-    let profileData = { name: "Aventureiro", description: "Iniciando a jornada", exp: 0, customPhotoURL: "", theme: "theme-journey" };
-    let skillsData = [];
-    let questsData = [];
-    
+    let profileData = { 
+        name: "Viajante", description: "Despertando...", exp: 0, theme: "theme-void",
+        equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } // Equipamentos Iniciais
+    };
+    let skillsData = []; let questsData = [];
     let selectedNode = { type: 'main', id: null };
     let isEditingPillar = false;
-    let isEditingProfile = false; 
     let unsubProfile, unsubSkills, unsubQuests;
     let currentLevelState = 1;
 
     const colorOptions = ["grad-blue", "grad-purple", "grad-orange", "grad-emerald", "grad-red", "grad-indigo"];
     const EXP_PER_LEVEL = 500;
 
-    function handleFirestoreError(error) {
-        console.error("Erro no Firestore:", error);
-        if (error.code === 'permission-denied') {
-            document.getElementById('permission-error').style.display = 'block';
-        }
-    }
+    // --- CANVAS PARTICLES ---
+    const canvas = document.getElementById('theme-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = []; let animationFrameId;
 
-    // --- CONTROLE DE TEMA ---
-    window.toggleThemePanel = () => { document.getElementById('theme-panel').classList.toggle('open'); }
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas); resizeCanvas();
+
+    class Particle {
+        constructor(theme) { this.theme = theme; this.reset(); this.y = Math.random() * canvas.height; }
+        reset() {
+            this.x = Math.random() * canvas.width; this.y = canvas.height + Math.random() * 100;
+            this.size = Math.random() * 3 + 1; this.alpha = Math.random() * 0.5 + 0.1;
+            if (this.theme === 'theme-void') { this.vx = (Math.random() - 0.5) * 0.5; this.vy = -(Math.random() * 1 + 0.5); this.color = `rgba(129, 140, 248, ${this.alpha})`; } 
+            else if (this.theme === 'theme-journey') { this.x = Math.random() * canvas.width * 1.5 - canvas.width*0.5; this.vx = Math.random() * 3 + 1; this.vy = -(Math.random() * 1 + 0.5); this.color = `rgba(251, 191, 36, ${this.alpha})`; } 
+            else if (this.theme === 'theme-forest') { this.vy = -(Math.random() * 0.5 + 0.2); this.angle = Math.random() * Math.PI * 2; this.vx = Math.cos(this.angle); this.color = `rgba(167, 243, 208, ${this.alpha * 1.5})`; } 
+            else if (this.theme === 'theme-cloud') { this.size = Math.random() * 50 + 20; this.y = Math.random() * canvas.height; this.x = -this.size; this.vx = Math.random() * 0.5 + 0.1; this.vy = 0; this.color = `rgba(255, 255, 255, ${this.alpha * 0.5})`; }
+        }
+        update() {
+            if (this.theme === 'theme-forest') { this.angle += 0.05; this.x += Math.cos(this.angle) * 1.5; } else { this.x += this.vx; }
+            this.y += this.vy;
+            if (this.theme === 'theme-cloud' && this.x > canvas.width + this.size) this.reset();
+            else if (this.theme !== 'theme-cloud' && (this.y < -10 || this.x > canvas.width + 10 || this.x < -10)) this.reset();
+        }
+        draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = this.color; ctx.fill(); }
+    }
+    function initParticles(themeClass) { particles = []; let count = themeClass==='theme-cloud'?10:themeClass==='theme-journey'?80:40; for(let i=0; i<count; i++) particles.push(new Particle(themeClass)); }
+    function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); animationFrameId = requestAnimationFrame(animateParticles); }
+
+    // --- NAVEGAÇÃO E TEMAS ---
+    window.switchTab = (tabId, btnElement) => {
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+        if(btnElement) btnElement.classList.add('active');
+        document.getElementById('view-home').classList.add('hidden');
+        document.getElementById('view-inventory').classList.add('hidden');
+        document.getElementById('view-skills').classList.add('hidden');
+        document.getElementById(`view-${tabId}`).classList.remove('hidden');
+        if(tabId === 'skills') setTimeout(renderWheel, 50); 
+        if(tabId === 'inventory' || tabId === 'home') renderAvatar();
+    };
+
+    window.toggleSettings = () => {
+        const sheet = document.getElementById('settings-sheet');
+        sheet.classList.toggle('open');
+        if (sheet.classList.contains('open')) {
+            document.getElementById('input-profile-name').value = profileData.name || '';
+            document.getElementById('input-profile-desc').value = profileData.description || '';
+        }
+    };
 
     window.setTheme = async (themeClass, element) => {
         document.body.className = themeClass;
         document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
         if(element) element.classList.add('active');
-        
+        initParticles(themeClass);
         if (currentUser) {
             profileData.theme = themeClass;
-            await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: themeClass }).catch(handleFirestoreError);
+            await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: themeClass }).catch(console.error);
         }
-        if (!document.getElementById('view-pillars').classList.contains('hidden')) renderWheel();
-    }
-
-    // --- AUTENTICAÇÃO ---
-    document.getElementById('btn-login-action').onclick = async () => {
-        const btn = document.getElementById('btn-login-action');
-        btn.innerHTML = 'Conectando...';
-        try {
-            await signInWithPopup(auth, provider);
-        } catch (error) {
-            btn.innerHTML = 'Continuar com Google';
-        }
+        if (!document.getElementById('view-skills').classList.contains('hidden')) renderWheel();
     };
 
-    window.handleLogout = () => { if(confirm("Deseja pausar sua jornada e sair?")) signOut(auth); };
+    // --- AUTENTICAÇÃO ---
+    document.getElementById('btn-login-action').onclick = async () => { try { await signInWithPopup(auth, provider); } catch (e) { console.error(e); } };
+    window.handleLogout = () => { if(confirm("Deseja sair?")) { signOut(auth); window.toggleSettings(); } };
 
     onAuthStateChanged(auth, (user) => {
-        const loginScreen = document.getElementById('login-screen');
-        const appHeader = document.getElementById('main-header');
-        const appMain = document.getElementById('app-main');
-
         if (user) {
-            currentUser = user;
-            userPath = `users/${user.uid}`;
+            currentUser = user; userPath = `users/${user.uid}`;
             document.getElementById('permission-error').style.display = 'none';
-            
-            loginScreen.style.opacity = '0';
+            document.getElementById('login-screen').style.opacity = '0';
             setTimeout(() => {
-                loginScreen.classList.add('hidden');
-                appHeader.classList.remove('hidden');
-                appMain.classList.remove('hidden');
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('app-container').classList.remove('hidden');
+                initParticles(document.body.className); animateParticles();
             }, 500);
-            
             loadDataAndSync();
+            renderInventoryGrid(); // Inicia Inventário
         } else {
             currentUser = null;
-            loginScreen.classList.remove('hidden');
-            loginScreen.style.opacity = '1';
-            appHeader.classList.add('hidden');
-            appMain.classList.add('hidden');
-            if (unsubProfile) unsubProfile();
-            if (unsubSkills) unsubSkills();
-            if (unsubQuests) unsubQuests();
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('login-screen').style.opacity = '1';
+            document.getElementById('app-container').classList.add('hidden');
+            cancelAnimationFrame(animationFrameId);
+            if (unsubProfile) unsubProfile(); if (unsubSkills) unsubSkills(); if (unsubQuests) unsubQuests();
         }
     });
 
-    // --- LÓGICA DE PROGRESSÃO ---
-    function getLevelInfo(totalExp) {
-        const level = Math.floor(totalExp / EXP_PER_LEVEL) + 1;
-        const currentExp = totalExp % EXP_PER_LEVEL;
-        const progress = (currentExp / EXP_PER_LEVEL) * 100;
-        return { level, currentExp, progress };
-    }
+    // --- PROGRESSÃO E SYNC ---
+    function getLevelInfo(exp) { return { level: Math.floor(exp / EXP_PER_LEVEL) + 1, currentExp: exp % EXP_PER_LEVEL, progress: ((exp % EXP_PER_LEVEL) / EXP_PER_LEVEL) * 100 }; }
+    function closeLevelUp() { document.getElementById('level-up-screen').style.opacity = '0'; document.getElementById('level-up-screen').style.pointerEvents = 'none'; }
+    function createFloatingEXP(x, y, amount) { const el = document.createElement('div'); el.className = 'floating-exp'; el.innerText = `+${amount} XP`; el.style.left = `${x}px`; el.style.top = `${y}px`; document.body.appendChild(el); setTimeout(() => el.remove(), 1000); }
 
-    function triggerLevelUpAnimation(newLevel) {
-        const modal = document.getElementById('level-up-screen');
-        document.getElementById('new-level-display').innerText = newLevel;
-        modal.classList.add('active');
-    }
-    window.closeLevelUp = () => document.getElementById('level-up-screen').classList.remove('active');
-
-    function createFloatingEXP(x, y, amount) {
-        const expEl = document.createElement('div');
-        expEl.className = 'floating-exp';
-        expEl.innerText = `+${amount} XP`;
-        expEl.style.left = `${x}px`;
-        expEl.style.top = `${y}px`;
-        document.body.appendChild(expEl);
-        setTimeout(() => expEl.remove(), 1200);
-    }
-
-    // --- DB SYNC ---
     async function loadDataAndSync() {
         if (!currentUser) return;
-
         try {
             const profileRef = doc(db, userPath, 'profile', 'main');
             const profileSnap = await getDoc(profileRef);
-            
-            if (!profileSnap.exists()) {
-                await setDoc(profileRef, profileData);
-            } else {
+            if (!profileSnap.exists()) await setDoc(profileRef, profileData);
+            else {
                 const initialData = profileSnap.data();
                 currentLevelState = getLevelInfo(initialData.exp || 0).level;
+                // Garante que o equipped exista
+                if(!initialData.equipped) initialData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' };
+                profileData = initialData;
+
                 if(initialData.theme) {
-                    profileData.theme = initialData.theme;
-                    document.body.className = initialData.theme;
+                    document.body.className = initialData.theme; initParticles(initialData.theme);
                     document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
-                    const activeBtn = document.querySelector(`.theme-option[onclick*="${initialData.theme}"]`);
-                    if(activeBtn) activeBtn.classList.add('active');
+                    const actBtn = document.querySelector(`.theme-option[onclick*="${initialData.theme}"]`); if(actBtn) actBtn.classList.add('active');
                 }
             }
             
             unsubProfile = onSnapshot(profileRef, (docSnap) => {
                 if (docSnap.exists()) {
                     profileData = docSnap.data();
-                    const newLevelInfo = getLevelInfo(profileData.exp || 0);
+                    if(!profileData.equipped) profileData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' };
                     
-                    if (newLevelInfo.level > currentLevelState) {
-                        triggerLevelUpAnimation(newLevelInfo.level);
-                        currentLevelState = newLevelInfo.level;
+                    const newLevel = getLevelInfo(profileData.exp || 0).level;
+                    if (newLevel > currentLevelState) {
+                        document.getElementById('new-level-display').innerText = newLevel;
+                        document.getElementById('level-up-screen').style.opacity = '1'; document.getElementById('level-up-screen').style.pointerEvents = 'auto';
+                        currentLevelState = newLevel;
                     }
-                    
                     if(profileData.theme && document.body.className !== profileData.theme) {
-                        document.body.className = profileData.theme;
-                        document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
-                        const activeBtn = document.querySelector(`.theme-option[onclick*="${profileData.theme}"]`);
-                        if(activeBtn) activeBtn.classList.add('active');
+                        document.body.className = profileData.theme; initParticles(profileData.theme);
                     }
-
-                    updateProfileUI(); 
-                    renderEditor();    
+                    updateProfileUI(); renderAvatar(); renderInventoryGrid();
                 }
-            }, handleFirestoreError);
+            }, (err) => document.getElementById('permission-error').style.display='block');
 
-            unsubSkills = onSnapshot(collection(db, userPath, 'skills'), (snapshot) => {
-                skillsData = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateStatsUI();
-                renderWheel();
-                renderSkillList();
-                renderEditor();
-            }, handleFirestoreError);
-
-            unsubQuests = onSnapshot(collection(db, userPath, 'quests'), (snapshot) => {
-                questsData = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateQuestsUI();
-            }, handleFirestoreError);
-            
-        } catch (error) { handleFirestoreError(error); }
+            unsubSkills = onSnapshot(collection(db, userPath, 'skills'), (snap) => { skillsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderWheel(); renderSkillList(); renderEditor(); });
+            unsubQuests = onSnapshot(collection(db, userPath, 'quests'), (snap) => { questsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); updateQuestsUI(); });
+        } catch (error) { document.getElementById('permission-error').style.display='block'; }
     }
 
-    window.addExp = async (amount) => {
+    // --- AÇÕES DO JOGADOR ---
+    window.addExp = async (amount) => { if (currentUser) await updateDoc(doc(db, userPath, 'profile', 'main'), { exp: (profileData.exp || 0) + amount }); };
+    window.toggleQuest = async (id, done, exp, event) => {
         if (!currentUser) return;
-        const newExp = (profileData.exp || 0) + amount;
-        await updateDoc(doc(db, userPath, 'profile', 'main'), { exp: newExp }).catch(handleFirestoreError);
+        let cx = event.clientX; let cy = event.clientY;
+        if(event.touches) { cx = event.touches[0].clientX; cy = event.touches[0].clientY; }
+        if (!done) createFloatingEXP(cx, cy, exp);
+        await updateDoc(doc(db, userPath, 'quests', id), { done: !done });
+        if (!done) await window.addExp(exp);
     };
-
-    window.toggleQuest = async (questId, isDone, expReward, event) => {
-        if (!currentUser) return;
-        if (!isDone && event) createFloatingEXP(event.clientX, event.clientY, expReward);
-        await updateDoc(doc(db, userPath, 'quests', questId), { done: !isDone }).catch(handleFirestoreError);
-        if (!isDone) await window.addExp(expReward);
-    };
-
     window.addRandomQuest = async () => {
         if (!currentUser) return;
-        const missao = prompt("Que novo hábito você quer cultivar?");
-        if (missao && missao.trim() !== "") {
-            await addDoc(collection(db, userPath, 'quests'), {
-                title: missao, exp: 30, done: false, createdAt: Date.now()
-            }).catch(handleFirestoreError);
-        }
+        const missao = prompt("Novo Hábito a monitorar:");
+        if (missao && missao.trim() !== "") await addDoc(collection(db, userPath, 'quests'), { title: missao, exp: 30, done: false, createdAt: Date.now() });
     };
-
-    // --- EDIÇÃO DE PERFIL PRINCIPAL ---
-    window.toggleEditProfileMode = () => {
-        isEditingProfile = !isEditingProfile;
-        updateProfileUI();
-    };
-
     window.saveProfileData = async () => {
         if (!currentUser) return;
-        const newName = document.getElementById('input-profile-name').value;
-        const newDesc = document.getElementById('input-profile-desc').value;
-        const newPhoto = document.getElementById('input-profile-photo').value;
-
-        await updateDoc(doc(db, userPath, 'profile', 'main'), {
-            name: newName, description: newDesc, customPhotoURL: newPhoto
-        }).catch(handleFirestoreError);
-        
-        isEditingProfile = false;
-        updateProfileUI();
+        const n = document.getElementById('input-profile-name').value; const d = document.getElementById('input-profile-desc').value;
+        await updateDoc(doc(db, userPath, 'profile', 'main'), { name: n, description: d }); window.toggleSettings();
     };
 
-    // --- RENDERIZAÇÃO DA INTERFACE (ABA RESUMO) ---
-    function updateProfileUI() {
-        if (!currentUser) return;
+    // --- SISTEMA DE AVATAR (NOVO) ---
+    function renderAvatar() {
+        const eq = profileData.equipped || {};
+        const getLayer = (id) => itemsDB.find(i => i.id === id)?.render || '';
 
-        const panel = document.getElementById('main-profile-panel');
-        const stats = getLevelInfo(profileData.exp || 0);
+        // Ordem de desenho (Z-index gerido pela ordem das divs)
+        // 1. Extra (Capa por trás) -> 2. Corpo -> 3. Head -> 4. Extra (Arma na frente)
+        const html = `
+            <div class="avatar-layer">${getLayer(eq.extra)}</div> 
+            <div class="avatar-layer">${getLayer(eq.body)}</div>
+            <div class="avatar-layer">${getLayer(eq.head)}</div>
+        `;
         
-        const displayPhotoURL = (profileData.customPhotoURL && profileData.customPhotoURL.trim() !== "") 
-                                ? profileData.customPhotoURL : currentUser.photoURL;
-
-        if(displayPhotoURL) document.getElementById('user-photo').src = displayPhotoURL;
-
-        let html = `
-            <div class="profile-header-actions">
-                <button onclick="toggleEditProfileMode()" class="btn-icon-soft" title="Editar Perfil">
-                    ${isEditingProfile ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>'}
-                </button>
-            </div>
-        `;
-
-        if (isEditingProfile) {
-            html += `
-                <div class="animate-fade-in" style="width: 100%; text-align: left; padding: 0 1rem;">
-                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; display: block;">Como quer ser chamado?</label>
-                    <input type="text" id="input-profile-name" class="input-ios" value="${profileData.name || ''}" placeholder="Seu Nome">
-                    
-                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; display: block;">Qual o seu título/foco?</label>
-                    <input type="text" id="input-profile-desc" class="input-ios" value="${profileData.description || ''}" placeholder="Ex: Explorador Digital">
-                    
-                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; display: block;">URL da Foto (Opcional):</label>
-                    <input type="text" id="input-profile-photo" class="input-ios" value="${profileData.customPhotoURL || ''}" placeholder="https://link-da-imagem.com/foto.jpg">
-                    
-                    <button onclick="saveProfileData()" class="btn-duo" style="width: 100%; margin-top: 1.5rem;">Salvar Perfil</button>
-                </div>
-            `;
-        } else {
-            html += `
-                <div class="animate-fade-in" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-                    <div class="avatar-container float-gentle">
-                        <div class="avatar">
-                            ${displayPhotoURL ? `<img src="${displayPhotoURL}" alt="Avatar">` : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:40px; color: var(--text-muted);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`}
-                        </div>
-                    </div>
-                    <h2 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.25rem; color: var(--text-main); letter-spacing: -0.5px;">${profileData.name || 'Aventureiro'}</h2>
-                    <p style="color: var(--text-muted); font-size: 1rem; font-weight: 600; margin-bottom: 1.5rem;">${profileData.description || 'Iniciando a jornada'}</p>
-                </div>
-            `;
-        }
-
-        html += `
-            <div class="avatar-body-space float-gentle" title="Em breve: Insira aqui o modelo do seu personagem">
-                <div class="pedestal-light"></div>
-                <svg class="avatar-silhouette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 4a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
-                    <path d="M12 4v7M8 11v11M16 11v11M8 11h8M5 6l3 5M19 6l-3 5"/>
-                </svg>
-                <div class="avatar-placeholder-text">Seu Avatar 3D (Em breve)</div>
-            </div>
-
-            <div class="progress-wrapper" style="width: 100%; text-align: left;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                    <span style="font-size: 1rem; font-weight: 800; color: var(--text-main);">Nível ${stats.level}</span>
-                    <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">${stats.currentExp} / ${EXP_PER_LEVEL} XP</span>
-                </div>
-                <div class="progress-track">
-                    <div class="progress-fill" style="width: ${stats.progress}%"></div>
-                </div>
-            </div>
-        `;
-
-        panel.innerHTML = html;
+        // Atualiza nos dois lugares (Home e Inventário)
+        if(document.getElementById('home-avatar-render')) document.getElementById('home-avatar-render').innerHTML = html;
+        if(document.getElementById('inv-avatar-render')) document.getElementById('inv-avatar-render').innerHTML = html;
     }
 
-    // --- OUTROS COMPONENTES DA UI ---
-    function updateStatsUI() {
-        const container = document.getElementById('stats-container');
-        if (skillsData.length === 0) {
-            container.innerHTML = `<p style="color: var(--text-muted); grid-column: span 2; text-align: center; font-weight: 600;">Adicione pilares para ver seus atributos.</p>`;
-            return;
-        }
+    // --- SISTEMA DE INVENTÁRIO (NOVO) ---
+    window.equipItem = async (itemId, type) => {
+        if (!currentUser) return;
+        const currentEquipped = profileData.equipped || { body: 'body_default', head: 'head_none', extra: 'extra_none' };
+        currentEquipped[type] = itemId;
+        
+        // Atualiza DB (o onSnapshot fará o render automático)
+        await updateDoc(doc(db, userPath, 'profile', 'main'), { equipped: currentEquipped });
+    };
 
-        const topSkills = [...skillsData].sort((a, b) => b.level - a.level).slice(0, 4);
-        container.innerHTML = topSkills.map((skill, i) => `
-            <div class="stat-item animate-fade-in" style="animation-delay: ${i * 0.1}s">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom:10px;">
-                    <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--text-main); font-size: 0.9rem;">
-                        <div style="width:12px; height:12px; border-radius:50%; background:var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.2);"></div>
-                        ${skill.name}
-                    </div>
-                    <span style="color: var(--text-main); font-weight: 900; font-size:1.1rem;">${skill.level}</span>
+    function renderInventoryGrid() {
+        const eq = profileData.equipped || {};
+        const renderGroup = (type, containerId) => {
+            const container = document.getElementById(containerId);
+            if(!container) return;
+            const items = itemsDB.filter(i => i.type === type);
+            container.innerHTML = items.map(i => `
+                <div class="inv-slot ${eq[type] === i.id ? 'equipped' : ''}" onclick="equipItem('${i.id}', '${type}')">
+                    <div class="inv-icon">${i.icon}</div>
+                    <div class="inv-name">${i.name}</div>
                 </div>
-                <div class="progress-track" style="height: 8px; margin: 0;">
-                    <div class="progress-fill" style="width: ${skill.level}%; background: var(--accent);"></div>
-                </div>
-            </div>
-        `).join('');
+            `).join('');
+        };
+
+        renderGroup('head', 'inv-grid-head');
+        renderGroup('body', 'inv-grid-body');
+        renderGroup('extra', 'inv-grid-extras');
+    }
+
+
+    // --- UI UPDATES (HOME) ---
+    function updateProfileUI() {
+        if (!currentUser) return;
+        const stats = getLevelInfo(profileData.exp || 0);
+        document.getElementById('disp-char-name').innerText = profileData.name || 'Viajante';
+        document.getElementById('disp-char-title').innerText = profileData.description || 'Despertando...';
+        document.getElementById('disp-level').innerText = stats.level;
+        document.getElementById('disp-exp-current').innerText = stats.currentExp;
+        document.getElementById('disp-exp-bar').style.width = `${stats.progress}%`;
     }
 
     function updateQuestsUI() {
         const container = document.getElementById('quests-container');
-        const sortedQuests = [...questsData].sort((a, b) => (a.done === b.done)? 0 : a.done ? 1 : -1);
-
-        container.innerHTML = sortedQuests.map((q, i) => `
-            <div class="quest-item ${q.done ? 'completed' : ''} animate-fade-in" style="animation-delay: ${i * 0.1}s" onclick="toggleQuest('${q.id}', ${q.done}, ${q.exp}, event)">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div class="checkbox-bouncy">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" style="width:16px; height:16px; color:white; opacity:${q.done?1:0}; transition:0.3s;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <div style="color: ${q.done ? 'var(--text-muted)' : 'var(--text-main)'}; font-weight: 800; font-size: 1rem; text-decoration: ${q.done ? 'line-through' : 'none'}; transition: all 0.2s;">
-                        ${q.title}
-                    </div>
+        const sorted = [...questsData].sort((a, b) => (a.done === b.done)? 0 : a.done ? 1 : -1);
+        if(sorted.length === 0) { container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 1rem 0;">Adicione hábitos no botão +</p>`; return; }
+        container.innerHTML = sorted.map((q, i) => `
+            <div class="quest-item ${q.done ? 'completed' : ''} animate-fade-in" style="animation-delay: ${i*0.05}s" onclick="toggleQuest('${q.id}', ${q.done}, ${q.exp}, event)">
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <div class="checkbox-bouncy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" style="width:14px; opacity:${q.done?1:0};"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <div style="color: ${q.done?'var(--text-muted)':'var(--text-main)'}; font-weight:800; font-size:0.95rem; text-decoration:${q.done?'line-through':'none'};">${q.title}</div>
                 </div>
-                <div class="quest-reward">+${q.exp} XP</div>
+                <div class="quest-reward">+${q.exp}XP</div>
             </div>
         `).join('');
     }
 
-    // --- ABA PILARES (Roda e Editor) ---
-    window.switchTab = (tabId) => {
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector(`.nav-btn[onclick="switchTab('${tabId}')"]`).classList.add('active');
-        document.getElementById('view-profile').classList.add('hidden');
-        document.getElementById('view-pillars').classList.add('hidden');
-        const targetView = document.getElementById(`view-${tabId}`);
-        targetView.classList.remove('hidden');
-        targetView.classList.add('animate-fade-in');
-        if(tabId === 'pillars') setTimeout(renderWheel, 50); 
-    };
-
-    window.handleAddSkill = async () => {
-        if (!currentUser) return;
-        const docRef = await addDoc(collection(db, userPath, 'skills'), {
-            name: "Nova Habilidade", level: 10, color: colorOptions[skillsData.length % colorOptions.length]
-        }).catch(handleFirestoreError);
-        if(docRef) { selectNode('skill', docRef.id); isEditingPillar = true; }
-    };
-
-    window.handleDeleteSkill = async (id) => {
-        if (confirm("Remover esta habilidade da sua constelação?")) {
-            await deleteDoc(doc(db, userPath, 'skills', id)).catch(handleFirestoreError);
-            if (selectedNode.id === id) selectNode('main', null);
-        }
-    };
-
-    window.updatePillarName = async (val) => {
-        if (!currentUser || selectedNode.type !== 'skill') return;
-        await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { name: val }).catch(handleFirestoreError);
-    };
-
-    window.updateSkillLevelDB = async (val) => {
-        if (!currentUser || selectedNode.type !== 'skill') return;
-        await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { level: parseInt(val) }).catch(handleFirestoreError);
-    };
-
-    window.updateSkillLevelUI = (val) => {
-        const label = document.getElementById('editor-skill-label');
-        if(label) label.innerText = `Nível: ${val}%`;
-    }
-
-    window.selectNode = (type, id) => {
-        selectedNode = { type, id };
-        isEditingPillar = false;
-        renderWheel();
-        renderEditor();
-        renderSkillList();
-    };
-
+    // --- ABA PILARES ---
+    window.handleAddSkill = async () => { if(currentUser) { const docRef = await addDoc(collection(db, userPath, 'skills'), { name: "Nova Magia", level: 10, color: colorOptions[skillsData.length % colorOptions.length] }); if(docRef){ selectNode('skill', docRef.id); isEditingPillar = true; } } };
+    window.handleDeleteSkill = async (id) => { if (confirm("Esquecer habilidade?")) { await deleteDoc(doc(db, userPath, 'skills', id)); if (selectedNode.id === id) selectNode('main', null); } };
+    window.updatePillarName = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { name: val }); };
+    window.updateSkillLevelDB = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { level: parseInt(val) }); };
+    window.updateSkillLevelUI = (val) => { const label = document.getElementById('editor-skill-label'); if(label) label.innerText = `Nível: ${val}%`; }
+    window.selectNode = (type, id) => { selectedNode = { type, id }; isEditingPillar = false; renderWheel(); renderEditor(); renderSkillList(); };
     window.toggleEditPillar = () => { isEditingPillar = !isEditingPillar; renderEditor(); };
 
     function renderWheel() {
-        const container = document.getElementById('polymath-wheel');
-        const nodesContainer = document.getElementById('nodes-container');
-        const svg = document.getElementById('wheel-svg');
-        if (!container || document.getElementById('view-pillars').classList.contains('hidden')) return;
+        const nodesContainer = document.getElementById('nodes-container'); const svg = document.getElementById('wheel-svg');
+        if (!nodesContainer || document.getElementById('view-skills').classList.contains('hidden')) return;
+        const w = document.getElementById('polymath-wheel').offsetWidth; const h = document.getElementById('polymath-wheel').offsetHeight;
+        const cx = w/2; const cy = h/2; const r = Math.max(80, Math.min(cx, cy)*0.6);
+        nodesContainer.innerHTML = ''; svg.innerHTML = '';
 
-        const width = container.offsetWidth;
-        const height = container.offsetHeight;
-        const centerX = width / 2;
-        const centerY = height / 2;
-        const radius = Math.max(100, Math.min(centerX, centerY) * 0.6);
-
-        nodesContainer.innerHTML = '';
-        svg.innerHTML = '';
-
-        const isMainSelected = selectedNode.type === 'main';
+        const isMain = selectedNode.type === 'main';
         const mainDiv = document.createElement('div');
-        mainDiv.style.cssText = `position: absolute; left: ${centerX}px; top: ${centerY}px; transform: translate(-50%, -50%); z-index: 20; cursor: pointer; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);`;
-        if (isMainSelected) mainDiv.style.transform += " scale(1.15)";
-        
+        mainDiv.style.cssText = `position:absolute; left:${cx}px; top:${cy}px; transform:translate(-50%, -50%) ${isMain?'scale(1.1)':'scale(1)'}; z-index:20; cursor:pointer; transition:0.3s;`;
         mainDiv.onclick = () => selectNode('main', null);
-        mainDiv.innerHTML = `
-            <div style="width: 110px; height: 110px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; text-align: center; background: var(--glass-bg); backdrop-filter: blur(10px); border: 4px solid ${isMainSelected ? 'var(--accent)' : 'var(--glass-border)'}; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: all 0.3s;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="${isMainSelected ? 'var(--accent)' : 'var(--text-main)'}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:32px; margin-bottom:4px; transition: stroke 0.3s;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                <h3 style="font-size: 0.8rem; font-weight: 800; color: var(--text-main);">Origem</h3>
-            </div>
-        `;
+        mainDiv.innerHTML = `<div style="width:90px; height:90px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:var(--glass-bg); backdrop-filter:blur(10px); border:3px solid ${isMain?'var(--accent)':'var(--glass-border)'}; box-shadow:0 10px 25px rgba(0,0,0,0.2);"><svg viewBox="0 0 24 24" fill="none" stroke="${isMain?'var(--accent)':'var(--text-main)'}" stroke-width="2.5" style="width:24px; margin-bottom:4px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg><h3 style="font-size:0.7rem; font-weight:800;">Raiz</h3></div>`;
         nodesContainer.appendChild(mainDiv);
 
-        skillsData.forEach((skill, index) => {
-            const angle = (index * (2 * Math.PI)) / skillsData.length - Math.PI / 2;
-            const x = centerX + radius * Math.cos(angle);
-            const y = centerY + radius * Math.sin(angle);
-            const isSelected = selectedNode.id === skill.id;
-
+        skillsData.forEach((s, i) => {
+            const angle = (i * (2*Math.PI))/skillsData.length - Math.PI/2;
+            const px = cx + r*Math.cos(angle); const py = cy + r*Math.sin(angle);
+            const isSel = selectedNode.id === s.id;
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            line.setAttribute("x1", centerX); line.setAttribute("y1", centerY);
-            line.setAttribute("x2", x); line.setAttribute("y2", y);
-            line.setAttribute("stroke", isSelected ? "var(--accent)" : "rgba(255, 255, 255, 0.2)");
-            line.setAttribute("stroke-width", isSelected ? "3" : "2");
-            line.style.transition = "stroke 0.3s";
-            if (!isSelected) line.setAttribute("stroke-dasharray", "4 4");
+            line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", px); line.setAttribute("y2", py);
+            line.setAttribute("stroke", isSel ? "var(--accent)" : "rgba(255, 255, 255, 0.1)"); line.setAttribute("stroke-width", isSel ? "3" : "2");
             svg.appendChild(line);
 
-            const skillDiv = document.createElement('div');
-            skillDiv.style.cssText = `position: absolute; left: ${x}px; top: ${y}px; transform: translate(-50%, -50%); z-index: 10; cursor: pointer; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);`;
-            if (isSelected) skillDiv.style.transform += " scale(1.2)";
-            
-            skillDiv.onclick = () => selectNode('skill', skill.id);
-            skillDiv.innerHTML = `
-                <div style="width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px; color: var(--text-main); font-size: 0.75rem; font-weight: 800; background: var(--glass-bg); backdrop-filter: blur(10px); border: 3px solid ${isSelected ? 'var(--accent)' : 'transparent'}; box-shadow: 0 5px 15px rgba(0,0,0,0.2); line-height: 1.2;">
-                    ${skill.name}
-                </div>
-            `;
-            nodesContainer.appendChild(skillDiv);
+            const sDiv = document.createElement('div');
+            sDiv.style.cssText = `position:absolute; left:${px}px; top:${py}px; transform:translate(-50%, -50%) ${isSel?'scale(1.15)':'scale(1)'}; z-index:10; cursor:pointer; transition:0.3s;`;
+            sDiv.onclick = () => selectNode('skill', s.id);
+            sDiv.innerHTML = `<div style="width:70px; height:70px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-align:center; padding:5px; font-size:0.7rem; font-weight:800; background:var(--glass-bg); backdrop-filter:blur(10px); border:2px solid ${isSel?'var(--accent)':'transparent'}; box-shadow:0 5px 15px rgba(0,0,0,0.2);">${s.name}</div>`;
+            nodesContainer.appendChild(sDiv);
         });
     }
 
     function renderEditor() {
         const card = document.getElementById('editor-card');
-        
-        if (selectedNode.type === 'main') {
-            card.innerHTML = `
-                <div style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:48px; margin-bottom: 1rem; opacity: 0.5;"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-                    <p style="font-weight: 600; font-size: 1.1rem;">A Origem</p>
-                    <p style="font-size: 0.9rem; margin-top: 8px;">Selecione uma habilidade na constelação para gerenciá-la aqui.</p>
-                </div>
-            `;
-            return;
-        }
-
-        const activeData = skillsData.find(s => s.id === selectedNode.id);
-        if (!activeData) return;
-
-        let content = `
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
-                <span style="font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Detalhes</span>
-                <button onclick="toggleEditPillar()" class="btn-icon-soft">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                </button>
-            </div>
-        `;
-
+        if (selectedNode.type === 'main') { card.innerHTML = `<div style="text-align:center; color:var(--text-muted);"><p style="font-weight:600; font-size:0.9rem;">Toque em um nó da rede para expandi-lo.</p></div>`; return; }
+        const activeData = skillsData.find(s => s.id === selectedNode.id); if (!activeData) return;
+        let content = `<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;"><span style="font-size:1rem; font-weight:800;">Detalhes</span><button onclick="toggleEditPillar()" class="btn-icon-soft" style="width:30px; height:30px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></button></div>`;
         if (isEditingPillar) {
-            content += `
-                <div class="animate-fade-in" style="display: flex; flex-direction: column; gap: 0.5rem;">
-                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Nome da Habilidade</label>
-                    <input type="text" class="input-ios" value="${activeData.name || ''}" onchange="updatePillarName(this.value)">
-                    
-                    <div style="margin-top: 1rem;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                            <label id="editor-skill-label" style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Nível Atual: ${activeData.level}%</label>
-                        </div>
-                        <input type="range" min="0" max="100" value="${activeData.level}" 
-                               style="width:100%; accent-color: var(--accent);"
-                               oninput="updateSkillLevelUI(this.value)" 
-                               onchange="updateSkillLevelDB(this.value)">
-                    </div>
-                    <button onclick="toggleEditPillar()" class="btn-duo" style="margin-top: 1.5rem; width: 100%;">Feito</button>
-                </div>
-            `;
+            content += `<div class="animate-fade-in" style="display:flex; flex-direction:column;"><input type="text" class="input-ios" value="${activeData.name||''}" onchange="updatePillarName(this.value)"><div style="display:flex; justify-content:space-between; margin:10px 0 5px;"><label id="editor-skill-label" style="font-size:0.85rem; font-weight:700;">Nível: ${activeData.level}%</label></div><input type="range" min="0" max="100" value="${activeData.level}" style="width:100%; accent-color:var(--accent);" oninput="updateSkillLevelUI(this.value)" onchange="updateSkillLevelDB(this.value)"><button onclick="toggleEditPillar()" class="btn-duo" style="margin-top:1rem; padding:10px;">Aplicar</button></div>`;
         } else {
-            content += `
-                <div class="animate-fade-in">
-                    <h3 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--text-main); font-weight: 900;">${activeData.name}</h3>
-                    <div class="progress-wrapper" style="padding: 1rem;">
-                        <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.1rem; color: var(--text-main);">
-                            <span>Domínio</span>
-                            <span>${activeData.level}%</span>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-fill" style="width: ${activeData.level}%;"></div>
-                        </div>
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-top: 1rem; font-weight: 600;">
-                        Complete hábitos na aba "Meu Perfil" para evoluir esta e outras habilidades organicamente.
-                    </p>
-                </div>
-            `;
+            content += `<div class="animate-fade-in"><h3 style="font-size:1.5rem; margin-bottom:1rem; font-weight:900;">${activeData.name}</h3><div class="progress-wrapper" style="padding:1rem;"><div style="display:flex; justify-content:space-between; font-weight:800; font-size:1rem;"><span>Sincronização</span><span>${activeData.level}%</span></div><div class="progress-track" style="height:10px; margin-top:8px;"><div class="progress-fill" style="width:${activeData.level}%;"></div></div></div></div>`;
         }
         card.innerHTML = content;
     }
 
     function renderSkillList() {
-        const list = document.getElementById('skills-list');
-        document.getElementById('skill-count').innerText = skillsData.length;
+        const list = document.getElementById('skills-list'); document.getElementById('skill-count').innerText = skillsData.length;
         if (skillsData.length === 0) { list.innerHTML = ''; return; }
-
-        list.innerHTML = skillsData.map(s => `
-            <div class="skill-list-item ${selectedNode.id === s.id ? 'active' : ''}" onclick="selectNode('skill', '${s.id}')">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width:12px; height:12px; border-radius:50%; background:var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.2);"></div>
-                    <div>
-                        <div style="font-size: 1rem; font-weight: 800; color: var(--text-main);">${s.name}</div>
-                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Nível: ${s.level}%</div>
-                    </div>
-                </div>
-                <button onclick="event.stopPropagation(); handleDeleteSkill('${s.id}')" class="btn-icon-soft" title="Remover Habilidade">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="width:16px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>    
-                </button>
-            </div>
-        `).join('');
+        list.innerHTML = skillsData.map(s => `<div class="skill-list-item ${selectedNode.id === s.id ? 'active' : ''}" onclick="selectNode('skill', '${s.id}')"><div style="display:flex; align-items:center; gap:12px;"><div style="width:10px; height:10px; border-radius:50%; background:var(--accent);"></div><div style="font-weight:800; font-size:0.95rem;">${s.name}</div></div><button onclick="event.stopPropagation(); handleDeleteSkill('${s.id}')" class="btn-icon-soft" style="width:26px; height:26px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>`).join('');
     }
-
-    window.addEventListener('resize', () => { if (!document.getElementById('view-pillars').classList.contains('hidden')) renderWheel(); });
-
 </script>
 </body>
 </html>
