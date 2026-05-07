@@ -3,254 +3,334 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Polímata Hub - App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <title>Polímata Hub - Templo Místico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- OS 7 ELEMENTOS (TEMAS GLOBAIS E LOCAIS) --- */
+        /* --- OS 7 ELEMENTOS (TEMAS GLOBAIS) --- */
         :root, .theme-void {
-            --bg-color-1: #0f172a; --bg-color-2: #1e1b4b; --accent: #818cf8; --accent-dark: #4f46e5;
+            --bg-color-1: #09090b; --bg-color-2: #18181b; --accent: #818cf8; --accent-dark: #4f46e5;
             --glass-bg: rgba(30, 27, 75, 0.4); --glass-border: rgba(129, 140, 248, 0.3);
-            --nav-bg: rgba(15, 23, 42, 0.85); --sheet-bg: rgba(15, 23, 42, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.6); --success: #34d399; --success-dark: #059669;
+            --nav-bg: rgba(9, 9, 11, 0.9); --sheet-bg: rgba(9, 9, 11, 0.98);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.5); --success: #34d399; --success-dark: #059669;
         }
-        .theme-journey {
-            --bg-color-1: #451a03; --bg-color-2: #78350f; --accent: #fbbf24; --accent-dark: #d97706;
-            --glass-bg: rgba(120, 53, 15, 0.4); --glass-border: rgba(251, 191, 36, 0.3);
-            --nav-bg: rgba(69, 26, 3, 0.85); --sheet-bg: rgba(69, 26, 3, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
-        }
-        .theme-forest {
-            --bg-color-1: #064e3b; --bg-color-2: #065f46; --accent: #a7f3d0; --accent-dark: #10b981;
-            --glass-bg: rgba(6, 95, 70, 0.4); --glass-border: rgba(167, 243, 208, 0.3);
-            --nav-bg: rgba(6, 78, 59, 0.85); --sheet-bg: rgba(6, 78, 59, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7); --success: #fcd34d;
-        }
-        .theme-cloud {
-            --bg-color-1: #e0f2fe; --bg-color-2: #bae6fd; --accent: #0ea5e9; --accent-dark: #0284c7;
-            --glass-bg: rgba(255, 255, 255, 0.6); --glass-border: rgba(255, 255, 255, 0.8);
-            --nav-bg: rgba(255, 255, 255, 0.85); --sheet-bg: rgba(248, 250, 252, 0.95);
-            --text-main: #0f172a; --text-muted: #475569;
-        }
-        .theme-inferno {
-            --bg-color-1: #450a0a; --bg-color-2: #7f1d1d; --accent: #f87171; --accent-dark: #dc2626;
-            --glass-bg: rgba(127, 29, 29, 0.4); --glass-border: rgba(248, 113, 113, 0.3);
-            --nav-bg: rgba(69, 10, 10, 0.85); --sheet-bg: rgba(69, 10, 10, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
-        }
-        .theme-ocean {
-            --bg-color-1: #083344; --bg-color-2: #164e63; --accent: #22d3ee; --accent-dark: #0891b2;
-            --glass-bg: rgba(22, 78, 99, 0.4); --glass-border: rgba(34, 211, 238, 0.3);
-            --nav-bg: rgba(8, 51, 68, 0.85); --sheet-bg: rgba(8, 51, 68, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
-        }
-        .theme-arcane {
-            --bg-color-1: #3b0764; --bg-color-2: #581c87; --accent: #e879f9; --accent-dark: #c026d3;
-            --glass-bg: rgba(88, 28, 135, 0.4); --glass-border: rgba(232, 121, 249, 0.3);
-            --nav-bg: rgba(59, 7, 100, 0.85); --sheet-bg: rgba(59, 7, 100, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
-        }
+        .theme-journey { --bg-color-1: #1c1917; --bg-color-2: #292524; --accent: #fbbf24; --accent-dark: #d97706; --glass-bg: rgba(68, 64, 60, 0.4); --glass-border: rgba(251, 191, 36, 0.3); }
+        .theme-forest { --bg-color-1: #062016; --bg-color-2: #064e3b; --accent: #34d399; --accent-dark: #10b981; --glass-bg: rgba(6, 78, 59, 0.4); --glass-border: rgba(52, 211, 153, 0.3); }
+        .theme-cloud { --bg-color-1: #f0f9ff; --bg-color-2: #e0f2fe; --accent: #0ea5e9; --accent-dark: #0284c7; --glass-bg: rgba(255, 255, 255, 0.6); --glass-border: rgba(14, 165, 233, 0.3); --text-main: #0f172a; --text-muted: #64748b; --nav-bg: rgba(255,255,255,0.9); --sheet-bg: #fff; }
+        .theme-inferno { --bg-color-1: #2d0a0a; --bg-color-2: #450a0a; --accent: #f87171; --accent-dark: #dc2626; --glass-bg: rgba(127, 29, 29, 0.4); --glass-border: rgba(248, 113, 113, 0.3); }
+        .theme-ocean { --bg-color-1: #082f49; --bg-color-2: #0c4a6e; --accent: #22d3ee; --accent-dark: #0891b2; --glass-bg: rgba(12, 74, 110, 0.4); --glass-border: rgba(34, 211, 238, 0.3); }
+        .theme-arcane { --bg-color-1: #2e1065; --bg-color-2: #4c1d95; --accent: #e879f9; --accent-dark: #c026d3; --glass-bg: rgba(88, 28, 135, 0.4); --glass-border: rgba(232, 121, 249, 0.3); }
 
         /* --- BASE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2)); color: var(--text-main); height: 100vh; height: 100dvh; overflow: hidden; transition: color 0.5s ease, background 0.5s ease; }
-        #theme-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+        body { background: radial-gradient(circle at center, var(--bg-color-2), var(--bg-color-1)); color: var(--text-main); height: 100vh; height: 100dvh; overflow: hidden; transition: background 0.8s ease; }
+        #theme-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; opacity: 0.6; }
         .hidden { display: none !important; }
-        ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
-
-        /* --- ANIMAÇÕES --- */
-        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .float-gentle { animation: float 6s ease-in-out infinite; }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
-        
-        @keyframes pulse-energy { 0%, 100% { opacity: 0.6; stroke-width: 3; } 50% { opacity: 1; stroke-width: 5; filter: drop-shadow(0 0 12px var(--energy-color)); } }
 
         /* --- LAYOUT --- */
         #app-container { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; }
-        main.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.5rem 1.5rem 6rem 1.5rem; }
+        main.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.5rem 1.5rem 7rem 1.5rem; }
+
+        /* --- PILARES E TEMPLO (ESTILO MÍSTICO) --- */
+        #iso-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; text-align: center; border-radius: 16px; padding: 40px 0; mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); }
+        #iso-world { position: relative; margin: 0 auto; transition: all 0.5s ease; }
+        #iso-ground { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
         
-        .btn-duo { background: var(--accent); color: #fff; font-weight: 800; font-size: 1rem; padding: 14px 24px; border: none; border-radius: 20px; cursor: pointer; box-shadow: 0 6px 0 var(--accent-dark), 0 15px 20px rgba(0,0,0,0.2); transition: 0.1s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; width: 100%; }
-        .btn-duo:active { transform: translateY(6px); box-shadow: 0 0px 0 var(--accent-dark), 0 5px 10px rgba(0,0,0,0.2); }
-        .btn-outline { background: transparent; border: 2px solid var(--text-muted); color: var(--text-main); font-weight: 800; padding: 12px 24px; border-radius: 20px; cursor: pointer; transition: 0.2s; width: 100%; text-transform: uppercase; }
+        .iso-pillar-container { position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+        .iso-pillar-container:hover, .iso-pillar-container.active { transform: translate(-50%, -100%) scale(1.1); z-index: 1000 !important; }
 
-        /* --- BOTTOM NAV --- */
-        #bottom-nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); width: calc(100% - 1rem); max-width: 500px; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 30px; display: flex; justify-content: space-between; padding: 0.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 50; }
-        .nav-item { flex: 1; background: transparent; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 18px; cursor: pointer; transition: all 0.3s; font-weight: 800; font-size: 0.55rem; text-transform: uppercase; padding: 4px 0; }
-        .nav-item.active { color: var(--accent); background: rgba(0,0,0,0.2); }
-        .nav-item svg { width: 18px; height: 18px; stroke-width: 2.5; transition: transform 0.3s; }
-        .nav-item.active svg { transform: scale(1.15); }
-
-        /* --- UI COMPONENTS --- */
-        .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 1.5rem; position: relative; }
-        .identity-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 1.5rem; }
-        .identity-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
-        .coin-display { background: rgba(0,0,0,0.3); padding: 6px 12px; border-radius: 16px; display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 1rem; color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
-
-        /* --- PILARES & TEMPLO (NOVO VISUAL) --- */
-        #iso-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; text-align: center; border-radius: 16px; padding: 40px 0; }
-        #iso-world { position: relative; margin: 0 auto; perspective: 1000px; transition: all 0.5s ease; }
-        #iso-ground { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; }
-        
-        .pillar-base-shadow {
-            position: absolute; width: 60px; height: 20px; 
-            background: radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%);
-            border-radius: 50%; transform: translate(-50%, -50%); 
-            filter: blur(4px); pointer-events: none; z-index: 1;
+        /* Sombra Projetada */
+        .pilar-shadow {
+            position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
+            width: 70px; height: 20px; background: rgba(0,0,0,0.7);
+            border-radius: 50%; filter: blur(8px); z-index: -1; transition: all 0.4s;
         }
+        .iso-pillar-container.active .pilar-shadow { width: 90px; filter: blur(12px); background: rgba(0,0,0,0.9); }
 
-        .iso-pillar-container { position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
-        .iso-pillar-container:hover, .iso-pillar-container.active { transform: translate(-50%, -100%) scale(1.05); filter: drop-shadow(0 0 15px rgba(255,255,255,0.2)); z-index: 100 !important; }
-
-        .iso-label { 
-            position: absolute; 
-            background: rgba(255,255,255,0.03); 
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            padding: 6px 14px; border-radius: 12px; 
-            font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; 
-            color: var(--text-main); white-space: nowrap; 
-            pointer-events: none; transition: all 0.3s; 
-            opacity: 0.6; text-transform: uppercase; letter-spacing: 2px;
-            text-shadow: 0 0 8px rgba(255,255,255,0.4);
+        /* Etiquetas Místicas */
+        .mystic-label {
+            position: absolute; top: -140px; background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 4px 16px; border-radius: 4px; font-size: 0.7rem; font-weight: 200;
+            white-space: nowrap; border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff; letter-spacing: 2px; text-transform: uppercase;
+            pointer-events: none; transition: all 0.3s; opacity: 0.6;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        .iso-pillar-container:hover .iso-label, .iso-pillar-container.active .iso-label { 
-            opacity: 1; transform: translateY(-5px); color: var(--accent); 
-            background: rgba(255,255,255,0.08);
-            text-shadow: 0 0 12px var(--accent);
+        .iso-pillar-container:hover .mystic-label, .iso-pillar-container.active .mystic-label {
+            opacity: 1; transform: translateY(-5px); border-color: var(--accent);
+            text-shadow: 0 0 8px var(--accent);
         }
 
-        /* --- CAMINHO ELEMENTAL --- */
-        #path-area { position: relative; overflow: hidden; padding-top: 1rem; }
-        .timeline-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; padding-bottom: 15px; scroll-behavior: smooth; }
-        .timeline { display: flex; flex-direction: row; gap: 20px; padding: 40px 20px 10px 20px; position: relative; width: max-content; min-width: 100%; border: none; }
-        .timeline::before { content: ''; position: absolute; top: 20px; left: 20px; right: 20px; height: 4px; background: var(--glass-border); border-radius: 2px; z-index: 1; }
-        .timeline-item { position: relative; width: 260px; flex-shrink: 0; }
-        .timeline-dot { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); width: 24px; height: 24px; border-radius: 50%; background: var(--bg-color-1); border: 4px solid var(--glass-border); z-index: 2; }
-        .timeline-item.unlocked .timeline-dot { background: var(--accent); border-color: var(--accent-dark); box-shadow: 0 0 15px var(--accent); }
-        .timeline-item.claimed .timeline-dot { background: var(--success); border-color: var(--success-dark); }
+        /* Animação das Linhas de Energia */
+        @keyframes energyFlow {
+            from { stroke-dashoffset: 40; }
+            to { stroke-dashoffset: 0; }
+        }
+        .energy-beam { stroke-linecap: round; transition: all 0.5s; }
+        .beam-inactive { stroke: var(--text-muted); stroke-width: 1; opacity: 0.15; }
+        .beam-active {
+            stroke-width: 3; stroke-dasharray: 8 4;
+            animation: energyFlow 1.5s linear infinite;
+            filter: drop-shadow(0 0 6px var(--accent));
+        }
 
-        /* Quest e Progress */
-        .progress-wrapper { background: rgba(0,0,0,0.2); padding: 1.25rem; border-radius: 24px; text-align: left; margin-top: 1.5rem; }
-        .progress-track { width: 100%; background: rgba(0,0,0,0.3); border-radius: 999px; height: 1.25rem; position: relative; overflow: hidden; margin: 0.5rem 0; }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 999px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .quest-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 20px; background: rgba(0,0,0,0.2); cursor: pointer; transition: all 0.2s; margin-bottom: 10px; }
-        .quest-item.completed { background: var(--glass-bg); border: 2px solid var(--success); opacity: 0.8; }
+        /* --- OUTROS COMPONENTES --- */
+        .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 1.5rem; transition: 0.5s; }
+        .btn-duo { background: var(--accent); color: #fff; font-weight: 800; font-size: 1rem; padding: 14px 24px; border: none; border-radius: 20px; cursor: pointer; box-shadow: 0 6px 0 var(--accent-dark), 0 15px 20px rgba(0,0,0,0.2); transition: 0.1s; width: 100%; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-duo:active { transform: translateY(6px); box-shadow: 0 0px 0 var(--accent-dark); }
         
-        /* Avatar */
-        .avatar-2d-container { width: 160px; height: 160px; margin: 0 auto; position: relative; border-radius: 30px; background: radial-gradient(circle, var(--glass-bg), transparent); display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; }
-        .avatar-character { width: 120px; height: 120px; position: relative; }
+        #bottom-nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); width: calc(100% - 1rem); max-width: 550px; background: var(--nav-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 30px; display: flex; justify-content: space-between; padding: 0.5rem; z-index: 50; }
+        .nav-item { flex: 1; background: transparent; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 18px; cursor: pointer; transition: 0.3s; font-size: 0.5rem; text-transform: uppercase; font-weight: 900; }
+        .nav-item.active { color: var(--accent); background: rgba(255,255,255,0.05); }
+        .nav-item svg { width: 18px; height: 18px; stroke-width: 2.5; }
+
+        .coin-display { background: rgba(0,0,0,0.4); padding: 8px 16px; border-radius: 20px; display: flex; align-items: center; gap: 8px; font-weight: 900; color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+        
+        /* Progress Bar */
+        .progress-track { width: 100%; background: rgba(0,0,0,0.4); border-radius: 20px; height: 10px; margin: 10px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent); border-radius: 20px; transition: width 1s ease; box-shadow: 0 0 10px var(--accent); }
+
+        /* Quest Items */
+        .quest-item { background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 20px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; cursor: pointer; }
+        .quest-item.completed { border-color: var(--success); opacity: 0.6; }
+        .checkbox-bouncy { width: 24px; height: 24px; border: 2px solid var(--text-muted); border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .quest-item.completed .checkbox-bouncy { background: var(--success); border-color: var(--success); }
+
+        /* Timeline Horizontal */
+        .timeline-wrapper { overflow-x: auto; padding: 20px 0; scroll-behavior: smooth; }
+        .timeline { display: flex; gap: 20px; width: max-content; padding: 40px 20px; position: relative; }
+        .timeline::before { content: ''; position: absolute; top: 20px; left: 20px; right: 20px; height: 2px; background: var(--glass-border); }
+        .timeline-item { width: 250px; position: relative; }
+        .timeline-dot { position: absolute; top: -28px; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; border-radius: 50%; background: var(--bg-color-1); border: 3px solid var(--glass-border); z-index: 2; transition: 0.3s; }
+        .timeline-item.unlocked .timeline-dot { background: var(--accent); border-color: #fff; box-shadow: 0 0 15px var(--accent); }
+
+        /* Inventory */
+        .inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 10px; }
+        .inv-slot { background: rgba(0,0,0,0.2); border: 2px solid var(--glass-border); border-radius: 16px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; position: relative; }
+        .inv-slot.equipped { border-color: var(--success); background: rgba(52, 211, 153, 0.1); }
+        .inv-slot.equipped::after { content: '✓'; position: absolute; top: 5px; right: 5px; color: var(--success); font-weight: 900; font-size: 0.7rem; }
+
+        /* Avatar render */
+        .avatar-2d-container { width: 150px; height: 150px; margin: 0 auto; position: relative; display: flex; justify-content: center; align-items: flex-end; }
+        .avatar-character { width: 110px; height: 110px; position: relative; z-index: 2; }
         .avatar-layer { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: flex-end; }
-        .avatar-layer svg { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-        
-        /* Modals */
-        .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s; opacity: 0; pointer-events: none; }
+        .avatar-layer img, .avatar-layer svg { width: 100%; height: 100%; object-fit: contain; }
+
+        .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.4s; }
         .overlay-screen.active { opacity: 1; pointer-events: auto; }
+        
+        .input-ios, .select-ios { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: #fff; margin-bottom: 12px; font-size: 1rem; outline: none; transition: 0.3s; }
+        .input-ios:focus { border-color: var(--accent); }
     </style>
 </head>
 <body class="theme-void">
 
     <canvas id="theme-canvas"></canvas>
 
-    <!-- TELAS DE OVERLAY -->
-    <div id="login-screen" class="overlay-screen active" style="opacity: 1; pointer-events: auto;">
-        <div style="text-align: center; padding: 2rem; max-width: 400px; width: 100%;">
-            <div class="float-gentle" style="background: var(--text-main); color: var(--bg-color-1); width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; transform: rotate(-10deg);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            </div>
-            <h1 style="font-size: 2.5rem; font-weight: 900;">Polímata</h1>
-            <p style="color: var(--text-muted); margin-bottom: 3rem;">Sua jornada épica.</p>
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen" class="overlay-screen active">
+        <div style="text-align: center; max-width: 400px; width: 90%;">
+            <div style="font-size: 4rem; margin-bottom: 1rem; filter: drop-shadow(0 0 20px var(--accent));">💎</div>
+            <h1 style="font-weight: 900; font-size: 2.5rem; letter-spacing: -1px;">Polímata Hub</h1>
+            <p style="color: var(--text-muted); margin-bottom: 3rem;">Sua jornada elemental começa aqui.</p>
             <button id="btn-login-action" class="btn-duo">Entrar com Google</button>
         </div>
     </div>
 
-    <div id="element-choice-screen" class="overlay-screen">
-        <div class="panel" style="max-width: 450px; text-align: center;">
-            <h2 style="font-family: 'Cinzel', serif; font-size: 2rem;">O Despertar</h2>
-            <p style="margin-bottom: 1.5rem;">Escolha sua afinidade elemental inicial.</p>
-            <div id="initial-theme-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 2rem;">
-                <!-- Temas aqui -->
-                <div class="theme-option" onclick="selectInitialElement('theme-void', this)">O Vazio</div>
-                <div class="theme-option" onclick="selectInitialElement('theme-journey', this)">A Jornada</div>
-                <div class="theme-option" onclick="selectInitialElement('theme-forest', this)">A Floresta</div>
-                <div class="theme-option" onclick="selectInitialElement('theme-cloud', this)">A Nuvem</div>
-                <div class="theme-option" onclick="selectInitialElement('theme-inferno', this)">Inferno</div>
-                <div class="theme-option" onclick="selectInitialElement('theme-ocean', this)">Oceano</div>
-                <div class="theme-option" onclick="selectInitialElement('theme-arcane', this)">Arcano</div>
+    <!-- ELEMENT CHOICE SCREEN -->
+    <div id="element-choice-screen" class="overlay-screen" style="z-index: 2000;">
+        <div class="panel" style="max-width: 450px; width: 95%; text-align: center;">
+            <h2 style="font-weight: 900; margin-bottom: 1rem;">O Despertar Primal</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Escolha sua afinidade elemental eterna.</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 2rem;" id="initial-theme-grid">
+                <div onclick="selectInitialElement('theme-void', this)" style="padding: 10px; border-radius: 12px; border: 1px solid var(--glass-border); cursor: pointer;">🌌 Vazio</div>
+                <div onclick="selectInitialElement('theme-journey', this)" style="padding: 10px; border-radius: 12px; border: 1px solid var(--glass-border); cursor: pointer;">⏳ Jornada</div>
+                <div onclick="selectInitialElement('theme-forest', this)" style="padding: 10px; border-radius: 12px; border: 1px solid var(--glass-border); cursor: pointer;">🌿 Floresta</div>
+                <div onclick="selectInitialElement('theme-cloud', this)" style="padding: 10px; border-radius: 12px; border: 1px solid var(--glass-border); cursor: pointer;">☁️ Nuvem</div>
+                <div onclick="selectInitialElement('theme-inferno', this)" style="padding: 10px; border-radius: 12px; border: 1px solid var(--glass-border); cursor: pointer;">🔥 Inferno</div>
+                <div onclick="selectInitialElement('theme-ocean', this)" style="padding: 10px; border-radius: 12px; border: 1px solid var(--glass-border); cursor: pointer;">🌊 Oceano</div>
+                <div onclick="selectInitialElement('theme-arcane', this)" style="padding: 10px; border-radius: 12px; border: 1px solid var(--glass-border); cursor: pointer;">✨ Arcano</div>
             </div>
             <button onclick="confirmInitialElement()" class="btn-duo">Selar Destino</button>
         </div>
     </div>
 
+    <!-- MAIN APP -->
     <div id="app-container" class="hidden">
         <main class="content-area">
-            <!-- INÍCIO -->
-            <section id="view-home" class="animate-fade-in">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
-                    <div class="identity-card" style="flex: 1; margin-right: 10px;">
-                        <img id="user-photo" src="" class="identity-photo">
-                        <div><h2 id="disp-char-name">Viajante</h2><p id="disp-char-title">Despertando...</p></div>
+            
+            <!-- HOME VIEW -->
+            <section id="view-home">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <img id="user-photo" src="" class="identity-photo" style="width: 48px; height: 48px;">
+                        <div>
+                            <h3 id="disp-char-name" style="font-size: 1rem; font-weight: 900;">Viajante</h3>
+                            <p id="disp-char-title" style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Iniciante</p>
+                        </div>
                     </div>
                     <div class="coin-display">🪙 <span id="disp-coins">0</span></div>
                 </div>
+
                 <div class="panel" style="text-align: center;">
-                    <div class="avatar-2d-container"><div class="avatar-character" id="home-avatar-render"></div></div>
-                    <div class="progress-wrapper">
-                        <div style="display: flex; justify-content: space-between;"><span>Nível <span id="disp-level">1</span></span><span><span id="disp-exp-current">0</span> / 500 XP</span></div>
+                    <div class="avatar-2d-container">
+                        <div class="avatar-character" id="home-avatar-render"></div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 900;">
+                            <span>Nível <span id="disp-level">1</span></span>
+                            <span style="color: var(--text-muted);"><span id="disp-exp-current">0</span> / 500 XP</span>
+                        </div>
                         <div class="progress-track"><div id="disp-exp-bar" class="progress-fill" style="width: 0%"></div></div>
                     </div>
                 </div>
-                <div class="panel"><div id="quests-container"></div></div>
+
+                <div class="panel">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <h4 style="font-weight: 900;">Hábitos Diários</h4>
+                        <button onclick="addRandomQuest()" style="background: var(--accent); border: none; width: 24px; height: 24px; border-radius: 50%; color: #fff; cursor: pointer;">+</button>
+                    </div>
+                    <div id="quests-container"></div>
+                </div>
             </section>
 
-            <!-- CAMINHO ELEMENTAL -->
+            <!-- INVENTORY VIEW -->
+            <section id="view-inventory" class="hidden">
+                <div class="panel" style="text-align: center;">
+                    <h2 style="font-weight: 900; margin-bottom: 1rem;">Mochila</h2>
+                    <div class="avatar-2d-container">
+                        <div class="avatar-character" id="inv-avatar-render"></div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <h5 style="color: var(--text-muted); margin-bottom: 10px;">Cabeça</h5>
+                    <div class="inv-grid" id="inv-grid-head"></div>
+                    <h5 style="color: var(--text-muted); margin: 15px 0 10px;">Corpo</h5>
+                    <div class="inv-grid" id="inv-grid-body"></div>
+                    <h5 style="color: var(--text-muted); margin: 15px 0 10px;">Extra</h5>
+                    <div class="inv-grid" id="inv-grid-extras"></div>
+                </div>
+            </section>
+
+            <!-- PATH VIEW -->
             <section id="view-path" class="hidden">
                 <div class="panel" id="path-area">
-                    <h2 class="section-title">Caminho d<span id="path-element-name">Ascensão</span></h2>
+                    <h2 style="font-weight: 900; margin-bottom: 5px;">Caminho d<span id="path-element-name">Ascensão</span></h2>
+                    <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">Seus marcos de poder até o nível 50.</p>
+                    <div id="path-decorations-container"></div>
                     <div class="timeline-wrapper" id="path-timeline-wrapper">
                         <div class="timeline" id="path-timeline-container"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- TEMPLO (PILARES) -->
+            <!-- SKILLS VIEW (TEMPLO MÍSTICO) -->
             <section id="view-skills" class="hidden">
-                <div class="panel" style="padding: 10px;">
-                    <h2 class="section-title" style="padding: 15px; font-family: 'Cinzel', serif;">O Templo de Sabedoria</h2>
+                <div class="panel" style="padding: 1rem; overflow: hidden;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 10px;">
+                        <h4 style="font-weight: 900; letter-spacing: 1px;">O TEMPLO</h4>
+                        <button onclick="openAddPillarModal()" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: #fff; padding: 4px 12px; border-radius: 8px; font-size: 0.7rem; cursor: pointer;">ERGUER PILAR</button>
+                    </div>
                     <div id="iso-wrapper">
                         <div id="iso-world">
                             <svg id="iso-ground">
                                 <defs>
-                                    <!-- Filtro de Brilho Energético -->
-                                    <filter id="energyGlow" x="-50%" y="-50%" width="200%" height="200%">
-                                        <feGaussianBlur stdDeviation="4" result="blur" />
+                                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                                        <feGaussianBlur stdDeviation="3" result="blur" />
                                         <feComposite in="SourceGraphic" in2="blur" operator="over" />
                                     </filter>
                                 </defs>
-                                <g id="iso-lines"></g>
                             </svg>
                             <div id="iso-nodes"></div>
                         </div>
                     </div>
                 </div>
-                <div class="panel" id="editor-card"></div>
-                <button onclick="openAddPillarModal()" class="btn-duo" style="margin-bottom: 20px;">Erguer Novo Pilar</button>
-                <div id="skills-list"></div>
+                <div id="editor-card" class="panel"></div>
+                <div class="panel">
+                    <h5 style="color: var(--text-muted); margin-bottom: 1rem;">Módulos Ativos (<span id="skill-count">0</span>)</h5>
+                    <div id="skills-list"></div>
+                </div>
             </section>
 
-            <!-- OUTRAS ABAS (SIMPLIFICADAS PARA FOCO) -->
-            <section id="view-inventory" class="hidden"><div class="panel"><h3>Mochila</h3><div id="inv-grid-head" class="inv-grid"></div><div id="inv-grid-body" class="inv-grid"></div><div id="inv-grid-extras" class="inv-grid"></div></div></section>
-            <section id="view-shop" class="hidden"><div class="panel"><h3>Em construção...</h3></div></section>
-            <section id="view-community" class="hidden"><div id="community-top10-list"></div></section>
+            <!-- SHOP VIEW -->
+            <section id="view-shop" class="hidden">
+                <div class="panel" style="text-align: center; padding: 4rem 1rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛖</div>
+                    <h2 style="font-weight: 900;">O Empório</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">Os mercadores estão viajando. Volte em breve.</p>
+                    <div class="coin-display" style="width: fit-content; margin: 0 auto; font-size: 1.5rem;">🪙 <span id="shop-disp-coins">0</span></div>
+                </div>
+            </section>
+
+            <!-- COMMUNITY VIEW -->
+            <section id="view-community" class="hidden">
+                <div class="panel">
+                    <h4 style="font-weight: 900; margin-bottom: 1rem;">Explorar Viajantes</h4>
+                    <input type="text" class="input-ios" placeholder="Buscar por nome..." oninput="handleSearch()">
+                </div>
+                <div id="my-community-card-container"></div>
+                <h5 style="color: var(--text-muted); margin: 20px 0 10px;">Top 10 Globais</h5>
+                <div id="community-top10-list"></div>
+            </section>
+
         </main>
 
+        <!-- NAV -->
         <nav id="bottom-nav">
-            <button class="nav-item active" onclick="switchTab('home', this)">Início</button>
-            <button class="nav-item" onclick="switchTab('path', this)">Caminho</button>
-            <button class="nav-item" onclick="switchTab('skills', this)">Templo</button>
-            <button class="nav-item" onclick="switchTab('inventory', this)">Mochila</button>
-            <button class="nav-item" onclick="switchTab('shop', this)">Loja</button>
-            <button class="nav-item" onclick="openSettings()">Ajustes</button>
+            <button class="nav-item active" onclick="switchTab('home', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Home</button>
+            <button class="nav-item" onclick="switchTab('inventory', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10"></path><path d="M4 16h16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z"></path></svg>Itens</button>
+            <button class="nav-item" onclick="switchTab('path', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>Caminho</button>
+            <button class="nav-item" onclick="switchTab('skills', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>Templo</button>
+            <button class="nav-item" onclick="switchTab('shop', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>Loja</button>
+            <button class="nav-item" onclick="switchTab('community', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>Mundo</button>
+            <button class="nav-item" onclick="openSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
         </nav>
+
+        <!-- SETTINGS SHEET -->
+        <div id="settings-backdrop" class="overlay-screen" onclick="closeSettingsUI()" style="background: rgba(0,0,0,0.7);"></div>
+        <div id="settings-sheet" style="position: fixed; bottom: -100%; left: 0; width: 100%; height: 80vh; background: var(--sheet-bg); border-top-radius: 30px; z-index: 2000; transition: 0.4s; padding: 2rem; overflow-y: auto;">
+            <h3 style="font-weight: 900; margin-bottom: 1.5rem; text-align: center;">Configurações</h3>
+            <label style="font-size: 0.8rem; color: var(--text-muted);">Nome do Personagem</label>
+            <input type="text" id="input-profile-name" class="input-ios">
+            <label style="font-size: 0.8rem; color: var(--text-muted);">Título ou Foco</label>
+            <input type="text" id="input-profile-desc" class="input-ios">
+            
+            <div id="admin-area" style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 16px; margin: 1rem 0;">
+                <p style="font-size: 0.7rem; margin-bottom: 10px;">Status de Admin: <span id="admin-status-text" style="color: var(--success);">Inativo</span></p>
+                <div id="admin-login-controls">
+                    <input type="password" id="input-admin-pass" class="input-ios" placeholder="Senha do Admin" style="margin-bottom: 8px;">
+                    <button onclick="unlockAdminThemes()" class="btn-duo" style="padding: 10px;">Ativar Privilégios</button>
+                </div>
+                <div id="admin-theme-selection" class="hidden" style="margin-top: 15px;">
+                    <p style="font-size: 0.8rem; margin-bottom: 8px;">Mudar Elemento (Admin):</p>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;" id="admin-themes-grid"></div>
+                </div>
+            </div>
+
+            <button onclick="saveProfileData()" class="btn-duo">Salvar Perfil</button>
+            <button onclick="handleLogout()" class="btn-duo" style="background: transparent; color: #ff4444; border: 1px solid #ff4444; margin-top: 10px; box-shadow: none;">Sair</button>
+        </div>
+    </div>
+
+    <!-- ADD PILLAR MODAL -->
+    <div id="modal-add-pillar" class="overlay-screen">
+        <div class="panel" style="max-width: 400px; width: 90%;">
+            <h3 style="font-weight: 900; margin-bottom: 1.5rem;">Erguer Novo Pilar</h3>
+            <input type="text" id="add-pillar-name" class="input-ios" placeholder="Nome do Pilar (Ex: Piano)">
+            <select id="add-pillar-element" class="select-ios">
+                <option value="void">🌌 O Vazio</option>
+                <option value="journey">⏳ A Jornada</option>
+                <option value="forest">🌿 A Floresta</option>
+                <option value="cloud">☁️ A Nuvem</option>
+                <option value="inferno">🔥 Inferno</option>
+                <option value="ocean">🌊 Oceano</option>
+                <option value="arcane">✨ Arcano</option>
+            </select>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="document.getElementById('modal-add-pillar').classList.remove('active')" class="btn-duo" style="background: transparent; border: 1px solid var(--text-muted); box-shadow: none;">Cancelar</button>
+                <button onclick="confirmAddPillar()" class="btn-duo">Erguer</button>
+            </div>
+        </div>
     </div>
 
 <script type="module">
@@ -263,192 +343,355 @@
         authDomain: "lista-de-presenca-95526.firebaseapp.com",
         projectId: "lista-de-presenca-95526",
         storageBucket: "lista-de-presenca-95526.firebasestorage.app",
+        messagingSenderId: "879181560997",
         appId: "1:879181560997:web:484b7aeb865856a7f8a14c"
     };
     
     const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
     const elementStyles = {
-        'void': { main: '#818cf8', icon: '🌌' }, 'journey': { main: '#fbbf24', icon: '⏳' },
-        'forest': { main: '#34d399', icon: '🌿' }, 'cloud': { main: '#38bdf8', icon: '☁️' },
-        'inferno': { main: '#f87171', icon: '🔥' }, 'ocean': { main: '#22d3ee', icon: '🌊' },
-        'arcane': { main: '#e879f9', icon: '✨' }
+        'void': { main: '#818cf8', icon: '🌌', decorators: ['✦', '✧', '⋆'] }, 
+        'journey': { main: '#fbbf24', icon: '⏳', decorators: ['🪨', '⛰️'] },
+        'forest': { main: '#34d399', icon: '🌿', decorators: ['🍃', '🌿'] }, 
+        'cloud': { main: '#0ea5e9', icon: '☁️', decorators: ['☁️', '🌀'] },
+        'inferno': { main: '#f87171', icon: '🔥', decorators: ['🔥', '☄️'] }, 
+        'ocean': { main: '#22d3ee', icon: '🌊', decorators: ['🫧', '💧'] },
+        'arcane': { main: '#e879f9', icon: '✨', decorators: ['🔮', '🧿'] }
+    };
+
+    const elementNames = { 'theme-void': 'o Vazio', 'theme-journey': 'a Jornada', 'theme-forest': 'a Floresta', 'theme-cloud': 'a Nuvem', 'theme-inferno': 'o Inferno', 'theme-ocean': 'o Oceano', 'theme-arcane': 'o Arcano' };
+
+    const itemsDB = [
+        { id: 'body_default', type: 'body', name: 'Corpo Base', icon: '👤', render: '<svg viewBox="0 0 100 100" fill="#fcd34d"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/></svg>' },
+        { id: 'head_none', type: 'head', name: 'Nenhum', icon: '❌', render: '' },
+        { id: 'extra_none', type: 'extra', name: 'Nenhum', icon: '❌', render: '' },
+        // Outros itens omitidos para brevidade, mas o sistema suporta expansão via claimReward
+        { id: 'head_void_halo', type: 'head', name: 'Coroa do Vazio', icon: '👑', render: '<svg viewBox="0 0 100 100"><ellipse cx="50" cy="15" rx="20" ry="5" fill="none" stroke="#818cf8" stroke-width="3"/></svg>' },
+        { id: 'extra_void_orbs', type: 'extra', name: 'Orbes Escuros', icon: '🔮', render: '<svg viewBox="0 0 100 100" fill="#4f46e5"><circle cx="20" cy="50" r="8"/><circle cx="80" cy="50" r="8"/></svg>' }
+    ];
+
+    function generatePathForElement(themeKey, headId, extraId) {
+        const path = []; const levels = [2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+        levels.forEach(lvl => {
+            if(lvl === 2) path.push({ id: `${themeKey}_n2`, reqLvl: 2, type: 'item', rewardId: headId, title: 'O Despertar', desc: 'Sua essência primal se manifesta.' });
+            else if(lvl === 20) path.push({ id: `${themeKey}_n20`, reqLvl: 20, type: 'item', rewardId: extraId, title: 'Domínio', desc: 'A aura do seu elemento te envolve.' });
+            else path.push({ id: `${themeKey}_coin_${lvl}`, reqLvl: lvl, type: 'coin', amount: lvl * 10, title: 'Tesouro Elemental', desc: `Você encontrou ${lvl*10} moedas.` });
+        });
+        return path;
+    }
+
+    const pathsDB = {
+        'theme-void': generatePathForElement('void', 'head_void_halo', 'extra_void_orbs'),
+        'theme-journey': generatePathForElement('journey', 'head_journey_hat', 'extra_journey_pack'),
+        'theme-forest': generatePathForElement('forest', 'head_forest_antlers', 'extra_forest_staff'),
+        'theme-cloud': generatePathForElement('cloud', 'head_cloud_goggles', 'extra_cloud_wings'),
+        'theme-inferno': generatePathForElement('inferno', 'head_inferno_horns', 'extra_inferno_aura'),
+        'theme-ocean': generatePathForElement('ocean', 'head_ocean_crown', 'extra_ocean_trident'),
+        'theme-arcane': generatePathForElement('arcane', 'head_arcane_hat', 'extra_arcane_book')
     };
 
     let currentUser = null; let userPath = ''; 
-    let profileData = { name: "Viajante", exp: 0, coins: 0, theme: "theme-void", elementChosen: false, claimedNodes: [], equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
-    let skillsData = []; let selectedNode = { type: 'main', id: null };
+    const defaultUnlocked = ['body_default', 'head_none', 'extra_none'];
+    let profileData = { name: "Viajante", description: "Iniciante", exp: 0, coins: 0, theme: "theme-void", elementChosen: false, isAdmin: false, unlockedItems: [...defaultUnlocked], claimedNodes: [], equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
+    let skillsData = []; let questsData = []; let communityData = [];
+    let selectedNode = { type: 'main', id: null }; let unsubProfile, unsubSkills, unsubQuests, unsubComm;
+    let currentLevelState = 1;
 
+    // --- CANVAS BG ---
+    const canvas = document.getElementById('theme-canvas'); const ctx = canvas.getContext('2d');
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
+    function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); requestAnimationFrame(animate); }
+    animate();
+
+    // --- AUTH & SYNC ---
     onAuthStateChanged(auth, (user) => {
-        if (user) {
+        if(user) {
             currentUser = user; userPath = `users/${user.uid}`;
-            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('active');
             document.getElementById('app-container').classList.remove('hidden');
             loadData();
         } else {
-            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('login-screen').classList.add('active');
             document.getElementById('app-container').classList.add('hidden');
         }
     });
 
+    document.getElementById('btn-login-action').onclick = () => signInWithPopup(auth, provider);
+    window.handleLogout = () => signOut(auth);
+
     async function loadData() {
-        const profileRef = doc(db, userPath, 'profile', 'main');
-        onSnapshot(profileRef, (snap) => {
-            if (snap.exists()) {
-                profileData = snap.data();
-                document.body.className = profileData.theme;
+        const pRef = doc(db, userPath, 'profile', 'main');
+        unsubProfile = onSnapshot(pRef, (s) => {
+            if(s.exists()) {
+                profileData = s.data();
+                if(!profileData.elementChosen) document.getElementById('element-choice-screen').classList.add('active');
+                else document.getElementById('element-choice-screen').classList.remove('active');
                 updateUI();
-            } else {
-                setDoc(profileRef, profileData);
-                document.getElementById('element-choice-screen').classList.add('active');
-            }
+            } else { setDoc(pRef, profileData); }
         });
-        onSnapshot(collection(db, userPath, 'skills'), (snap) => {
-            skillsData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            renderWheel();
-        });
+        unsubSkills = onSnapshot(collection(db, userPath, 'skills'), (s) => { skillsData = s.docs.map(d => ({id: d.id, ...d.data()})); renderWheel(); renderSkillList(); renderEditor(); });
+        unsubQuests = onSnapshot(collection(db, userPath, 'quests'), (s) => { questsData = s.docs.map(d => ({id: d.id, ...d.data()})); renderQuests(); });
+        unsubComm = onSnapshot(collection(db, 'community'), (s) => { communityData = s.docs.map(d => d.data()); renderCommunity(); });
     }
 
+    // --- UI UPDATES ---
+    function updateUI() {
+        document.body.className = profileData.theme;
+        document.getElementById('disp-char-name').innerText = profileData.name;
+        document.getElementById('disp-char-title').innerText = profileData.description;
+        document.getElementById('disp-coins').innerText = profileData.coins;
+        document.getElementById('shop-disp-coins').innerText = profileData.coins;
+        document.getElementById('user-photo').src = currentUser.photoURL;
+        
+        const lvlInfo = getLevelInfo(profileData.exp);
+        document.getElementById('disp-level').innerText = lvlInfo.level;
+        document.getElementById('disp-exp-current').innerText = lvlInfo.currentExp;
+        document.getElementById('disp-exp-bar').style.width = `${lvlInfo.progress}%`;
+
+        if(profileData.isAdmin) {
+            document.getElementById('admin-status-text').innerText = "Ativo";
+            document.getElementById('admin-login-controls').classList.add('hidden');
+            document.getElementById('admin-theme-selection').classList.remove('hidden');
+            renderAdminThemes();
+        }
+
+        renderAvatar(); renderInventory(); renderPath();
+    }
+
+    function getLevelInfo(exp) { return { level: Math.floor(exp / 500) + 1, currentExp: exp % 500, progress: (exp % 500) / 5 }; }
+
+    // --- TEMPLO MÍSTICO (WHEEL RENDER) ---
     function renderWheel() {
         const nodesContainer = document.getElementById('iso-nodes');
-        const linesContainer = document.getElementById('iso-lines');
-        const wrapper = document.getElementById('iso-wrapper');
+        const svg = document.getElementById('iso-ground');
         if (!nodesContainer || document.getElementById('view-skills').classList.contains('hidden')) return;
 
-        nodesContainer.innerHTML = '';
-        linesContainer.innerHTML = '';
-        
-        const wrapperW = wrapper.offsetWidth;
-        const cx = wrapperW / 2; const cy = 250;
-        const rx = 150; const ry = 70;
+        nodesContainer.innerHTML = ''; svg.innerHTML = '';
+        const cx = 300, cy = 250, rx = 220, ry = 100;
+        document.getElementById('iso-world').style.width = '600px';
+        document.getElementById('iso-world').style.height = '500px';
 
-        // Pilar Central (Origem)
-        const mainActive = selectedNode.type === 'main';
-        nodesContainer.innerHTML += `
-            <div class="pillar-base-shadow" style="left:${cx}px; top:${cy}px;"></div>
-            <div class="iso-pillar-container ${mainActive ? 'active' : ''}" style="left:${cx}px; top:${cy}px; z-index:10;" onclick="selectNode('main', null)">
-                <div class="iso-label" style="top:-140px;">A Origem</div>
-                <div style="width:90px; height:130px; background: url('pilar 1.svg') no-repeat bottom center; background-size:contain;"></div>
-            </div>
-        `;
-
+        // Linhas de Energia
         skillsData.forEach((s, i) => {
-            const angle = (i * (2 * Math.PI)) / skillsData.length;
+            const angle = (i * 2 * Math.PI) / skillsData.length;
             const px = cx + rx * Math.cos(angle);
             const py = cy + ry * Math.sin(angle);
             const isSel = selectedNode.id === s.id;
-            const elColor = elementStyles[s.element]?.main || '#fff';
-            const scale = 0.6 + (s.level / 200);
-
-            // Linha de Energia
-            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            line.setAttribute("x1", cx); line.setAttribute("y1", cy);
-            line.setAttribute("x2", px); line.setAttribute("y2", py);
             
-            if (isSel) {
-                line.setAttribute("stroke", elColor);
-                line.setAttribute("filter", "url(#energyGlow)");
-                line.style.setProperty('--energy-color', elColor);
-                line.style.animation = "pulse-energy 2s infinite ease-in-out";
-                line.setAttribute("stroke-width", "4");
-            } else {
-                line.setAttribute("stroke", "rgba(255,255,255,0.15)");
-                line.setAttribute("stroke-width", "1.5");
-            }
-            linesContainer.appendChild(line);
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", px); line.setAttribute("y2", py);
+            line.setAttribute("class", isSel ? "energy-beam beam-active" : "energy-beam beam-inactive");
+            if(isSel) line.style.setProperty('--accent', elementStyles[s.element]?.main || '#fff');
+            svg.appendChild(line);
+        });
 
-            // Sombra e Pilar
+        // Origem
+        nodesContainer.innerHTML += `
+            <div class="iso-pillar-container ${selectedNode.type === 'main' ? 'active' : ''}" style="left:${cx}px; top:${cy}px;" onclick="selectNode('main', null)">
+                <div class="pilar-shadow"></div>
+                <div class="mystic-label">A Origem</div>
+                <div style="width: 80px; height: 120px; background: linear-gradient(to bottom, #fff2, #fff4); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"></div>
+            </div>`;
+
+        // Pilares
+        skillsData.forEach((s, i) => {
+            const angle = (i * 2 * Math.PI) / skillsData.length;
+            const px = cx + rx * Math.cos(angle);
+            const py = cy + ry * Math.sin(angle);
+            const isSel = selectedNode.id === s.id;
+            const style = elementStyles[s.element] || elementStyles['void'];
+            const scale = 0.4 + (s.level / 150);
+
             nodesContainer.innerHTML += `
-                <div class="pillar-base-shadow" style="left:${px}px; top:${py}px;"></div>
-                <div class="iso-pillar-container ${isSel ? 'active' : ''}" style="left:${px}px; top:${py}px; z-index:${Math.floor(py)};" onclick="selectNode('skill', '${s.id}')">
-                    <div class="iso-label" style="top:${-110 * scale - 20}px;">${s.name}</div>
-                    <div style="width:70px; height:100px; background: url('pilar 1.svg') no-repeat bottom center; background-size:contain; transform: scale(${scale}); transform-origin: bottom center;"></div>
-                </div>
-            `;
+                <div class="iso-pillar-container ${isSel ? 'active' : ''}" style="left:${px}px; top:${py}px;" onclick="selectNode('skill', '${s.id}')">
+                    <div class="pilar-shadow" style="width: ${50 * scale + 20}px"></div>
+                    <div class="mystic-label">${style.icon} ${s.name}</div>
+                    <div style="width: 60px; height: 100px; background: ${style.main}; opacity: 0.8; transform: scale(${scale}); transform-origin: bottom center; border-radius: 2px; filter: drop-shadow(0 0 10px ${style.main}44);"></div>
+                </div>`;
         });
     }
 
-    window.selectNode = (type, id) => {
-        selectedNode = { type, id };
-        renderWheel();
-        renderEditor();
-    };
-
-    function renderEditor() {
-        const card = document.getElementById('editor-card');
-        if (selectedNode.type === 'main') {
-            card.innerHTML = `<div style="text-align:center; padding:20px;"><h3>O Templo Sagrado</h3><p>Selecione um pilar para expandir sua consciência.</p></div>`;
-            return;
-        }
-        const data = skillsData.find(s => s.id === selectedNode.id);
-        if (!data) return;
-        card.innerHTML = `
-            <div class="animate-fade-in">
-                <h3 style="font-family:'Cinzel', serif;">${data.name}</h3>
-                <p>Nível de Elevação: ${data.level}%</p>
-                <div class="progress-track"><div class="progress-fill" style="width:${data.level}%; background:${elementStyles[data.element]?.main}"></div></div>
-                <div style="display:flex; gap:10px; margin-top:15px;">
-                    <button class="btn-outline" onclick="deleteSkill('${data.id}')">Derrubar</button>
-                    <button class="btn-duo" onclick="boostSkill('${data.id}')">Elevar (+5%)</button>
-                </div>
-            </div>
-        `;
-    }
-
-    window.boostSkill = async (id) => {
-        const s = skillsData.find(x => x.id === id);
-        if (s) await updateDoc(doc(db, userPath, 'skills', id), { level: Math.min(100, (s.level || 0) + 5) });
-    };
-
-    window.deleteSkill = async (id) => {
-        if (confirm("Deseja mesmo derrubar este pilar de sabedoria?")) {
-            await deleteDoc(doc(db, userPath, 'skills', id));
-            selectNode('main', null);
-        }
-    };
-
-    window.openAddPillarModal = async () => {
-        const name = prompt("Nome do novo Pilar:");
-        if (name) {
-            const el = Object.keys(elementStyles)[Math.floor(Math.random() * 7)];
-            await addDoc(collection(db, userPath, 'skills'), { name, level: 10, element: el });
-        }
-    };
-
+    // --- HANDLERS ---
+    window.selectNode = (type, id) => { selectedNode = {type, id}; renderWheel(); renderEditor(); };
     window.switchTab = (tab, btn) => {
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        btn.classList.add('active');
-        ['home', 'path', 'skills', 'inventory', 'shop', 'community'].forEach(v => {
-            document.getElementById(`view-${v}`)?.classList.add('hidden');
-        });
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); btn.classList.add('active');
+        ['home','inventory','path','skills','shop','community'].forEach(v => document.getElementById(`view-${v}`).classList.add('hidden'));
         document.getElementById(`view-${tab}`).classList.remove('hidden');
-        if (tab === 'skills') setTimeout(renderWheel, 50);
+        if(tab === 'skills') setTimeout(renderWheel, 100);
+        if(tab === 'path') setTimeout(renderPath, 100);
     };
-
-    function updateUI() {
-        document.getElementById('disp-char-name').innerText = profileData.name;
-        document.getElementById('disp-coins').innerText = profileData.coins;
-        const lvl = Math.floor(profileData.exp / 500) + 1;
-        document.getElementById('disp-level').innerText = lvl;
-        document.getElementById('disp-exp-current').innerText = profileData.exp % 500;
-        document.getElementById('disp-exp-bar').style.width = `${(profileData.exp % 500) / 5}%`;
-        if (currentUser.photoURL) document.getElementById('user-photo').src = currentUser.photoURL;
-    }
-
-    document.getElementById('btn-login-action').onclick = () => signInWithPopup(auth, provider);
 
     window.selectInitialElement = (theme, el) => {
-        document.querySelectorAll('.theme-option').forEach(o => o.style.border = 'none');
-        el.style.border = '2px solid white';
-        window.pendingTheme = theme;
+        window.pendingElement = theme;
+        document.querySelectorAll('#initial-theme-grid div').forEach(d => d.style.borderColor = 'rgba(255,255,255,0.1)');
+        el.style.borderColor = 'var(--accent)';
     };
 
     window.confirmInitialElement = async () => {
-        if (window.pendingTheme) {
-            await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: window.pendingTheme, elementChosen: true });
-            document.getElementById('element-choice-screen').classList.remove('active');
+        if(!window.pendingElement) return;
+        await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: window.pendingElement, elementChosen: true });
+    };
+
+    window.addRandomQuest = async () => {
+        const q = prompt("Qual hábito quer cultivar?");
+        if(q) await addDoc(collection(db, userPath, 'quests'), { title: q, exp: 30, done: false });
+    }
+
+    window.toggleQuest = async (id, done, exp) => {
+        await updateDoc(doc(db, userPath, 'quests', id), { done: !done });
+        if(!done) await updateDoc(doc(db, userPath, 'profile', 'main'), { exp: (profileData.exp || 0) + exp });
+    }
+
+    window.openAddPillarModal = () => document.getElementById('modal-add-pillar').classList.add('active');
+    window.confirmAddPillar = async () => {
+        const n = document.getElementById('add-pillar-name').value;
+        const e = document.getElementById('add-pillar-element').value;
+        if(!n) return;
+        await addDoc(collection(db, userPath, 'skills'), { name: n, element: e, level: 10 });
+        document.getElementById('modal-add-pillar').classList.remove('active');
+    };
+
+    window.unlockAdminThemes = async () => {
+        if(document.getElementById('input-admin-pass').value === 'polimata') {
+            await updateDoc(doc(db, userPath, 'profile', 'main'), { isAdmin: true });
         }
     };
+
+    window.setThemeAdmin = async (t) => await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: t });
+    window.closeSettingsUI = () => {
+        document.getElementById('settings-sheet').style.bottom = '-100%';
+        document.getElementById('settings-backdrop').classList.remove('active');
+    };
+    window.openSettings = () => {
+        document.getElementById('input-profile-name').value = profileData.name;
+        document.getElementById('input-profile-desc').value = profileData.description;
+        document.getElementById('settings-sheet').style.bottom = '0';
+        document.getElementById('settings-backdrop').classList.add('active');
+    };
+    window.saveProfileData = async () => {
+        await updateDoc(doc(db, userPath, 'profile', 'main'), { 
+            name: document.getElementById('input-profile-name').value, 
+            description: document.getElementById('input-profile-desc').value 
+        });
+        closeSettingsUI();
+    };
+
+    // --- RENDERS ---
+    function renderQuests() {
+        const c = document.getElementById('quests-container');
+        c.innerHTML = questsData.map(q => `
+            <div class="quest-item ${q.done ? 'completed' : ''}" onclick="toggleQuest('${q.id}', ${q.done}, ${q.exp})">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div class="checkbox-bouncy">${q.done ? '✓' : ''}</div>
+                    <span style="font-weight: 700;">${q.title}</span>
+                </div>
+                <span style="font-size: 0.7rem; font-weight: 900; color: var(--accent);">+${q.exp}XP</span>
+            </div>
+        `).join('');
+    }
+
+    function renderInventory() {
+        const unlocked = profileData.unlockedItems || [];
+        const equipped = profileData.equipped || {};
+        const groups = { head: 'inv-grid-head', body: 'inv-grid-body', extra: 'inv-grid-extras' };
+        
+        for(let g in groups) {
+            const container = document.getElementById(groups[g]);
+            container.innerHTML = itemsDB.filter(i => i.type === g && unlocked.includes(i.id)).map(i => `
+                <div class="inv-slot ${equipped[g] === i.id ? 'equipped' : ''}" onclick="equip('${i.id}', '${g}')">
+                    <div style="font-size: 1.5rem;">${i.icon}</div>
+                    <div style="font-size: 0.5rem; text-align: center; color: var(--text-muted);">${i.name}</div>
+                </div>
+            `).join('');
+        }
+    }
+    window.equip = async (id, g) => {
+        const eq = profileData.equipped || {}; eq[g] = id;
+        await updateDoc(doc(db, userPath, 'profile', 'main'), { equipped: eq });
+    };
+
+    function renderAvatar() {
+        const eq = profileData.equipped || {};
+        const layers = [itemsDB.find(i => i.id === eq.extra), itemsDB.find(i => i.id === eq.body), itemsDB.find(i => i.id === eq.head)];
+        const html = layers.map(l => l ? `<div class="avatar-layer">${l.render}</div>` : '').join('');
+        document.getElementById('home-avatar-render').innerHTML = html;
+        document.getElementById('inv-avatar-render').innerHTML = html;
+    }
+
+    function renderPath() {
+        const container = document.getElementById('path-timeline-container');
+        const theme = profileData.theme || 'theme-void';
+        const nodes = pathsDB[theme] || [];
+        const claimed = profileData.claimedNodes || [];
+        const currentLvl = getLevelInfo(profileData.exp).level;
+
+        document.getElementById('path-element-name').innerText = elementNames[theme];
+
+        container.innerHTML = nodes.map(n => {
+            const isClaimed = claimed.includes(n.id);
+            const isUnlocked = currentLvl >= n.reqLvl;
+            return `
+                <div class="timeline-item ${isUnlocked ? 'unlocked' : ''} ${isClaimed ? 'claimed' : ''}">
+                    <div class="timeline-dot"></div>
+                    <div class="panel" style="margin-bottom: 0;">
+                        <h4 style="font-size: 0.9rem;">${n.title}</h4>
+                        <p style="font-size: 0.7rem; color: var(--text-muted);">${n.desc}</p>
+                        ${!isClaimed && isUnlocked ? `<button onclick="claim('${n.id}', '${n.type}', '${n.rewardId || n.amount}')" style="background:var(--accent); border:none; padding: 5px 10px; border-radius: 8px; color:#fff; font-size:0.6rem; margin-top:10px;">RESGATAR</button>` : ''}
+                        ${isClaimed ? `<div style="font-size:0.6rem; color:var(--success); margin-top:10px;">ADQUIRIDO</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    window.claim = async (id, type, val) => {
+        const claimed = profileData.claimedNodes || [];
+        const unlocked = profileData.unlockedItems || [];
+        let coins = profileData.coins || 0;
+        claimed.push(id);
+        if(type === 'item') unlocked.push(val); else coins += parseInt(val);
+        await updateDoc(doc(db, userPath, 'profile', 'main'), { claimedNodes: claimed, unlockedItems: unlocked, coins: coins });
+    };
+
+    function renderCommunity() {
+        const top10 = [...communityData].sort((a,b) => b.level - a.level).slice(0, 10);
+        document.getElementById('community-top10-list').innerHTML = top10.map(u => `
+            <div class="panel" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="${u.photoURL}" style="width: 32px; height: 32px; border-radius: 50%;">
+                    <div><h6 style="font-weight: 900;">${u.name}</h6><p style="font-size: 0.6rem;">Nv. ${u.level}</p></div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderAdminThemes() {
+        const g = document.getElementById('admin-themes-grid');
+        g.innerHTML = Object.keys(elementNames).map(t => `<div onclick="setThemeAdmin('${t}')" style="font-size:0.6rem; padding: 5px; background: rgba(255,255,255,0.05); border-radius: 5px; text-align: center; cursor: pointer;">${elementNames[t]}</div>`).join('');
+    }
+
+    function renderSkillList() {
+        const c = document.getElementById('skills-list');
+        document.getElementById('skill-count').innerText = skillsData.length;
+        c.innerHTML = skillsData.map(s => `<div onclick="selectNode('skill', '${s.id}')" style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 12px; margin-bottom: 5px; font-weight: 900; border: 1px solid ${selectedNode.id === s.id ? 'var(--accent)' : 'transparent'}">${elementStyles[s.element]?.icon} ${s.name}</div>`).join('');
+    }
+
+    function renderEditor() {
+        const c = document.getElementById('editor-card');
+        if(selectedNode.type === 'main') { c.innerHTML = "<p style='text-align:center;'>Foco na Origem: O centro de toda a sua sabedoria.</p>"; return; }
+        const s = skillsData.find(x => x.id === selectedNode.id);
+        if(!s) { c.innerHTML = ""; return; }
+        c.innerHTML = `
+            <div style="display:flex; justify-content:space-between; margin-bottom: 1rem;">
+                <h4 style="font-weight: 900;">${s.name}</h4>
+                <button onclick="deleteSkill('${s.id}')" style="background:transparent; border:none; color:#ff4444; font-size:0.7rem;">DELETAR</button>
+            </div>
+            <label style="font-size:0.7rem;">Elevação (Nível): ${s.level}%</label>
+            <input type="range" class="input-ios" value="${s.level}" onchange="updateSkillLevel('${s.id}', this.value)">
+        `;
+    }
+    window.updateSkillLevel = async (id, val) => await updateDoc(doc(db, userPath, 'skills', id), { level: parseInt(val) });
+    window.deleteSkill = async (id) => { if(confirm("Deseja destruir este pilar?")) await deleteDoc(doc(db, userPath, id)); };
 
 </script>
 </body>
