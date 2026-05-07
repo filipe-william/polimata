@@ -8,68 +8,54 @@
     <style>
         /* --- OS 7 ELEMENTOS (TEMAS GLOBAIS E LOCAIS) --- */
         :root, .theme-void {
-            --bg-color-1: #0f172a; --bg-color-2: #1e1b4b;
-            --accent: #818cf8; --accent-dark: #4f46e5;
+            --bg-color-1: #0f172a; --bg-color-2: #1e1b4b; --accent: #818cf8; --accent-dark: #4f46e5;
             --glass-bg: rgba(30, 27, 75, 0.4); --glass-border: rgba(129, 140, 248, 0.3);
             --nav-bg: rgba(15, 23, 42, 0.85); --sheet-bg: rgba(15, 23, 42, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.6);
-            --success: #34d399; --success-dark: #059669;
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.6); --success: #34d399; --success-dark: #059669;
         }
-
         .theme-journey {
-            --bg-color-1: #451a03; --bg-color-2: #78350f;
-            --accent: #fbbf24; --accent-dark: #d97706;
+            --bg-color-1: #451a03; --bg-color-2: #78350f; --accent: #fbbf24; --accent-dark: #d97706;
             --glass-bg: rgba(120, 53, 15, 0.4); --glass-border: rgba(251, 191, 36, 0.3);
             --nav-bg: rgba(69, 26, 3, 0.85); --sheet-bg: rgba(69, 26, 3, 0.95);
             --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
         }
-
         .theme-forest {
-            --bg-color-1: #064e3b; --bg-color-2: #065f46;
-            --accent: #a7f3d0; --accent-dark: #10b981;
+            --bg-color-1: #064e3b; --bg-color-2: #065f46; --accent: #a7f3d0; --accent-dark: #10b981;
             --glass-bg: rgba(6, 95, 70, 0.4); --glass-border: rgba(167, 243, 208, 0.3);
             --nav-bg: rgba(6, 78, 59, 0.85); --sheet-bg: rgba(6, 78, 59, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
-            --success: #fcd34d; --success-dark: #f59e0b;
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7); --success: #fcd34d;
         }
-
         .theme-cloud {
-            --bg-color-1: #e0f2fe; --bg-color-2: #bae6fd;
-            --accent: #0ea5e9; --accent-dark: #0284c7;
+            --bg-color-1: #e0f2fe; --bg-color-2: #bae6fd; --accent: #0ea5e9; --accent-dark: #0284c7;
             --glass-bg: rgba(255, 255, 255, 0.6); --glass-border: rgba(255, 255, 255, 0.8);
             --nav-bg: rgba(255, 255, 255, 0.85); --sheet-bg: rgba(248, 250, 252, 0.95);
             --text-main: #0f172a; --text-muted: #475569;
         }
-
         .theme-inferno {
-            --bg-color-1: #450a0a; --bg-color-2: #7f1d1d;
-            --accent: #f87171; --accent-dark: #dc2626;
+            --bg-color-1: #450a0a; --bg-color-2: #7f1d1d; --accent: #f87171; --accent-dark: #dc2626;
             --glass-bg: rgba(127, 29, 29, 0.4); --glass-border: rgba(248, 113, 113, 0.3);
             --nav-bg: rgba(69, 10, 10, 0.85); --sheet-bg: rgba(69, 10, 10, 0.95);
             --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
         }
-
         .theme-ocean {
-            --bg-color-1: #083344; --bg-color-2: #164e63;
-            --accent: #22d3ee; --accent-dark: #0891b2;
+            --bg-color-1: #083344; --bg-color-2: #164e63; --accent: #22d3ee; --accent-dark: #0891b2;
             --glass-bg: rgba(22, 78, 99, 0.4); --glass-border: rgba(34, 211, 238, 0.3);
             --nav-bg: rgba(8, 51, 68, 0.85); --sheet-bg: rgba(8, 51, 68, 0.95);
             --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
         }
-
         .theme-arcane {
-            --bg-color-1: #3b0764; --bg-color-2: #581c87;
-            --accent: #e879f9; --accent-dark: #c026d3;
+            --bg-color-1: #3b0764; --bg-color-2: #581c87; --accent: #e879f9; --accent-dark: #c026d3;
             --glass-bg: rgba(88, 28, 135, 0.4); --glass-border: rgba(232, 121, 249, 0.3);
             --nav-bg: rgba(59, 7, 100, 0.85); --sheet-bg: rgba(59, 7, 100, 0.95);
             --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
         }
 
-        /* --- BASE APP --- */
+        /* --- BASE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2)); color: var(--text-main); height: 100vh; height: 100dvh; overflow: hidden; transition: color 0.5s ease, background 0.5s ease; }
         #theme-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
         .hidden { display: none !important; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
 
         /* --- ANIMAÇÕES --- */
         .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
@@ -81,158 +67,82 @@
         #app-container { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; }
         main.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.5rem 1.5rem 6rem 1.5rem; }
         
-        ::-webkit-scrollbar { width: 4px; height: 4px; } 
-        ::-webkit-scrollbar-track { background: transparent; } 
-        ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        .btn-duo { background: var(--accent); color: #fff; font-weight: 800; font-size: 1rem; padding: 14px 24px; border: none; border-radius: 20px; cursor: pointer; box-shadow: 0 6px 0 var(--accent-dark), 0 15px 20px rgba(0,0,0,0.2); transition: 0.1s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; width: 100%; }
+        .theme-cloud .btn-duo { color: #fff; } .btn-duo:active { transform: translateY(6px); box-shadow: 0 0px 0 var(--accent-dark), 0 5px 10px rgba(0,0,0,0.2); }
+        .btn-outline { background: transparent; border: 2px solid var(--text-muted); color: var(--text-main); font-weight: 800; padding: 12px 24px; border-radius: 20px; cursor: pointer; transition: 0.2s; width: 100%; text-transform: uppercase; }
+        .btn-outline:active { background: rgba(255,255,255,0.1); } .theme-cloud .btn-outline { border-color: var(--text-muted); color: var(--text-main); }
 
-        /* --- BOTÕES --- */
-        .btn-duo {
-            background: var(--accent); color: #fff; font-weight: 800; font-size: 1rem;
-            padding: 14px 24px; border: none; border-radius: 20px; cursor: pointer;
-            box-shadow: 0 6px 0 var(--accent-dark), 0 15px 20px rgba(0,0,0,0.2);
-            transition: transform 0.1s, box-shadow 0.1s;
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; width: 100%;
-        }
-        .theme-cloud .btn-duo { color: #fff; } 
-        .btn-duo:active { transform: translateY(6px); box-shadow: 0 0px 0 var(--accent-dark), 0 5px 10px rgba(0,0,0,0.2); }
-
-        .btn-outline {
-            background: transparent; border: 2px solid var(--text-muted); color: var(--text-main); font-weight: 800;
-            padding: 12px 24px; border-radius: 20px; cursor: pointer; transition: 0.2s; width: 100%; text-transform: uppercase;
-        }
-        .btn-outline:active { background: rgba(255,255,255,0.1); }
-        .theme-cloud .btn-outline { border-color: var(--text-muted); color: var(--text-main); }
-
-        /* --- BOTTOM NAV --- */
-        #bottom-nav {
-            position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); width: calc(100% - 2rem); max-width: 500px;
-            background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); border-radius: 30px; display: flex; justify-content: space-between; padding: 0.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 50; transition: background-color 0.5s ease, border-color 0.5s ease;
-        }
-        .nav-item { flex: 1; background: transparent; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0.4rem 0; border-radius: 20px; cursor: pointer; transition: all 0.3s; font-weight: 800; font-size: 0.6rem; text-transform: uppercase; }
+        /* --- BOTTOM NAV (6 ITENS) --- */
+        #bottom-nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); width: calc(100% - 1rem); max-width: 500px; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 30px; display: flex; justify-content: space-between; padding: 0.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 50; transition: background-color 0.5s ease, border-color 0.5s ease; }
+        .nav-item { flex: 1; background: transparent; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 18px; cursor: pointer; transition: all 0.3s; font-weight: 800; font-size: 0.55rem; text-transform: uppercase; padding: 4px 0; }
         .nav-item.active { color: var(--accent); background: rgba(0,0,0,0.2); }
         .theme-cloud .nav-item.active { background: rgba(0,0,0,0.05); }
-        .nav-item svg { width: 20px; height: 20px; stroke-width: 2.5; transition: transform 0.3s; }
+        .nav-item svg { width: 18px; height: 18px; stroke-width: 2.5; transition: transform 0.3s; }
         .nav-item.active svg { transform: scale(1.15); }
 
         /* --- INPUTS & SHEETS --- */
         #settings-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 90; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
         #settings-backdrop.active { opacity: 1; pointer-events: auto; }
-        #settings-sheet {
-            position: fixed; bottom: -100%; left: 0; width: 100%; height: 85vh;
-            background: var(--sheet-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border-top-left-radius: 32px; border-top-right-radius: 32px; box-shadow: 0 -10px 40px rgba(0,0,0,0.3); z-index: 100; transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.5s ease; display: flex; flex-direction: column;
-        }
+        #settings-sheet { position: fixed; bottom: -100%; left: 0; width: 100%; height: 85vh; background: var(--sheet-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-top-left-radius: 32px; border-top-right-radius: 32px; box-shadow: 0 -10px 40px rgba(0,0,0,0.3); z-index: 100; transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.5s ease; display: flex; flex-direction: column; }
         #settings-sheet.open { bottom: 0; }
-        .sheet-handle { width: 40px; height: 6px; background: var(--glass-border); border-radius: 3px; margin: 1rem auto; cursor: pointer; transition: background-color 0.5s ease;}
+        .sheet-handle { width: 40px; height: 6px; background: var(--glass-border); border-radius: 3px; margin: 1rem auto; cursor: pointer; }
         .sheet-content { padding: 0 1.5rem 2rem 1.5rem; overflow-y: auto; flex: 1; }
-        .sheet-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; }
-
-        .input-ios, .select-ios {
-            width: 100%; background: rgba(0,0,0,0.2); border: 2px solid transparent; border-radius: 16px;
-            padding: 14px 16px; color: var(--text-main); font-size: 1rem; font-weight: 600; transition: 0.3s; margin-bottom: 12px; appearance: none;
-        }
+        .input-ios, .select-ios { width: 100%; background: rgba(0,0,0,0.2); border: 2px solid transparent; border-radius: 16px; padding: 14px 16px; color: var(--text-main); font-size: 1rem; font-weight: 600; transition: 0.3s; margin-bottom: 12px; appearance: none; }
         .theme-cloud .input-ios, .theme-cloud .select-ios { background: rgba(0,0,0,0.05); color: #0f172a; }
-        .input-ios::placeholder { color: var(--text-muted); }
-        .input-ios:focus, .select-ios:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.1); }
-        .select-ios option { background: var(--sheet-bg); color: var(--text-main); }
-        .theme-cloud .select-ios option { background: #fff; color: #0f172a; }
-
+        .input-ios::placeholder { color: var(--text-muted); } .input-ios:focus, .select-ios:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.1); }
+        .select-ios option { background: var(--sheet-bg); color: var(--text-main); } .theme-cloud .select-ios option { background: #fff; color: #0f172a; }
         .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 2rem; }
         .theme-option { display: flex; align-items: center; gap: 10px; padding: 0.8rem; border-radius: 16px; cursor: pointer; border: 2px solid transparent; background: var(--glass-bg); transition: all 0.2s; }
-        .theme-option.active { border-color: var(--accent); background: rgba(0,0,0,0.3); }
-        .theme-cloud .theme-option.active { background: rgba(0,0,0,0.05); }
+        .theme-option.active { border-color: var(--accent); background: rgba(0,0,0,0.3); } .theme-cloud .theme-option.active { background: rgba(0,0,0,0.05); }
         .color-preview { width: 20px; height: 20px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); flex-shrink: 0; }
 
-        /* --- COMPONENTES UI (CARTÕES) --- */
+        /* --- COMPONENTES UI --- */
         .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 1.5rem; position: relative; transition: background-color 0.5s ease, border-color 0.5s ease; }
-        .identity-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 1.5rem; backdrop-filter: blur(24px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: background-color 0.5s ease, border-color 0.5s ease; }
-        .identity-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: border-color 0.5s ease;}
-
-        /* --- CARTÕES DA COMUNIDADE --- */
-        .community-card {
-            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-            padding: 1.25rem; border-radius: 24px; margin-bottom: 16px;
-            background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2));
-            border: 2px solid var(--glass-border); box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            color: var(--text-main); position: relative; overflow: visible; transition: transform 0.2s;
-        }
-        .community-card:hover { transform: translateY(-3px); border-color: var(--accent); }
-        .community-card::before { content: ''; position: absolute; inset: 0; background: var(--glass-bg); pointer-events: none; border-radius: 24px;}
-        .community-card > * { position: relative; z-index: 1; }
-        .comm-info { display: flex; align-items: center; gap: 1rem; flex: 1; }
-        .comm-photo { width: 50px; height: 50px; border-radius: 18px; object-fit: cover; border: 2px solid var(--accent); }
-        .comm-level-badge { background: var(--accent); color: #fff; font-weight: 900; font-size: 1.1rem; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0; }
+        .identity-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: background-color 0.5s ease; }
+        .identity-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         
-        .chat-btn-comm {
-            background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main);
-            width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.2s; flex-shrink: 0;
-        }
-        .chat-btn-comm:hover { background: var(--accent); border-color: var(--accent); transform: scale(1.1); }
+        .coin-display { background: rgba(0,0,0,0.3); padding: 6px 12px; border-radius: 16px; display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 1rem; color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .theme-cloud .coin-display { background: rgba(255,255,255,0.8); }
 
         /* --- CHAT TEMPORÁRIO (MODAL) --- */
-        #chat-modal {
-            position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            z-index: 2000; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+        #chat-modal { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 2000; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
         #chat-modal.open { transform: translateY(0); }
-        .chat-header {
-            padding: 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between;
-            background: rgba(0,0,0,0.2);
-        }
+        .chat-header { padding: 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); }
         .chat-header-title { font-size: 1.2rem; font-weight: 900; display: flex; align-items: center; gap: 10px; }
-        .chat-status { font-size: 0.75rem; font-weight: 700; color: var(--success); background: var(--glass-bg); padding: 2px 8px; border-radius: 10px; border: 1px solid var(--glass-border); }
-        
         #chat-messages-container { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 10px; }
         .chat-bubble { max-width: 80%; padding: 12px 16px; border-radius: 20px; font-weight: 600; font-size: 0.95rem; line-height: 1.4; animation: fadeIn 0.3s ease-out forwards; }
         .bubble-mine { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .bubble-other { align-self: flex-start; background: var(--glass-bg); border: 1px solid var(--glass-border); border-bottom-left-radius: 4px; color: var(--text-main); }
         .chat-input-area { padding: 1.5rem; border-top: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); display: flex; gap: 10px; padding-bottom: 2.5rem; }
         .chat-input { flex: 1; background: rgba(0,0,0,0.3); border: 2px solid transparent; border-radius: 24px; padding: 14px 20px; color: var(--text-main); font-size: 1rem; outline: none; transition: 0.3s; }
-        .theme-cloud .chat-input { background: rgba(255,255,255,0.5); color: #0f172a; }
-        .chat-input:focus { border-color: var(--accent); background: rgba(0,0,0,0.4); }
+        .theme-cloud .chat-input { background: rgba(255,255,255,0.5); color: #0f172a; } .chat-input:focus { border-color: var(--accent); background: rgba(0,0,0,0.4); }
         .btn-send { background: var(--accent); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0; }
-        .btn-send:active { transform: scale(0.9); }
 
-        /* --- CAMINHO ELEMENTAL (TIMELINE) --- */
-        .timeline { position: relative; padding: 10px 0; margin-left: 10px; border-left: 3px solid var(--glass-border); margin-top: 1.5rem; }
-        .timeline-item { position: relative; padding-left: 25px; margin-bottom: 20px; }
-        .timeline-dot { position: absolute; left: -11.5px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--glass-bg); border: 3px solid var(--glass-border); transition: 0.3s; }
-        .timeline-item.unlocked .timeline-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 15px var(--accent); }
+        /* --- CAMINHO ELEMENTAL (TIMELINE & DECORAÇÕES) --- */
+        #path-area { position: relative; overflow: hidden; padding-top: 1rem; }
+        .path-decorator { position: absolute; font-size: 2rem; opacity: 0.15; pointer-events: none; z-index: 0; filter: blur(1px); animation: float 10s ease-in-out infinite; }
+        .timeline { position: relative; padding: 10px 0; margin-left: 20px; border-left: 4px solid var(--accent); margin-top: 1.5rem; z-index: 1; }
+        .timeline-item { position: relative; padding-left: 30px; margin-bottom: 25px; }
+        .timeline-dot { position: absolute; left: -14px; top: 10px; width: 24px; height: 24px; border-radius: 50%; background: var(--bg-color-1); border: 4px solid var(--glass-border); transition: 0.3s; z-index: 2;}
+        .timeline-item.unlocked .timeline-dot { background: var(--accent); border-color: var(--accent-dark); box-shadow: 0 0 15px var(--accent); }
         .theme-cloud .timeline-item.unlocked .timeline-dot { box-shadow: 0 0 10px var(--accent-dark); }
-        .timeline-item.claimed .timeline-dot { background: var(--success); border-color: var(--success); }
+        .timeline-item.claimed .timeline-dot { background: var(--success); border-color: var(--success-dark); }
 
         /* Diversos */
         .progress-wrapper { background: rgba(0,0,0,0.2); padding: 1.25rem; border-radius: 24px; text-align: left; margin-top: 1.5rem; }
         .theme-cloud .progress-wrapper { background: rgba(255,255,255,0.5); }
         .progress-track { width: 100%; background: rgba(0,0,0,0.3); border-radius: 999px; height: 1.25rem; position: relative; overflow: hidden; margin: 0.5rem 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
         .theme-cloud .progress-track { background: rgba(0,0,0,0.1); }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 999px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.5s ease; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15); }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 999px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15); }
         .section-title { font-size: 1.2rem; font-weight: 900; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
         .btn-icon-soft { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
-        .btn-icon-soft:hover { transform: scale(1.1); background: var(--accent); color: white; border-color: var(--accent); }
         .quest-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 20px; background: rgba(0,0,0,0.2); border: 2px solid transparent; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; }
         .theme-cloud .quest-item { background: rgba(255,255,255,0.4); }
-        .quest-item:active { transform: translateY(3px); }
         .quest-item.completed { background: var(--glass-bg); border-color: var(--success); opacity: 0.8; }
-        .checkbox-bouncy { width: 26px; height: 26px; border-radius: 8px; border: 3px solid var(--text-muted); display: flex; align-items: center; justify-content: center; transition: 0.3s; background: transparent; }
+        .checkbox-bouncy { width: 26px; height: 26px; border-radius: 8px; border: 3px solid var(--text-muted); display: flex; align-items: center; justify-content: center; transition: 0.3s; }
         .quest-item.completed .checkbox-bouncy { background: var(--success); border-color: var(--success); transform: scale(1.1) rotate(10deg); }
-        .quest-reward { color: var(--accent); font-weight: 800; font-size: 0.85rem; background: var(--glass-bg); padding: 4px 10px; border-radius: 10px; border: 1px solid var(--glass-border); transition: color 0.5s ease, background-color 0.5s ease;}
+        .quest-reward { color: var(--accent); font-weight: 800; font-size: 0.85rem; background: var(--glass-bg); padding: 4px 10px; border-radius: 10px; border: 1px solid var(--glass-border); }
         .quest-item.completed .quest-reward { color: var(--success); border-color: transparent;}
-
-        /* --- SISTEMA ISOMÉTRICO 3D (OS PILARES SVG) --- */
-        #iso-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; text-align: center; border-radius: 16px; padding: 20px 0; }
-        #iso-world { position: relative; margin: 0 auto; perspective: 1000px; transition: width 0.5s ease, height 0.5s ease; }
-        #iso-ground { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; }
-        .iso-pillar-container { position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
-        .iso-pillar-container:hover, .iso-pillar-container.active { transform: translate(-50%, -100%) scale(1.05); filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); z-index: 100 !important; }
-        .iso-label { position: absolute; background: var(--glass-bg); padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; white-space: nowrap; border: 1px solid var(--glass-border); backdrop-filter: blur(4px); pointer-events: none; transition: opacity 0.3s; opacity: 0.7;}
-        .iso-pillar-container:hover .iso-label, .iso-pillar-container.active .iso-label { opacity: 1; border-color: var(--accent); }
-
-        .skill-list-item { padding: 1rem; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.2s; margin-bottom: 8px; background: rgba(0,0,0,0.2); }
-        .theme-cloud .skill-list-item { background: rgba(255,255,255,0.4); }
-        .skill-list-item.active { border: 2px solid var(--accent); background: var(--glass-bg); }
 
         /* Avatar & Inventário */
         .avatar-2d-container { width: 160px; height: 160px; margin: 0 auto; position: relative; border-radius: 30px; background: radial-gradient(circle, var(--glass-bg), transparent); box-shadow: inset 0 0 20px rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; transition: background 0.5s ease;}
@@ -243,32 +153,44 @@
         @keyframes breathe { 0%, 100% { transform: scaleY(1) translateY(0); } 50% { transform: scaleY(0.98) translateY(2px); } }
         .inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 10px; margin-top: 1rem; }
         .inv-slot { background: rgba(0,0,0,0.2); border: 2px solid var(--glass-border); border-radius: 16px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; position: relative; overflow: hidden; }
-        .theme-cloud .inv-slot { background: rgba(255,255,255,0.6); }
-        .inv-slot:hover { transform: scale(1.05); background: var(--glass-bg); }
-        .inv-slot.equipped { border-color: var(--success); background: rgba(52, 211, 153, 0.1); }
+        .theme-cloud .inv-slot { background: rgba(255,255,255,0.6); } .inv-slot.equipped { border-color: var(--success); background: rgba(52, 211, 153, 0.1); }
         .inv-slot.equipped::after { content: 'E'; position: absolute; top: 4px; right: 4px; background: var(--success); color: var(--bg-color-1); font-size: 0.6rem; font-weight: 900; padding: 2px 5px; border-radius: 6px; }
-        .inv-icon { font-size: 1.5rem; margin-bottom: 4px; }
-        .inv-name { font-size: 0.55rem; text-align: center; font-weight: 800; color: var(--text-muted); line-height: 1.1; padding: 0 4px; }
+        .inv-icon { font-size: 1.5rem; margin-bottom: 4px; } .inv-name { font-size: 0.55rem; text-align: center; font-weight: 800; color: var(--text-muted); line-height: 1.1; padding: 0 4px; }
+
+        /* Pilares SVG */
+        #iso-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; text-align: center; border-radius: 16px; padding: 20px 0; }
+        #iso-world { position: relative; margin: 0 auto; perspective: 1000px; transition: width 0.5s ease, height 0.5s ease; }
+        #iso-ground { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; }
+        .iso-pillar-container { position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+        .iso-pillar-container:hover, .iso-pillar-container.active { transform: translate(-50%, -100%) scale(1.05); filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); z-index: 100 !important; }
+        .iso-label { position: absolute; background: var(--glass-bg); padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; white-space: nowrap; border: 1px solid var(--glass-border); backdrop-filter: blur(4px); pointer-events: none; transition: opacity 0.3s; opacity: 0.7;}
+        .iso-pillar-container:hover .iso-label, .iso-pillar-container.active .iso-label { opacity: 1; border-color: var(--accent); }
+        .skill-list-item { padding: 1rem; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; margin-bottom: 8px; background: rgba(0,0,0,0.2); }
+        .skill-list-item.active { border: 2px solid var(--accent); background: var(--glass-bg); }
+
+        /* Cartões da Comunidade */
+        .community-card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem; border-radius: 24px; margin-bottom: 16px; background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2)); border: 2px solid var(--glass-border); box-shadow: 0 8px 20px rgba(0,0,0,0.3); color: var(--text-main); position: relative; transition: transform 0.2s; }
+        .community-card::before { content: ''; position: absolute; inset: 0; background: var(--glass-bg); pointer-events: none; border-radius: 24px;}
+        .community-card > * { position: relative; z-index: 1; }
+        .comm-photo { width: 50px; height: 50px; border-radius: 18px; object-fit: cover; border: 2px solid var(--accent); }
+        .comm-level-badge { background: var(--accent); color: #fff; font-weight: 900; font-size: 1.1rem; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0; }
+        .chat-btn-comm { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
         /* Modals Overlay */
-        .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s, background-color 0.5s ease; opacity: 0; pointer-events: none; }
+        .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s; opacity: 0; pointer-events: none; }
         .overlay-screen.active { opacity: 1; pointer-events: auto; }
-        
-        .level-badge { background: var(--accent); width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 8px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.3); border: 6px solid rgba(255,255,255,0.2); transition: background-color 0.5s ease, box-shadow 0.5s ease;}
+        .level-badge { background: var(--accent); width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 8px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.3); border: 6px solid rgba(255,255,255,0.2); }
         .floating-exp { position: fixed; color: var(--success); font-size: 1.25rem; font-weight: 900; pointer-events: none; z-index: 1000; text-shadow: 0 2px 10px rgba(0,0,0,0.3); animation: floatUpAndFade 1s forwards; }
-
-        /* Estilos do Modal de Escolha Inicial */
-        .warning-text { color: #ef4444; font-weight: 900; font-size: 0.9rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; background: rgba(239, 68, 68, 0.1); padding: 8px; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .warning-text { color: #ef4444; font-weight: 900; font-size: 0.9rem; margin-bottom: 1.5rem; text-transform: uppercase; background: rgba(239, 68, 68, 0.1); padding: 8px; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3); }
     </style>
 </head>
 <body class="theme-void">
 
     <canvas id="theme-canvas"></canvas>
 
-    <!-- TELA DE LOGIN -->
     <div id="login-screen" class="overlay-screen active" style="opacity: 1; pointer-events: auto;">
         <div style="text-align: center; padding: 2rem; max-width: 400px; width: 100%;">
-            <div class="float-gentle" style="background: var(--text-main); color: var(--bg-color-1); width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: rotate(-10deg); transition: color 0.5s ease, background-color 0.5s ease;">
+            <div class="float-gentle" style="background: var(--text-main); color: var(--bg-color-1); width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: rotate(-10deg);">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 40px; height: 40px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
             </div>
             <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem;">Polímata</h1>
@@ -277,12 +199,11 @@
         </div>
     </div>
 
-    <!-- MODAL: ESCOLHA INICIAL DO ELEMENTO (O DESPERTAR) -->
     <div id="element-choice-screen" class="overlay-screen" style="z-index: 9999;">
         <div class="panel" style="max-width: 95%; width: 450px; text-align: center; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.8); border: 2px solid var(--accent);">
             <h2 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem;">O Despertar</h2>
             <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 1rem;">Todo viajante precisa de um ponto de origem.</p>
-            <div class="warning-text">Aviso: A afinidade que você escolher será o seu tema permanente. Esta ação não pode ser desfeita.</div>
+            <div class="warning-text">Aviso: A afinidade escolhida será seu tema permanente.</div>
             
             <div class="theme-grid" id="initial-theme-grid" style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); margin-bottom: 1.5rem;">
                 <div class="theme-option" onclick="selectInitialElement('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700; font-size: 0.8rem;">O Vazio</span></div>
@@ -293,12 +214,10 @@
                 <div class="theme-option" onclick="selectInitialElement('theme-ocean', this)"><div class="color-preview" style="background: #164e63;"></div><span style="font-weight: 700; font-size: 0.8rem;">Oceano</span></div>
                 <div class="theme-option" onclick="selectInitialElement('theme-arcane', this)"><div class="color-preview" style="background: #581c87;"></div><span style="font-weight: 700; font-size: 0.8rem;">Arcano</span></div>
             </div>
-
             <button onclick="confirmInitialElement()" class="btn-duo" style="width: 100%; font-size: 1.1rem; padding: 16px;">Selar Meu Destino</button>
         </div>
     </div>
 
-    <!-- MODAL: LEVEL UP -->
     <div id="level-up-screen" class="overlay-screen">
         <div style="text-align: center;">
             <div class="level-badge animate-slide-up"><span style="font-size: 1rem; font-weight: 800; color: rgba(255,255,255,0.8); text-transform: uppercase;">Nível</span><div id="new-level-display" style="font-size: 4rem; font-weight: 900; color: white; line-height: 1;">2</div></div>
@@ -308,12 +227,11 @@
         </div>
     </div>
 
-    <!-- MODAL: CRIAR NOVO PILAR -->
     <div id="modal-add-pillar" class="overlay-screen">
-        <div class="panel animate-fade-in" style="max-width: 90%; width: 380px; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+        <div class="panel animate-fade-in" style="max-width: 90%; width: 380px; margin: 0 auto;">
             <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 1.5rem; text-align: center;">Forjar Novo Pilar</h3>
             <label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted);">Qual sabedoria você irá cultivar?</label>
-            <input type="text" id="add-pillar-name" class="input-ios" placeholder="Ex: Programação, Piano, Calistenia...">
+            <input type="text" id="add-pillar-name" class="input-ios" placeholder="Ex: Programação, Piano...">
             <label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted); margin-top:10px;">Elemento de Poder</label>
             <select id="add-pillar-element" class="select-ios">
                 <option value="void">🌌 O Vazio (Foco / Disciplina)</option>
@@ -330,25 +248,15 @@
         </div>
     </div>
 
-    <!-- MODAL: CHAT TEMPORÁRIO -->
     <div id="chat-modal">
         <div class="chat-header">
             <div class="chat-header-title">
                 <div class="comm-photo" style="width:36px; height:36px; border-radius:12px; overflow:hidden;" id="chat-header-photo"></div>
-                <div>
-                    <div id="chat-header-name" style="line-height:1.2;">Viajante</div>
-                    <div class="chat-status">Sessão Temporária</div>
-                </div>
+                <div><div id="chat-header-name" style="line-height:1.2;">Viajante</div><div class="chat-status">Sessão Temporária</div></div>
             </div>
             <button onclick="closeChat()" class="btn-icon-soft" style="width: 36px; height: 36px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:18px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
-        
-        <div id="chat-messages-container">
-            <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: auto; padding-top: 2rem;">
-                As mensagens trocadas aqui desaparecem assim que você fecha o aplicativo.<br>Apenas no momento presente.
-            </div>
-        </div>
-        
+        <div id="chat-messages-container"><div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: auto; padding-top: 2rem;">As mensagens trocadas aqui desaparecem assim que você fecha o aplicativo.<br>Apenas no momento presente.</div></div>
         <div class="chat-input-area">
             <input type="text" id="chat-input-text" class="chat-input" placeholder="Escreva uma mensagem..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
             <button onclick="sendChatMessage()" class="btn-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px; transform: translateX(-2px);"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
@@ -359,13 +267,20 @@
         <div id="permission-error" style="background: #ef4444; color: white; padding: 1rem; text-align: center; font-weight: 700; display: none; z-index: 200; position: absolute; top:0; width: 100%;">⚠️ Erro de Banco de Dados.</div>
 
         <main class="content-area">
+            
             <!-- HOME -->
             <section id="view-home" class="animate-fade-in">
-                <div class="identity-card float-gentle" style="animation-delay: 0.5s;">
-                    <img id="user-photo" src="" alt="Identificador" class="identity-photo">
-                    <div>
-                        <h2 id="disp-char-name" style="font-size: 1.2rem; font-weight: 900; line-height: 1.2;">Viajante</h2>
-                        <p id="disp-char-title" style="color: var(--text-muted); font-weight: 700; font-size: 0.85rem;">Despertando...</p>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="identity-card float-gentle" style="margin-bottom: 0; flex: 1; margin-right: 10px;">
+                        <img id="user-photo" src="" alt="Identificador" class="identity-photo">
+                        <div>
+                            <h2 id="disp-char-name" style="font-size: 1.1rem; font-weight: 900; line-height: 1.2;">Viajante</h2>
+                            <p id="disp-char-title" style="color: var(--text-muted); font-weight: 700; font-size: 0.8rem;">Despertando...</p>
+                        </div>
+                    </div>
+                    <!-- DISPLAY DE MOEDAS -->
+                    <div class="coin-display float-gentle" style="animation-delay: 0.5s;">
+                        🪙 <span id="disp-coins">0</span>
                     </div>
                 </div>
 
@@ -397,14 +312,14 @@
                 </div>
             </section>
 
-            <!-- CAMINHO ELEMENTAL (NOVO) -->
+            <!-- CAMINHO ELEMENTAL -->
             <section id="view-path" class="hidden">
-                <div class="panel">
-                    <div class="section-title">Caminho d<span id="path-element-name" style="color: var(--accent); margin-left: 5px;">Ascensão</span></div>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">Desbloqueie relíquias e acessórios alcançando níveis mais altos na sua jornada.</p>
-                    <div class="timeline" id="path-timeline-container">
-                        <!-- Injetado por JS -->
-                    </div>
+                <div class="panel" id="path-area">
+                    <div class="section-title" style="position: relative; z-index: 2;">Caminho d<span id="path-element-name" style="color: var(--accent); margin-left: 5px;">Ascensão</span></div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; position: relative; z-index: 2;">Desbloqueie relíquias e moedas alcançando níveis mais altos (até Nv. 50).</p>
+                    
+                    <div id="path-decorations-container"></div> <!-- Injetado por JS -->
+                    <div class="timeline" id="path-timeline-container"></div> <!-- Injetado por JS -->
                 </div>
             </section>
 
@@ -424,24 +339,30 @@
                 </div>
             </section>
 
+            <!-- LOJA -->
+            <section id="view-shop" class="hidden">
+                <div class="panel" style="text-align: center; padding: 3rem 1.5rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));">🛒</div>
+                    <h2 style="font-weight: 900; font-size: 1.8rem; margin-bottom: 0.5rem;">O Empório</h2>
+                    <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 2rem;">Os mercadores ainda estão montando suas barracas. Guarde suas 🪙 Essências para quando as portas se abrirem!</p>
+                    <div class="coin-display" style="justify-content: center; width: max-content; margin: 0 auto; font-size: 1.5rem; padding: 10px 20px;">
+                        🪙 <span id="shop-disp-coins">0</span>
+                    </div>
+                </div>
+            </section>
+
             <!-- COMUNIDADE -->
             <section id="view-community" class="hidden">
                 <div class="panel">
                     <div class="section-title">Encontrar Viajantes</div>
                     <input type="text" id="search-community" class="input-ios" placeholder="Buscar por nome ou título..." oninput="handleSearch()">
                 </div>
-                
                 <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 1.5rem; padding-left: 0.5rem;">Seu Cartão Público</h3>
                 <div id="my-community-card-container"></div>
-
                 <div id="top-10-section">
-                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--success); margin-bottom: 1rem; margin-top: 2rem; padding-left: 0.5rem; display: flex; align-items: center; gap: 8px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 20px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg> 
-                        Top 10 Globais
-                    </h3>
+                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--success); margin-bottom: 1rem; margin-top: 2rem; padding-left: 0.5rem; display: flex; align-items: center; gap: 8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 20px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg> Top 10 Globais</h3>
                     <div id="community-top10-list"></div>
                 </div>
-
                 <div id="search-results-section" class="hidden">
                     <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 2rem; padding-left: 0.5rem;">Resultados da Busca</h3>
                     <div id="community-search-list"></div>
@@ -450,39 +371,41 @@
 
         </main>
 
-        <!-- BOTTOM NAV (AGORA COM 5 ABAS) -->
+        <!-- BOTTOM NAV (6 ABAS) -->
         <nav id="bottom-nav">
             <button class="nav-item active" onclick="switchTab('home', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Início</button>
             <button class="nav-item" onclick="switchTab('inventory', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10"></path><path d="M4 16h16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z"></path><path d="M10 10l2 2 2-2"></path></svg>Mochila</button>
             <button class="nav-item" onclick="switchTab('path', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>Caminho</button>
             <button class="nav-item" onclick="switchTab('skills', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 17 22 12"></polyline></svg>Pilares</button>
+            <button class="nav-item" onclick="switchTab('shop', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>Loja</button>
             <button class="nav-item" onclick="switchTab('community', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Global</button>
-            <button class="nav-item" onclick="openSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Ajustes</button>
+            <button class="nav-item" onclick="openSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
         </nav>
 
-        <!-- CONFIGURAÇÕES (SHEET) -->
+        <!-- CONFIGURAÇÕES -->
         <div id="settings-backdrop" onclick="handleCloseSettings()"></div>
         <div id="settings-sheet">
             <div class="sheet-handle" onclick="handleCloseSettings()"></div>
             <div class="sheet-content">
                 <h3 class="sheet-title">Configurações da Conta</h3>
-                
                 <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Identidade</h4>
                 <input type="text" id="input-profile-name" class="input-ios" placeholder="Seu Nome">
                 <input type="text" id="input-profile-desc" class="input-ios" placeholder="Seu Título/Foco">
                 <input type="text" id="input-profile-photo" class="input-ios" placeholder="URL da foto de perfil (Opcional)">
                 
-                <!-- SEÇÃO ADMIN PARA DESTRAVAR TEMA -->
-                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 16px; margin-bottom: 1.5rem; border: 1px solid var(--glass-border);">
+                <div id="admin-login-area" style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 16px; margin-bottom: 1.5rem; border: 1px solid var(--glass-border);">
                     <h4 style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Acesso Administrativo</h4>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px;">Sua afinidade é permanente. Apenas um admin pode alterá-la para visualizar outros Caminhos.</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px;">Apenas administradores podem transitar entre os elementos livremente.</p>
                     <div style="display: flex; gap: 8px;">
                         <input type="password" id="input-admin-pass" class="input-ios" placeholder="Palavra-passe" style="margin-bottom: 0;">
                         <button onclick="unlockAdminThemes()" class="btn-duo" style="width: auto; padding: 0 16px;">Destravar</button>
                     </div>
                 </div>
 
-                <!-- GRADE DE TEMAS (ESCONDIDA POR PADRÃO) -->
+                <div id="admin-status-area" class="hidden" style="background: rgba(16, 185, 129, 0.1); padding: 1rem; border-radius: 16px; margin-bottom: 1.5rem; border: 1px solid rgba(16, 185, 129, 0.3); text-align: center; color: var(--success); font-weight: 800;">
+                    ✓ Status de Administrador Ativo
+                </div>
+
                 <div id="admin-theme-area" class="hidden">
                     <h4 style="font-size: 0.9rem; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase;">Afinidade Destravada</h4>
                     <div class="theme-grid">
@@ -519,18 +442,18 @@
     const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
     const elementStyles = {
-        'void': { main: '#4f46e5', top: '#818cf8', icon: '🌌' }, 'journey': { main: '#d97706', top: '#fbbf24', icon: '⏳' },
-        'forest': { main: '#059669', top: '#34d399', icon: '🌿' }, 'cloud': { main: '#0284c7', top: '#38bdf8', icon: '☁️' },
-        'inferno': { main: '#dc2626', top: '#f87171', icon: '🔥' }, 'ocean': { main: '#0891b2', top: '#22d3ee', icon: '🌊' },
-        'arcane': { main: '#c026d3', top: '#e879f9', icon: '✨' }
+        'void': { main: '#4f46e5', icon: '🌌', decorators: ['✦', '✧', '⋆'] }, 
+        'journey': { main: '#d97706', icon: '⏳', decorators: ['🪨', '⛰️', '⏳'] },
+        'forest': { main: '#059669', icon: '🌿', decorators: ['🍃', '🌿', '🍄'] }, 
+        'cloud': { main: '#0284c7', icon: '☁️', decorators: ['☁️', '💨', '🌀'] },
+        'inferno': { main: '#dc2626', icon: '🔥', decorators: ['🔥', '✨', '☄️'] }, 
+        'ocean': { main: '#0891b2', icon: '🌊', decorators: ['🫧', '💧', '🐚'] },
+        'arcane': { main: '#c026d3', icon: '✨', decorators: ['🔮', '✨', '🧿'] }
     };
 
-    const elementNames = {
-        'theme-void': 'o Vazio', 'theme-journey': 'a Jornada', 'theme-forest': 'a Floresta', 'theme-cloud': 'a Nuvem', 'theme-inferno': 'o Inferno', 'theme-ocean': 'o Oceano', 'theme-arcane': 'o Arcano'
-    };
+    const elementNames = { 'theme-void': 'o Vazio', 'theme-journey': 'a Jornada', 'theme-forest': 'a Floresta', 'theme-cloud': 'a Nuvem', 'theme-inferno': 'o Inferno', 'theme-ocean': 'o Oceano', 'theme-arcane': 'o Arcano' };
 
     const itemsDB = [
-        // Itens Básicos
         { id: 'body_default', type: 'body', name: 'Corpo Base', icon: '👤', render: '<svg viewBox="0 0 100 100" fill="#fcd34d"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/></svg>' },
         { id: 'body_dark', type: 'body', name: 'Corpo Sombrio', icon: '🌑', render: '<svg viewBox="0 0 100 100" fill="#1e293b"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/><circle cx="40" cy="35" r="3" fill="#60a5fa"/><circle cx="60" cy="35" r="3" fill="#60a5fa"/></svg>' },
         { id: 'head_none', type: 'head', name: 'Nenhum', icon: '❌', render: '' },
@@ -540,74 +463,56 @@
         { id: 'extra_sword', type: 'extra', name: 'Espada', icon: '⚔️', render: '<svg viewBox="0 0 100 100" fill="#cbd5e1" stroke="#475569" stroke-width="2"><rect x="75" y="40" width="10" height="40" transform="rotate(45 80 60)"/><rect x="65" y="70" width="30" height="5" transform="rotate(45 80 60)" fill="#fbbf24"/></svg>' },
         { id: 'extra_cloak', type: 'extra', name: 'Capa Azul', icon: '🧥', render: '<svg viewBox="0 0 100 100" fill="#3b82f6" style="z-index: -1; position: absolute;"><path d="M30 50 L20 95 L80 95 L70 50 Z"/></svg>' },
         
-        // Recompensas do Caminho Elemental
         { id: 'head_void_halo', type: 'head', name: 'Coroa do Vazio', icon: '👑', render: '<svg viewBox="0 0 100 100"><ellipse cx="50" cy="15" rx="20" ry="5" fill="none" stroke="#818cf8" stroke-width="3" filter="drop-shadow(0 0 5px #818cf8)"/></svg>' },
         { id: 'extra_void_orbs', type: 'extra', name: 'Orbes Escuros', icon: '🔮', render: '<svg viewBox="0 0 100 100" fill="#4f46e5"><circle cx="20" cy="50" r="8" filter="drop-shadow(0 0 10px #4f46e5)"/><circle cx="80" cy="50" r="8" filter="drop-shadow(0 0 10px #4f46e5)"/></svg>' },
-        
         { id: 'head_journey_hat', type: 'head', name: 'Chapéu Expedição', icon: '🤠', render: '<svg viewBox="0 0 100 100" fill="#d97706"><path d="M 20 35 Q 50 20 80 35 L 85 40 L 15 40 Z"/><rect x="25" y="25" width="50" height="10" fill="#78350f"/></svg>' },
         { id: 'extra_journey_pack', type: 'extra', name: 'Mochila Pesada', icon: '🎒', render: '<svg viewBox="0 0 100 100" fill="#78350f" style="z-index: -1; position: absolute;"><rect x="30" y="40" width="40" height="50" rx="10"/><rect x="35" y="50" width="30" height="20" fill="#b45309" rx="5"/></svg>' },
-        
         { id: 'head_forest_antlers', type: 'head', name: 'Chifres Anciões', icon: '🦌', render: '<svg viewBox="0 0 100 100" stroke="#78350f" stroke-width="4" stroke-linecap="round"><path d="M 40 25 L 30 5 M 35 15 L 20 15 M 60 25 L 70 5 M 65 15 L 80 15"/></svg>' },
         { id: 'extra_forest_staff', type: 'extra', name: 'Cajado Vital', icon: '🌿', render: '<svg viewBox="0 0 100 100"><line x1="85" y1="20" x2="65" y2="90" stroke="#78350f" stroke-width="5"/><path d="M 85 20 Q 75 10 90 5 Q 95 15 85 20 Z" fill="#34d399"/></svg>' },
-        
         { id: 'head_cloud_goggles', type: 'head', name: 'Óculos de Voo', icon: '🥽', render: '<svg viewBox="0 0 100 100"><rect x="35" y="30" width="30" height="10" fill="#475569" rx="5"/><circle cx="40" cy="35" r="4" fill="#38bdf8"/><circle cx="60" cy="35" r="4" fill="#38bdf8"/></svg>' },
         { id: 'extra_cloud_wings', type: 'extra', name: 'Asas de Brisa', icon: '👼', render: '<svg viewBox="0 0 100 100" fill="#fff" opacity="0.8" style="z-index: -1; position: absolute;"><path d="M 50 50 Q 20 30 10 60 Q 30 70 50 50 M 50 50 Q 80 30 90 60 Q 70 70 50 50 Z" filter="drop-shadow(0 0 5px #e0f2fe)"/></svg>' },
-        
         { id: 'head_inferno_horns', type: 'head', name: 'Chifres de Fogo', icon: '👿', render: '<svg viewBox="0 0 100 100" fill="#dc2626"><path d="M 35 25 Q 25 10 20 5 Q 30 15 45 20 Z"/><path d="M 65 25 Q 75 10 80 5 Q 70 15 55 20 Z"/></svg>' },
         { id: 'extra_inferno_aura', type: 'extra', name: 'Aura Ardente', icon: '🔥', render: '<svg viewBox="0 0 100 100" fill="#f87171" opacity="0.5" style="z-index: -1; position: absolute;"><path d="M 20 90 Q 50 60 80 90 Q 50 100 20 90 Z" filter="drop-shadow(0 -10px 15px #dc2626)"/></svg>' },
-        
         { id: 'head_ocean_crown', type: 'head', name: 'Coroa de Coral', icon: '🧜‍♂️', render: '<svg viewBox="0 0 100 100" fill="#0ea5e9"><path d="M 30 20 L 40 30 L 50 15 L 60 30 L 70 20 L 75 35 L 25 35 Z"/></svg>' },
         { id: 'extra_ocean_trident', type: 'extra', name: 'Tridente Abissal', icon: '🔱', render: '<svg viewBox="0 0 100 100" stroke="#0891b2" stroke-width="3" fill="none"><line x1="80" y1="20" x2="60" y2="90"/><path d="M 70 20 L 80 40 L 90 20 M 80 15 L 80 30"/></svg>' },
-        
         { id: 'head_arcane_hat', type: 'head', name: 'Chapéu Estelar', icon: '🧙', render: '<svg viewBox="0 0 100 100" fill="#581c87"><path d="M 15 40 L 85 40 L 50 0 Z"/><ellipse cx="50" cy="40" rx="40" ry="10" fill="#3b0764"/></svg>' },
         { id: 'extra_arcane_book', type: 'extra', name: 'Grimório Flutuante', icon: '📖', render: '<svg viewBox="0 0 100 100" fill="#c026d3"><rect x="10" y="50" width="20" height="25" rx="2" transform="rotate(-15 20 60)" filter="drop-shadow(0 0 10px #e879f9)"/><rect x="12" y="52" width="16" height="21" fill="#fff" transform="rotate(-15 20 60)"/></svg>' }
     ];
 
+    // Geração dinâmica dos Caminhos (Até lvl 50)
+    function generatePathForElement(themeKey, headId, extraId) {
+        const path = [];
+        const levels = [2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+        levels.forEach(lvl => {
+            if(lvl === 2) path.push({ id: `${themeKey}_n2`, reqLvl: 2, type: 'item', rewardId: headId, title: 'O Primeiro Passo', desc: 'Sua afinidade despertou.' });
+            else if(lvl === 20) path.push({ id: `${themeKey}_n20`, reqLvl: 20, type: 'item', rewardId: extraId, title: 'Domínio Elemental', desc: 'Você domina sua aura primal.' });
+            else {
+                const coins = lvl * 10;
+                path.push({ id: `${themeKey}_coin_${lvl}`, reqLvl: lvl, type: 'coin', amount: coins, title: 'Tesouro da Jornada', desc: `Receba ${coins} Moedas Essenciais.` });
+            }
+        });
+        return path;
+    }
+
     const pathsDB = {
-        'theme-void': [
-            { id: 'void_n1', reqLvl: 2, rewardId: 'head_void_halo', title: 'Visão do Vazio', desc: 'Desbloqueia a Coroa do Vazio.' },
-            { id: 'void_n2', reqLvl: 3, rewardId: 'extra_void_orbs', title: 'Singularidade', desc: 'Desbloqueia as Orbes Escuras.' }
-        ],
-        'theme-journey': [
-            { id: 'journey_n1', reqLvl: 2, rewardId: 'head_journey_hat', title: 'Passos Iniciais', desc: 'Desbloqueia o Chapéu Expedição.' },
-            { id: 'journey_n2', reqLvl: 3, rewardId: 'extra_journey_pack', title: 'Sobrevivência', desc: 'Desbloqueia a Mochila Pesada.' }
-        ],
-        'theme-forest': [
-            { id: 'forest_n1', reqLvl: 2, rewardId: 'head_forest_antlers', title: 'Sintonia Primal', desc: 'Desbloqueia os Chifres Anciões.' },
-            { id: 'forest_n2', reqLvl: 3, rewardId: 'extra_forest_staff', title: 'Sabedoria da Árvore', desc: 'Desbloqueia o Cajado Vital.' }
-        ],
-        'theme-cloud': [
-            { id: 'cloud_n1', reqLvl: 2, rewardId: 'head_cloud_goggles', title: 'Olhos nos Céus', desc: 'Desbloqueia os Óculos de Voo.' },
-            { id: 'cloud_n2', reqLvl: 3, rewardId: 'extra_cloud_wings', title: 'Ascensão Leve', desc: 'Desbloqueia as Asas de Brisa.' }
-        ],
-        'theme-inferno': [
-            { id: 'inferno_n1', reqLvl: 2, rewardId: 'head_inferno_horns', title: 'Faísca', desc: 'Desbloqueia os Chifres de Fogo.' },
-            { id: 'inferno_n2', reqLvl: 3, rewardId: 'extra_inferno_aura', title: 'Chama Eterna', desc: 'Desbloqueia a Aura Ardente.' }
-        ],
-        'theme-ocean': [
-            { id: 'ocean_n1', reqLvl: 2, rewardId: 'head_ocean_crown', title: 'Batismo', desc: 'Desbloqueia a Coroa de Coral.' },
-            { id: 'ocean_n2', reqLvl: 3, rewardId: 'extra_ocean_trident', title: 'Poder das Marés', desc: 'Desbloqueia o Tridente Abissal.' }
-        ],
-        'theme-arcane': [
-            { id: 'arcane_n1', reqLvl: 2, rewardId: 'head_arcane_hat', title: 'Foco Mental', desc: 'Desbloqueia o Chapéu Estelar.' },
-            { id: 'arcane_n2', reqLvl: 3, rewardId: 'extra_arcane_book', title: 'Conhecimento Oculto', desc: 'Desbloqueia o Grimório Flutuante.' }
-        ]
+        'theme-void': generatePathForElement('void', 'head_void_halo', 'extra_void_orbs'),
+        'theme-journey': generatePathForElement('journey', 'head_journey_hat', 'extra_journey_pack'),
+        'theme-forest': generatePathForElement('forest', 'head_forest_antlers', 'extra_forest_staff'),
+        'theme-cloud': generatePathForElement('cloud', 'head_cloud_goggles', 'extra_cloud_wings'),
+        'theme-inferno': generatePathForElement('inferno', 'head_inferno_horns', 'extra_inferno_aura'),
+        'theme-ocean': generatePathForElement('ocean', 'head_ocean_crown', 'extra_ocean_trident'),
+        'theme-arcane': generatePathForElement('arcane', 'head_arcane_hat', 'extra_arcane_book')
     };
 
     let currentUser = null; let userPath = ''; 
     const defaultUnlocked = ['body_default', 'body_dark', 'head_none', 'head_hood', 'head_hair', 'extra_none', 'extra_sword', 'extra_cloak'];
-    let profileData = { name: "Viajante", description: "Despertando...", exp: 0, theme: "theme-void", customPhotoURL: "", elementChosen: false, unlockedItems: [...defaultUnlocked], claimedNodes: [], equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
+    let profileData = { name: "Viajante", description: "Despertando...", exp: 0, coins: 0, theme: "theme-void", customPhotoURL: "", elementChosen: false, isAdmin: false, unlockedItems: [...defaultUnlocked], claimedNodes: [], equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
     let skillsData = []; let questsData = []; let communityData = [];
     let selectedNode = { type: 'main', id: null }; let isEditingPillar = false;
     let unsubProfile, unsubSkills, unsubQuests, unsubComm; let currentLevelState = 1; let initialSettingsState = {};
     const EXP_PER_LEVEL = 500;
 
-    // --- SESSÃO DO CHAT ---
-    const sessionStartTime = Date.now();
-    let activeChatRoomId = null;
-    let unsubActiveChat = null;
-
-    // --- CANVAS ---
+    const sessionStartTime = Date.now(); let activeChatRoomId = null; let unsubActiveChat = null;
     const canvas = document.getElementById('theme-canvas'); const ctx = canvas.getContext('2d');
     let particles = []; let animationFrameId;
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -641,14 +546,11 @@
     function initParticles(themeClass) { particles = []; let c = 40; if(themeClass==='theme-cloud') c=10; if(themeClass==='theme-journey') c=80; if(themeClass==='theme-inferno') c=60; for(let i=0; i<c; i++) particles.push(new Particle(themeClass)); }
     function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); animationFrameId = requestAnimationFrame(animateParticles); }
 
-    // --- ESCOLHA INICIAL DO ELEMENTO ---
     let pendingElementChoice = null;
     window.selectInitialElement = (themeClass, element) => {
         pendingElementChoice = themeClass;
-        document.querySelectorAll('#initial-theme-grid .theme-option').forEach(el => el.classList.remove('active'));
-        element.classList.add('active');
-        document.body.className = themeClass; 
-        initParticles(themeClass);
+        document.querySelectorAll('#initial-theme-grid .theme-option').forEach(el => el.classList.remove('active')); element.classList.add('active');
+        document.body.className = themeClass; initParticles(themeClass);
     };
 
     window.confirmInitialElement = async () => {
@@ -658,24 +560,31 @@
         document.getElementById('element-choice-screen').classList.remove('active');
     };
 
-    // --- INTERAÇÕES DA UI GERAL ---
     window.switchTab = (tabId, btnElement) => {
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active')); if(btnElement) btnElement.classList.add('active');
-        ['home','inventory','path','skills','community'].forEach(t => document.getElementById(`view-${t}`).classList.add('hidden'));
+        ['home','inventory','path','skills','shop','community'].forEach(t => document.getElementById(`view-${t}`).classList.add('hidden'));
         document.getElementById(`view-${tabId}`).classList.remove('hidden');
         if(tabId === 'skills') setTimeout(renderWheel, 50); 
         if(tabId === 'inventory' || tabId === 'home') renderAvatar();
         if(tabId === 'path') renderPath();
     };
 
-    // --- CONFIGURAÇÕES & ADMIN ---
     window.openSettings = () => {
         const sheet = document.getElementById('settings-sheet'); const backdrop = document.getElementById('settings-backdrop');
         initialSettingsState = { name: profileData.name||'', desc: profileData.description||'', photo: profileData.customPhotoURL||'' };
-        document.getElementById('input-profile-name').value = initialSettingsState.name;
-        document.getElementById('input-profile-desc').value = initialSettingsState.desc;
-        document.getElementById('input-profile-photo').value = initialSettingsState.photo;
-        document.getElementById('input-admin-pass').value = ''; document.getElementById('admin-theme-area').classList.add('hidden');
+        document.getElementById('input-profile-name').value = initialSettingsState.name; document.getElementById('input-profile-desc').value = initialSettingsState.desc; document.getElementById('input-profile-photo').value = initialSettingsState.photo;
+        
+        if (profileData.isAdmin) {
+            document.getElementById('admin-login-area').classList.add('hidden');
+            document.getElementById('admin-status-area').classList.remove('hidden');
+            showAdminThemes();
+        } else {
+            document.getElementById('input-admin-pass').value = ''; 
+            document.getElementById('admin-theme-area').classList.add('hidden');
+            document.getElementById('admin-login-area').classList.remove('hidden');
+            document.getElementById('admin-status-area').classList.add('hidden');
+        }
+
         sheet.classList.add('open'); backdrop.classList.add('active');
     };
     
@@ -688,25 +597,29 @@
     
     function closeSettingsUI() { document.getElementById('settings-sheet').classList.remove('open'); document.getElementById('settings-backdrop').classList.remove('active'); }
 
-    window.unlockAdminThemes = () => {
+    window.unlockAdminThemes = async () => {
         const pass = document.getElementById('input-admin-pass').value;
-        if(pass === 'polimata') { 
-            document.getElementById('admin-theme-area').classList.remove('hidden');
-            document.querySelectorAll('#admin-theme-area .theme-option').forEach(el => el.classList.remove('active'));
-            const actBtn = document.querySelector(`#admin-theme-area .theme-option[onclick*="${profileData.theme}"]`); 
-            if(actBtn) actBtn.classList.add('active');
+        if(pass === 'polimata' || profileData.isAdmin) { 
+            if(!profileData.isAdmin && currentUser) await updateDoc(doc(db, userPath, 'profile', 'main'), { isAdmin: true });
+            document.getElementById('admin-login-area').classList.add('hidden');
+            document.getElementById('admin-status-area').classList.remove('hidden');
+            showAdminThemes();
         } else { alert("Acesso negado."); }
     };
 
+    function showAdminThemes() {
+        document.getElementById('admin-theme-area').classList.remove('hidden');
+        document.querySelectorAll('#admin-theme-area .theme-option').forEach(el => el.classList.remove('active'));
+        const actBtn = document.querySelector(`#admin-theme-area .theme-option[onclick*="${profileData.theme}"]`); if(actBtn) actBtn.classList.add('active');
+    }
+
     window.setTheme = async (themeClass, element) => {
         document.body.className = themeClass; 
-        document.querySelectorAll('#admin-theme-area .theme-option').forEach(el => el.classList.remove('active')); 
-        if(element) element.classList.add('active');
+        document.querySelectorAll('#admin-theme-area .theme-option').forEach(el => el.classList.remove('active')); if(element) element.classList.add('active');
         initParticles(themeClass);
         if (currentUser) { profileData.theme = themeClass; await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: themeClass }).catch(console.error); }
     };
 
-    // --- AUTH E BD ---
     document.getElementById('btn-login-action').onclick = async () => { try { await signInWithPopup(auth, provider); } catch (e) { console.error(e); } };
     window.handleLogout = () => { if(confirm("Deseja desconectar?")) { signOut(auth); closeSettingsUI(); } };
 
@@ -733,6 +646,7 @@
                 if(!initialData.equipped) initialData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' }; 
                 if(!initialData.unlockedItems) initialData.unlockedItems = [...defaultUnlocked];
                 if(!initialData.claimedNodes) initialData.claimedNodes = [];
+                if(initialData.coins === undefined) initialData.coins = 0;
                 profileData = initialData;
                 
                 if(profileData.elementChosen !== true) document.getElementById('element-choice-screen').classList.add('active');
@@ -745,10 +659,10 @@
                     if(!profileData.equipped) profileData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' };
                     if(!profileData.unlockedItems) profileData.unlockedItems = [...defaultUnlocked];
                     if(!profileData.claimedNodes) profileData.claimedNodes = [];
+                    if(profileData.coins === undefined) profileData.coins = 0;
 
                     const newLevel = getLevelInfo(profileData.exp || 0).level;
                     if (newLevel > currentLevelState) { document.getElementById('new-level-display').innerText = newLevel; document.getElementById('level-up-screen').classList.add('active'); currentLevelState = newLevel; }
-                    
                     if(profileData.elementChosen === true) document.getElementById('element-choice-screen').classList.remove('active');
                     if(profileData.theme && document.body.className !== profileData.theme) { document.body.className = profileData.theme; initParticles(profileData.theme); }
                     
@@ -759,17 +673,13 @@
 
             unsubSkills = onSnapshot(collection(db, userPath, 'skills'), (snap) => { skillsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderWheel(); renderSkillList(); renderEditor(); });
             unsubQuests = onSnapshot(collection(db, userPath, 'quests'), (snap) => { questsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); updateQuestsUI(); });
-            unsubComm = onSnapshot(collection(db, 'community'), (snap) => { communityData = snap.docs.map(d => d.data()); renderCommunityList(); }, (err) => console.error(err));
+            unsubComm = onSnapshot(collection(db, 'community'), (snap) => { communityData = snap.docs.map(d => d.data()); renderCommunityList(); });
         } catch (error) { document.getElementById('permission-error').style.display='block'; }
     }
 
-    // --- COMUNIDADE & CHAT ---
     async function syncToCommunity() {
         if (!currentUser) return;
-        try {
-            const pubData = { uid: currentUser.uid, name: profileData.name || 'Viajante', description: profileData.description || 'Despertando...', photoURL: profileData.customPhotoURL || currentUser.photoURL || '', theme: profileData.theme || 'theme-void', level: getLevelInfo(profileData.exp || 0).level };
-            await setDoc(doc(db, 'community', currentUser.uid), pubData);
-        } catch(e) {}
+        try { const pubData = { uid: currentUser.uid, name: profileData.name || 'Viajante', description: profileData.description || 'Despertando...', photoURL: profileData.customPhotoURL || currentUser.photoURL || '', theme: profileData.theme || 'theme-void', level: getLevelInfo(profileData.exp || 0).level }; await setDoc(doc(db, 'community', currentUser.uid), pubData); } catch(e) {}
     }
 
     window.handleSearch = () => { renderCommunityList(); };
@@ -779,7 +689,6 @@
         const photo = userObj.photoURL ? `<img src="${userObj.photoURL}" class="comm-photo">` : `<div class="comm-photo" style="background:var(--glass-bg); display:flex; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px; color:var(--text-main);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>`;
         const chatButton = !isMe ? `<button class="chat-btn-comm" onclick="openChat('${userObj.uid}', '${userObj.name.replace(/'/g, "\\'")}', '${(userObj.photoURL || '').replace(/'/g, "\\'")}')" title="Mensagem Epêmera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>` : '';
         const rankBadge = rank ? `<div style="position: absolute; top: -10px; left: -10px; background: var(--accent); color: #fff; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid var(--glass-border); z-index: 10;">#${rank}</div>` : '';
-
         return `<div class="community-card ${themeClass}">${rankBadge}<div class="comm-info">${photo}<div><div style="font-weight:900; font-size:1.1rem; line-height:1.1; margin-bottom:2px;">${userObj.name}</div><div style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">${userObj.description}</div></div></div><div style="display:flex; align-items:center; gap:10px;">${chatButton}<div class="comm-level-badge">${userObj.level}</div></div></div>`;
     }
 
@@ -788,11 +697,8 @@
         const me = { uid: currentUser.uid, name: profileData.name, description: profileData.description, photoURL: profileData.customPhotoURL || currentUser.photoURL, theme: profileData.theme, level: currentLevelState };
         document.getElementById('my-community-card-container').innerHTML = createCardHTML(me, true);
 
-        const top10Container = document.getElementById('community-top10-list');
-        const searchContainer = document.getElementById('community-search-list');
-        const top10Section = document.getElementById('top-10-section');
-        const searchSection = document.getElementById('search-results-section');
-
+        const top10Container = document.getElementById('community-top10-list'); const searchContainer = document.getElementById('community-search-list');
+        const top10Section = document.getElementById('top-10-section'); const searchSection = document.getElementById('search-results-section');
         const top10 = [...communityData].sort((a, b) => b.level - a.level).slice(0, 10);
 
         if (searchTerm === '') {
@@ -810,8 +716,7 @@
         if(!currentUser) return;
         document.getElementById('chat-header-name').innerText = friendName;
         const photoHtml = friendPhoto ? `<img src="${friendPhoto}" style="width:100%; height:100%; object-fit:cover;">` : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; color:var(--text-main); margin:8px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
-        document.getElementById('chat-header-photo').innerHTML = photoHtml;
-        document.getElementById('chat-modal').classList.add('open');
+        document.getElementById('chat-header-photo').innerHTML = photoHtml; document.getElementById('chat-modal').classList.add('open');
         
         activeChatRoomId = [currentUser.uid, friendUid].sort().join('_');
         if(unsubActiveChat) unsubActiveChat();
@@ -830,54 +735,54 @@
     };
 
     window.closeChat = () => { document.getElementById('chat-modal').classList.remove('open'); if(unsubActiveChat) { unsubActiveChat(); unsubActiveChat = null; } activeChatRoomId = null; };
-    window.sendChatMessage = async () => {
-        if(!currentUser || !activeChatRoomId) return;
-        const input = document.getElementById('chat-input-text'); const text = input.value.trim();
-        if(text === '') return;
-        input.value = ''; 
-        await addDoc(collection(db, `chats/${activeChatRoomId}/messages`), { senderId: currentUser.uid, text: text, timestamp: Date.now() });
-    };
+    window.sendChatMessage = async () => { if(!currentUser || !activeChatRoomId) return; const input = document.getElementById('chat-input-text'); const text = input.value.trim(); if(text === '') return; input.value = ''; await addDoc(collection(db, `chats/${activeChatRoomId}/messages`), { senderId: currentUser.uid, text: text, timestamp: Date.now() }); };
 
-    // --- PROGRESSÃO, CAMINHO E INVENTÁRIO ---
     function getLevelInfo(exp) { return { level: Math.floor(exp / EXP_PER_LEVEL) + 1, currentExp: exp % EXP_PER_LEVEL, progress: ((exp % EXP_PER_LEVEL) / EXP_PER_LEVEL) * 100 }; }
     window.closeLevelUp = () => { document.getElementById('level-up-screen').classList.remove('active'); };
     function createFloatingEXP(x, y, amount) { const el = document.createElement('div'); el.className = 'floating-exp'; el.innerText = `+${amount} XP`; el.style.left = `${x}px`; el.style.top = `${y}px`; document.body.appendChild(el); setTimeout(() => el.remove(), 1000); }
 
     window.addExp = async (amount) => { if (currentUser) await updateDoc(doc(db, userPath, 'profile', 'main'), { exp: (profileData.exp || 0) + amount }); };
-    window.toggleQuest = async (id, done, exp, event) => {
-        if (!currentUser) return; let cx = event.clientX; let cy = event.clientY;
-        if(event.touches && event.touches.length > 0) { cx = event.touches[0].clientX; cy = event.touches[0].clientY; }
-        if (!done) createFloatingEXP(cx, cy, exp); await updateDoc(doc(db, userPath, 'quests', id), { done: !done }); if (!done) await window.addExp(exp);
-    };
+    window.toggleQuest = async (id, done, exp, event) => { if (!currentUser) return; let cx = event.clientX; let cy = event.clientY; if(event.touches && event.touches.length > 0) { cx = event.touches[0].clientX; cy = event.touches[0].clientY; } if (!done) createFloatingEXP(cx, cy, exp); await updateDoc(doc(db, userPath, 'quests', id), { done: !done }); if (!done) await window.addExp(exp); };
     window.addRandomQuest = async () => { if (!currentUser) return; const missao = prompt("Novo Hábito a cultivar:"); if (missao && missao.trim() !== "") await addDoc(collection(db, userPath, 'quests'), { title: missao, exp: 30, done: false, createdAt: Date.now() }); };
-    
-    window.saveProfileData = async () => {
-        if (!currentUser) return;
-        const n = document.getElementById('input-profile-name').value; const d = document.getElementById('input-profile-desc').value; const p = document.getElementById('input-profile-photo').value;
-        await updateDoc(doc(db, userPath, 'profile', 'main'), { name: n, description: d, customPhotoURL: p }); closeSettingsUI();
-    };
+    window.saveProfileData = async () => { if (!currentUser) return; const n = document.getElementById('input-profile-name').value; const d = document.getElementById('input-profile-desc').value; const p = document.getElementById('input-profile-photo').value; await updateDoc(doc(db, userPath, 'profile', 'main'), { name: n, description: d, customPhotoURL: p }); closeSettingsUI(); };
 
-    // --- RENDERIZAÇÃO DO CAMINHO ---
-    window.claimReward = async (nodeId, rewardId) => {
+    // --- RENDERIZAÇÃO DO CAMINHO (ITENS E MOEDAS) ---
+    window.claimReward = async (nodeId, type, rewardValue) => {
         if(!currentUser) return;
         const claimed = profileData.claimedNodes || [];
         const unlocked = profileData.unlockedItems || [...defaultUnlocked];
+        let newCoins = profileData.coins || 0;
         
         if(!claimed.includes(nodeId)) {
             claimed.push(nodeId);
-            if(!unlocked.includes(rewardId)) unlocked.push(rewardId);
-            await updateDoc(doc(db, userPath, 'profile', 'main'), { claimedNodes: claimed, unlockedItems: unlocked });
+            if(type === 'item' && !unlocked.includes(rewardValue)) unlocked.push(rewardValue);
+            if(type === 'coin') newCoins += parseInt(rewardValue);
+            
+            await updateDoc(doc(db, userPath, 'profile', 'main'), { claimedNodes: claimed, unlockedItems: unlocked, coins: newCoins });
         }
     };
 
     function renderPath() {
         const container = document.getElementById('path-timeline-container');
+        const decorContainer = document.getElementById('path-decorations-container');
         const elName = document.getElementById('path-element-name');
         if(!container) return;
 
         const theme = profileData.theme || 'theme-void';
         elName.innerText = elementNames[theme] || 'Ascensão';
         
+        // Decorações Temáticas
+        const themeConfig = elementStyles[theme.replace('theme-', '')];
+        decorContainer.innerHTML = '';
+        if(themeConfig && themeConfig.decorators) {
+            for(let i=0; i<15; i++) {
+                const dec = themeConfig.decorators[Math.floor(Math.random() * themeConfig.decorators.length)];
+                const left = Math.random() * 90; const top = Math.random() * 100;
+                const dur = 5 + Math.random() * 10;
+                decorContainer.innerHTML += `<div class="path-decorator" style="left: ${left}%; top: ${top}%; animation-duration: ${dur}s">${dec}</div>`;
+            }
+        }
+
         const pathNodes = pathsDB[theme] || [];
         const claimed = profileData.claimedNodes || [];
         const currentLevel = getLevelInfo(profileData.exp || 0).level;
@@ -891,18 +796,24 @@
             if(isClaimed) {
                 btnHtml = `<div style="color: var(--success); font-weight: 800; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; margin-top: 10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Adquirido</div>`;
             } else if (isUnlocked) {
-                btnHtml = `<button class="btn-duo" style="padding: 8px 16px; font-size: 0.8rem; width: auto; margin-top: 10px;" onclick="claimReward('${node.id}', '${node.rewardId}')">Reivindicar Relíquia</button>`;
+                const callVal = node.type === 'item' ? `'${node.rewardId}'` : node.amount;
+                btnHtml = `<button class="btn-duo" style="padding: 8px 16px; font-size: 0.8rem; width: auto; margin-top: 10px;" onclick="claimReward('${node.id}', '${node.type}', ${callVal})">Reivindicar</button>`;
             } else {
                 btnHtml = `<div style="color: var(--text-muted); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; margin-top: 10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Requer Nível ${node.reqLvl}</div>`;
             }
 
-            const rewardItem = itemsDB.find(i => i.id === node.rewardId);
-            const rewardIcon = rewardItem ? rewardItem.icon : '🎁';
+            let rewardIcon = '🎁';
+            if (node.type === 'item') {
+                const rewardItem = itemsDB.find(i => i.id === node.rewardId);
+                if (rewardItem) rewardIcon = rewardItem.icon;
+            } else if (node.type === 'coin') {
+                rewardIcon = '🪙';
+            }
 
             return `
                 <div class="timeline-item ${statusClass}">
                     <div class="timeline-dot"></div>
-                    <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); padding: 1rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); padding: 1rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; z-index: 2; backdrop-filter: blur(10px);">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
                             <div>
                                 <h4 style="font-weight: 900; font-size: 1rem; color: var(--text-main);">${node.title}</h4>
@@ -935,7 +846,6 @@
         const unlocked = profileData.unlockedItems || [...defaultUnlocked];
         const renderGroup = (type, containerId) => {
             const c = document.getElementById(containerId); if(!c) return; 
-            // Mostra apenas itens desbloqueados
             const items = itemsDB.filter(i => i.type === type && unlocked.includes(i.id));
             c.innerHTML = items.map(i => `<div class="inv-slot ${eq[type] === i.id ? 'equipped' : ''}" onclick="equipItem('${i.id}', '${type}')"><div class="inv-icon">${i.icon}</div><div class="inv-name">${i.name}</div></div>`).join('');
         };
@@ -949,6 +859,10 @@
         if(photoEl) { if(displayPhotoURL) { photoEl.src = displayPhotoURL; photoEl.style.display = 'block'; } else { photoEl.style.display = 'none'; } }
         document.getElementById('disp-char-name').innerText = profileData.name || 'Viajante'; document.getElementById('disp-char-title').innerText = profileData.description || 'Despertando...';
         document.getElementById('disp-level').innerText = stats.level; document.getElementById('disp-exp-current').innerText = stats.currentExp; document.getElementById('disp-exp-bar').style.width = `${stats.progress}%`;
+        
+        // Moedas
+        document.getElementById('disp-coins').innerText = profileData.coins || 0;
+        document.getElementById('shop-disp-coins').innerText = profileData.coins || 0;
     }
 
     function updateQuestsUI() {
@@ -957,15 +871,9 @@
         c.innerHTML = sorted.map((q, i) => `<div class="quest-item ${q.done ? 'completed' : ''} animate-fade-in" style="animation-delay: ${i*0.05}s" onclick="toggleQuest('${q.id}', ${q.done}, ${q.exp}, event)"><div style="display:flex; align-items:center; gap:1rem;"><div class="checkbox-bouncy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" style="width:14px; opacity:${q.done?1:0};"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div style="color: ${q.done?'var(--text-muted)':'var(--text-main)'}; font-weight:800; font-size:0.95rem; text-decoration:${q.done?'line-through':'none'};">${q.title}</div></div><div class="quest-reward">+${q.exp}XP</div></div>`).join('');
     }
 
-    // --- PILARES E TEMPLO ---
     window.openAddPillarModal = () => { document.getElementById('add-pillar-name').value = ''; document.getElementById('add-pillar-element').value = 'void'; document.getElementById('add-pillar-level').value = 1; document.getElementById('add-pillar-level-label').innerText = 'Elevação Inicial: 1%'; document.getElementById('modal-add-pillar').classList.add('active'); };
     window.closeAddPillarModal = () => { document.getElementById('modal-add-pillar').classList.remove('active'); };
-    window.confirmAddPillar = async () => {
-        if (!currentUser) return;
-        const n = document.getElementById('add-pillar-name').value.trim(); const e = document.getElementById('add-pillar-element').value; const l = parseInt(document.getElementById('add-pillar-level').value);
-        const docRef = await addDoc(collection(db, userPath, 'skills'), { name: n === '' ? 'Novo Pilar' : n, element: e, level: l });
-        if (docRef) { closeAddPillarModal(); selectNode('skill', docRef.id); isEditingPillar = false; renderEditor(); }
-    };
+    window.confirmAddPillar = async () => { if (!currentUser) return; const n = document.getElementById('add-pillar-name').value.trim(); const e = document.getElementById('add-pillar-element').value; const l = parseInt(document.getElementById('add-pillar-level').value); const docRef = await addDoc(collection(db, userPath, 'skills'), { name: n === '' ? 'Novo Pilar' : n, element: e, level: l }); if (docRef) { closeAddPillarModal(); selectNode('skill', docRef.id); isEditingPillar = false; renderEditor(); } };
     window.handleDeleteSkill = async (id) => { if (confirm("Desmoronar este pilar?")) { await deleteDoc(doc(db, userPath, 'skills', id)); if (selectedNode.id === id) selectNode('main', null); } };
     window.updatePillarName = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { name: val }); };
     window.updateSkillLevelDB = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { level: parseInt(val) }); };
@@ -975,39 +883,22 @@
     window.toggleEditPillar = () => { isEditingPillar = !isEditingPillar; renderEditor(); };
 
     function renderWheel() {
-        const wrapper = document.getElementById('iso-wrapper');
-        const nodesContainer = document.getElementById('iso-nodes'); 
-        const svg = document.getElementById('iso-ground');
+        const wrapper = document.getElementById('iso-wrapper'); const nodesContainer = document.getElementById('iso-nodes'); const svg = document.getElementById('iso-ground');
         if (!wrapper || !nodesContainer || document.getElementById('view-skills').classList.contains('hidden')) return;
-        
         nodesContainer.innerHTML = ''; svg.innerHTML = '';
         const wrapperW = wrapper.offsetWidth; const n = skillsData.length;
         const minRx = Math.max(120, wrapperW * 0.35); const dynamicRx = n > 6 ? minRx + ((n - 6) * 35) : minRx; const dynamicRy = dynamicRx * 0.45;
         const worldH = Math.max(400, dynamicRy * 2 + 300); const worldW = Math.max(wrapperW, dynamicRx * 2 + 200);
-
         const isoWorld = document.getElementById('iso-world'); isoWorld.style.width = `${worldW}px`; isoWorld.style.height = `${worldH}px`;
         const cx = worldW / 2; const cy = (worldH / 2) + 50;
         let renderQueue = [];
-        
-        renderQueue.push({
-            type: 'main', id: null, x: cx, y: cy, zIndex: Math.floor(cy),
-            html: `<div class="iso-pillar-container ${selectedNode.type === 'main' ? 'active' : ''}" style="left:${cx}px; top:${cy}px; z-index:${Math.floor(cy)};" onclick="selectNode('main', null)"><div class="iso-label" style="top:-120px;">A Origem</div><div style="width: 100px; height: 150px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4)); transform-origin: bottom center;"></div></div>`
-        });
+        renderQueue.push({ type: 'main', id: null, x: cx, y: cy, zIndex: Math.floor(cy), html: `<div class="iso-pillar-container ${selectedNode.type === 'main' ? 'active' : ''}" style="left:${cx}px; top:${cy}px; z-index:${Math.floor(cy)};" onclick="selectNode('main', null)"><div class="iso-label" style="top:-120px;">A Origem</div><div style="width: 100px; height: 150px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4)); transform-origin: bottom center;"></div></div>` });
 
         skillsData.forEach((s, i) => {
             const angle = (i * (2*Math.PI))/skillsData.length; const px = cx + dynamicRx * Math.cos(angle); const py = cy + dynamicRy * Math.sin(angle);
-            const isSel = selectedNode.id === s.id; const elStyle = elementStyles[s.element] || elementStyles['void'];
-            const scale = 0.5 + (s.level / 100) * 0.7; const labelTop = -120 * scale - 20;
-
-            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", px); line.setAttribute("y2", py);
-            line.setAttribute("stroke", isSel ? elStyle.main : "rgba(255, 255, 255, 0.1)"); line.setAttribute("stroke-width", isSel ? "3" : "1.5");
-            svg.appendChild(line);
-
-            renderQueue.push({
-                type: 'skill', id: s.id, x: px, y: py, zIndex: Math.floor(py),
-                html: `<div class="iso-pillar-container ${isSel ? 'active' : ''}" style="left:${px}px; top:${py}px; z-index:${Math.floor(py)};" onclick="selectNode('skill', '${s.id}')"><div class="iso-label" style="top:${labelTop}px;">${elStyle.icon} ${s.name}</div><div style="width: 80px; height: 120px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; transform: scale(${scale}); transform-origin: bottom center; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.4));"></div></div>`
-            });
+            const isSel = selectedNode.id === s.id; const elStyle = elementStyles[s.element] || elementStyles['void']; const scale = 0.5 + (s.level / 100) * 0.7; const labelTop = -120 * scale - 20;
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line"); line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", px); line.setAttribute("y2", py); line.setAttribute("stroke", isSel ? elStyle.main : "rgba(255, 255, 255, 0.1)"); line.setAttribute("stroke-width", isSel ? "3" : "1.5"); svg.appendChild(line);
+            renderQueue.push({ type: 'skill', id: s.id, x: px, y: py, zIndex: Math.floor(py), html: `<div class="iso-pillar-container ${isSel ? 'active' : ''}" style="left:${px}px; top:${py}px; z-index:${Math.floor(py)};" onclick="selectNode('skill', '${s.id}')"><div class="iso-label" style="top:${labelTop}px;">${elStyle.icon} ${s.name}</div><div style="width: 80px; height: 120px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; transform: scale(${scale}); transform-origin: bottom center; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.4));"></div></div>` });
         });
         renderQueue.sort((a, b) => a.zIndex - b.zIndex).forEach(node => { nodesContainer.innerHTML += node.html; });
         if(worldW > wrapperW) { wrapper.scrollLeft = (worldW - wrapperW) / 2; }
@@ -1017,25 +908,15 @@
         const card = document.getElementById('editor-card');
         if (selectedNode.type === 'main') { card.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding: 1rem;"><h3 style="color:var(--text-main); font-weight:900; font-size:1.5rem; margin-bottom:0.5rem;">O Templo</h3><p style="font-weight:600; font-size:0.9rem;">Toque em um pilar ao redor para visualizar sua sabedoria.</p></div>`; return; }
         const activeData = skillsData.find(s => s.id === selectedNode.id); if (!activeData) return;
-        
         let content = `<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;"><span style="font-size:1rem; font-weight:800;">Detalhes do Pilar</span><button onclick="toggleEditPillar()" class="btn-icon-soft" style="width:30px; height:30px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></button></div>`;
-        
-        if (isEditingPillar) {
-            content += `<div class="animate-fade-in" style="display:flex; flex-direction:column;"><label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted);">Nome</label><input type="text" class="input-ios" value="${activeData.name||''}" onchange="updatePillarName(this.value)"><label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted); margin-top:5px;">Elemento de Poder</label><select class="select-ios" onchange="updateSkillElement(this.value)"><option value="void" ${activeData.element === 'void' ? 'selected' : ''}>🌌 O Vazio</option><option value="journey" ${activeData.element === 'journey' ? 'selected' : ''}>⏳ A Jornada</option><option value="forest" ${activeData.element === 'forest' ? 'selected' : ''}>🌿 A Floresta</option><option value="cloud" ${activeData.element === 'cloud' ? 'selected' : ''}>☁️ A Nuvem</option><option value="inferno" ${activeData.element === 'inferno' ? 'selected' : ''}>🔥 Inferno</option><option value="ocean" ${activeData.element === 'ocean' ? 'selected' : ''}>🌊 Oceano</option><option value="arcane" ${activeData.element === 'arcane' ? 'selected' : ''}>✨ Arcano</option></select><div style="display:flex; justify-content:space-between; margin:10px 0 5px;"><label id="editor-skill-label" style="font-size:0.85rem; font-weight:700;">Elevação: ${activeData.level}%</label></div><input type="range" min="0" max="100" value="${activeData.level}" style="width:100%; accent-color:var(--accent);" oninput="updateSkillLevelUI(this.value)" onchange="updateSkillLevelDB(this.value)"><button onclick="toggleEditPillar()" class="btn-duo" style="margin-top:1.5rem; padding:10px;">Aplicar Runas</button></div>`;
-        } else {
-            const elStyle = elementStyles[activeData.element] || elementStyles['void'];
-            content += `<div class="animate-fade-in"><h3 style="font-size:1.5rem; margin-bottom:1rem; font-weight:900; display:flex; align-items:center; gap:8px;">${elStyle.icon} ${activeData.name}</h3><div class="progress-wrapper" style="padding:1rem;"><div style="display:flex; justify-content:space-between; font-weight:800; font-size:1rem;"><span>Construção</span><span>${activeData.level}%</span></div><div class="progress-track" style="height:12px; margin-top:8px;"><div class="progress-fill" style="width:${activeData.level}%; background:${elStyle.main};"></div></div></div></div>`;
-        }
+        if (isEditingPillar) { content += `<div class="animate-fade-in" style="display:flex; flex-direction:column;"><label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted);">Nome</label><input type="text" class="input-ios" value="${activeData.name||''}" onchange="updatePillarName(this.value)"><label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted); margin-top:5px;">Elemento de Poder</label><select class="select-ios" onchange="updateSkillElement(this.value)"><option value="void" ${activeData.element === 'void' ? 'selected' : ''}>🌌 O Vazio</option><option value="journey" ${activeData.element === 'journey' ? 'selected' : ''}>⏳ A Jornada</option><option value="forest" ${activeData.element === 'forest' ? 'selected' : ''}>🌿 A Floresta</option><option value="cloud" ${activeData.element === 'cloud' ? 'selected' : ''}>☁️ A Nuvem</option><option value="inferno" ${activeData.element === 'inferno' ? 'selected' : ''}>🔥 Inferno</option><option value="ocean" ${activeData.element === 'ocean' ? 'selected' : ''}>🌊 Oceano</option><option value="arcane" ${activeData.element === 'arcane' ? 'selected' : ''}>✨ Arcano</option></select><div style="display:flex; justify-content:space-between; margin:10px 0 5px;"><label id="editor-skill-label" style="font-size:0.85rem; font-weight:700;">Elevação: ${activeData.level}%</label></div><input type="range" min="0" max="100" value="${activeData.level}" style="width:100%; accent-color:var(--accent);" oninput="updateSkillLevelUI(this.value)" onchange="updateSkillLevelDB(this.value)"><button onclick="toggleEditPillar()" class="btn-duo" style="margin-top:1.5rem; padding:10px;">Aplicar Runas</button></div>`; } else { const elStyle = elementStyles[activeData.element] || elementStyles['void']; content += `<div class="animate-fade-in"><h3 style="font-size:1.5rem; margin-bottom:1rem; font-weight:900; display:flex; align-items:center; gap:8px;">${elStyle.icon} ${activeData.name}</h3><div class="progress-wrapper" style="padding:1rem;"><div style="display:flex; justify-content:space-between; font-weight:800; font-size:1rem;"><span>Construção</span><span>${activeData.level}%</span></div><div class="progress-track" style="height:12px; margin-top:8px;"><div class="progress-fill" style="width:${activeData.level}%; background:${elStyle.main};"></div></div></div></div>`; }
         card.innerHTML = content;
     }
 
     function renderSkillList() {
         const list = document.getElementById('skills-list'); document.getElementById('skill-count').innerText = skillsData.length;
         if (skillsData.length === 0) { list.innerHTML = ''; return; }
-        list.innerHTML = skillsData.map(s => {
-            const elStyle = elementStyles[s.element] || elementStyles['void'];
-            return `<div class="skill-list-item ${selectedNode.id === s.id ? 'active' : ''}" onclick="selectNode('skill', '${s.id}')"><div style="display:flex; align-items:center; gap:12px;"><div style="width:16px; height:16px; border-radius:50%; background:${elStyle.main}; display:flex; align-items:center; justify-content:center; font-size:0.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">${elStyle.icon}</div><div style="font-weight:800; font-size:0.95rem;">${s.name}</div></div><button onclick="event.stopPropagation(); handleDeleteSkill('${s.id}')" class="btn-icon-soft" style="width:26px; height:26px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>`
-        }).join('');
+        list.innerHTML = skillsData.map(s => { const elStyle = elementStyles[s.element] || elementStyles['void']; return `<div class="skill-list-item ${selectedNode.id === s.id ? 'active' : ''}" onclick="selectNode('skill', '${s.id}')"><div style="display:flex; align-items:center; gap:12px;"><div style="width:16px; height:16px; border-radius:50%; background:${elStyle.main}; display:flex; align-items:center; justify-content:center; font-size:0.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">${elStyle.icon}</div><div style="font-weight:800; font-size:0.95rem;">${s.name}</div></div><button onclick="event.stopPropagation(); handleDeleteSkill('${s.id}')" class="btn-icon-soft" style="width:26px; height:26px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>` }).join('');
     }
 </script>
 </body>
