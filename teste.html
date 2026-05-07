@@ -1,30 +1,455 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<style>
-    .html, body {
-    background-color: black;
-}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Polímata Hub - App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- OS 7 ELEMENTOS (TEMAS GLOBAIS E LOCAIS) --- */
+        :root, .theme-void {
+            --bg-color-1: #0f172a; --bg-color-2: #1e1b4b; --accent: #818cf8; --accent-dark: #4f46e5;
+            --glass-bg: rgba(30, 27, 75, 0.4); --glass-border: rgba(129, 140, 248, 0.3);
+            --nav-bg: rgba(15, 23, 42, 0.85); --sheet-bg: rgba(15, 23, 42, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.6); --success: #34d399; --success-dark: #059669;
+        }
+        .theme-journey {
+            --bg-color-1: #451a03; --bg-color-2: #78350f; --accent: #fbbf24; --accent-dark: #d97706;
+            --glass-bg: rgba(120, 53, 15, 0.4); --glass-border: rgba(251, 191, 36, 0.3);
+            --nav-bg: rgba(69, 26, 3, 0.85); --sheet-bg: rgba(69, 26, 3, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
+        }
+        .theme-forest {
+            --bg-color-1: #064e3b; --bg-color-2: #065f46; --accent: #a7f3d0; --accent-dark: #10b981;
+            --glass-bg: rgba(6, 95, 70, 0.4); --glass-border: rgba(167, 243, 208, 0.3);
+            --nav-bg: rgba(6, 78, 59, 0.85); --sheet-bg: rgba(6, 78, 59, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7); --success: #fcd34d;
+        }
+        .theme-cloud {
+            --bg-color-1: #e0f2fe; --bg-color-2: #bae6fd; --accent: #0ea5e9; --accent-dark: #0284c7;
+            --glass-bg: rgba(255, 255, 255, 0.6); --glass-border: rgba(255, 255, 255, 0.8);
+            --nav-bg: rgba(255, 255, 255, 0.85); --sheet-bg: rgba(248, 250, 252, 0.95);
+            --text-main: #0f172a; --text-muted: #475569;
+        }
+        .theme-inferno {
+            --bg-color-1: #450a0a; --bg-color-2: #7f1d1d; --accent: #f87171; --accent-dark: #dc2626;
+            --glass-bg: rgba(127, 29, 29, 0.4); --glass-border: rgba(248, 113, 113, 0.3);
+            --nav-bg: rgba(69, 10, 10, 0.85); --sheet-bg: rgba(69, 10, 10, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
+        }
+        .theme-ocean {
+            --bg-color-1: #083344; --bg-color-2: #164e63; --accent: #22d3ee; --accent-dark: #0891b2;
+            --glass-bg: rgba(22, 78, 99, 0.4); --glass-border: rgba(34, 211, 238, 0.3);
+            --nav-bg: rgba(8, 51, 68, 0.85); --sheet-bg: rgba(8, 51, 68, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
+        }
+        .theme-arcane {
+            --bg-color-1: #3b0764; --bg-color-2: #581c87; --accent: #e879f9; --accent-dark: #c026d3;
+            --glass-bg: rgba(88, 28, 135, 0.4); --glass-border: rgba(232, 121, 249, 0.3);
+            --nav-bg: rgba(59, 7, 100, 0.85); --sheet-bg: rgba(59, 7, 100, 0.95);
+            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
+        }
 
-    .pilar {
-  /* Defina o tamanho que você quer que o pilar apareça */
-  width: 100px; 
-  height: 300px; 
-  
-  /* Chama o SEU novo arquivo SVG */
-  background-image: url('pilar\ 1.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center bottom;
-}
-</style>   
-<body>
-    <div>
-        <div class="pilar"></div>
+        /* --- BASE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2)); color: var(--text-main); height: 100vh; height: 100dvh; overflow: hidden; transition: color 0.5s ease, background 0.5s ease; }
+        #theme-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+        .hidden { display: none !important; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+
+        /* --- ANIMAÇÕES --- */
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .float-gentle { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        
+        @keyframes pulse-energy { 0%, 100% { opacity: 0.6; stroke-width: 3; } 50% { opacity: 1; stroke-width: 5; filter: drop-shadow(0 0 12px var(--energy-color)); } }
+
+        /* --- LAYOUT --- */
+        #app-container { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; }
+        main.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.5rem 1.5rem 6rem 1.5rem; }
+        
+        .btn-duo { background: var(--accent); color: #fff; font-weight: 800; font-size: 1rem; padding: 14px 24px; border: none; border-radius: 20px; cursor: pointer; box-shadow: 0 6px 0 var(--accent-dark), 0 15px 20px rgba(0,0,0,0.2); transition: 0.1s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; width: 100%; }
+        .btn-duo:active { transform: translateY(6px); box-shadow: 0 0px 0 var(--accent-dark), 0 5px 10px rgba(0,0,0,0.2); }
+        .btn-outline { background: transparent; border: 2px solid var(--text-muted); color: var(--text-main); font-weight: 800; padding: 12px 24px; border-radius: 20px; cursor: pointer; transition: 0.2s; width: 100%; text-transform: uppercase; }
+
+        /* --- BOTTOM NAV --- */
+        #bottom-nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); width: calc(100% - 1rem); max-width: 500px; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 30px; display: flex; justify-content: space-between; padding: 0.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 50; }
+        .nav-item { flex: 1; background: transparent; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 18px; cursor: pointer; transition: all 0.3s; font-weight: 800; font-size: 0.55rem; text-transform: uppercase; padding: 4px 0; }
+        .nav-item.active { color: var(--accent); background: rgba(0,0,0,0.2); }
+        .nav-item svg { width: 18px; height: 18px; stroke-width: 2.5; transition: transform 0.3s; }
+        .nav-item.active svg { transform: scale(1.15); }
+
+        /* --- UI COMPONENTS --- */
+        .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 1.5rem; position: relative; }
+        .identity-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 1.5rem; }
+        .identity-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
+        .coin-display { background: rgba(0,0,0,0.3); padding: 6px 12px; border-radius: 16px; display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 1rem; color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
+
+        /* --- PILARES & TEMPLO (NOVO VISUAL) --- */
+        #iso-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; text-align: center; border-radius: 16px; padding: 40px 0; }
+        #iso-world { position: relative; margin: 0 auto; perspective: 1000px; transition: all 0.5s ease; }
+        #iso-ground { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; }
+        
+        .pillar-base-shadow {
+            position: absolute; width: 60px; height: 20px; 
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%; transform: translate(-50%, -50%); 
+            filter: blur(4px); pointer-events: none; z-index: 1;
+        }
+
+        .iso-pillar-container { position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+        .iso-pillar-container:hover, .iso-pillar-container.active { transform: translate(-50%, -100%) scale(1.05); filter: drop-shadow(0 0 15px rgba(255,255,255,0.2)); z-index: 100 !important; }
+
+        .iso-label { 
+            position: absolute; 
+            background: rgba(255,255,255,0.03); 
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            padding: 6px 14px; border-radius: 12px; 
+            font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; 
+            color: var(--text-main); white-space: nowrap; 
+            pointer-events: none; transition: all 0.3s; 
+            opacity: 0.6; text-transform: uppercase; letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(255,255,255,0.4);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .iso-pillar-container:hover .iso-label, .iso-pillar-container.active .iso-label { 
+            opacity: 1; transform: translateY(-5px); color: var(--accent); 
+            background: rgba(255,255,255,0.08);
+            text-shadow: 0 0 12px var(--accent);
+        }
+
+        /* --- CAMINHO ELEMENTAL --- */
+        #path-area { position: relative; overflow: hidden; padding-top: 1rem; }
+        .timeline-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; padding-bottom: 15px; scroll-behavior: smooth; }
+        .timeline { display: flex; flex-direction: row; gap: 20px; padding: 40px 20px 10px 20px; position: relative; width: max-content; min-width: 100%; border: none; }
+        .timeline::before { content: ''; position: absolute; top: 20px; left: 20px; right: 20px; height: 4px; background: var(--glass-border); border-radius: 2px; z-index: 1; }
+        .timeline-item { position: relative; width: 260px; flex-shrink: 0; }
+        .timeline-dot { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); width: 24px; height: 24px; border-radius: 50%; background: var(--bg-color-1); border: 4px solid var(--glass-border); z-index: 2; }
+        .timeline-item.unlocked .timeline-dot { background: var(--accent); border-color: var(--accent-dark); box-shadow: 0 0 15px var(--accent); }
+        .timeline-item.claimed .timeline-dot { background: var(--success); border-color: var(--success-dark); }
+
+        /* Quest e Progress */
+        .progress-wrapper { background: rgba(0,0,0,0.2); padding: 1.25rem; border-radius: 24px; text-align: left; margin-top: 1.5rem; }
+        .progress-track { width: 100%; background: rgba(0,0,0,0.3); border-radius: 999px; height: 1.25rem; position: relative; overflow: hidden; margin: 0.5rem 0; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 999px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .quest-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 20px; background: rgba(0,0,0,0.2); cursor: pointer; transition: all 0.2s; margin-bottom: 10px; }
+        .quest-item.completed { background: var(--glass-bg); border: 2px solid var(--success); opacity: 0.8; }
+        
+        /* Avatar */
+        .avatar-2d-container { width: 160px; height: 160px; margin: 0 auto; position: relative; border-radius: 30px; background: radial-gradient(circle, var(--glass-bg), transparent); display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; }
+        .avatar-character { width: 120px; height: 120px; position: relative; }
+        .avatar-layer { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: flex-end; }
+        .avatar-layer svg { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
+        
+        /* Modals */
+        .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s; opacity: 0; pointer-events: none; }
+        .overlay-screen.active { opacity: 1; pointer-events: auto; }
+    </style>
+</head>
+<body class="theme-void">
+
+    <canvas id="theme-canvas"></canvas>
+
+    <!-- TELAS DE OVERLAY -->
+    <div id="login-screen" class="overlay-screen active" style="opacity: 1; pointer-events: auto;">
+        <div style="text-align: center; padding: 2rem; max-width: 400px; width: 100%;">
+            <div class="float-gentle" style="background: var(--text-main); color: var(--bg-color-1); width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; transform: rotate(-10deg);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <h1 style="font-size: 2.5rem; font-weight: 900;">Polímata</h1>
+            <p style="color: var(--text-muted); margin-bottom: 3rem;">Sua jornada épica.</p>
+            <button id="btn-login-action" class="btn-duo">Entrar com Google</button>
+        </div>
     </div>
+
+    <div id="element-choice-screen" class="overlay-screen">
+        <div class="panel" style="max-width: 450px; text-align: center;">
+            <h2 style="font-family: 'Cinzel', serif; font-size: 2rem;">O Despertar</h2>
+            <p style="margin-bottom: 1.5rem;">Escolha sua afinidade elemental inicial.</p>
+            <div id="initial-theme-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 2rem;">
+                <!-- Temas aqui -->
+                <div class="theme-option" onclick="selectInitialElement('theme-void', this)">O Vazio</div>
+                <div class="theme-option" onclick="selectInitialElement('theme-journey', this)">A Jornada</div>
+                <div class="theme-option" onclick="selectInitialElement('theme-forest', this)">A Floresta</div>
+                <div class="theme-option" onclick="selectInitialElement('theme-cloud', this)">A Nuvem</div>
+                <div class="theme-option" onclick="selectInitialElement('theme-inferno', this)">Inferno</div>
+                <div class="theme-option" onclick="selectInitialElement('theme-ocean', this)">Oceano</div>
+                <div class="theme-option" onclick="selectInitialElement('theme-arcane', this)">Arcano</div>
+            </div>
+            <button onclick="confirmInitialElement()" class="btn-duo">Selar Destino</button>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+        <main class="content-area">
+            <!-- INÍCIO -->
+            <section id="view-home" class="animate-fade-in">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <div class="identity-card" style="flex: 1; margin-right: 10px;">
+                        <img id="user-photo" src="" class="identity-photo">
+                        <div><h2 id="disp-char-name">Viajante</h2><p id="disp-char-title">Despertando...</p></div>
+                    </div>
+                    <div class="coin-display">🪙 <span id="disp-coins">0</span></div>
+                </div>
+                <div class="panel" style="text-align: center;">
+                    <div class="avatar-2d-container"><div class="avatar-character" id="home-avatar-render"></div></div>
+                    <div class="progress-wrapper">
+                        <div style="display: flex; justify-content: space-between;"><span>Nível <span id="disp-level">1</span></span><span><span id="disp-exp-current">0</span> / 500 XP</span></div>
+                        <div class="progress-track"><div id="disp-exp-bar" class="progress-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <div class="panel"><div id="quests-container"></div></div>
+            </section>
+
+            <!-- CAMINHO ELEMENTAL -->
+            <section id="view-path" class="hidden">
+                <div class="panel" id="path-area">
+                    <h2 class="section-title">Caminho d<span id="path-element-name">Ascensão</span></h2>
+                    <div class="timeline-wrapper" id="path-timeline-wrapper">
+                        <div class="timeline" id="path-timeline-container"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEMPLO (PILARES) -->
+            <section id="view-skills" class="hidden">
+                <div class="panel" style="padding: 10px;">
+                    <h2 class="section-title" style="padding: 15px; font-family: 'Cinzel', serif;">O Templo de Sabedoria</h2>
+                    <div id="iso-wrapper">
+                        <div id="iso-world">
+                            <svg id="iso-ground">
+                                <defs>
+                                    <!-- Filtro de Brilho Energético -->
+                                    <filter id="energyGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                        <feGaussianBlur stdDeviation="4" result="blur" />
+                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                    </filter>
+                                </defs>
+                                <g id="iso-lines"></g>
+                            </svg>
+                            <div id="iso-nodes"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel" id="editor-card"></div>
+                <button onclick="openAddPillarModal()" class="btn-duo" style="margin-bottom: 20px;">Erguer Novo Pilar</button>
+                <div id="skills-list"></div>
+            </section>
+
+            <!-- OUTRAS ABAS (SIMPLIFICADAS PARA FOCO) -->
+            <section id="view-inventory" class="hidden"><div class="panel"><h3>Mochila</h3><div id="inv-grid-head" class="inv-grid"></div><div id="inv-grid-body" class="inv-grid"></div><div id="inv-grid-extras" class="inv-grid"></div></div></section>
+            <section id="view-shop" class="hidden"><div class="panel"><h3>Em construção...</h3></div></section>
+            <section id="view-community" class="hidden"><div id="community-top10-list"></div></section>
+        </main>
+
+        <nav id="bottom-nav">
+            <button class="nav-item active" onclick="switchTab('home', this)">Início</button>
+            <button class="nav-item" onclick="switchTab('path', this)">Caminho</button>
+            <button class="nav-item" onclick="switchTab('skills', this)">Templo</button>
+            <button class="nav-item" onclick="switchTab('inventory', this)">Mochila</button>
+            <button class="nav-item" onclick="switchTab('shop', this)">Loja</button>
+            <button class="nav-item" onclick="openSettings()">Ajustes</button>
+        </nav>
+    </div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc, deleteDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBFxnca6Q1AZBrwdpU07GM2OCd9XIpn4xQ",
+        authDomain: "lista-de-presenca-95526.firebaseapp.com",
+        projectId: "lista-de-presenca-95526",
+        storageBucket: "lista-de-presenca-95526.firebasestorage.app",
+        appId: "1:879181560997:web:484b7aeb865856a7f8a14c"
+    };
+    
+    const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
+
+    const elementStyles = {
+        'void': { main: '#818cf8', icon: '🌌' }, 'journey': { main: '#fbbf24', icon: '⏳' },
+        'forest': { main: '#34d399', icon: '🌿' }, 'cloud': { main: '#38bdf8', icon: '☁️' },
+        'inferno': { main: '#f87171', icon: '🔥' }, 'ocean': { main: '#22d3ee', icon: '🌊' },
+        'arcane': { main: '#e879f9', icon: '✨' }
+    };
+
+    let currentUser = null; let userPath = ''; 
+    let profileData = { name: "Viajante", exp: 0, coins: 0, theme: "theme-void", elementChosen: false, claimedNodes: [], equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
+    let skillsData = []; let selectedNode = { type: 'main', id: null };
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            currentUser = user; userPath = `users/${user.uid}`;
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+            loadData();
+        } else {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('app-container').classList.add('hidden');
+        }
+    });
+
+    async function loadData() {
+        const profileRef = doc(db, userPath, 'profile', 'main');
+        onSnapshot(profileRef, (snap) => {
+            if (snap.exists()) {
+                profileData = snap.data();
+                document.body.className = profileData.theme;
+                updateUI();
+            } else {
+                setDoc(profileRef, profileData);
+                document.getElementById('element-choice-screen').classList.add('active');
+            }
+        });
+        onSnapshot(collection(db, userPath, 'skills'), (snap) => {
+            skillsData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderWheel();
+        });
+    }
+
+    function renderWheel() {
+        const nodesContainer = document.getElementById('iso-nodes');
+        const linesContainer = document.getElementById('iso-lines');
+        const wrapper = document.getElementById('iso-wrapper');
+        if (!nodesContainer || document.getElementById('view-skills').classList.contains('hidden')) return;
+
+        nodesContainer.innerHTML = '';
+        linesContainer.innerHTML = '';
+        
+        const wrapperW = wrapper.offsetWidth;
+        const cx = wrapperW / 2; const cy = 250;
+        const rx = 150; const ry = 70;
+
+        // Pilar Central (Origem)
+        const mainActive = selectedNode.type === 'main';
+        nodesContainer.innerHTML += `
+            <div class="pillar-base-shadow" style="left:${cx}px; top:${cy}px;"></div>
+            <div class="iso-pillar-container ${mainActive ? 'active' : ''}" style="left:${cx}px; top:${cy}px; z-index:10;" onclick="selectNode('main', null)">
+                <div class="iso-label" style="top:-140px;">A Origem</div>
+                <div style="width:90px; height:130px; background: url('pilar 1.svg') no-repeat bottom center; background-size:contain;"></div>
+            </div>
+        `;
+
+        skillsData.forEach((s, i) => {
+            const angle = (i * (2 * Math.PI)) / skillsData.length;
+            const px = cx + rx * Math.cos(angle);
+            const py = cy + ry * Math.sin(angle);
+            const isSel = selectedNode.id === s.id;
+            const elColor = elementStyles[s.element]?.main || '#fff';
+            const scale = 0.6 + (s.level / 200);
+
+            // Linha de Energia
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", cx); line.setAttribute("y1", cy);
+            line.setAttribute("x2", px); line.setAttribute("y2", py);
+            
+            if (isSel) {
+                line.setAttribute("stroke", elColor);
+                line.setAttribute("filter", "url(#energyGlow)");
+                line.style.setProperty('--energy-color', elColor);
+                line.style.animation = "pulse-energy 2s infinite ease-in-out";
+                line.setAttribute("stroke-width", "4");
+            } else {
+                line.setAttribute("stroke", "rgba(255,255,255,0.15)");
+                line.setAttribute("stroke-width", "1.5");
+            }
+            linesContainer.appendChild(line);
+
+            // Sombra e Pilar
+            nodesContainer.innerHTML += `
+                <div class="pillar-base-shadow" style="left:${px}px; top:${py}px;"></div>
+                <div class="iso-pillar-container ${isSel ? 'active' : ''}" style="left:${px}px; top:${py}px; z-index:${Math.floor(py)};" onclick="selectNode('skill', '${s.id}')">
+                    <div class="iso-label" style="top:${-110 * scale - 20}px;">${s.name}</div>
+                    <div style="width:70px; height:100px; background: url('pilar 1.svg') no-repeat bottom center; background-size:contain; transform: scale(${scale}); transform-origin: bottom center;"></div>
+                </div>
+            `;
+        });
+    }
+
+    window.selectNode = (type, id) => {
+        selectedNode = { type, id };
+        renderWheel();
+        renderEditor();
+    };
+
+    function renderEditor() {
+        const card = document.getElementById('editor-card');
+        if (selectedNode.type === 'main') {
+            card.innerHTML = `<div style="text-align:center; padding:20px;"><h3>O Templo Sagrado</h3><p>Selecione um pilar para expandir sua consciência.</p></div>`;
+            return;
+        }
+        const data = skillsData.find(s => s.id === selectedNode.id);
+        if (!data) return;
+        card.innerHTML = `
+            <div class="animate-fade-in">
+                <h3 style="font-family:'Cinzel', serif;">${data.name}</h3>
+                <p>Nível de Elevação: ${data.level}%</p>
+                <div class="progress-track"><div class="progress-fill" style="width:${data.level}%; background:${elementStyles[data.element]?.main}"></div></div>
+                <div style="display:flex; gap:10px; margin-top:15px;">
+                    <button class="btn-outline" onclick="deleteSkill('${data.id}')">Derrubar</button>
+                    <button class="btn-duo" onclick="boostSkill('${data.id}')">Elevar (+5%)</button>
+                </div>
+            </div>
+        `;
+    }
+
+    window.boostSkill = async (id) => {
+        const s = skillsData.find(x => x.id === id);
+        if (s) await updateDoc(doc(db, userPath, 'skills', id), { level: Math.min(100, (s.level || 0) + 5) });
+    };
+
+    window.deleteSkill = async (id) => {
+        if (confirm("Deseja mesmo derrubar este pilar de sabedoria?")) {
+            await deleteDoc(doc(db, userPath, 'skills', id));
+            selectNode('main', null);
+        }
+    };
+
+    window.openAddPillarModal = async () => {
+        const name = prompt("Nome do novo Pilar:");
+        if (name) {
+            const el = Object.keys(elementStyles)[Math.floor(Math.random() * 7)];
+            await addDoc(collection(db, userPath, 'skills'), { name, level: 10, element: el });
+        }
+    };
+
+    window.switchTab = (tab, btn) => {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        btn.classList.add('active');
+        ['home', 'path', 'skills', 'inventory', 'shop', 'community'].forEach(v => {
+            document.getElementById(`view-${v}`)?.classList.add('hidden');
+        });
+        document.getElementById(`view-${tab}`).classList.remove('hidden');
+        if (tab === 'skills') setTimeout(renderWheel, 50);
+    };
+
+    function updateUI() {
+        document.getElementById('disp-char-name').innerText = profileData.name;
+        document.getElementById('disp-coins').innerText = profileData.coins;
+        const lvl = Math.floor(profileData.exp / 500) + 1;
+        document.getElementById('disp-level').innerText = lvl;
+        document.getElementById('disp-exp-current').innerText = profileData.exp % 500;
+        document.getElementById('disp-exp-bar').style.width = `${(profileData.exp % 500) / 5}%`;
+        if (currentUser.photoURL) document.getElementById('user-photo').src = currentUser.photoURL;
+    }
+
+    document.getElementById('btn-login-action').onclick = () => signInWithPopup(auth, provider);
+
+    window.selectInitialElement = (theme, el) => {
+        document.querySelectorAll('.theme-option').forEach(o => o.style.border = 'none');
+        el.style.border = '2px solid white';
+        window.pendingTheme = theme;
+    };
+
+    window.confirmInitialElement = async () => {
+        if (window.pendingTheme) {
+            await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: window.pendingTheme, elementChosen: true });
+            document.getElementById('element-choice-screen').classList.remove('active');
+        }
+    };
+
+</script>
 </body>
 </html>
