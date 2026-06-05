@@ -3,144 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Polímata Hub - App</title>
+    <title>Polímata Hub - 3D App</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- OS 7 ELEMENTOS --- */
-        :root, .theme-void {
-            --bg-color-1: #0f172a; --bg-color-2: #1e1b4b; --accent: #818cf8; --accent-dark: #4f46e5;
-            --glass-bg: rgba(30, 27, 75, 0.4); --glass-border: rgba(129, 140, 248, 0.3);
-            --nav-bg: rgba(15, 23, 42, 0.85); --sheet-bg: rgba(15, 23, 42, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.6); --success: #34d399; --success-dark: #059669;
-        }
-        .theme-journey {
-            --bg-color-1: #451a03; --bg-color-2: #78350f; --accent: #fbbf24; --accent-dark: #d97706;
-            --glass-bg: rgba(120, 53, 15, 0.4); --glass-border: rgba(251, 191, 36, 0.3);
-            --nav-bg: rgba(69, 26, 3, 0.85); --sheet-bg: rgba(69, 26, 3, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
-        }
-        .theme-forest {
-            --bg-color-1: #064e3b; --bg-color-2: #065f46; --accent: #a7f3d0; --accent-dark: #10b981;
-            --glass-bg: rgba(6, 95, 70, 0.4); --glass-border: rgba(167, 243, 208, 0.3);
-            --nav-bg: rgba(6, 78, 59, 0.85); --sheet-bg: rgba(6, 78, 59, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7); --success: #fcd34d;
-        }
-        .theme-cloud {
-            --bg-color-1: #e0f2fe; --bg-color-2: #bae6fd; --accent: #0ea5e9; --accent-dark: #0284c7;
-            --glass-bg: rgba(255, 255, 255, 0.6); --glass-border: rgba(255, 255, 255, 0.8);
-            --nav-bg: rgba(255, 255, 255, 0.85); --sheet-bg: rgba(248, 250, 252, 0.95);
-            --text-main: #0f172a; --text-muted: #475569;
-        }
-        .theme-inferno {
-            --bg-color-1: #450a0a; --bg-color-2: #7f1d1d; --accent: #f87171; --accent-dark: #dc2626;
-            --glass-bg: rgba(127, 29, 29, 0.4); --glass-border: rgba(248, 113, 113, 0.3);
-            --nav-bg: rgba(69, 10, 10, 0.85); --sheet-bg: rgba(69, 10, 10, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
-        }
-        .theme-ocean {
-            --bg-color-1: #083344; --bg-color-2: #164e63; --accent: #22d3ee; --accent-dark: #0891b2;
-            --glass-bg: rgba(22, 78, 99, 0.4); --glass-border: rgba(34, 211, 238, 0.3);
-            --nav-bg: rgba(8, 51, 68, 0.85); --sheet-bg: rgba(8, 51, 68, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
-        }
-        .theme-arcane {
-            --bg-color-1: #3b0764; --bg-color-2: #581c87; --accent: #e879f9; --accent-dark: #c026d3;
-            --glass-bg: rgba(88, 28, 135, 0.4); --glass-border: rgba(232, 121, 249, 0.3);
-            --nav-bg: rgba(59, 7, 100, 0.85); --sheet-bg: rgba(59, 7, 100, 0.95);
-            --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7);
-        }
+        /* --- TEMAS (Cores e Elementos) --- */
+        :root, .theme-void { --bg-color-1: #0f172a; --bg-color-2: #1e1b4b; --accent: #818cf8; --accent-dark: #4f46e5; --glass-bg: rgba(30, 27, 75, 0.4); --glass-border: rgba(129, 140, 248, 0.3); --nav-bg: rgba(15, 23, 42, 0.85); --sheet-bg: rgba(15, 23, 42, 0.95); --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.6); --success: #34d399; --success-dark: #059669; }
+        .theme-journey { --bg-color-1: #451a03; --bg-color-2: #78350f; --accent: #fbbf24; --accent-dark: #d97706; --glass-bg: rgba(120, 53, 15, 0.4); --glass-border: rgba(251, 191, 36, 0.3); --nav-bg: rgba(69, 26, 3, 0.85); --sheet-bg: rgba(69, 26, 3, 0.95); --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7); }
+        .theme-forest { --bg-color-1: #064e3b; --bg-color-2: #065f46; --accent: #a7f3d0; --accent-dark: #10b981; --glass-bg: rgba(6, 95, 70, 0.4); --glass-border: rgba(167, 243, 208, 0.3); --nav-bg: rgba(6, 78, 59, 0.85); --sheet-bg: rgba(6, 78, 59, 0.95); --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7); --success: #fcd34d; }
+        .theme-cloud { --bg-color-1: #e0f2fe; --bg-color-2: #bae6fd; --accent: #0ea5e9; --accent-dark: #0284c7; --glass-bg: rgba(255, 255, 255, 0.6); --glass-border: rgba(255, 255, 255, 0.8); --nav-bg: rgba(255, 255, 255, 0.85); --sheet-bg: rgba(248, 250, 252, 0.95); --text-main: #0f172a; --text-muted: #475569; }
+        .theme-inferno { --bg-color-1: #450a0a; --bg-color-2: #7f1d1d; --accent: #f87171; --accent-dark: #dc2626; --glass-bg: rgba(127, 29, 29, 0.4); --glass-border: rgba(248, 113, 113, 0.3); --nav-bg: rgba(69, 10, 10, 0.85); --sheet-bg: rgba(69, 10, 10, 0.95); --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7); }
+        .theme-ocean { --bg-color-1: #083344; --bg-color-2: #164e63; --accent: #22d3ee; --accent-dark: #0891b2; --glass-bg: rgba(22, 78, 99, 0.4); --glass-border: rgba(34, 211, 238, 0.3); --nav-bg: rgba(8, 51, 68, 0.85); --sheet-bg: rgba(8, 51, 68, 0.95); --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7); }
+        .theme-arcane { --bg-color-1: #3b0764; --bg-color-2: #581c87; --accent: #e879f9; --accent-dark: #c026d3; --glass-bg: rgba(88, 28, 135, 0.4); --glass-border: rgba(232, 121, 249, 0.3); --nav-bg: rgba(59, 7, 100, 0.85); --sheet-bg: rgba(59, 7, 100, 0.95); --text-main: #ffffff; --text-muted: rgba(255, 255, 255, 0.7); }
 
         /* --- BASE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2)); color: var(--text-main); height: 100vh; height: 100dvh; overflow: hidden; transition: color 0.5s ease, background 0.5s ease; }
-        #theme-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+        body { background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2)); color: var(--text-main); height: 100vh; overflow: hidden; transition: color 0.5s, background 0.5s; }
         .hidden { display: none !important; }
         ::-webkit-scrollbar { width: 4px; height: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
-
-        /* --- ANIMAÇÕES --- */
-        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .float-gentle { animation: float 6s ease-in-out infinite; }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; } @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .float-gentle { animation: float 6s ease-in-out infinite; } @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
 
         /* --- LAYOUT --- */
         #app-container { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; }
-        main.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.5rem 1.5rem 6rem 1.5rem; }
-        
+        main.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.5rem 1.5rem 6.5rem 1.5rem; }
         .btn-duo { background: var(--accent); color: #fff; font-weight: 800; font-size: 1rem; padding: 14px 24px; border: none; border-radius: 20px; cursor: pointer; box-shadow: 0 6px 0 var(--accent-dark), 0 15px 20px rgba(0,0,0,0.2); transition: 0.1s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; width: 100%; }
         .theme-cloud .btn-duo { color: #fff; } .btn-duo:active { transform: translateY(6px); box-shadow: 0 0px 0 var(--accent-dark), 0 5px 10px rgba(0,0,0,0.2); }
-        .btn-outline { background: transparent; border: 2px solid var(--text-muted); color: var(--text-main); font-weight: 800; padding: 12px 24px; border-radius: 20px; cursor: pointer; transition: 0.2s; width: 100%; text-transform: uppercase; }
-        .btn-outline:active { background: rgba(255,255,255,0.1); } .theme-cloud .btn-outline { border-color: var(--text-muted); color: var(--text-main); }
-
-        /* --- BOTTOM NAV --- */
-        #bottom-nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); width: calc(100% - 1rem); max-width: 500px; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 30px; display: flex; justify-content: space-between; padding: 0.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 50; transition: background-color 0.5s ease, border-color 0.5s ease; }
+        
+        #bottom-nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); width: calc(100% - 1rem); max-width: 500px; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 30px; display: flex; justify-content: space-between; padding: 0.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 50; }
         .nav-item { flex: 1; background: transparent; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 18px; cursor: pointer; transition: all 0.3s; font-weight: 800; font-size: 0.55rem; text-transform: uppercase; padding: 4px 0; }
-        .nav-item.active { color: var(--accent); background: rgba(0,0,0,0.2); }
-        .theme-cloud .nav-item.active { background: rgba(0,0,0,0.05); }
-        .nav-item svg { width: 18px; height: 18px; stroke-width: 2.5; transition: transform 0.3s; }
-        .nav-item.active svg { transform: scale(1.15); }
+        .nav-item.active { color: var(--accent); background: rgba(0,0,0,0.2); } .theme-cloud .nav-item.active { background: rgba(0,0,0,0.05); }
+        .nav-item svg { width: 18px; height: 18px; stroke-width: 2.5; transition: 0.3s; } .nav-item.active svg { transform: scale(1.15); }
 
-        /* --- INPUTS & SHEETS --- */
-        #settings-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 90; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-        #settings-backdrop.active { opacity: 1; pointer-events: auto; }
-        #settings-sheet { position: fixed; bottom: -100%; left: 0; width: 100%; height: 85vh; background: var(--sheet-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-top-left-radius: 32px; border-top-right-radius: 32px; box-shadow: 0 -10px 40px rgba(0,0,0,0.3); z-index: 100; transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.5s ease; display: flex; flex-direction: column; }
-        #settings-sheet.open { bottom: 0; }
-        .sheet-handle { width: 40px; height: 6px; background: var(--glass-border); border-radius: 3px; margin: 1rem auto; cursor: pointer; }
-        .sheet-content { padding: 0 1.5rem 2rem 1.5rem; overflow-y: auto; flex: 1; }
-        .input-ios, .select-ios { width: 100%; background: rgba(0,0,0,0.2); border: 2px solid transparent; border-radius: 16px; padding: 14px 16px; color: var(--text-main); font-size: 1rem; font-weight: 600; transition: 0.3s; margin-bottom: 12px; appearance: none; }
-        .theme-cloud .input-ios, .theme-cloud .select-ios { background: rgba(0,0,0,0.05); color: #0f172a; }
-        .input-ios::placeholder { color: var(--text-muted); } .input-ios:focus, .select-ios:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.1); }
-        .select-ios option { background: var(--sheet-bg); color: var(--text-main); } .theme-cloud .select-ios option { background: #fff; color: #0f172a; }
-        .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 2rem; }
-        .theme-option { display: flex; align-items: center; gap: 10px; padding: 0.8rem; border-radius: 16px; cursor: pointer; border: 2px solid transparent; background: var(--glass-bg); transition: all 0.2s; }
-        .theme-option.active { border-color: var(--accent); background: rgba(0,0,0,0.3); } .theme-cloud .theme-option.active { background: rgba(0,0,0,0.05); }
-        .color-preview { width: 20px; height: 20px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); flex-shrink: 0; }
+        /* --- UI COMPONENTS --- */
+        .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 1.5rem; position: relative; }
+        .coin-display { background: rgba(0,0,0,0.3); padding: 6px 12px; border-radius: 16px; display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 1rem; color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); } .theme-cloud .coin-display { background: rgba(255,255,255,0.8); }
+        .section-title { font-size: 1.2rem; font-weight: 900; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+        .btn-icon-soft { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        
+        .progress-wrapper { background: rgba(0,0,0,0.2); padding: 1.25rem; border-radius: 24px; margin-top: 1.5rem; } .theme-cloud .progress-wrapper { background: rgba(255,255,255,0.5); }
+        .progress-track { width: 100%; background: rgba(0,0,0,0.3); border-radius: 999px; height: 1.25rem; position: relative; overflow: hidden; margin: 0.5rem 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); } .theme-cloud .progress-track { background: rgba(0,0,0,0.1); }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 999px; transition: width 1s; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15); }
 
-        /* --- COMPONENTES UI --- */
-        .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 1.5rem; position: relative; transition: background-color 0.5s ease, border-color 0.5s ease; }
-        .identity-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: background-color 0.5s ease; }
-        .identity-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .coin-display { background: rgba(0,0,0,0.3); padding: 6px 12px; border-radius: 16px; display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 1rem; color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .theme-cloud .coin-display { background: rgba(255,255,255,0.8); }
-
-        /* --- AVATAR 3D CONTAINER (NOVO DESIGN) --- */
-        /* Na Home: Um container médio */
+        /* --- 3D AVATAR CONTAINERS --- */
         #home-avatar-container { width: 100%; height: 280px; position: relative; border-radius: 24px; background: radial-gradient(circle at center 70%, var(--glass-bg), transparent); box-shadow: inset 0 0 40px rgba(0,0,0,0.3); overflow: hidden; margin-bottom: 1rem; }
-        /* No Inventário: Um container grande estilo "Provador" */
         #inv-avatar-container { width: 100%; height: 400px; position: relative; border-radius: 24px; background: radial-gradient(circle at center 60%, var(--glass-bg), transparent); box-shadow: inset 0 0 40px rgba(0,0,0,0.3), 0 10px 30px rgba(0,0,0,0.2); border: 2px solid var(--glass-border); overflow: hidden; margin-bottom: 1.5rem; cursor: grab; }
         #inv-avatar-container:active { cursor: grabbing; }
-        
-        .drag-hint { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--text-muted); font-weight: 800; display: flex; align-items: center; gap: 5px; pointer-events: none; background: rgba(0,0,0,0.4); padding: 4px 12px; border-radius: 20px; }
-        
-        .inv-category-title { font-size: 1.1rem; font-weight: 900; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--text-main); }
+        .drag-hint { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--text-muted); font-weight: 800; pointer-events: none; background: rgba(0,0,0,0.4); padding: 4px 12px; border-radius: 20px; }
+
         .inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
-        .inv-slot { background: rgba(0,0,0,0.3); border: 2px solid var(--glass-border); border-radius: 18px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .inv-slot { background: rgba(0,0,0,0.3); border: 2px solid var(--glass-border); border-radius: 18px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; position: relative; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .theme-cloud .inv-slot { background: rgba(255,255,255,0.6); } 
         .inv-slot:hover { transform: translateY(-4px); border-color: var(--accent); }
         .inv-slot.equipped { border-color: var(--success); background: rgba(52, 211, 153, 0.15); box-shadow: 0 0 15px rgba(52, 211, 153, 0.3); transform: scale(1.05); z-index: 2; }
         .inv-slot.equipped::before { content: '✓ EQUIPADO'; position: absolute; bottom: 0; left: 0; width: 100%; background: var(--success); color: var(--bg-color-1); font-size: 0.55rem; font-weight: 900; text-align: center; padding: 3px 0; }
-        .inv-icon { font-size: 2rem; margin-bottom: 8px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); } 
-        .inv-name { font-size: 0.6rem; text-align: center; font-weight: 800; color: var(--text-main); line-height: 1.1; padding: 0 4px; z-index: 1;}
+        .inv-icon { font-size: 2rem; margin-bottom: 8px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); } .inv-name { font-size: 0.6rem; text-align: center; font-weight: 800; line-height: 1.1; z-index: 1;}
 
-        /* Outros Componentes */
-        .progress-wrapper { background: rgba(0,0,0,0.2); padding: 1.25rem; border-radius: 24px; text-align: left; margin-top: 1.5rem; }
-        .theme-cloud .progress-wrapper { background: rgba(255,255,255,0.5); }
-        .progress-track { width: 100%; background: rgba(0,0,0,0.3); border-radius: 999px; height: 1.25rem; position: relative; overflow: hidden; margin: 0.5rem 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
-        .theme-cloud .progress-track { background: rgba(0,0,0,0.1); }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); border-radius: 999px; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15); }
-        .section-title { font-size: 1.2rem; font-weight: 900; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
-        .btn-icon-soft { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
-        .quest-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 20px; background: rgba(0,0,0,0.2); border: 2px solid transparent; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; }
-        .quest-item.completed { background: var(--glass-bg); border-color: var(--success); opacity: 0.8; }
-        .checkbox-bouncy { width: 26px; height: 26px; border-radius: 8px; border: 3px solid var(--text-muted); display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        .quest-item.completed .checkbox-bouncy { background: var(--success); border-color: var(--success); transform: scale(1.1) rotate(10deg); }
-        
-        /* Modals e 3D Path */
-        #path-area { height: 72vh; min-height: 450px; position: relative; overflow: hidden; padding: 0; display: flex; flex-direction: column; background: rgba(0,0,0,0.15); }
+        /* --- 3D PATH ENVIRONMENT --- */
+        #path-area { height: 72vh; min-height: 450px; position: relative; overflow: hidden; padding: 0; display: flex; flex-direction: column; background: rgba(0,0,0,0.15); margin: -1.5rem -1.5rem 0 -1.5rem; border-radius: 0; border-left: none; border-right: none;}
         .path-header { position: absolute; top: 0; left: 0; width: 100%; padding: 1.5rem; z-index: 10; pointer-events: none; }
         .timeline-wrapper { flex: 1; width: 100%; overflow-x: auto; overflow-y: hidden; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; z-index: 2; display: flex; align-items: center; }
         .timeline-wrapper::-webkit-scrollbar { height: 6px; } .timeline-wrapper::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); } .timeline-wrapper::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-        .timeline-connection-line { position: absolute; top: 50%; left: 0; height: 3px; background: var(--glass-border); z-index: 1; pointer-events: none; box-shadow: 0 0 10px var(--accent); opacity: 0.6; }
+        .timeline-connection-line { position: absolute; top: 50%; left: 0; height: 3px; background: var(--glass-border); z-index: 1; box-shadow: 0 0 10px var(--accent); opacity: 0.6; }
         .timeline { display: flex; flex-direction: row; align-items: center; gap: 40px; padding: 0 60px; position: relative; height: 100%; width: max-content; z-index: 2; }
         .timeline-item { position: relative; width: 280px; flex-shrink: 0; z-index: 5; }
         .timeline-item:nth-child(odd) { transform: translateY(-70px); } .timeline-item:nth-child(even) { transform: translateY(70px); }
@@ -152,72 +75,103 @@
         .timeline-item.claimed .timeline-dot { background: var(--success); border-color: var(--success-dark); }
         #path-3d-env { position: absolute; top: 0; left: 0; height: 100%; z-index: 0; pointer-events: none; }
 
+        /* --- ISOMETRIC SKILLS / PILLARS --- */
+        #iso-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; text-align: center; border-radius: 16px; padding: 20px 0; }
+        #iso-world { position: relative; margin: 0 auto; perspective: 1000px; transition: 0.5s; }
+        #iso-ground { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; }
+        .iso-pillar-container { position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+        .iso-pillar-container:hover, .iso-pillar-container.active { transform: translate(-50%, -100%) scale(1.05); filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); z-index: 100 !important; }
+        .iso-label { position: absolute; background: var(--glass-bg); padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; white-space: nowrap; border: 1px solid var(--glass-border); backdrop-filter: blur(4px); transition: 0.3s; opacity: 0.7;}
+        .iso-pillar-container:hover .iso-label, .iso-pillar-container.active .iso-label { opacity: 1; border-color: var(--accent); }
+        .skill-list-item { padding: 1rem; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; margin-bottom: 8px; background: rgba(0,0,0,0.2); }
+        .skill-list-item.active { border: 2px solid var(--accent); background: var(--glass-bg); }
+
+        /* --- COMMUNITY & MISC --- */
+        .community-card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem; border-radius: 24px; margin-bottom: 16px; background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2)); border: 2px solid var(--glass-border); box-shadow: 0 8px 20px rgba(0,0,0,0.3); position: relative; }
+        .community-card::before { content: ''; position: absolute; inset: 0; background: var(--glass-bg); pointer-events: none; border-radius: 24px;}
+        .community-card > * { position: relative; z-index: 1; }
+        .comm-photo { width: 50px; height: 50px; border-radius: 18px; object-fit: cover; border: 2px solid var(--accent); }
+        .comm-level-badge { background: var(--accent); color: #fff; font-weight: 900; font-size: 1.1rem; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        
+        .quest-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 20px; background: rgba(0,0,0,0.2); cursor: pointer; transition: 0.2s; margin-bottom: 10px; }
+        .quest-item.completed { background: var(--glass-bg); opacity: 0.8; }
+        .checkbox-bouncy { width: 26px; height: 26px; border-radius: 8px; border: 3px solid var(--text-muted); display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .quest-item.completed .checkbox-bouncy { background: var(--success); border-color: var(--success); transform: scale(1.1) rotate(10deg); }
+
         .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s; opacity: 0; pointer-events: none; }
         .overlay-screen.active { opacity: 1; pointer-events: auto; }
-        .level-badge { background: var(--accent); width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 8px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.3); border: 6px solid rgba(255,255,255,0.2); }
-        .floating-exp { position: fixed; color: var(--success); font-size: 1.25rem; font-weight: 900; pointer-events: none; z-index: 1000; text-shadow: 0 2px 10px rgba(0,0,0,0.3); animation: floatUpAndFade 1s forwards; }
-        @keyframes floatUpAndFade { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-50px) scale(1.2); } }
+        
+        .input-ios, .select-ios { width: 100%; background: rgba(0,0,0,0.2); border: 2px solid transparent; border-radius: 16px; padding: 14px 16px; color: var(--text-main); font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
+        .input-ios:focus, .select-ios:focus { outline: none; border-color: var(--accent); }
+        .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 2rem; }
+        .theme-option { display: flex; align-items: center; gap: 10px; padding: 0.8rem; border-radius: 16px; cursor: pointer; background: var(--glass-bg); border: 2px solid transparent; }
+        .theme-option.active { border-color: var(--accent); background: rgba(0,0,0,0.3); }
+
+        #chat-modal { position: fixed; inset: 0; background: var(--sheet-bg); z-index: 2000; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.4s; }
+        #chat-modal.open { transform: translateY(0); }
+        .chat-header { padding: 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); }
+        .chat-bubble { max-width: 80%; padding: 12px 16px; border-radius: 20px; font-weight: 600; margin-bottom: 10px; }
+        .bubble-mine { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+        .bubble-other { align-self: flex-start; background: var(--glass-bg); border: 1px solid var(--glass-border); border-bottom-left-radius: 4px; }
     </style>
 </head>
 <body class="theme-void">
 
-    <canvas id="theme-canvas"></canvas>
-
+    <!-- Overlays & Modals -->
     <div id="login-screen" class="overlay-screen active" style="opacity: 1; pointer-events: auto;">
-        <div style="text-align: center; padding: 2rem; max-width: 400px; width: 100%;">
-            <div class="float-gentle" style="background: var(--text-main); color: var(--bg-color-1); width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: rotate(-10deg);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 40px; height: 40px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+        <div style="text-align: center; padding: 2rem;">
+            <div class="float-gentle" style="background: var(--text-main); color: var(--bg-color-1); width: 80px; height: 80px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; transform: rotate(-10deg);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 40px;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
             </div>
-            <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem;">Polímata</h1>
+            <h1 style="font-size: 2.5rem; font-weight: 900;">Polímata</h1>
             <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 600; margin-bottom: 3rem;">Sua jornada épica.</p>
             <button id="btn-login-action" class="btn-duo"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="24" alt="Google" style="background: white; border-radius: 50%; padding: 2px;"> Entrar</button>
         </div>
     </div>
 
-    <!-- Modals simplificados para espaço... -->
     <div id="element-choice-screen" class="overlay-screen" style="z-index: 9999;">
-        <div class="panel" style="max-width: 95%; width: 450px; text-align: center; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.8); border: 2px solid var(--accent);">
-            <h2 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem;">O Despertar</h2>
+        <div class="panel" style="max-width: 95%; width: 450px; text-align: center;">
+            <h2 style="font-size: 2rem; font-weight: 900;">O Despertar</h2>
             <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 1.5rem;">Selecione sua afinidade inicial.</p>
-            <div class="theme-grid" id="initial-theme-grid" style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); margin-bottom: 1.5rem;">
-                <div class="theme-option" onclick="selectInitialElement('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700; font-size: 0.8rem;">Vazio</span></div>
-                <div class="theme-option" onclick="selectInitialElement('theme-journey', this)"><div class="color-preview" style="background: #b45309;"></div><span style="font-weight: 700; font-size: 0.8rem;">Jornada</span></div>
-                <div class="theme-option" onclick="selectInitialElement('theme-forest', this)"><div class="color-preview" style="background: #047857;"></div><span style="font-weight: 700; font-size: 0.8rem;">Floresta</span></div>
+            <div class="theme-grid" id="initial-theme-grid">
+                <div class="theme-option" onclick="selectInitialElement('theme-void', this)"><div style="width:20px;height:20px;border-radius:50%;background:#1e1b4b;"></div><span style="font-weight: 700;">Vazio</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-journey', this)"><div style="width:20px;height:20px;border-radius:50%;background:#b45309;"></div><span style="font-weight: 700;">Jornada</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-forest', this)"><div style="width:20px;height:20px;border-radius:50%;background:#047857;"></div><span style="font-weight: 700;">Floresta</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-cloud', this)"><div style="width:20px;height:20px;border-radius:50%;background:#e0f2fe;"></div><span style="font-weight: 700;">Nuvem</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-inferno', this)"><div style="width:20px;height:20px;border-radius:50%;background:#7f1d1d;"></div><span style="font-weight: 700;">Inferno</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-ocean', this)"><div style="width:20px;height:20px;border-radius:50%;background:#164e63;"></div><span style="font-weight: 700;">Oceano</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-arcane', this)"><div style="width:20px;height:20px;border-radius:50%;background:#581c87;"></div><span style="font-weight: 700;">Arcano</span></div>
             </div>
-            <button onclick="confirmInitialElement()" class="btn-duo" style="width: 100%; font-size: 1.1rem; padding: 16px;">Selar Meu Destino</button>
+            <button onclick="confirmInitialElement()" class="btn-duo" style="width: 100%;">Selar Meu Destino</button>
         </div>
     </div>
 
     <div id="level-up-screen" class="overlay-screen">
         <div style="text-align: center;">
-            <div class="level-badge animate-slide-up"><span style="font-size: 1rem; font-weight: 800; color: rgba(255,255,255,0.8); text-transform: uppercase;">Nível</span><div id="new-level-display" style="font-size: 4rem; font-weight: 900; color: white; line-height: 1;">2</div></div>
-            <h1 class="animate-slide-up delay-1" style="font-size: 2.5rem; font-weight: 900; margin-top: 1.5rem; color: var(--text-main);">Evoluiu!</h1>
-            <button onclick="closeLevelUp()" class="btn-duo animate-slide-up delay-3" style="background: var(--text-main); color: var(--bg-color-1); box-shadow: 0 6px 0 rgba(0,0,0,0.2); margin-top: 2rem;">Continuar</button>
+            <div style="background:var(--accent); width:140px; height:140px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-direction:column; border:6px solid rgba(255,255,255,0.2); margin:0 auto;"><span style="font-size: 1rem; font-weight: 800;">Nível</span><div id="new-level-display" style="font-size: 4rem; font-weight: 900;">2</div></div>
+            <h1 style="font-size: 2.5rem; font-weight: 900; margin-top: 1.5rem;">Evoluiu!</h1>
+            <button onclick="closeLevelUp()" class="btn-duo" style="background: var(--text-main); color: var(--bg-color-1); margin-top: 2rem;">Continuar</button>
         </div>
     </div>
 
+    <!-- MAIN APP -->
     <div id="app-container" class="hidden">
-        <div id="permission-error" style="background: #ef4444; color: white; padding: 1rem; text-align: center; font-weight: 700; display: none; z-index: 200; position: absolute; top:0; width: 100%;">⚠️ Erro de Banco de Dados.</div>
-
-        <main class="content-area" style="padding-bottom: 7rem; padding-top: 1rem;">
+        <main class="content-area">
             
             <!-- HOME -->
             <section id="view-home" class="animate-fade-in">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
                     <div class="identity-card float-gentle" style="margin-bottom: 0; flex: 1; margin-right: 10px;">
-                        <img id="user-photo" src="" alt="Identificador" class="identity-photo">
                         <div>
-                            <h2 id="disp-char-name" style="font-size: 1.1rem; font-weight: 900; line-height: 1.2;">Viajante</h2>
+                            <h2 id="disp-char-name" style="font-size: 1.1rem; font-weight: 900;">Viajante</h2>
                             <p id="disp-char-title" style="color: var(--text-muted); font-weight: 700; font-size: 0.8rem;">Despertando...</p>
                         </div>
                     </div>
-                    <div class="coin-display float-gentle" style="animation-delay: 0.5s;">🪙 <span id="disp-coins">0</span></div>
+                    <div class="coin-display float-gentle">🪙 <span id="disp-coins">0</span></div>
                 </div>
 
-                <div class="panel hub-header" style="text-align: center; padding-top: 1rem; padding-bottom: 1rem;">
-                    <!-- NOVO CONTAINER 3D NA HOME -->
+                <div class="panel hub-header" style="padding-top: 1rem; padding-bottom: 1rem;">
                     <div id="home-avatar-container"></div>
-                    
                     <div class="progress-wrapper" style="margin-top: 0;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-end;"><span style="font-size: 1.1rem; font-weight: 800;">Nível <span id="disp-level">1</span></span><span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);"><span id="disp-exp-current">0</span> / 500 XP</span></div>
                         <div class="progress-track"><div id="disp-exp-bar" class="progress-fill" style="width: 0%"></div></div>
@@ -225,367 +179,285 @@
                 </div>
 
                 <div class="panel">
-                    <div class="section-title">Hábitos Diários<button onclick="addRandomQuest()" class="btn-icon-soft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div>
+                    <div class="section-title">Hábitos Diários<button onclick="addRandomQuest()" class="btn-icon-soft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:18px"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div>
                     <div id="quests-container"></div>
                 </div>
             </section>
 
-            <!-- INVENTÁRIO REDESENHADO (FOCO NO 3D) -->
+            <!-- INVENTÁRIO -->
             <section id="view-inventory" class="hidden">
-                <div style="margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
-                    <h2 style="font-weight: 900; font-size: 1.5rem;">Sua Identidade</h2>
-                </div>
-
-                <!-- NOVO CONTAINER 3D GRANDE -->
+                <h2 style="font-weight: 900; font-size: 1.5rem; margin-bottom:1rem;">Sua Identidade</h2>
                 <div id="inv-avatar-container">
-                    <div class="drag-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;"><path d="M2 12h20M12 2v20M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg> Arraste para girar</div>
+                    <div class="drag-hint">Arraste para girar</div>
                 </div>
-
-                <div class="panel" style="padding: 1.5rem 1rem;">
-                    <div class="inv-category-title"><span style="font-size: 1.5rem;">👑</span> Cabeça</div>
-                    <div class="inv-grid" id="inv-grid-head"></div>
-                    
-                    <div class="inv-category-title" style="margin-top: 1rem;"><span style="font-size: 1.5rem;">👕</span> Traje Base</div>
-                    <div class="inv-grid" id="inv-grid-body"></div>
-                    
-                    <div class="inv-category-title" style="margin-top: 1rem;"><span style="font-size: 1.5rem;">⚔️</span> Relíquias & Costas</div>
-                    <div class="inv-grid" id="inv-grid-extras"></div>
+                <div class="panel">
+                    <div style="font-size: 1.1rem; font-weight: 900; margin-bottom: 10px;">👑 Cabeça</div><div class="inv-grid" id="inv-grid-head"></div>
+                    <div style="font-size: 1.1rem; font-weight: 900; margin-bottom: 10px; margin-top:1rem;">👕 Traje Base</div><div class="inv-grid" id="inv-grid-body"></div>
+                    <div style="font-size: 1.1rem; font-weight: 900; margin-bottom: 10px; margin-top:1rem;">⚔️ Relíquias & Costas</div><div class="inv-grid" id="inv-grid-extras"></div>
                 </div>
             </section>
 
-            <!-- CAMINHO ELEMENTAL -->
-            <section id="view-path" class="hidden" style="margin: -1.5rem -1.5rem 0 -1.5rem; border-radius: 0;">
-                <div class="panel" id="path-area" style="border-radius: 0; border-left: none; border-right: none;">
-                    <div class="path-header"><div class="section-title">Caminho d<span id="path-element-name" style="color: var(--accent); margin-left: 5px;">Ascensão</span></div><p style="color: var(--text-muted); font-size: 0.85rem; text-shadow: 0 1px 4px rgba(0,0,0,0.5);">Deslize para explorar o horizonte.</p></div>
+            <!-- CAMINHO ELEMENTAL (3D) -->
+            <section id="view-path" class="hidden">
+                <div class="panel" id="path-area">
+                    <div class="path-header"><div class="section-title">Caminho d<span id="path-element-name" style="color: var(--accent); margin-left: 5px;">Ascensão</span></div><p style="color: var(--text-muted); font-size: 0.85rem;">Deslize para explorar o horizonte.</p></div>
                     <svg id="path-3d-env" width="100%" height="100%" preserveAspectRatio="none"></svg>
                     <div class="timeline-wrapper" id="path-timeline-wrapper"><div class="timeline-connection-line" id="path-horizon-line"></div><div class="timeline" id="path-timeline-container"></div></div>
                 </div>
             </section>
             
+            <!-- PILARES -->
+            <section id="view-skills" class="hidden">
+                <div class="panel" style="padding: 1rem;">
+                    <div class="section-title">O Templo (Pilares)<button onclick="openAddPillarModal()" class="btn-icon-soft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:18px"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div>
+                    <div id="iso-wrapper"><div id="iso-world"><svg id="iso-ground"></svg><div id="iso-nodes"></div></div></div>
+                </div>
+                <div class="panel" id="editor-card"></div>
+                <div class="panel">
+                    <h3 style="font-size: 1rem; font-weight: 800; margin-bottom: 1rem;">Módulos Instalados (<span id="skill-count">0</span>)</h3>
+                    <div id="skills-list"></div>
+                </div>
+            </section>
+
+            <!-- COMUNIDADE & LOJA -->
             <section id="view-shop" class="hidden">
                 <div class="panel" style="text-align: center; padding: 3rem 1.5rem;">
                     <div style="font-size: 4rem; margin-bottom: 1rem;">🛒</div>
-                    <h2 style="font-weight: 900; font-size: 1.8rem; margin-bottom: 0.5rem;">O Empório</h2>
-                    <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 2rem;">Os mercadores ainda estão montando suas barracas.</p>
+                    <h2 style="font-weight: 900;">O Empório</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Adquire novas relíquias e visuais com as tuas moedas.</p>
+                    <div class="inv-grid" id="shop-items-container"></div>
                 </div>
+            </section>
+
+            <section id="view-community" class="hidden">
+                <div class="panel"><div class="section-title">Encontrar Viajantes</div><input type="text" id="search-community" class="input-ios" placeholder="Buscar por nome..." oninput="renderCommunityList()"></div>
+                <div id="community-top10-list"></div>
             </section>
 
         </main>
 
         <!-- BOTTOM NAV -->
         <nav id="bottom-nav">
-            <button class="nav-item active" onclick="switchTab('home', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Início</button>
+            <button class="nav-item active" onclick="switchTab('home', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>Início</button>
             <button class="nav-item" onclick="switchTab('inventory', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10"></path><path d="M4 16h16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z"></path><path d="M10 10l2 2 2-2"></path></svg>Equipar</button>
             <button class="nav-item" onclick="switchTab('path', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>Caminho</button>
-            <button class="nav-item" onclick="switchTab('shop', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>Loja</button>
+            <button class="nav-item" onclick="switchTab('skills', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 17 22 12"></polyline></svg>Pilares</button>
+            <button class="nav-item" onclick="switchTab('community', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Global</button>
             <button class="nav-item" onclick="openSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
         </nav>
 
-        <!-- CONFIGURAÇÕES -->
-        <div id="settings-backdrop" onclick="handleCloseSettings()"></div>
+        <!-- CONFIGURAÇÕES E MODALS RESTANTES -->
+        <div id="settings-backdrop" onclick="closeSettingsUI()"></div>
         <div id="settings-sheet">
-            <div class="sheet-handle" onclick="handleCloseSettings()"></div>
+            <div class="sheet-handle" onclick="closeSettingsUI()"></div>
             <div class="sheet-content">
-                <h3 class="sheet-title">Configurações</h3>
+                <h3 style="margin-bottom:1rem; font-weight:900;">Configurações</h3>
                 <input type="text" id="input-profile-name" class="input-ios" placeholder="Seu Nome">
                 <input type="text" id="input-profile-desc" class="input-ios" placeholder="Seu Título">
+                <div class="theme-grid" id="admin-theme-area">
+                    <div class="theme-option" onclick="setTheme('theme-void', this)"><div style="width:15px;height:15px;border-radius:50%;background:#1e1b4b;"></div><span style="font-size:0.8rem;">Vazio</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-journey', this)"><div style="width:15px;height:15px;border-radius:50%;background:#b45309;"></div><span style="font-size:0.8rem;">Jornada</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-forest', this)"><div style="width:15px;height:15px;border-radius:50%;background:#047857;"></div><span style="font-size:0.8rem;">Floresta</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-cloud', this)"><div style="width:15px;height:15px;border-radius:50%;background:#e0f2fe;"></div><span style="font-size:0.8rem;">Nuvem</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-inferno', this)"><div style="width:15px;height:15px;border-radius:50%;background:#7f1d1d;"></div><span style="font-size:0.8rem;">Inferno</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-ocean', this)"><div style="width:15px;height:15px;border-radius:50%;background:#164e63;"></div><span style="font-size:0.8rem;">Oceano</span></div>
+                    <div class="theme-option" onclick="setTheme('theme-arcane', this)"><div style="width:15px;height:15px;border-radius:50%;background:#581c87;"></div><span style="font-size:0.8rem;">Arcano</span></div>
+                </div>
+                <button onclick="saveProfileData()" class="btn-duo" style="margin-bottom: 1rem;">Salvar Modificações</button>
                 <button onclick="handleLogout()" class="btn-duo" style="background: transparent; color: #ef4444; border: 2px solid #ef4444; box-shadow: none;">Desconectar</button>
             </div>
         </div>
+
+        <div id="modal-add-pillar" class="overlay-screen">
+            <div class="panel" style="width:90%; max-width:400px;">
+                <h3 style="font-weight:900; margin-bottom:1rem;">Novo Pilar</h3>
+                <input type="text" id="add-pillar-name" class="input-ios" placeholder="Nome do pilar">
+                <select id="add-pillar-element" class="select-ios">
+                    <option value="void">🌌 Vazio</option><option value="journey">⏳ Jornada</option><option value="forest">🌿 Floresta</option>
+                    <option value="cloud">☁️ Nuvem</option><option value="inferno">🔥 Inferno</option><option value="ocean">🌊 Oceano</option><option value="arcane">✨ Arcano</option>
+                </select>
+                <div style="display:flex; justify-content:space-between; margin-top:1rem;"><button onclick="document.getElementById('modal-add-pillar').classList.remove('active')" class="btn-outline" style="width:48%;">Cancelar</button><button onclick="confirmAddPillar()" class="btn-duo" style="width:48%;">Erguer</button></div>
+            </div>
+        </div>
+
     </div>
 
 <!-- FIREBASE & THREE.JS -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
 
+    // FIREBASE INIT
     const firebaseConfig = { apiKey: "AIzaSyBFxnca6Q1AZBrwdpU07GM2OCd9XIpn4xQ", authDomain: "lista-de-presenca-95526.firebaseapp.com", projectId: "lista-de-presenca-95526", storageBucket: "lista-de-presenca-95526.firebasestorage.app", messagingSenderId: "879181560997", appId: "1:879181560997:web:484b7aeb865856a7f8a14c" };
     const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
+    // VARIÁVEIS GLOBAIS
+    let currentUser = null; let userPath = ''; 
+    const defaultUnlocked = ['body_default', 'body_dark', 'head_none', 'head_hood', 'head_hair', 'extra_none', 'extra_sword', 'extra_cloak'];
+    let profileData = { name: "Viajante", description: "Despertando...", exp: 0, coins: 0, theme: "theme-void", elementChosen: false, unlockedItems: [...defaultUnlocked], claimedNodes: [], equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
+    let skillsData = []; let questsData = []; let communityData = [];
+    let currentLevelState = 1; const EXP_PER_LEVEL = 500;
+    
+    // DB DE ELEMENTOS
+    const elementNames = { 'theme-void': 'o Vazio', 'theme-journey': 'a Jornada', 'theme-forest': 'a Floresta', 'theme-cloud': 'a Nuvem', 'theme-inferno': 'o Inferno', 'theme-ocean': 'o Oceano', 'theme-arcane': 'o Arcano' };
+    const elementStyles = { 'void': { main: '#4f46e5', icon: '🌌' }, 'journey': { main: '#d97706', icon: '⏳' }, 'forest': { main: '#059669', icon: '🌿' }, 'cloud': { main: '#0284c7', icon: '☁️' }, 'inferno': { main: '#dc2626', icon: '🔥' }, 'ocean': { main: '#0891b2', icon: '🌊' }, 'arcane': { main: '#c026d3', icon: '✨' } };
+
     // ----------------------------------------------------
-    // MOTOR 3D DO AVATAR (Substituindo o antigo sistema SVG)
+    // MOTOR 3D (THREE.JS)
     // ----------------------------------------------------
     let scene, camera, renderer, avatarGroup;
-    let slots = { body: null, head: null, extra: null, back: null }; // "Ossos" do personagem
+    let slots = { head: null, extra: null, back: null }; 
     let baseMeshes = { torso: null, leftArm: null, rightArm: null, leftLeg: null, rightLeg: null };
-    let currentContainer = null;
-    let isDragging = false, previousMousePosition = { x: 0, y: 0 };
-    let targetRotation = 0;
+    let currentContainer = null; let isDragging = false, previousMousePosition = { x: 0 }; let targetRotation = 0; let currentSkinColor = 0xfcd34d;
 
     function init3DEngine() {
         scene = new THREE.Scene();
-        
-        // Câmera ajustada para mostrar o corpo inteiro
         camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-        camera.position.set(0, 4, 12);
-
         renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.shadowMap.enabled = true;
-
-        // Iluminação
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
-        dirLight.position.set(5, 10, 5);
-        dirLight.castShadow = true;
-        scene.add(dirLight);
+        renderer.setPixelRatio(window.devicePixelRatio); renderer.shadowMap.enabled = true;
+        scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.6); dirLight.position.set(5, 10, 5); dirLight.castShadow = true; scene.add(dirLight);
+        
         const backLight = new THREE.DirectionalLight(0x818cf8, 0.4);
         backLight.position.set(-5, 5, -5);
         scene.add(backLight);
 
-        // Pedestal
-        const pedGeo = new THREE.CylinderGeometry(2.5, 3, 0.5, 32);
         const pedMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.2, metalness: 0.8 });
-        const pedestal = new THREE.Mesh(pedGeo, pedMat);
-        pedestal.position.y = -0.25;
-        pedestal.receiveShadow = true;
-        scene.add(pedestal);
-        const ringGeo = new THREE.TorusGeometry(2.8, 0.05, 16, 100);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0x818cf8 });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        ring.position.y = 0.05;
-        ring.rotation.x = Math.PI / 2;
-        scene.add(ring);
+        const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 3, 0.5, 32), pedMat); pedestal.position.y = -0.25; scene.add(pedestal);
 
-        // Grupo Principal do Avatar
-        avatarGroup = new THREE.Group();
-        avatarGroup.position.y = 0;
-        scene.add(avatarGroup);
-
-        // Construir Base do Corpo
+        avatarGroup = new THREE.Group(); avatarGroup.position.y = 0; scene.add(avatarGroup);
         buildBaseBody();
 
-        // Loop de Animação
         const animate3D = () => {
             requestAnimationFrame(animate3D);
-            // Suavização da rotação manual
             avatarGroup.rotation.y += (targetRotation - avatarGroup.rotation.y) * 0.1;
-            
-            // Animação de respiração simples
             const time = Date.now() * 0.002;
             if(baseMeshes.torso) baseMeshes.torso.position.y = 2.5 + Math.sin(time) * 0.05;
-            if(slots.head) slots.head.rotation.x = Math.sin(time * 0.5) * 0.05;
             if(baseMeshes.leftArm) baseMeshes.leftArm.rotation.z = 0.1 + Math.sin(time) * 0.05;
             if(baseMeshes.rightArm) baseMeshes.rightArm.rotation.z = -0.1 - Math.sin(time) * 0.05;
-
-            ring.rotation.z += 0.01;
-
-            if (currentContainer && currentContainer.offsetWidth > 0) {
-                renderer.render(scene, camera);
-            }
+            if (currentContainer && currentContainer.offsetWidth > 0) renderer.render(scene, camera);
         };
-        animate3D();
-        setupDragControls();
+        animate3D(); setupDragControls();
     }
 
     function buildBaseBody() {
         const defaultMat = new THREE.MeshStandardMaterial({ color: 0xfcd34d, roughness: 0.7 });
-        
-        // Tronco
-        baseMeshes.torso = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.5, 0.8), defaultMat);
-        baseMeshes.torso.position.y = 2.5;
-        baseMeshes.torso.castShadow = true;
-        avatarGroup.add(baseMeshes.torso);
-
-        // Perna Esq e Dir
-        baseMeshes.leftLeg = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.8, 0.5), defaultMat);
-        baseMeshes.leftLeg.position.set(-0.35, 0.9, 0); baseMeshes.leftLeg.castShadow = true;
-        avatarGroup.add(baseMeshes.leftLeg);
-        
-        baseMeshes.rightLeg = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.8, 0.5), defaultMat);
-        baseMeshes.rightLeg.position.set(0.35, 0.9, 0); baseMeshes.rightLeg.castShadow = true;
-        avatarGroup.add(baseMeshes.rightLeg);
-
-        // Braço Esq e Dir (Atachados ao Torso para herdarem a respiração)
-        baseMeshes.leftArm = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.4, 0.4), defaultMat);
-        baseMeshes.leftArm.position.set(-0.8, 0, 0); baseMeshes.leftArm.castShadow = true;
-        baseMeshes.torso.add(baseMeshes.leftArm);
-
-        baseMeshes.rightArm = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.4, 0.4), defaultMat);
-        baseMeshes.rightArm.position.set(0.8, 0, 0); baseMeshes.rightArm.castShadow = true;
-        baseMeshes.torso.add(baseMeshes.rightArm);
-
-        // Slots (Grupos vazios onde injetaremos os equipamentos)
-        slots.head = new THREE.Group();
-        slots.head.position.set(0, 1.0, 0); // Topo do torso
-        baseMeshes.torso.add(slots.head);
-
-        slots.extra = new THREE.Group();
-        slots.extra.position.set(0, -0.5, 0.2); // Na mão direita
-        baseMeshes.rightArm.add(slots.extra);
-
-        slots.back = new THREE.Group();
-        slots.back.position.set(0, 0.5, -0.45); // Nas costas
-        baseMeshes.torso.add(slots.back);
+        baseMeshes.torso = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.5, 0.8), defaultMat); baseMeshes.torso.position.y = 2.5; avatarGroup.add(baseMeshes.torso);
+        baseMeshes.leftLeg = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.8, 0.5), defaultMat); baseMeshes.leftLeg.position.set(-0.35, 0.9, 0); avatarGroup.add(baseMeshes.leftLeg);
+        baseMeshes.rightLeg = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.8, 0.5), defaultMat); baseMeshes.rightLeg.position.set(0.35, 0.9, 0); avatarGroup.add(baseMeshes.rightLeg);
+        baseMeshes.leftArm = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.4, 0.4), defaultMat); baseMeshes.leftArm.position.set(-0.8, 0, 0); baseMeshes.torso.add(baseMeshes.leftArm);
+        baseMeshes.rightArm = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.4, 0.4), defaultMat); baseMeshes.rightArm.position.set(0.8, 0, 0); baseMeshes.torso.add(baseMeshes.rightArm);
+        slots.head = new THREE.Group(); slots.head.position.set(0, 1.0, 0); baseMeshes.torso.add(slots.head);
+        slots.extra = new THREE.Group(); slots.extra.position.set(0, -0.5, 0.2); baseMeshes.rightArm.add(slots.extra);
+        slots.back = new THREE.Group(); slots.back.position.set(0, 0.5, -0.45); baseMeshes.torso.add(slots.back);
     }
 
     function mount3DCanvas(containerId) {
-        const container = document.getElementById(containerId);
-        if (!container || currentContainer === container) return;
-        currentContainer = container;
-        
-        // Reajusta tamanho
-        const w = container.offsetWidth;
-        const h = container.offsetHeight || 300;
-        renderer.setSize(w, h);
-        camera.aspect = w / h;
-        
-        // Ajusta zoom dependendo da tela
-        if(containerId === 'home-avatar-container') camera.position.set(0, 4.5, 9); // Mais perto
-        else camera.position.set(0, 3.5, 11); // Mais corpo inteiro
-        
-        camera.updateProjectionMatrix();
-        container.innerHTML = '';
-        container.appendChild(renderer.domElement);
-        
-        // Reseta rotação ao trocar de aba
-        targetRotation = 0;
+        const container = document.getElementById(containerId); if (!container || currentContainer === container) return;
+        currentContainer = container; const w = container.offsetWidth; const h = container.offsetHeight || 300;
+        renderer.setSize(w, h); camera.aspect = w / h;
+        if(containerId === 'home-avatar-container') camera.position.set(0, 4.5, 9); else camera.position.set(0, 3.5, 11);
+        camera.updateProjectionMatrix(); container.innerHTML = ''; container.appendChild(renderer.domElement); targetRotation = 0;
     }
 
     function setupDragControls() {
-        const onDown = (e) => { isDragging = true; previousMousePosition = { x: e.offsetX || e.touches?.[0].clientX, y: e.offsetY || e.touches?.[0].clientY }; };
-        const onMove = (e) => {
-            if(!isDragging) return;
-            const currentX = e.offsetX || e.touches?.[0].clientX;
-            const deltaX = currentX - previousMousePosition.x;
-            targetRotation += deltaX * 0.01;
-            previousMousePosition = { x: currentX };
-        };
+        const onDown = (e) => { isDragging = true; previousMousePosition = { x: e.offsetX || e.touches?.[0].clientX }; };
+        const onMove = (e) => { if(!isDragging) return; const curX = e.offsetX || e.touches?.[0].clientX; targetRotation += (curX - previousMousePosition.x) * 0.01; previousMousePosition = { x: curX }; };
         const onUp = () => { isDragging = false; };
-        
         document.addEventListener('mousedown', onDown); document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
         document.addEventListener('touchstart', onDown); document.addEventListener('touchmove', onMove); document.addEventListener('touchend', onUp);
     }
 
-    // BANCO DE ITENS E GERADORES 3D PROCEDURAIS
-    const itemsDB = [
-        { id: 'body_default', type: 'body', name: 'Traje Base', icon: '👤', apply3D: () => { setBodyColor(0xfcd34d, 0x3b82f6); } },
-        { id: 'body_dark', type: 'body', name: 'Traje Sombrio', icon: '🌑', apply3D: () => { setBodyColor(0x1e293b, 0x0f172a); } },
-        { id: 'head_none', type: 'head', name: 'Nenhum', icon: '❌', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); return g; } },
-        { id: 'head_hood', type: 'head', name: 'Capuz Rogue', icon: '🥷', build3D: () => { 
-            const g = new THREE.Group(); 
-            const face = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), new THREE.MeshStandardMaterial({color: 0x1e293b})); face.position.y = 0.4; g.add(face);
-            const hood = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: 0x0f172a})); hood.position.y = 0.45; hood.position.z = -0.05; g.add(hood);
-            return g; 
-        } },
-        { id: 'head_hair', type: 'head', name: 'Cabelo Herói', icon: '💇', build3D: () => {
-            const g = new THREE.Group();
-            const head = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); head.position.y = 0.45; g.add(head);
-            const hair = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.3, 1.0), new THREE.MeshStandardMaterial({color: 0x78350f})); hair.position.y = 0.95; g.add(hair);
-            return g;
-        } },
-        { id: 'extra_none', type: 'extra', name: 'Nenhum', icon: '❌', build3D: () => new THREE.Group() },
-        { id: 'extra_sword', type: 'extra', name: 'Espada', icon: '⚔️', build3D: () => {
-            const g = new THREE.Group();
-            const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.4), new THREE.MeshStandardMaterial({color: 0x78350f})); handle.rotation.x = Math.PI/2; g.add(handle);
-            const guard = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), new THREE.MeshStandardMaterial({color: 0xfbbf24})); guard.position.z = 0.2; g.add(guard);
-            const blade = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.8, 0.02), new THREE.MeshStandardMaterial({color: 0xcbd5e1, metalness: 0.8})); blade.position.z = 0.6; blade.rotation.x = Math.PI/2; g.add(blade);
-            return g;
-        } },
-        { id: 'extra_cloak', type: 'extra', name: 'Capa Azul', icon: '🧥', isBack: true, build3D: () => {
-            const g = new THREE.Group();
-            const cloak = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.8), new THREE.MeshStandardMaterial({color: 0x3b82f6, side: THREE.DoubleSide}));
-            cloak.position.y = -0.5; cloak.rotation.x = -0.1; g.add(cloak);
-            return g;
-        } },
-        // Itens Elementais (Exemplos)
-        { id: 'head_void_halo', type: 'head', name: 'Coroa Vazio', icon: '👑', build3D: () => {
-            const g = new THREE.Group();
-            const head = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); head.position.y = 0.45; g.add(head);
-            const halo = new THREE.Mesh(new THREE.TorusGeometry(0.6, 0.05, 8, 24), new THREE.MeshBasicMaterial({color: 0x818cf8})); halo.position.y = 1.2; halo.rotation.x = Math.PI/2; g.add(halo);
-            return g;
-        }},
-        { id: 'extra_forest_staff', type: 'extra', name: 'Cajado', icon: '🌿', build3D: () => {
-            const g = new THREE.Group();
-            const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.04, 2.0), new THREE.MeshStandardMaterial({color: 0x451a03})); staff.rotation.x = Math.PI/2; g.add(staff);
-            const gem = new THREE.Mesh(new THREE.OctahedronGeometry(0.2), new THREE.MeshStandardMaterial({color: 0x34d399, emissive: 0x059669})); gem.position.z = 1.1; g.add(gem);
-            return g;
-        }}
-    ];
-
-    let currentSkinColor = 0xfcd34d;
     function setBodyColor(skinHex, clothesHex) {
         currentSkinColor = skinHex;
         if(baseMeshes.torso) {
-            baseMeshes.torso.material.color.setHex(clothesHex);
-            baseMeshes.leftLeg.material.color.setHex(clothesHex); baseMeshes.rightLeg.material.color.setHex(clothesHex);
+            baseMeshes.torso.material.color.setHex(clothesHex); baseMeshes.leftLeg.material.color.setHex(clothesHex); baseMeshes.rightLeg.material.color.setHex(clothesHex);
             baseMeshes.leftArm.material.color.setHex(skinHex); baseMeshes.rightArm.material.color.setHex(skinHex);
         }
     }
 
-    function applyEquipment3D() {
-        if(!avatarGroup) return;
-        const eq = profileData.equipped || { body: 'body_default', head: 'head_none', extra: 'extra_none' };
-        
-        // 1. Aplicar Body (Cores)
-        const bodyItem = itemsDB.find(i => i.id === eq.body);
-        if(bodyItem && bodyItem.apply3D) bodyItem.apply3D();
+    // ITEM DATABASE & 3D PROCEDURAL GENERATION
+    const itemsDB = [
+        { id: 'body_default', type: 'body', name: 'Traje Base', icon: '👤', apply3D: () => setBodyColor(0xfcd34d, 0x3b82f6) },
+        { id: 'body_dark', type: 'body', name: 'Sombrio', icon: '🌑', apply3D: () => setBodyColor(0x1e293b, 0x0f172a) },
+        { id: 'head_none', type: 'head', name: 'Nenhum', icon: '❌', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); return g; } },
+        { id: 'head_hood', type: 'head', name: 'Capuz', icon: '🥷', build3D: () => { const g = new THREE.Group(); const f = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), new THREE.MeshStandardMaterial({color: 0x1e293b})); f.position.y = 0.4; g.add(f); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: 0x0f172a})); h.position.y = 0.45; h.position.z = -0.05; g.add(h); return g; } },
+        { id: 'head_hair', type: 'head', name: 'Cabelo', icon: '💇', build3D: () => { const g = new THREE.Group(); const head = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); head.position.y = 0.45; g.add(head); const hair = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.3, 1.0), new THREE.MeshStandardMaterial({color: 0x78350f})); hair.position.y = 0.95; g.add(hair); return g; } },
+        { id: 'extra_none', type: 'extra', name: 'Nenhum', icon: '❌', build3D: () => new THREE.Group() },
+        { id: 'extra_sword', type: 'extra', name: 'Espada', icon: '⚔️', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.4), new THREE.MeshStandardMaterial({color: 0x78350f})); h.rotation.x = Math.PI/2; g.add(h); const guard = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), new THREE.MeshStandardMaterial({color: 0xfbbf24})); guard.position.z = 0.2; g.add(guard); const blade = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.8, 0.02), new THREE.MeshStandardMaterial({color: 0xcbd5e1, metalness: 0.8})); blade.position.z = 0.6; blade.rotation.x = Math.PI/2; g.add(blade); return g; } },
+        { id: 'extra_cloak', type: 'extra', name: 'Capa', icon: '🧥', isBack: true, build3D: () => { const g = new THREE.Group(); const c = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.8), new THREE.MeshStandardMaterial({color: 0x3b82f6, side: THREE.DoubleSide})); c.position.y = -0.5; c.rotation.x = -0.1; g.add(c); return g; } },
+        { id: 'head_void_halo', type: 'head', name: 'Coroa Vazio', icon: '👑', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const halo = new THREE.Mesh(new THREE.TorusGeometry(0.6, 0.05, 8, 24), new THREE.MeshBasicMaterial({color: 0x818cf8})); halo.position.y = 1.2; halo.rotation.x = Math.PI/2; g.add(halo); return g; }},
+        { id: 'extra_void_orbs', type: 'extra', name: 'Orbes', icon: '🔮', isBack: true, build3D: () => { const g = new THREE.Group(); const orb1 = new THREE.Mesh(new THREE.SphereGeometry(0.2), new THREE.MeshBasicMaterial({color: 0x818cf8})); orb1.position.set(-0.8, 0.5, 0.2); g.add(orb1); const orb2 = new THREE.Mesh(new THREE.SphereGeometry(0.2), new THREE.MeshBasicMaterial({color: 0x818cf8})); orb2.position.set(0.8, 0.5, 0.2); g.add(orb2); return g; }},
+        { id: 'head_journey_hat', type: 'head', name: 'Chapéu', icon: '🤠', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const hat = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.8, 0.2), new THREE.MeshStandardMaterial({color: 0xd97706})); hat.position.y = 1.0; g.add(hat); return g; }},
+        { id: 'extra_journey_pack', type: 'extra', name: 'Mochila', icon: '🎒', isBack: true, build3D: () => { const g = new THREE.Group(); const pack = new THREE.Mesh(new THREE.BoxGeometry(0.8, 1.0, 0.4), new THREE.MeshStandardMaterial({color: 0x78350f})); pack.position.set(0, -0.2, 0); g.add(pack); return g; }},
+        { id: 'head_forest_antlers', type: 'head', name: 'Chifres', icon: '🦌', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const horn = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.6), new THREE.MeshStandardMaterial({color: 0x78350f})); horn.position.set(0.4, 1.2, 0); horn.rotation.z = -0.3; g.add(horn); const horn2 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.6), new THREE.MeshStandardMaterial({color: 0x78350f})); horn2.position.set(-0.4, 1.2, 0); horn2.rotation.z = 0.3; g.add(horn2); return g; }},
+        { id: 'extra_forest_staff', type: 'extra', name: 'Cajado', icon: '🌿', build3D: () => { const g = new THREE.Group(); const s = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.04, 2.0), new THREE.MeshStandardMaterial({color: 0x451a03})); s.rotation.x = Math.PI/2; g.add(s); const gem = new THREE.Mesh(new THREE.OctahedronGeometry(0.2), new THREE.MeshStandardMaterial({color: 0x34d399, emissive: 0x059669})); gem.position.z = 1.1; g.add(gem); return g; }},
+        { id: 'head_cloud_goggles', type: 'head', name: 'Óculos', icon: '🥽', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const glass = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.2, 0.92), new THREE.MeshStandardMaterial({color: 0x475569})); glass.position.y = 0.6; g.add(glass); return g; }},
+        { id: 'extra_cloud_wings', type: 'extra', name: 'Asas', icon: '👼', isBack: true, build3D: () => { const g = new THREE.Group(); const w = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 1.0), new THREE.MeshBasicMaterial({color: 0xffffff, transparent:true, opacity:0.7, side: THREE.DoubleSide})); w.position.y = -0.2; g.add(w); return g; }},
+        { id: 'head_inferno_horns', type: 'head', name: 'Demônio', icon: '👿', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const horn1 = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.4), new THREE.MeshStandardMaterial({color: 0xdc2626})); horn1.position.set(0.3, 1.1, 0); horn1.rotation.z = -0.2; g.add(horn1); const horn2 = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.4), new THREE.MeshStandardMaterial({color: 0xdc2626})); horn2.position.set(-0.3, 1.1, 0); horn2.rotation.z = 0.2; g.add(horn2); return g; }},
+        { id: 'extra_inferno_aura', type: 'extra', name: 'Aura Fogo', icon: '🔥', isBack: true, build3D: () => { const g = new THREE.Group(); const aura = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 2.0), new THREE.MeshBasicMaterial({color: 0xf87171, transparent:true, opacity:0.5, side: THREE.DoubleSide})); aura.position.y = -0.5; g.add(aura); return g; }},
+        { id: 'head_ocean_crown', type: 'head', name: 'Coroa Mar', icon: '🧜‍♂️', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const crown = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.3), new THREE.MeshStandardMaterial({color: 0x0ea5e9})); crown.position.y = 1.0; g.add(crown); return g; }},
+        { id: 'extra_ocean_trident', type: 'extra', name: 'Tridente', icon: '🔱', build3D: () => { const g = new THREE.Group(); const s = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 2.0), new THREE.MeshStandardMaterial({color: 0x0891b2})); s.rotation.x = Math.PI/2; g.add(s); const top = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), new THREE.MeshStandardMaterial({color: 0x22d3ee})); top.position.z = 1.0; g.add(top); return g; }},
+        { id: 'head_arcane_hat', type: 'head', name: 'Chapéu Mago', icon: '🧙', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const hat = new THREE.Mesh(new THREE.ConeGeometry(0.6, 1.2), new THREE.MeshStandardMaterial({color: 0x581c87})); hat.position.y = 1.4; g.add(hat); const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.8, 0.1), new THREE.MeshStandardMaterial({color: 0x3b0764})); brim.position.y = 0.9; g.add(brim); return g; }},
+        { id: 'extra_arcane_book', type: 'extra', name: 'Grimório', icon: '📖', build3D: () => { const g = new THREE.Group(); const book = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.5, 0.1), new THREE.MeshStandardMaterial({color: 0xc026d3})); book.position.set(0, 0, 0.5); g.add(book); return g; }}
+    ];
 
-        // 2. Limpar Slots Head/Extra/Back
+    function applyEquipment3D() {
+        if(!avatarGroup) return; const eq = profileData.equipped || { body: 'body_default', head: 'head_none', extra: 'extra_none' };
+        const bodyItem = itemsDB.find(i => i.id === eq.body); if(bodyItem && bodyItem.apply3D) bodyItem.apply3D();
         while(slots.head.children.length > 0) slots.head.remove(slots.head.children[0]);
         while(slots.extra.children.length > 0) slots.extra.remove(slots.extra.children[0]);
         while(slots.back.children.length > 0) slots.back.remove(slots.back.children[0]);
-
-        // 3. Aplicar Head
-        const headItem = itemsDB.find(i => i.id === eq.head);
-        if(headItem && headItem.build3D) {
-            const mesh = headItem.build3D();
-            if(mesh) slots.head.add(mesh);
-        }
-
-        // 4. Aplicar Extra (Arma ou Capa)
-        const extraItem = itemsDB.find(i => i.id === eq.extra);
-        if(extraItem && extraItem.build3D) {
-            const mesh = extraItem.build3D();
-            if(mesh) {
-                if(extraItem.isBack) slots.back.add(mesh);
-                else slots.extra.add(mesh);
-            }
-        }
+        const headItem = itemsDB.find(i => i.id === eq.head); if(headItem && headItem.build3D) { const m = headItem.build3D(); if(m) slots.head.add(m); }
+        const extraItem = itemsDB.find(i => i.id === eq.extra); if(extraItem && extraItem.build3D) { const m = extraItem.build3D(); if(m) { if(extraItem.isBack) slots.back.add(m); else slots.extra.add(m); } }
     }
 
-    // Inicializar Motor 3D ao carregar script
     init3DEngine();
 
-
     // ----------------------------------------------------
-    // LÓGICA DO APP (Firebase, UI, Caminho)
+    // LÓGICA DO APP (Caminho, Hábitos, Inventário)
     // ----------------------------------------------------
-    let currentUser = null; let userPath = ''; 
-    const defaultUnlocked = ['body_default', 'body_dark', 'head_none', 'head_hood', 'head_hair', 'extra_none', 'extra_sword', 'extra_cloak'];
-    let profileData = { name: "Viajante", description: "Despertando...", exp: 0, coins: 0, theme: "theme-void", customPhotoURL: "", elementChosen: false, isAdmin: false, unlockedItems: [...defaultUnlocked], claimedNodes: [], equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
-    const EXP_PER_LEVEL = 500;
-    
-    // Canvas do Background Animado (SVG/2D Context)
-    const canvas = document.getElementById('theme-canvas'); const ctx = canvas.getContext('2d');
-    let particles = []; function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } window.addEventListener('resize', resizeCanvas); resizeCanvas();
-    class Particle {
-        constructor(theme) { this.theme = theme; this.reset(); this.y = Math.random() * canvas.height; }
-        reset() { this.x = Math.random() * canvas.width; this.y = canvas.height + Math.random() * 100; this.size = Math.random() * 3 + 1; this.alpha = Math.random() * 0.5 + 0.1; this.vx = (Math.random() - 0.5); this.vy = -(Math.random()*1 + 0.5); this.color = `rgba(255,255,255,${this.alpha})`; }
-        update() { this.x += this.vx; this.y += this.vy; if (this.y < -10) this.reset(); }
-        draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = this.color; ctx.fill(); }
+    function generatePathForElement(themeKey, headId, extraId) {
+        const path = []; const levels = [2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+        levels.forEach(lvl => {
+            if(lvl === 2) path.push({ id: `${themeKey}_n2`, reqLvl: 2, type: 'item', rewardId: headId, title: 'O Primeiro Passo', desc: 'Afinidade despertou.' });
+            else if(lvl === 20) path.push({ id: `${themeKey}_n20`, reqLvl: 20, type: 'item', rewardId: extraId, title: 'Domínio Elemental', desc: 'Sua aura primal.' });
+            else { const coins = lvl * 10; path.push({ id: `${themeKey}_coin_${lvl}`, reqLvl: lvl, type: 'coin', amount: coins, title: 'Tesouro da Jornada', desc: `+${coins} Moedas.` }); }
+        }); return path;
     }
-    function initParticles(theme) { particles = []; for(let i=0; i<30; i++) particles.push(new Particle(theme)); }
-    function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animateParticles); }
+
+    const pathsDB = {
+        'theme-void': generatePathForElement('void', 'head_void_halo', 'extra_void_orbs'),
+        'theme-journey': generatePathForElement('journey', 'head_journey_hat', 'extra_journey_pack'),
+        'theme-forest': generatePathForElement('forest', 'head_forest_antlers', 'extra_forest_staff'),
+        'theme-cloud': generatePathForElement('cloud', 'head_cloud_goggles', 'extra_cloud_wings'),
+        'theme-inferno': generatePathForElement('inferno', 'head_inferno_horns', 'extra_inferno_aura'),
+        'theme-ocean': generatePathForElement('ocean', 'head_ocean_crown', 'extra_ocean_trident'),
+        'theme-arcane': generatePathForElement('arcane', 'head_arcane_hat', 'extra_arcane_book')
+    };
+
+    function getLevelInfo(exp) { return { level: Math.floor(exp / EXP_PER_LEVEL) + 1, currentExp: exp % EXP_PER_LEVEL, progress: ((exp % EXP_PER_LEVEL) / EXP_PER_LEVEL) * 100 }; }
+    function closeLevelUp() { document.getElementById('level-up-screen').classList.remove('active'); }
+    function createFloatingEXP(amount) { const el = document.createElement('div'); el.className = 'floating-exp'; el.innerText = `+${amount} XP`; el.style.left = `50%`; el.style.top = `50%`; document.body.appendChild(el); setTimeout(() => el.remove(), 1000); }
 
     window.switchTab = (tabId, btnElement) => {
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active')); if(btnElement) btnElement.classList.add('active');
         ['home','inventory','path','skills','shop','community'].forEach(t => { const el = document.getElementById(`view-${t}`); if(el) el.classList.add('hidden'); });
-        const target = document.getElementById(`view-${tabId}`); if(target) target.classList.remove('hidden');
-        
-        // Mover o Canvas 3D para a tela correta
+        document.getElementById(`view-${tabId}`).classList.remove('hidden');
         if(tabId === 'home') mount3DCanvas('home-avatar-container');
         if(tabId === 'inventory') mount3DCanvas('inv-avatar-container');
+        if(tabId === 'path') renderPath();
+        if(tabId === 'skills') renderWheel();
+        if(tabId === 'shop') renderShop();
     };
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
             currentUser = user; userPath = `users/${user.uid}`;
             document.getElementById('login-screen').classList.remove('active');
-            setTimeout(() => { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('app-container').classList.remove('hidden'); initParticles(document.body.className); animateParticles(); mount3DCanvas('home-avatar-container'); }, 500);
+            setTimeout(() => { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('app-container').classList.remove('hidden'); mount3DCanvas('home-avatar-container'); document.body.className = profileData.theme; }, 500);
             loadDataAndSync(); 
         } else {
             currentUser = null; document.getElementById('login-screen').classList.remove('hidden'); document.getElementById('login-screen').classList.add('active'); document.getElementById('app-container').classList.add('hidden');
@@ -594,50 +466,170 @@
 
     async function loadDataAndSync() {
         if (!currentUser) return;
-        const profileRef = doc(db, userPath, 'profile', 'main');
-        onSnapshot(profileRef, (docSnap) => {
+        onSnapshot(doc(db, userPath, 'profile', 'main'), (docSnap) => {
             if (docSnap.exists()) {
                 profileData = docSnap.data(); 
                 if(!profileData.equipped) profileData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' };
                 if(!profileData.unlockedItems) profileData.unlockedItems = [...defaultUnlocked];
+                if(!profileData.claimedNodes) profileData.claimedNodes = [];
+                
+                const newLvl = getLevelInfo(profileData.exp || 0).level;
+                if(newLvl > currentLevelState) { document.getElementById('new-level-display').innerText = newLvl; document.getElementById('level-up-screen').classList.add('active'); currentLevelState = newLvl; }
+                if(profileData.elementChosen === false) document.getElementById('element-choice-screen').classList.add('active');
                 
                 document.getElementById('disp-char-name').innerText = profileData.name || 'Viajante';
                 document.getElementById('disp-char-title').innerText = profileData.description || '';
+                document.getElementById('disp-level').innerText = newLvl;
+                document.getElementById('disp-exp-current').innerText = getLevelInfo(profileData.exp || 0).currentExp;
+                document.getElementById('disp-exp-bar').style.width = `${getLevelInfo(profileData.exp || 0).progress}%`;
+                document.getElementById('disp-coins').innerText = profileData.coins || 0;
                 
-                renderInventoryGrid();
-                applyEquipment3D(); // ATUALIZA O 3D
-            } else { setDoc(profileRef, profileData); }
+                document.body.className = profileData.theme || 'theme-void';
+                renderInventoryGrid(); applyEquipment3D(); renderPath();
+            } else { setDoc(doc(db, userPath, 'profile', 'main'), profileData); }
         });
+
+        onSnapshot(collection(db, userPath, 'quests'), (snap) => { questsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); updateQuestsUI(); });
+        onSnapshot(collection(db, userPath, 'skills'), (snap) => { skillsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderWheel(); renderSkillList(); });
+        onSnapshot(collection(db, 'community'), (snap) => { communityData = snap.docs.map(d => d.data()); renderCommunityList(); });
     }
 
-    // INVENTÁRIO LOGIC
+    // --- INVENTÁRIO LOGIC ---
     window.equipItem = async (itemId, type) => {
-        if (!currentUser) return; 
-        const eq = profileData.equipped || { body: 'body_default', head: 'head_none', extra: 'extra_none' }; 
-        eq[type] = itemId;
-        // Salva no banco. O onSnapshot vai pegar e chamar applyEquipment3D()
+        if (!currentUser) return; const eq = profileData.equipped; eq[type] = itemId;
         await updateDoc(doc(db, userPath, 'profile', 'main'), { equipped: eq });
     };
 
     function renderInventoryGrid() {
-        const eq = profileData.equipped || {};
-        const unlocked = profileData.unlockedItems || [...defaultUnlocked];
+        const eq = profileData.equipped || {}; const unlocked = profileData.unlockedItems || [];
         const renderGroup = (type, containerId) => {
             const c = document.getElementById(containerId); if(!c) return; 
             const items = itemsDB.filter(i => i.type === type && unlocked.includes(i.id));
-            c.innerHTML = items.map(i => `
-                <div class="inv-slot ${eq[type] === i.id ? 'equipped' : ''}" onclick="equipItem('${i.id}', '${type}')">
-                    <div class="inv-icon">${i.icon}</div>
-                    <div class="inv-name">${i.name}</div>
-                </div>`).join('');
+            c.innerHTML = items.map(i => `<div class="inv-slot ${eq[type] === i.id ? 'equipped' : ''}" onclick="equipItem('${i.id}', '${type}')"><div class="inv-icon">${i.icon}</div><div class="inv-name">${i.name}</div></div>`).join('');
         };
-        renderGroup('head', 'inv-grid-head'); 
-        renderGroup('body', 'inv-grid-body'); 
-        renderGroup('extra', 'inv-grid-extras');
+        renderGroup('head', 'inv-grid-head'); renderGroup('body', 'inv-grid-body'); renderGroup('extra', 'inv-grid-extras');
     }
 
+    // --- CAMINHO 3D ---
+    function generate3DEnvironment(theme, totalWidth) {
+        let svg = ''; const loops = Math.ceil(totalWidth / 300);
+        if (theme === 'theme-cloud') {
+            for (let i = 0; i < loops; i++) { svg += `<ellipse cx="${i*300+Math.random()*100}" cy="90%" rx="${Math.random()*80+50}" ry="${Math.random()*40+30}" fill="#ffffff" opacity="0.4"/>`; }
+        } else if (theme === 'theme-ocean') {
+            svg += `<path d="M0,80% Q${totalWidth*0.25},70% ${totalWidth*0.5},80% T${totalWidth},80% L${totalWidth},100% L0,100% Z" fill="#06b6d4" opacity="0.3"/>`;
+            for (let i = 0; i < loops * 3; i++) svg += `<circle cx="${Math.random()*totalWidth}" cy="${Math.random()*100}%" r="${Math.random()*8+2}" fill="#cffafe" opacity="0.5"/>`;
+        } else if (theme === 'theme-forest') {
+            for (let i = 0; i < loops * 2; i++) { svg += `<rect x="${i*150+Math.random()*50}" y="40%" width="30" height="60%" fill="#064e3b" opacity="0.7"/><circle cx="${i*150+15}" cy="40%" r="${Math.random()*50+40}" fill="#059669" opacity="0.5"/>`; }
+        } else if (theme === 'theme-inferno') {
+            svg += `<path d="M0,85% L${totalWidth},85% L${totalWidth},100% L0,100% Z" fill="#7f1d1d" opacity="0.8"/>`;
+            for (let i = 0; i < loops * 2; i++) svg += `<polygon points="${i*150},100% ${i*150+30},60% ${i*150+60},100%" fill="#450a0a" opacity="0.8"/>`;
+        } else if (theme === 'theme-journey') {
+            for (let i = 0; i < loops * 2; i++) { const bx = i * 150 + Math.random() * 50; const by = 70 + Math.random() * 20; svg += `<polygon points="${bx},${by}% ${bx+40},${by-10}% ${bx+80},${by}% ${bx+40},${by+10}%" fill="#d97706" opacity="0.5"/>`; }
+        } else if (theme === 'theme-void') {
+            for (let i = 0; i < loops * 3; i++) { const bx = Math.random() * totalWidth; const by = Math.random() * 80 + 10; const s = Math.random() * 20 + 10; svg += `<polygon points="${bx},${by}% ${bx+s},${by-s}% ${bx+s*2},${by}% ${bx+s},${by+s}%" fill="#818cf8" opacity="0.4"/>`; }
+        } else if (theme === 'theme-arcane') {
+            for (let i = 0; i < loops; i++) { const px = i * 300 + Math.random() * 100; svg += `<ellipse cx="${px}" cy="80%" rx="${Math.random()*80+40}" ry="${Math.random()*20+10}" fill="none" stroke="#e879f9" stroke-width="2" opacity="0.5"/>`; }
+        }
+        return svg;
+    }
+
+    window.claimReward = async (nodeId, type, rewardValue) => {
+        if(!currentUser) return; const claimed = profileData.claimedNodes || []; const unlocked = profileData.unlockedItems || []; let newCoins = profileData.coins || 0;
+        if(!claimed.includes(nodeId)) {
+            claimed.push(nodeId); if(type === 'item' && !unlocked.includes(rewardValue)) unlocked.push(rewardValue); if(type === 'coin') newCoins += parseInt(rewardValue);
+            await updateDoc(doc(db, userPath, 'profile', 'main'), { claimedNodes: claimed, unlockedItems: unlocked, coins: newCoins });
+        }
+    };
+
+    function renderPath() {
+        const container = document.getElementById('path-timeline-container'); if(!container) return;
+        const theme = profileData.theme || 'theme-void'; document.getElementById('path-element-name').innerText = elementNames[theme] || 'Ascensão';
+        const pathNodes = pathsDB[theme] || []; const claimed = profileData.claimedNodes || []; const lvl = getLevelInfo(profileData.exp || 0).level;
+        
+        const totalWidth = pathNodes.length * 320 + 100; document.getElementById('path-horizon-line').style.width = `${totalWidth}px`;
+        document.getElementById('path-3d-env').innerHTML = generate3DEnvironment(theme, totalWidth);
+
+        container.innerHTML = pathNodes.map(node => {
+            const isClaimed = claimed.includes(node.id); const isUnlocked = lvl >= node.reqLvl;
+            const status = isClaimed ? 'claimed' : (isUnlocked ? 'unlocked' : '');
+            let btn = isClaimed ? `<div style="color:var(--success); font-weight:800; font-size:0.8rem; margin-top:10px;">✓ Adquirido</div>` : (isUnlocked ? `<button class="btn-duo" style="padding: 8px 16px; font-size: 0.8rem; width: auto; margin-top: 10px;" onclick="claimReward('${node.id}', '${node.type}', '${node.type==='item'?node.rewardId:node.amount}')">Reivindicar</button>` : `<div style="color:var(--text-muted); font-weight:700; font-size:0.8rem; margin-top:10px;">Requer Nível ${node.reqLvl}</div>`);
+            let icon = node.type === 'item' ? (itemsDB.find(i=>i.id===node.rewardId)?.icon||'🎁') : '🪙';
+            return `<div class="timeline-item ${status}"><div class="timeline-connector"></div><div class="timeline-dot"></div><div style="background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); padding: 1rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px); position:relative; z-index:10;"><div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><div><h4 style="font-weight: 900; font-size: 1rem;">${node.title}</h4><div style="font-size: 0.8rem; color: var(--accent); font-weight: 800;">Nível ${node.reqLvl}</div></div><div style="font-size: 1.5rem; background: rgba(255,255,255,0.1); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid var(--glass-border);">${icon}</div></div><p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.3;">${node.desc}</p>${btn}</div></div>`;
+        }).join('');
+    }
+
+    // --- HÁBITOS (QUESTS) ---
+    window.addRandomQuest = async () => { if(!currentUser) return; const m = prompt("Novo Hábito a cultivar:"); if(m) await addDoc(collection(db, userPath, 'quests'), { title: m, exp: 30, done: false }); };
+    window.toggleQuest = async (id, done, exp) => { if(!currentUser) return; if(!done) { createFloatingEXP(exp); await updateDoc(doc(db, userPath, 'profile', 'main'), { exp: (profileData.exp||0)+exp }); } await updateDoc(doc(db, userPath, 'quests', id), { done: !done }); };
+    function updateQuestsUI() {
+        const c = document.getElementById('quests-container'); const sorted = [...questsData].sort((a, b) => a.done ? 1 : -1);
+        if(sorted.length === 0) { c.innerHTML = `<p style="color:var(--text-muted); text-align:center;">Adicione hábitos no botão +</p>`; return; }
+        c.innerHTML = sorted.map(q => `<div class="quest-item ${q.done ? 'completed' : ''}" onclick="toggleQuest('${q.id}', ${q.done}, ${q.exp})"><div style="display:flex; align-items:center; gap:1rem;"><div class="checkbox-bouncy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" style="width:14px; opacity:${q.done?1:0};"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div style="font-weight:800; text-decoration:${q.done?'line-through':'none'};">${q.title}</div></div><div style="color:var(--accent); font-weight:800; font-size:0.85rem;">+${q.exp}XP</div></div>`).join('');
+    }
+
+    // --- PILARES (SKILLS) ---
+    window.openAddPillarModal = () => document.getElementById('modal-add-pillar').classList.add('active');
+    window.confirmAddPillar = async () => { const n = document.getElementById('add-pillar-name').value; const e = document.getElementById('add-pillar-element').value; await addDoc(collection(db, userPath, 'skills'), { name: n||'Novo Pilar', element: e, level: 1 }); document.getElementById('modal-add-pillar').classList.remove('active'); };
+    function renderWheel() {
+        const wrapper = document.getElementById('iso-wrapper'); const nodesContainer = document.getElementById('iso-nodes'); const svg = document.getElementById('iso-ground'); if (!nodesContainer || document.getElementById('view-skills').classList.contains('hidden')) return;
+        nodesContainer.innerHTML = ''; svg.innerHTML = ''; const cx = 200; const cy = 200;
+        document.getElementById('iso-world').style.width = `400px`; document.getElementById('iso-world').style.height = `400px`;
+        skillsData.forEach((s, i) => {
+            const angle = (i * (2*Math.PI))/skillsData.length; const px = cx + 150 * Math.cos(angle); const py = cy + 60 * Math.sin(angle);
+            const elStyle = elementStyles[s.element] || elementStyles['void'];
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line"); line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", px); line.setAttribute("y2", py); line.setAttribute("stroke", "rgba(255,255,255,0.2)"); svg.appendChild(line);
+            nodesContainer.innerHTML += `<div class="iso-pillar-container" style="left:${px}px; top:${py}px;"><div class="iso-label" style="top:-60px;">${elStyle.icon} ${s.name}</div><div style="width: 40px; height: 60px; background: ${elStyle.main}; opacity:0.8; border-radius:4px; transform: scale(${0.5 + s.level/200});"></div></div>`;
+        });
+    }
+    function renderSkillList() { document.getElementById('skill-count').innerText = skillsData.length; document.getElementById('skills-list').innerHTML = skillsData.map(s => `<div class="skill-list-item"><div style="font-weight:800;">${elementStyles[s.element].icon} ${s.name}</div><div style="font-size:0.8rem; font-weight:700;">Lvl ${s.level}</div></div>`).join(''); }
+
+    // --- COMUNIDADE ---
+    function renderCommunityList() {
+        const term = document.getElementById('search-community').value.toLowerCase();
+        document.getElementById('community-top10-list').innerHTML = communityData.filter(u => u.name.toLowerCase().includes(term)).map(u => `<div class="community-card"><div style="display:flex; gap:10px; align-items:center;"><div class="comm-photo" style="background:var(--glass-bg);"></div><div><div style="font-weight:900;">${u.name}</div><div style="font-size:0.8rem; color:var(--text-muted);">${u.description}</div></div></div><div class="comm-level-badge">${u.level}</div></div>`).join('');
+    }
+
+    // --- SETUP GERAL ---
+    window.selectInitialElement = (themeClass) => { document.body.className = themeClass; profileData.theme = themeClass; };
+    window.confirmInitialElement = async () => { await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: profileData.theme, elementChosen: true }); document.getElementById('element-choice-screen').classList.remove('active'); };
+    window.openSettings = () => { document.getElementById('input-profile-name').value = profileData.name; document.getElementById('input-profile-desc').value = profileData.description; document.getElementById('settings-sheet').classList.add('open'); document.getElementById('settings-backdrop').classList.add('active'); };
+    window.closeSettingsUI = () => { document.getElementById('settings-sheet').classList.remove('open'); document.getElementById('settings-backdrop').classList.remove('active'); };
+    window.saveProfileData = async () => { await updateDoc(doc(db, userPath, 'profile', 'main'), { name: document.getElementById('input-profile-name').value, description: document.getElementById('input-profile-desc').value }); window.closeSettingsUI(); };
+    window.setTheme = async (themeClass) => { document.body.className = themeClass; profileData.theme = themeClass; await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: themeClass }); renderPath(); };
+    
+    // --- LOJA ---
+    function renderShop() {
+        const c = document.getElementById('shop-items-container'); if (!c) return;
+        const unlocked = profileData.unlockedItems || [];
+        const lockedItems = itemsDB.filter(i => !unlocked.includes(i.id) && i.id !== 'head_none' && i.id !== 'extra_none');
+        if(lockedItems.length === 0) { c.innerHTML = '<p style="color:var(--text-muted); grid-column: 1 / -1;">Tens todos os itens disponíveis!</p>'; return; }
+        c.innerHTML = lockedItems.map(i => `<div class="inv-slot"><div class="inv-icon">${i.icon}</div><div class="inv-name" style="margin-bottom:8px;">${i.name}</div><button class="btn-duo" style="padding: 4px 8px; font-size: 0.6rem; width: 85%;" onclick="buyItem('${i.id}', 50, event)">🪙 50</button></div>`).join('');
+    }
+
+    window.buyItem = async (itemId, price, event) => {
+        if (!currentUser) return;
+        let coins = profileData.coins || 0;
+        if (coins >= price) {
+            const unlocked = profileData.unlockedItems || [];
+            unlocked.push(itemId);
+            await updateDoc(doc(db, userPath, 'profile', 'main'), { coins: coins - price, unlockedItems: unlocked });
+            if (event && event.target) {
+                event.target.innerText = "✓ Adquirido";
+                event.target.style.background = "var(--success)";
+            }
+        } else {
+            if (event && event.target) {
+                const oldText = event.target.innerText;
+                event.target.innerText = "Moedas Insuficientes";
+                event.target.style.background = "#ef4444";
+                setTimeout(() => { event.target.innerText = oldText; event.target.style.background = "var(--accent)"; }, 2000);
+            }
+        }
+    };
+
     document.getElementById('btn-login-action').onclick = async () => { try { await signInWithPopup(auth, provider); } catch (e) { console.error(e); } };
-    window.handleLogout = () => { if(confirm("Deseja desconectar?")) signOut(auth); };
+    window.handleLogout = () => { if(confirm("Desejas desconectar?")) signOut(auth); };
+
 </script>
 </body>
 </html>
