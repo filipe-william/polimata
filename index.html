@@ -6,7 +6,7 @@
     <title>Polímata Hub - App</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- OS 7 ELEMENTOS (TEMAS GLOBAIS E LOCAIS) --- */
+        /* --- OS 7 ELEMENTOS --- */
         :root, .theme-void {
             --bg-color-1: #0f172a; --bg-color-2: #1e1b4b; --accent: #818cf8; --accent-dark: #4f46e5;
             --glass-bg: rgba(30, 27, 75, 0.4); --glass-border: rgba(129, 140, 248, 0.3);
@@ -72,7 +72,7 @@
         .btn-outline { background: transparent; border: 2px solid var(--text-muted); color: var(--text-main); font-weight: 800; padding: 12px 24px; border-radius: 20px; cursor: pointer; transition: 0.2s; width: 100%; text-transform: uppercase; }
         .btn-outline:active { background: rgba(255,255,255,0.1); } .theme-cloud .btn-outline { border-color: var(--text-muted); color: var(--text-main); }
 
-        /* --- BOTTOM NAV (6 ITENS) --- */
+        /* --- BOTTOM NAV --- */
         #bottom-nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); width: calc(100% - 1rem); max-width: 500px; background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 30px; display: flex; justify-content: space-between; padding: 0.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 50; transition: background-color 0.5s ease, border-color 0.5s ease; }
         .nav-item { flex: 1; background: transparent; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 18px; cursor: pointer; transition: all 0.3s; font-weight: 800; font-size: 0.55rem; text-transform: uppercase; padding: 4px 0; }
         .nav-item.active { color: var(--accent); background: rgba(0,0,0,0.2); }
@@ -100,73 +100,29 @@
         .panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 32px; border: 1px solid var(--glass-border); padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 1.5rem; position: relative; transition: background-color 0.5s ease, border-color 0.5s ease; }
         .identity-card { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: background-color 0.5s ease; }
         .identity-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        
         .coin-display { background: rgba(0,0,0,0.3); padding: 6px 12px; border-radius: 16px; display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 1rem; color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .theme-cloud .coin-display { background: rgba(255,255,255,0.8); }
 
-        /* --- CHAT TEMPORÁRIO (MODAL) --- */
-        #chat-modal { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 2000; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        #chat-modal.open { transform: translateY(0); }
-        .chat-header { padding: 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); }
-        .chat-header-title { font-size: 1.2rem; font-weight: 900; display: flex; align-items: center; gap: 10px; }
-        #chat-messages-container { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 10px; }
-        .chat-bubble { max-width: 80%; padding: 12px 16px; border-radius: 20px; font-weight: 600; font-size: 0.95rem; line-height: 1.4; animation: fadeIn 0.3s ease-out forwards; }
-        .bubble-mine { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .bubble-other { align-self: flex-start; background: var(--glass-bg); border: 1px solid var(--glass-border); border-bottom-left-radius: 4px; color: var(--text-main); }
-        .chat-input-area { padding: 1.5rem; border-top: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); display: flex; gap: 10px; padding-bottom: 2.5rem; }
-        .chat-input { flex: 1; background: rgba(0,0,0,0.3); border: 2px solid transparent; border-radius: 24px; padding: 14px 20px; color: var(--text-main); font-size: 1rem; outline: none; transition: 0.3s; }
-        .theme-cloud .chat-input { background: rgba(255,255,255,0.5); color: #0f172a; } .chat-input:focus { border-color: var(--accent); background: rgba(0,0,0,0.4); }
-        .btn-send { background: var(--accent); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0; }
-
-        /* --- CAMINHO ELEMENTAL (3D IMERSIVO) --- */
-        #path-area { height: 72vh; min-height: 450px; position: relative; overflow: hidden; padding: 0; display: flex; flex-direction: column; background: rgba(0,0,0,0.15); }
-        .path-header { position: absolute; top: 0; left: 0; width: 100%; padding: 1.5rem; z-index: 10; pointer-events: none; }
-        .theme-cloud #path-area { background: rgba(255,255,255,0.3); }
-
-        .timeline-wrapper { 
-            flex: 1; width: 100%; overflow-x: auto; overflow-y: hidden; 
-            scroll-behavior: smooth; -webkit-overflow-scrolling: touch; 
-            position: relative; z-index: 2; display: flex; align-items: center;
-        }
-        .timeline-wrapper::-webkit-scrollbar { height: 6px; }
-        .timeline-wrapper::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-        .timeline-wrapper::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-        .theme-cloud .timeline-wrapper::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
-
-        /* Linha do horizonte central */
-        .timeline-connection-line { position: absolute; top: 50%; left: 0; height: 3px; background: var(--glass-border); z-index: 1; pointer-events: none; box-shadow: 0 0 10px var(--accent); opacity: 0.6; }
-
-        .timeline { 
-            display: flex; flex-direction: row; align-items: center; gap: 40px; 
-            padding: 0 60px; position: relative; height: 100%; width: max-content; z-index: 2;
-        }
+        /* --- AVATAR 3D CONTAINER (NOVO DESIGN) --- */
+        /* Na Home: Um container médio */
+        #home-avatar-container { width: 100%; height: 280px; position: relative; border-radius: 24px; background: radial-gradient(circle at center 70%, var(--glass-bg), transparent); box-shadow: inset 0 0 40px rgba(0,0,0,0.3); overflow: hidden; margin-bottom: 1rem; }
+        /* No Inventário: Um container grande estilo "Provador" */
+        #inv-avatar-container { width: 100%; height: 400px; position: relative; border-radius: 24px; background: radial-gradient(circle at center 60%, var(--glass-bg), transparent); box-shadow: inset 0 0 40px rgba(0,0,0,0.3), 0 10px 30px rgba(0,0,0,0.2); border: 2px solid var(--glass-border); overflow: hidden; margin-bottom: 1.5rem; cursor: grab; }
+        #inv-avatar-container:active { cursor: grabbing; }
         
-        .timeline-item { position: relative; width: 280px; flex-shrink: 0; z-index: 5; }
-        /* Efeito de Zig-Zag/Flutuação Alternada */
-        .timeline-item:nth-child(odd) { transform: translateY(-70px); }
-        .timeline-item:nth-child(even) { transform: translateY(70px); }
+        .drag-hint { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--text-muted); font-weight: 800; display: flex; align-items: center; gap: 5px; pointer-events: none; background: rgba(0,0,0,0.4); padding: 4px 12px; border-radius: 20px; }
+        
+        .inv-category-title { font-size: 1.1rem; font-weight: 900; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--text-main); }
+        .inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+        .inv-slot { background: rgba(0,0,0,0.3); border: 2px solid var(--glass-border); border-radius: 18px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .theme-cloud .inv-slot { background: rgba(255,255,255,0.6); } 
+        .inv-slot:hover { transform: translateY(-4px); border-color: var(--accent); }
+        .inv-slot.equipped { border-color: var(--success); background: rgba(52, 211, 153, 0.15); box-shadow: 0 0 15px rgba(52, 211, 153, 0.3); transform: scale(1.05); z-index: 2; }
+        .inv-slot.equipped::before { content: '✓ EQUIPADO'; position: absolute; bottom: 0; left: 0; width: 100%; background: var(--success); color: var(--bg-color-1); font-size: 0.55rem; font-weight: 900; text-align: center; padding: 3px 0; }
+        .inv-icon { font-size: 2rem; margin-bottom: 8px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); } 
+        .inv-name { font-size: 0.6rem; text-align: center; font-weight: 800; color: var(--text-main); line-height: 1.1; padding: 0 4px; z-index: 1;}
 
-        /* Ponto e Conector Vertical */
-        .timeline-connector { position: absolute; left: 50%; width: 3px; background: var(--glass-border); z-index: -1; opacity: 0.6; }
-        .timeline-item:nth-child(odd) .timeline-connector { top: 100%; height: 70px; }
-        .timeline-item:nth-child(even) .timeline-connector { bottom: 100%; height: 70px; }
-
-        .timeline-dot { 
-            position: absolute; left: 50%; transform: translateX(-50%); 
-            width: 28px; height: 28px; border-radius: 50%; background: var(--bg-color-1); 
-            border: 4px solid var(--glass-border); transition: 0.3s; z-index: 6; 
-        }
-        .timeline-item:nth-child(odd) .timeline-dot { bottom: -14px; }
-        .timeline-item:nth-child(even) .timeline-dot { top: -14px; }
-
-        .timeline-item.unlocked .timeline-dot { background: var(--accent); border-color: var(--accent-dark); box-shadow: 0 0 20px var(--accent); }
-        .theme-cloud .timeline-item.unlocked .timeline-dot { box-shadow: 0 0 10px var(--accent-dark); }
-        .timeline-item.claimed .timeline-dot { background: var(--success); border-color: var(--success-dark); }
-
-        /* O container SVG 3D Atrás */
-        #path-3d-env { position: absolute; top: 0; left: 0; height: 100%; z-index: 0; pointer-events: none; }
-
-        /* Diversos */
+        /* Outros Componentes */
         .progress-wrapper { background: rgba(0,0,0,0.2); padding: 1.25rem; border-radius: 24px; text-align: left; margin-top: 1.5rem; }
         .theme-cloud .progress-wrapper { background: rgba(255,255,255,0.5); }
         .progress-track { width: 100%; background: rgba(0,0,0,0.3); border-radius: 999px; height: 1.25rem; position: relative; overflow: hidden; margin: 0.5rem 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
@@ -175,51 +131,32 @@
         .section-title { font-size: 1.2rem; font-weight: 900; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
         .btn-icon-soft { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
         .quest-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border-radius: 20px; background: rgba(0,0,0,0.2); border: 2px solid transparent; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; }
-        .theme-cloud .quest-item { background: rgba(255,255,255,0.4); }
         .quest-item.completed { background: var(--glass-bg); border-color: var(--success); opacity: 0.8; }
         .checkbox-bouncy { width: 26px; height: 26px; border-radius: 8px; border: 3px solid var(--text-muted); display: flex; align-items: center; justify-content: center; transition: 0.3s; }
         .quest-item.completed .checkbox-bouncy { background: var(--success); border-color: var(--success); transform: scale(1.1) rotate(10deg); }
-        .quest-reward { color: var(--accent); font-weight: 800; font-size: 0.85rem; background: var(--glass-bg); padding: 4px 10px; border-radius: 10px; border: 1px solid var(--glass-border); }
-        .quest-item.completed .quest-reward { color: var(--success); border-color: transparent;}
+        
+        /* Modals e 3D Path */
+        #path-area { height: 72vh; min-height: 450px; position: relative; overflow: hidden; padding: 0; display: flex; flex-direction: column; background: rgba(0,0,0,0.15); }
+        .path-header { position: absolute; top: 0; left: 0; width: 100%; padding: 1.5rem; z-index: 10; pointer-events: none; }
+        .timeline-wrapper { flex: 1; width: 100%; overflow-x: auto; overflow-y: hidden; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; position: relative; z-index: 2; display: flex; align-items: center; }
+        .timeline-wrapper::-webkit-scrollbar { height: 6px; } .timeline-wrapper::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); } .timeline-wrapper::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+        .timeline-connection-line { position: absolute; top: 50%; left: 0; height: 3px; background: var(--glass-border); z-index: 1; pointer-events: none; box-shadow: 0 0 10px var(--accent); opacity: 0.6; }
+        .timeline { display: flex; flex-direction: row; align-items: center; gap: 40px; padding: 0 60px; position: relative; height: 100%; width: max-content; z-index: 2; }
+        .timeline-item { position: relative; width: 280px; flex-shrink: 0; z-index: 5; }
+        .timeline-item:nth-child(odd) { transform: translateY(-70px); } .timeline-item:nth-child(even) { transform: translateY(70px); }
+        .timeline-connector { position: absolute; left: 50%; width: 3px; background: var(--glass-border); z-index: -1; opacity: 0.6; }
+        .timeline-item:nth-child(odd) .timeline-connector { top: 100%; height: 70px; } .timeline-item:nth-child(even) .timeline-connector { bottom: 100%; height: 70px; }
+        .timeline-dot { position: absolute; left: 50%; transform: translateX(-50%); width: 28px; height: 28px; border-radius: 50%; background: var(--bg-color-1); border: 4px solid var(--glass-border); transition: 0.3s; z-index: 6; }
+        .timeline-item:nth-child(odd) .timeline-dot { bottom: -14px; } .timeline-item:nth-child(even) .timeline-dot { top: -14px; }
+        .timeline-item.unlocked .timeline-dot { background: var(--accent); border-color: var(--accent-dark); box-shadow: 0 0 20px var(--accent); }
+        .timeline-item.claimed .timeline-dot { background: var(--success); border-color: var(--success-dark); }
+        #path-3d-env { position: absolute; top: 0; left: 0; height: 100%; z-index: 0; pointer-events: none; }
 
-        /* Avatar & Inventário */
-        .avatar-2d-container { width: 160px; height: 160px; margin: 0 auto; position: relative; border-radius: 30px; background: radial-gradient(circle, var(--glass-bg), transparent); box-shadow: inset 0 0 20px rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px; transition: background 0.5s ease;}
-        .avatar-character { width: 120px; height: 120px; position: relative; }
-        .avatar-layer { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: flex-end; transition: all 0.3s; }
-        .avatar-layer img, .avatar-layer svg { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-        .breathe-anim { animation: breathe 3s ease-in-out infinite; }
-        @keyframes breathe { 0%, 100% { transform: scaleY(1) translateY(0); } 50% { transform: scaleY(0.98) translateY(2px); } }
-        .inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 10px; margin-top: 1rem; }
-        .inv-slot { background: rgba(0,0,0,0.2); border: 2px solid var(--glass-border); border-radius: 16px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; position: relative; overflow: hidden; }
-        .theme-cloud .inv-slot { background: rgba(255,255,255,0.6); } .inv-slot.equipped { border-color: var(--success); background: rgba(52, 211, 153, 0.1); }
-        .inv-slot.equipped::after { content: 'E'; position: absolute; top: 4px; right: 4px; background: var(--success); color: var(--bg-color-1); font-size: 0.6rem; font-weight: 900; padding: 2px 5px; border-radius: 6px; }
-        .inv-icon { font-size: 1.5rem; margin-bottom: 4px; } .inv-name { font-size: 0.55rem; text-align: center; font-weight: 800; color: var(--text-muted); line-height: 1.1; padding: 0 4px; }
-
-        /* Pilares SVG */
-        #iso-wrapper { width: 100%; overflow-x: auto; overflow-y: hidden; text-align: center; border-radius: 16px; padding: 20px 0; }
-        #iso-world { position: relative; margin: 0 auto; perspective: 1000px; transition: width 0.5s ease, height 0.5s ease; }
-        #iso-ground { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; }
-        .iso-pillar-container { position: absolute; transform: translate(-50%, -100%); cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
-        .iso-pillar-container:hover, .iso-pillar-container.active { transform: translate(-50%, -100%) scale(1.05); filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); z-index: 100 !important; }
-        .iso-label { position: absolute; background: var(--glass-bg); padding: 4px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; white-space: nowrap; border: 1px solid var(--glass-border); backdrop-filter: blur(4px); pointer-events: none; transition: opacity 0.3s; opacity: 0.7;}
-        .iso-pillar-container:hover .iso-label, .iso-pillar-container.active .iso-label { opacity: 1; border-color: var(--accent); }
-        .skill-list-item { padding: 1rem; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; margin-bottom: 8px; background: rgba(0,0,0,0.2); }
-        .skill-list-item.active { border: 2px solid var(--accent); background: var(--glass-bg); }
-
-        /* Cartões da Comunidade */
-        .community-card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem; border-radius: 24px; margin-bottom: 16px; background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2)); border: 2px solid var(--glass-border); box-shadow: 0 8px 20px rgba(0,0,0,0.3); color: var(--text-main); position: relative; transition: transform 0.2s; }
-        .community-card::before { content: ''; position: absolute; inset: 0; background: var(--glass-bg); pointer-events: none; border-radius: 24px;}
-        .community-card > * { position: relative; z-index: 1; }
-        .comm-photo { width: 50px; height: 50px; border-radius: 18px; object-fit: cover; border: 2px solid var(--accent); }
-        .comm-level-badge { background: var(--accent); color: #fff; font-weight: 900; font-size: 1.1rem; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0; }
-        .chat-btn-comm { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-
-        /* Modals Overlay */
         .overlay-screen { position: fixed; inset: 0; background: var(--sheet-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s; opacity: 0; pointer-events: none; }
         .overlay-screen.active { opacity: 1; pointer-events: auto; }
         .level-badge { background: var(--accent); width: 140px; height: 140px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; box-shadow: 0 8px 0 var(--accent-dark), 0 20px 40px rgba(0,0,0,0.3); border: 6px solid rgba(255,255,255,0.2); }
         .floating-exp { position: fixed; color: var(--success); font-size: 1.25rem; font-weight: 900; pointer-events: none; z-index: 1000; text-shadow: 0 2px 10px rgba(0,0,0,0.3); animation: floatUpAndFade 1s forwards; }
-        .warning-text { color: #ef4444; font-weight: 900; font-size: 0.9rem; margin-bottom: 1.5rem; text-transform: uppercase; background: rgba(239, 68, 68, 0.1); padding: 8px; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3); }
+        @keyframes floatUpAndFade { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-50px) scale(1.2); } }
     </style>
 </head>
 <body class="theme-void">
@@ -237,19 +174,15 @@
         </div>
     </div>
 
+    <!-- Modals simplificados para espaço... -->
     <div id="element-choice-screen" class="overlay-screen" style="z-index: 9999;">
         <div class="panel" style="max-width: 95%; width: 450px; text-align: center; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.8); border: 2px solid var(--accent);">
             <h2 style="font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem;">O Despertar</h2>
-            <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 1rem;">Todo viajante precisa de um ponto de origem.</p>
-            <div class="warning-text">Aviso: A afinidade escolhida será seu tema permanente.</div>
+            <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 1.5rem;">Selecione sua afinidade inicial.</p>
             <div class="theme-grid" id="initial-theme-grid" style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); margin-bottom: 1.5rem;">
-                <div class="theme-option" onclick="selectInitialElement('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700; font-size: 0.8rem;">O Vazio</span></div>
-                <div class="theme-option" onclick="selectInitialElement('theme-journey', this)"><div class="color-preview" style="background: #b45309;"></div><span style="font-weight: 700; font-size: 0.8rem;">A Jornada</span></div>
-                <div class="theme-option" onclick="selectInitialElement('theme-forest', this)"><div class="color-preview" style="background: #047857;"></div><span style="font-weight: 700; font-size: 0.8rem;">A Floresta</span></div>
-                <div class="theme-option" onclick="selectInitialElement('theme-cloud', this)"><div class="color-preview" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div><span style="font-weight: 700; font-size: 0.8rem;">A Nuvem</span></div>
-                <div class="theme-option" onclick="selectInitialElement('theme-inferno', this)"><div class="color-preview" style="background: #7f1d1d;"></div><span style="font-weight: 700; font-size: 0.8rem;">Inferno</span></div>
-                <div class="theme-option" onclick="selectInitialElement('theme-ocean', this)"><div class="color-preview" style="background: #164e63;"></div><span style="font-weight: 700; font-size: 0.8rem;">Oceano</span></div>
-                <div class="theme-option" onclick="selectInitialElement('theme-arcane', this)"><div class="color-preview" style="background: #581c87;"></div><span style="font-weight: 700; font-size: 0.8rem;">Arcano</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700; font-size: 0.8rem;">Vazio</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-journey', this)"><div class="color-preview" style="background: #b45309;"></div><span style="font-weight: 700; font-size: 0.8rem;">Jornada</span></div>
+                <div class="theme-option" onclick="selectInitialElement('theme-forest', this)"><div class="color-preview" style="background: #047857;"></div><span style="font-weight: 700; font-size: 0.8rem;">Floresta</span></div>
             </div>
             <button onclick="confirmInitialElement()" class="btn-duo" style="width: 100%; font-size: 1.1rem; padding: 16px;">Selar Meu Destino</button>
         </div>
@@ -259,44 +192,7 @@
         <div style="text-align: center;">
             <div class="level-badge animate-slide-up"><span style="font-size: 1rem; font-weight: 800; color: rgba(255,255,255,0.8); text-transform: uppercase;">Nível</span><div id="new-level-display" style="font-size: 4rem; font-weight: 900; color: white; line-height: 1;">2</div></div>
             <h1 class="animate-slide-up delay-1" style="font-size: 2.5rem; font-weight: 900; margin-top: 1.5rem; color: var(--text-main);">Evoluiu!</h1>
-            <p class="animate-slide-up delay-2" style="color: var(--text-muted); font-weight: 600; margin-bottom: 2rem;">Sistemas aprimorados.</p>
-            <button onclick="closeLevelUp()" class="btn-duo animate-slide-up delay-3" style="background: var(--text-main); color: var(--bg-color-1); box-shadow: 0 6px 0 rgba(0,0,0,0.2);">Continuar</button>
-        </div>
-    </div>
-
-    <div id="modal-add-pillar" class="overlay-screen">
-        <div class="panel animate-fade-in" style="max-width: 90%; width: 380px; margin: 0 auto;">
-            <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 1.5rem; text-align: center;">Forjar Novo Pilar</h3>
-            <label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted);">Qual sabedoria você irá cultivar?</label>
-            <input type="text" id="add-pillar-name" class="input-ios" placeholder="Ex: Programação, Piano...">
-            <label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted); margin-top:10px;">Elemento de Poder</label>
-            <select id="add-pillar-element" class="select-ios">
-                <option value="void">🌌 O Vazio (Foco / Disciplina)</option>
-                <option value="journey">⏳ A Jornada (Terra / Rotina)</option>
-                <option value="forest">🌿 A Floresta (Natureza / Saúde)</option>
-                <option value="cloud">☁️ A Nuvem (Ar / Mente / Estudos)</option>
-                <option value="inferno">🔥 Inferno (Paixão / Ação / Força)</option>
-                <option value="ocean">🌊 Oceano (Emoção / Artes / Fluxo)</option>
-                <option value="arcane">✨ Arcano (Intelecto / Lógica / Magia)</option>
-            </select>
-            <div style="display:flex; justify-content:space-between; margin:15px 0 5px;"><label id="add-pillar-level-label" style="font-size:0.85rem; font-weight:700;">Elevação Inicial: 1%</label></div>
-            <input type="range" id="add-pillar-level" min="1" max="100" value="1" style="width:100%; accent-color:var(--accent); margin-bottom: 2rem;" oninput="document.getElementById('add-pillar-level-label').innerText = `Elevação Inicial: ${this.value}%`">
-            <div style="display: flex; gap: 10px;"><button onclick="closeAddPillarModal()" class="btn-outline">Cancelar</button><button onclick="confirmAddPillar()" class="btn-duo">Erguer</button></div>
-        </div>
-    </div>
-
-    <div id="chat-modal">
-        <div class="chat-header">
-            <div class="chat-header-title">
-                <div class="comm-photo" style="width:36px; height:36px; border-radius:12px; overflow:hidden;" id="chat-header-photo"></div>
-                <div><div id="chat-header-name" style="line-height:1.2;">Viajante</div><div class="chat-status">Sessão Temporária</div></div>
-            </div>
-            <button onclick="closeChat()" class="btn-icon-soft" style="width: 36px; height: 36px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:18px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-        </div>
-        <div id="chat-messages-container"><div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: auto; padding-top: 2rem;">As mensagens trocadas aqui desaparecem assim que você fecha o aplicativo.<br>Apenas no momento presente.</div></div>
-        <div class="chat-input-area">
-            <input type="text" id="chat-input-text" class="chat-input" placeholder="Escreva uma mensagem..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
-            <button onclick="sendChatMessage()" class="btn-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px; transform: translateX(-2px);"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
+            <button onclick="closeLevelUp()" class="btn-duo animate-slide-up delay-3" style="background: var(--text-main); color: var(--bg-color-1); box-shadow: 0 6px 0 rgba(0,0,0,0.2); margin-top: 2rem;">Continuar</button>
         </div>
     </div>
 
@@ -318,9 +214,11 @@
                     <div class="coin-display float-gentle" style="animation-delay: 0.5s;">🪙 <span id="disp-coins">0</span></div>
                 </div>
 
-                <div class="panel hub-header" style="text-align: center; padding-top: 2rem;">
-                    <div class="avatar-2d-container float-gentle"><div class="avatar-character breathe-anim" id="home-avatar-render"></div></div>
-                    <div class="progress-wrapper">
+                <div class="panel hub-header" style="text-align: center; padding-top: 1rem; padding-bottom: 1rem;">
+                    <!-- NOVO CONTAINER 3D NA HOME -->
+                    <div id="home-avatar-container"></div>
+                    
+                    <div class="progress-wrapper" style="margin-top: 0;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-end;"><span style="font-size: 1.1rem; font-weight: 800;">Nível <span id="disp-level">1</span></span><span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);"><span id="disp-exp-current">0</span> / 500 XP</span></div>
                         <div class="progress-track"><div id="disp-exp-bar" class="progress-fill" style="width: 0%"></div></div>
                     </div>
@@ -332,100 +230,54 @@
                 </div>
             </section>
 
-            <!-- INVENTÁRIO -->
+            <!-- INVENTÁRIO REDESENHADO (FOCO NO 3D) -->
             <section id="view-inventory" class="hidden">
-                <div class="panel" style="text-align: center; padding-bottom: 1rem;">
-                    <h2 style="font-weight: 900; margin-bottom: 1rem;">Mochila & Avatar</h2>
-                    <div class="avatar-2d-container" style="margin-bottom: 0;"><div class="avatar-character breathe-anim" id="inv-avatar-render"></div></div>
+                <div style="margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+                    <h2 style="font-weight: 900; font-size: 1.5rem;">Sua Identidade</h2>
                 </div>
-                <div class="panel">
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; text-align: center;">Evolua no Caminho Elemental para desbloquear novas relíquias.</p>
-                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Cabeça</h3><div class="inv-grid" id="inv-grid-head"></div>
-                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-top: 1.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Corpo</h3><div class="inv-grid" id="inv-grid-body"></div>
-                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-top: 1.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Armas & Capas</h3><div class="inv-grid" id="inv-grid-extras"></div>
+
+                <!-- NOVO CONTAINER 3D GRANDE -->
+                <div id="inv-avatar-container">
+                    <div class="drag-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;"><path d="M2 12h20M12 2v20M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg> Arraste para girar</div>
+                </div>
+
+                <div class="panel" style="padding: 1.5rem 1rem;">
+                    <div class="inv-category-title"><span style="font-size: 1.5rem;">👑</span> Cabeça</div>
+                    <div class="inv-grid" id="inv-grid-head"></div>
+                    
+                    <div class="inv-category-title" style="margin-top: 1rem;"><span style="font-size: 1.5rem;">👕</span> Traje Base</div>
+                    <div class="inv-grid" id="inv-grid-body"></div>
+                    
+                    <div class="inv-category-title" style="margin-top: 1rem;"><span style="font-size: 1.5rem;">⚔️</span> Relíquias & Costas</div>
+                    <div class="inv-grid" id="inv-grid-extras"></div>
                 </div>
             </section>
 
-            <!-- CAMINHO ELEMENTAL (3D EXPANDIDO) -->
+            <!-- CAMINHO ELEMENTAL -->
             <section id="view-path" class="hidden" style="margin: -1.5rem -1.5rem 0 -1.5rem; border-radius: 0;">
                 <div class="panel" id="path-area" style="border-radius: 0; border-left: none; border-right: none;">
-                    
-                    <div class="path-header">
-                        <div class="section-title">Caminho d<span id="path-element-name" style="color: var(--accent); margin-left: 5px;">Ascensão</span></div>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; text-shadow: 0 1px 4px rgba(0,0,0,0.5);">Deslize para explorar o horizonte do seu destino.</p>
-                    </div>
-
-                    <!-- SVG ENVIRONMENT INJETADO AQUI -->
+                    <div class="path-header"><div class="section-title">Caminho d<span id="path-element-name" style="color: var(--accent); margin-left: 5px;">Ascensão</span></div><p style="color: var(--text-muted); font-size: 0.85rem; text-shadow: 0 1px 4px rgba(0,0,0,0.5);">Deslize para explorar o horizonte.</p></div>
                     <svg id="path-3d-env" width="100%" height="100%" preserveAspectRatio="none"></svg>
-                    
-                    <!-- WRAPPER COM SCROLL HORIZONTAL -->
-                    <div class="timeline-wrapper" id="path-timeline-wrapper">
-                        <!-- Linha central ligando tudo -->
-                        <div class="timeline-connection-line" id="path-horizon-line"></div>
-
-                        <div class="timeline" id="path-timeline-container">
-                            <!-- Injetado por JS -->
-                        </div>
-                    </div>
+                    <div class="timeline-wrapper" id="path-timeline-wrapper"><div class="timeline-connection-line" id="path-horizon-line"></div><div class="timeline" id="path-timeline-container"></div></div>
                 </div>
             </section>
-
-            <!-- PILARES -->
-            <section id="view-skills" class="hidden">
-                <div class="panel" style="padding: 1rem;">
-                    <div class="section-title" style="padding: 0.5rem;">
-                        O Templo (Pilares)
-                        <button onclick="openAddPillarModal()" class="btn-icon-soft" title="Erguer Novo Pilar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
-                    </div>
-                    <div id="iso-wrapper"><div id="iso-world"><svg id="iso-ground"></svg><div id="iso-nodes"></div></div></div>
-                </div>
-                <div class="panel" id="editor-card"></div>
-                <div class="panel">
-                    <h3 style="font-size: 1rem; font-weight: 800; margin-bottom: 1rem;">Módulos Instalados (<span id="skill-count">0</span>)</h3>
-                    <div id="skills-list"></div>
-                </div>
-            </section>
-
-            <!-- LOJA -->
+            
             <section id="view-shop" class="hidden">
                 <div class="panel" style="text-align: center; padding: 3rem 1.5rem;">
-                    <div style="font-size: 4rem; margin-bottom: 1rem; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));">🛒</div>
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🛒</div>
                     <h2 style="font-weight: 900; font-size: 1.8rem; margin-bottom: 0.5rem;">O Empório</h2>
-                    <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 2rem;">Os mercadores ainda estão montando suas barracas. Guarde suas 🪙 Essências para quando as portas se abrirem!</p>
-                    <div class="coin-display" style="justify-content: center; width: max-content; margin: 0 auto; font-size: 1.5rem; padding: 10px 20px;">
-                        🪙 <span id="shop-disp-coins">0</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- COMUNIDADE -->
-            <section id="view-community" class="hidden">
-                <div class="panel">
-                    <div class="section-title">Encontrar Viajantes</div>
-                    <input type="text" id="search-community" class="input-ios" placeholder="Buscar por nome ou título..." oninput="handleSearch()">
-                </div>
-                <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 1.5rem; padding-left: 0.5rem;">Seu Cartão Público</h3>
-                <div id="my-community-card-container"></div>
-                <div id="top-10-section">
-                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--success); margin-bottom: 1rem; margin-top: 2rem; padding-left: 0.5rem; display: flex; align-items: center; gap: 8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 20px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg> Top 10 Globais</h3>
-                    <div id="community-top10-list"></div>
-                </div>
-                <div id="search-results-section" class="hidden">
-                    <h3 style="font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 1rem; margin-top: 2rem; padding-left: 0.5rem;">Resultados da Busca</h3>
-                    <div id="community-search-list"></div>
+                    <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 2rem;">Os mercadores ainda estão montando suas barracas.</p>
                 </div>
             </section>
 
         </main>
 
-        <!-- BOTTOM NAV (6 ABAS) -->
+        <!-- BOTTOM NAV -->
         <nav id="bottom-nav">
             <button class="nav-item active" onclick="switchTab('home', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Início</button>
-            <button class="nav-item" onclick="switchTab('inventory', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10"></path><path d="M4 16h16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z"></path><path d="M10 10l2 2 2-2"></path></svg>Mochila</button>
+            <button class="nav-item" onclick="switchTab('inventory', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10"></path><path d="M4 16h16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z"></path><path d="M10 10l2 2 2-2"></path></svg>Equipar</button>
             <button class="nav-item" onclick="switchTab('path', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>Caminho</button>
-            <button class="nav-item" onclick="switchTab('skills', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 17 22 12"></polyline></svg>Pilares</button>
             <button class="nav-item" onclick="switchTab('shop', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>Loja</button>
-            <button class="nav-item" onclick="switchTab('community', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Global</button>
             <button class="nav-item" onclick="openSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
         </nav>
 
@@ -434,379 +286,358 @@
         <div id="settings-sheet">
             <div class="sheet-handle" onclick="handleCloseSettings()"></div>
             <div class="sheet-content">
-                <h3 class="sheet-title">Configurações da Conta</h3>
-                <h4 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Identidade</h4>
+                <h3 class="sheet-title">Configurações</h3>
                 <input type="text" id="input-profile-name" class="input-ios" placeholder="Seu Nome">
-                <input type="text" id="input-profile-desc" class="input-ios" placeholder="Seu Título/Foco">
-                <input type="text" id="input-profile-photo" class="input-ios" placeholder="URL da foto de perfil (Opcional)">
-                
-                <div id="admin-login-area" style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 16px; margin-bottom: 1.5rem; border: 1px solid var(--glass-border);">
-                    <h4 style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Acesso Administrativo</h4>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px;">Apenas administradores podem transitar entre os elementos livremente.</p>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="password" id="input-admin-pass" class="input-ios" placeholder="Palavra-passe" style="margin-bottom: 0;">
-                        <button onclick="unlockAdminThemes()" class="btn-duo" style="width: auto; padding: 0 16px;">Destravar</button>
-                    </div>
-                </div>
-
-                <div id="admin-status-area" class="hidden" style="background: rgba(16, 185, 129, 0.1); padding: 1rem; border-radius: 16px; margin-bottom: 1.5rem; border: 1px solid rgba(16, 185, 129, 0.3); text-align: center; color: var(--success); font-weight: 800;">
-                    ✓ Status de Administrador Ativo
-                </div>
-
-                <div id="admin-theme-area" class="hidden">
-                    <h4 style="font-size: 0.9rem; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase;">Afinidade Destravada</h4>
-                    <div class="theme-grid">
-                        <div class="theme-option active" onclick="setTheme('theme-void', this)"><div class="color-preview" style="background: #1e1b4b;"></div><span style="font-weight: 700; font-size: 0.85rem;">O Vazio</span></div>
-                        <div class="theme-option" onclick="setTheme('theme-journey', this)"><div class="color-preview" style="background: #b45309;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Jornada</span></div>
-                        <div class="theme-option" onclick="setTheme('theme-forest', this)"><div class="color-preview" style="background: #047857;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Floresta</span></div>
-                        <div class="theme-option" onclick="setTheme('theme-cloud', this)"><div class="color-preview" style="background: #e0f2fe; border: 1px solid #bae6fd;"></div><span style="font-weight: 700; font-size: 0.85rem;">A Nuvem</span></div>
-                        <div class="theme-option" onclick="setTheme('theme-inferno', this)"><div class="color-preview" style="background: #7f1d1d;"></div><span style="font-weight: 700; font-size: 0.85rem;">Inferno</span></div>
-                        <div class="theme-option" onclick="setTheme('theme-ocean', this)"><div class="color-preview" style="background: #164e63;"></div><span style="font-weight: 700; font-size: 0.85rem;">Oceano</span></div>
-                        <div class="theme-option" onclick="setTheme('theme-arcane', this)"><div class="color-preview" style="background: #581c87;"></div><span style="font-weight: 700; font-size: 0.85rem;">Arcano</span></div>
-                    </div>
-                </div>
-
-                <button onclick="saveProfileData()" class="btn-duo" style="margin-bottom: 2rem;">Salvar Modificações</button>
+                <input type="text" id="input-profile-desc" class="input-ios" placeholder="Seu Título">
                 <button onclick="handleLogout()" class="btn-duo" style="background: transparent; color: #ef4444; border: 2px solid #ef4444; box-shadow: none;">Desconectar</button>
             </div>
         </div>
     </div>
 
+<!-- FIREBASE & THREE.JS -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc, deleteDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyBFxnca6Q1AZBrwdpU07GM2OCd9XIpn4xQ",
-        authDomain: "lista-de-presenca-95526.firebaseapp.com",
-        projectId: "lista-de-presenca-95526",
-        storageBucket: "lista-de-presenca-95526.firebasestorage.app",
-        messagingSenderId: "879181560997",
-        appId: "1:879181560997:web:484b7aeb865856a7f8a14c"
-    };
-    
+    const firebaseConfig = { apiKey: "AIzaSyBFxnca6Q1AZBrwdpU07GM2OCd9XIpn4xQ", authDomain: "lista-de-presenca-95526.firebaseapp.com", projectId: "lista-de-presenca-95526", storageBucket: "lista-de-presenca-95526.firebasestorage.app", messagingSenderId: "879181560997", appId: "1:879181560997:web:484b7aeb865856a7f8a14c" };
     const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const provider = new GoogleAuthProvider();
 
-    const elementNames = { 'theme-void': 'o Vazio', 'theme-journey': 'a Jornada', 'theme-forest': 'a Floresta', 'theme-cloud': 'a Nuvem', 'theme-inferno': 'o Inferno', 'theme-ocean': 'o Oceano', 'theme-arcane': 'o Arcano' };
+    // ----------------------------------------------------
+    // MOTOR 3D DO AVATAR (Substituindo o antigo sistema SVG)
+    // ----------------------------------------------------
+    let scene, camera, renderer, avatarGroup;
+    let slots = { body: null, head: null, extra: null, back: null }; // "Ossos" do personagem
+    let baseMeshes = { torso: null, leftArm: null, rightArm: null, leftLeg: null, rightLeg: null };
+    let currentContainer = null;
+    let isDragging = false, previousMousePosition = { x: 0, y: 0 };
+    let targetRotation = 0;
 
-    const itemsDB = [
-        { id: 'body_default', type: 'body', name: 'Corpo Base', icon: '👤', render: '<svg viewBox="0 0 100 100" fill="#fcd34d"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/></svg>' },
-        { id: 'body_dark', type: 'body', name: 'Corpo Sombrio', icon: '🌑', render: '<svg viewBox="0 0 100 100" fill="#1e293b"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/><circle cx="40" cy="35" r="3" fill="#60a5fa"/><circle cx="60" cy="35" r="3" fill="#60a5fa"/></svg>' },
-        { id: 'head_none', type: 'head', name: 'Nenhum', icon: '❌', render: '' },
-        { id: 'head_hood', type: 'head', name: 'Capuz Rogue', icon: '🥷', render: '<svg viewBox="0 0 100 100" fill="#0f172a"><path d="M25 50 C 25 10, 75 10, 75 50 Q 50 20 25 50 Z"/></svg>' },
-        { id: 'head_hair', type: 'head', name: 'Cabelo Herói', icon: '💇', render: '<svg viewBox="0 0 100 100" fill="#78350f"><path d="M20 40 Q 50 0 80 40 Q 70 20 50 25 Q 30 20 20 40 Z"/></svg>' },
-        { id: 'extra_none', type: 'extra', name: 'Nenhum', icon: '❌', render: '' },
-        { id: 'extra_sword', type: 'extra', name: 'Espada', icon: '⚔️', render: '<svg viewBox="0 0 100 100" fill="#cbd5e1" stroke="#475569" stroke-width="2"><rect x="75" y="40" width="10" height="40" transform="rotate(45 80 60)"/><rect x="65" y="70" width="30" height="5" transform="rotate(45 80 60)" fill="#fbbf24"/></svg>' },
-        { id: 'extra_cloak', type: 'extra', name: 'Capa Azul', icon: '🧥', render: '<svg viewBox="0 0 100 100" fill="#3b82f6" style="z-index: -1; position: absolute;"><path d="M30 50 L20 95 L80 95 L70 50 Z"/></svg>' },
+    function init3DEngine() {
+        scene = new THREE.Scene();
         
-        { id: 'head_void_halo', type: 'head', name: 'Coroa do Vazio', icon: '👑', render: '<svg viewBox="0 0 100 100"><ellipse cx="50" cy="15" rx="20" ry="5" fill="none" stroke="#818cf8" stroke-width="3" filter="drop-shadow(0 0 5px #818cf8)"/></svg>' },
-        { id: 'extra_void_orbs', type: 'extra', name: 'Orbes Escuros', icon: '🔮', render: '<svg viewBox="0 0 100 100" fill="#4f46e5"><circle cx="20" cy="50" r="8" filter="drop-shadow(0 0 10px #4f46e5)"/><circle cx="80" cy="50" r="8" filter="drop-shadow(0 0 10px #4f46e5)"/></svg>' },
-        { id: 'head_journey_hat', type: 'head', name: 'Chapéu Expedição', icon: '🤠', render: '<svg viewBox="0 0 100 100" fill="#d97706"><path d="M 20 35 Q 50 20 80 35 L 85 40 L 15 40 Z"/><rect x="25" y="25" width="50" height="10" fill="#78350f"/></svg>' },
-        { id: 'extra_journey_pack', type: 'extra', name: 'Mochila Pesada', icon: '🎒', render: '<svg viewBox="0 0 100 100" fill="#78350f" style="z-index: -1; position: absolute;"><rect x="30" y="40" width="40" height="50" rx="10"/><rect x="35" y="50" width="30" height="20" fill="#b45309" rx="5"/></svg>' },
-        { id: 'head_forest_antlers', type: 'head', name: 'Chifres Anciões', icon: '🦌', render: '<svg viewBox="0 0 100 100" stroke="#78350f" stroke-width="4" stroke-linecap="round"><path d="M 40 25 L 30 5 M 35 15 L 20 15 M 60 25 L 70 5 M 65 15 L 80 15"/></svg>' },
-        { id: 'extra_forest_staff', type: 'extra', name: 'Cajado Vital', icon: '🌿', render: '<svg viewBox="0 0 100 100"><line x1="85" y1="20" x2="65" y2="90" stroke="#78350f" stroke-width="5"/><path d="M 85 20 Q 75 10 90 5 Q 95 15 85 20 Z" fill="#34d399"/></svg>' },
-        { id: 'head_cloud_goggles', type: 'head', name: 'Óculos de Voo', icon: '🥽', render: '<svg viewBox="0 0 100 100"><rect x="35" y="30" width="30" height="10" fill="#475569" rx="5"/><circle cx="40" cy="35" r="4" fill="#38bdf8"/><circle cx="60" cy="35" r="4" fill="#38bdf8"/></svg>' },
-        { id: 'extra_cloud_wings', type: 'extra', name: 'Asas de Brisa', icon: '👼', render: '<svg viewBox="0 0 100 100" fill="#fff" opacity="0.8" style="z-index: -1; position: absolute;"><path d="M 50 50 Q 20 30 10 60 Q 30 70 50 50 M 50 50 Q 80 30 90 60 Q 70 70 50 50 Z" filter="drop-shadow(0 0 5px #e0f2fe)"/></svg>' },
-        { id: 'head_inferno_horns', type: 'head', name: 'Chifres de Fogo', icon: '👿', render: '<svg viewBox="0 0 100 100" fill="#dc2626"><path d="M 35 25 Q 25 10 20 5 Q 30 15 45 20 Z"/><path d="M 65 25 Q 75 10 80 5 Q 70 15 55 20 Z"/></svg>' },
-        { id: 'extra_inferno_aura', type: 'extra', name: 'Aura Ardente', icon: '🔥', render: '<svg viewBox="0 0 100 100" fill="#f87171" opacity="0.5" style="z-index: -1; position: absolute;"><path d="M 20 90 Q 50 60 80 90 Q 50 100 20 90 Z" filter="drop-shadow(0 -10px 15px #dc2626)"/></svg>' },
-        { id: 'head_ocean_crown', type: 'head', name: 'Coroa de Coral', icon: '🧜‍♂️', render: '<svg viewBox="0 0 100 100" fill="#0ea5e9"><path d="M 30 20 L 40 30 L 50 15 L 60 30 L 70 20 L 75 35 L 25 35 Z"/></svg>' },
-        { id: 'extra_ocean_trident', type: 'extra', name: 'Tridente Abissal', icon: '🔱', render: '<svg viewBox="0 0 100 100" stroke="#0891b2" stroke-width="3" fill="none"><line x1="80" y1="20" x2="60" y2="90"/><path d="M 70 20 L 80 40 L 90 20 M 80 15 L 80 30"/></svg>' },
-        { id: 'head_arcane_hat', type: 'head', name: 'Chapéu Estelar', icon: '🧙', render: '<svg viewBox="0 0 100 100" fill="#581c87"><path d="M 15 40 L 85 40 L 50 0 Z"/><ellipse cx="50" cy="40" rx="40" ry="10" fill="#3b0764"/></svg>' },
-        { id: 'extra_arcane_book', type: 'extra', name: 'Grimório Flutuante', icon: '📖', render: '<svg viewBox="0 0 100 100" fill="#c026d3"><rect x="10" y="50" width="20" height="25" rx="2" transform="rotate(-15 20 60)" filter="drop-shadow(0 0 10px #e879f9)"/><rect x="12" y="52" width="16" height="21" fill="#fff" transform="rotate(-15 20 60)"/></svg>' }
-    ];
+        // Câmera ajustada para mostrar o corpo inteiro
+        camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+        camera.position.set(0, 4, 12);
 
-    function generatePathForElement(themeKey, headId, extraId) {
-        const path = []; const levels = [2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
-        levels.forEach(lvl => {
-            if(lvl === 2) path.push({ id: `${themeKey}_n2`, reqLvl: 2, type: 'item', rewardId: headId, title: 'O Primeiro Passo', desc: 'Sua afinidade despertou.' });
-            else if(lvl === 20) path.push({ id: `${themeKey}_n20`, reqLvl: 20, type: 'item', rewardId: extraId, title: 'Domínio Elemental', desc: 'Você domina sua aura primal.' });
-            else { const coins = lvl * 10; path.push({ id: `${themeKey}_coin_${lvl}`, reqLvl: lvl, type: 'coin', amount: coins, title: 'Tesouro da Jornada', desc: `Receba ${coins} Moedas Essenciais.` }); }
-        }); return path;
+        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+
+        // Iluminação
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        dirLight.position.set(5, 10, 5);
+        dirLight.castShadow = true;
+        scene.add(dirLight);
+        const backLight = new THREE.DirectionalLight(0x818cf8, 0.4);
+        backLight.position.set(-5, 5, -5);
+        scene.add(backLight);
+
+        // Pedestal
+        const pedGeo = new THREE.CylinderGeometry(2.5, 3, 0.5, 32);
+        const pedMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.2, metalness: 0.8 });
+        const pedestal = new THREE.Mesh(pedGeo, pedMat);
+        pedestal.position.y = -0.25;
+        pedestal.receiveShadow = true;
+        scene.add(pedestal);
+        const ringGeo = new THREE.TorusGeometry(2.8, 0.05, 16, 100);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x818cf8 });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.position.y = 0.05;
+        ring.rotation.x = Math.PI / 2;
+        scene.add(ring);
+
+        // Grupo Principal do Avatar
+        avatarGroup = new THREE.Group();
+        avatarGroup.position.y = 0;
+        scene.add(avatarGroup);
+
+        // Construir Base do Corpo
+        buildBaseBody();
+
+        // Loop de Animação
+        const animate3D = () => {
+            requestAnimationFrame(animate3D);
+            // Suavização da rotação manual
+            avatarGroup.rotation.y += (targetRotation - avatarGroup.rotation.y) * 0.1;
+            
+            // Animação de respiração simples
+            const time = Date.now() * 0.002;
+            if(baseMeshes.torso) baseMeshes.torso.position.y = 2.5 + Math.sin(time) * 0.05;
+            if(slots.head) slots.head.rotation.x = Math.sin(time * 0.5) * 0.05;
+            if(baseMeshes.leftArm) baseMeshes.leftArm.rotation.z = 0.1 + Math.sin(time) * 0.05;
+            if(baseMeshes.rightArm) baseMeshes.rightArm.rotation.z = -0.1 - Math.sin(time) * 0.05;
+
+            ring.rotation.z += 0.01;
+
+            if (currentContainer && currentContainer.offsetWidth > 0) {
+                renderer.render(scene, camera);
+            }
+        };
+        animate3D();
+        setupDragControls();
     }
 
-    const pathsDB = {
-        'theme-void': generatePathForElement('void', 'head_void_halo', 'extra_void_orbs'),
-        'theme-journey': generatePathForElement('journey', 'head_journey_hat', 'extra_journey_pack'),
-        'theme-forest': generatePathForElement('forest', 'head_forest_antlers', 'extra_forest_staff'),
-        'theme-cloud': generatePathForElement('cloud', 'head_cloud_goggles', 'extra_cloud_wings'),
-        'theme-inferno': generatePathForElement('inferno', 'head_inferno_horns', 'extra_inferno_aura'),
-        'theme-ocean': generatePathForElement('ocean', 'head_ocean_crown', 'extra_ocean_trident'),
-        'theme-arcane': generatePathForElement('arcane', 'head_arcane_hat', 'extra_arcane_book')
-    };
+    function buildBaseBody() {
+        const defaultMat = new THREE.MeshStandardMaterial({ color: 0xfcd34d, roughness: 0.7 });
+        
+        // Tronco
+        baseMeshes.torso = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.5, 0.8), defaultMat);
+        baseMeshes.torso.position.y = 2.5;
+        baseMeshes.torso.castShadow = true;
+        avatarGroup.add(baseMeshes.torso);
 
+        // Perna Esq e Dir
+        baseMeshes.leftLeg = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.8, 0.5), defaultMat);
+        baseMeshes.leftLeg.position.set(-0.35, 0.9, 0); baseMeshes.leftLeg.castShadow = true;
+        avatarGroup.add(baseMeshes.leftLeg);
+        
+        baseMeshes.rightLeg = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.8, 0.5), defaultMat);
+        baseMeshes.rightLeg.position.set(0.35, 0.9, 0); baseMeshes.rightLeg.castShadow = true;
+        avatarGroup.add(baseMeshes.rightLeg);
+
+        // Braço Esq e Dir (Atachados ao Torso para herdarem a respiração)
+        baseMeshes.leftArm = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.4, 0.4), defaultMat);
+        baseMeshes.leftArm.position.set(-0.8, 0, 0); baseMeshes.leftArm.castShadow = true;
+        baseMeshes.torso.add(baseMeshes.leftArm);
+
+        baseMeshes.rightArm = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.4, 0.4), defaultMat);
+        baseMeshes.rightArm.position.set(0.8, 0, 0); baseMeshes.rightArm.castShadow = true;
+        baseMeshes.torso.add(baseMeshes.rightArm);
+
+        // Slots (Grupos vazios onde injetaremos os equipamentos)
+        slots.head = new THREE.Group();
+        slots.head.position.set(0, 1.0, 0); // Topo do torso
+        baseMeshes.torso.add(slots.head);
+
+        slots.extra = new THREE.Group();
+        slots.extra.position.set(0, -0.5, 0.2); // Na mão direita
+        baseMeshes.rightArm.add(slots.extra);
+
+        slots.back = new THREE.Group();
+        slots.back.position.set(0, 0.5, -0.45); // Nas costas
+        baseMeshes.torso.add(slots.back);
+    }
+
+    function mount3DCanvas(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container || currentContainer === container) return;
+        currentContainer = container;
+        
+        // Reajusta tamanho
+        const w = container.offsetWidth;
+        const h = container.offsetHeight || 300;
+        renderer.setSize(w, h);
+        camera.aspect = w / h;
+        
+        // Ajusta zoom dependendo da tela
+        if(containerId === 'home-avatar-container') camera.position.set(0, 4.5, 9); // Mais perto
+        else camera.position.set(0, 3.5, 11); // Mais corpo inteiro
+        
+        camera.updateProjectionMatrix();
+        container.innerHTML = '';
+        container.appendChild(renderer.domElement);
+        
+        // Reseta rotação ao trocar de aba
+        targetRotation = 0;
+    }
+
+    function setupDragControls() {
+        const onDown = (e) => { isDragging = true; previousMousePosition = { x: e.offsetX || e.touches?.[0].clientX, y: e.offsetY || e.touches?.[0].clientY }; };
+        const onMove = (e) => {
+            if(!isDragging) return;
+            const currentX = e.offsetX || e.touches?.[0].clientX;
+            const deltaX = currentX - previousMousePosition.x;
+            targetRotation += deltaX * 0.01;
+            previousMousePosition = { x: currentX };
+        };
+        const onUp = () => { isDragging = false; };
+        
+        document.addEventListener('mousedown', onDown); document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
+        document.addEventListener('touchstart', onDown); document.addEventListener('touchmove', onMove); document.addEventListener('touchend', onUp);
+    }
+
+    // BANCO DE ITENS E GERADORES 3D PROCEDURAIS
+    const itemsDB = [
+        { id: 'body_default', type: 'body', name: 'Traje Base', icon: '👤', apply3D: () => { setBodyColor(0xfcd34d, 0x3b82f6); } },
+        { id: 'body_dark', type: 'body', name: 'Traje Sombrio', icon: '🌑', apply3D: () => { setBodyColor(0x1e293b, 0x0f172a); } },
+        { id: 'head_none', type: 'head', name: 'Nenhum', icon: '❌', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); return g; } },
+        { id: 'head_hood', type: 'head', name: 'Capuz Rogue', icon: '🥷', build3D: () => { 
+            const g = new THREE.Group(); 
+            const face = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), new THREE.MeshStandardMaterial({color: 0x1e293b})); face.position.y = 0.4; g.add(face);
+            const hood = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: 0x0f172a})); hood.position.y = 0.45; hood.position.z = -0.05; g.add(hood);
+            return g; 
+        } },
+        { id: 'head_hair', type: 'head', name: 'Cabelo Herói', icon: '💇', build3D: () => {
+            const g = new THREE.Group();
+            const head = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); head.position.y = 0.45; g.add(head);
+            const hair = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.3, 1.0), new THREE.MeshStandardMaterial({color: 0x78350f})); hair.position.y = 0.95; g.add(hair);
+            return g;
+        } },
+        { id: 'extra_none', type: 'extra', name: 'Nenhum', icon: '❌', build3D: () => new THREE.Group() },
+        { id: 'extra_sword', type: 'extra', name: 'Espada', icon: '⚔️', build3D: () => {
+            const g = new THREE.Group();
+            const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.4), new THREE.MeshStandardMaterial({color: 0x78350f})); handle.rotation.x = Math.PI/2; g.add(handle);
+            const guard = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), new THREE.MeshStandardMaterial({color: 0xfbbf24})); guard.position.z = 0.2; g.add(guard);
+            const blade = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.8, 0.02), new THREE.MeshStandardMaterial({color: 0xcbd5e1, metalness: 0.8})); blade.position.z = 0.6; blade.rotation.x = Math.PI/2; g.add(blade);
+            return g;
+        } },
+        { id: 'extra_cloak', type: 'extra', name: 'Capa Azul', icon: '🧥', isBack: true, build3D: () => {
+            const g = new THREE.Group();
+            const cloak = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.8), new THREE.MeshStandardMaterial({color: 0x3b82f6, side: THREE.DoubleSide}));
+            cloak.position.y = -0.5; cloak.rotation.x = -0.1; g.add(cloak);
+            return g;
+        } },
+        // Itens Elementais (Exemplos)
+        { id: 'head_void_halo', type: 'head', name: 'Coroa Vazio', icon: '👑', build3D: () => {
+            const g = new THREE.Group();
+            const head = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); head.position.y = 0.45; g.add(head);
+            const halo = new THREE.Mesh(new THREE.TorusGeometry(0.6, 0.05, 8, 24), new THREE.MeshBasicMaterial({color: 0x818cf8})); halo.position.y = 1.2; halo.rotation.x = Math.PI/2; g.add(halo);
+            return g;
+        }},
+        { id: 'extra_forest_staff', type: 'extra', name: 'Cajado', icon: '🌿', build3D: () => {
+            const g = new THREE.Group();
+            const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.04, 2.0), new THREE.MeshStandardMaterial({color: 0x451a03})); staff.rotation.x = Math.PI/2; g.add(staff);
+            const gem = new THREE.Mesh(new THREE.OctahedronGeometry(0.2), new THREE.MeshStandardMaterial({color: 0x34d399, emissive: 0x059669})); gem.position.z = 1.1; g.add(gem);
+            return g;
+        }}
+    ];
+
+    let currentSkinColor = 0xfcd34d;
+    function setBodyColor(skinHex, clothesHex) {
+        currentSkinColor = skinHex;
+        if(baseMeshes.torso) {
+            baseMeshes.torso.material.color.setHex(clothesHex);
+            baseMeshes.leftLeg.material.color.setHex(clothesHex); baseMeshes.rightLeg.material.color.setHex(clothesHex);
+            baseMeshes.leftArm.material.color.setHex(skinHex); baseMeshes.rightArm.material.color.setHex(skinHex);
+        }
+    }
+
+    function applyEquipment3D() {
+        if(!avatarGroup) return;
+        const eq = profileData.equipped || { body: 'body_default', head: 'head_none', extra: 'extra_none' };
+        
+        // 1. Aplicar Body (Cores)
+        const bodyItem = itemsDB.find(i => i.id === eq.body);
+        if(bodyItem && bodyItem.apply3D) bodyItem.apply3D();
+
+        // 2. Limpar Slots Head/Extra/Back
+        while(slots.head.children.length > 0) slots.head.remove(slots.head.children[0]);
+        while(slots.extra.children.length > 0) slots.extra.remove(slots.extra.children[0]);
+        while(slots.back.children.length > 0) slots.back.remove(slots.back.children[0]);
+
+        // 3. Aplicar Head
+        const headItem = itemsDB.find(i => i.id === eq.head);
+        if(headItem && headItem.build3D) {
+            const mesh = headItem.build3D();
+            if(mesh) slots.head.add(mesh);
+        }
+
+        // 4. Aplicar Extra (Arma ou Capa)
+        const extraItem = itemsDB.find(i => i.id === eq.extra);
+        if(extraItem && extraItem.build3D) {
+            const mesh = extraItem.build3D();
+            if(mesh) {
+                if(extraItem.isBack) slots.back.add(mesh);
+                else slots.extra.add(mesh);
+            }
+        }
+    }
+
+    // Inicializar Motor 3D ao carregar script
+    init3DEngine();
+
+
+    // ----------------------------------------------------
+    // LÓGICA DO APP (Firebase, UI, Caminho)
+    // ----------------------------------------------------
     let currentUser = null; let userPath = ''; 
     const defaultUnlocked = ['body_default', 'body_dark', 'head_none', 'head_hood', 'head_hair', 'extra_none', 'extra_sword', 'extra_cloak'];
     let profileData = { name: "Viajante", description: "Despertando...", exp: 0, coins: 0, theme: "theme-void", customPhotoURL: "", elementChosen: false, isAdmin: false, unlockedItems: [...defaultUnlocked], claimedNodes: [], equipped: { body: 'body_default', head: 'head_none', extra: 'extra_none' } };
-    let skillsData = []; let questsData = []; let communityData = [];
-    let selectedNode = { type: 'main', id: null }; let isEditingPillar = false;
-    let unsubProfile, unsubSkills, unsubQuests, unsubComm; let currentLevelState = 1; let initialSettingsState = {};
     const EXP_PER_LEVEL = 500;
-
-    const sessionStartTime = Date.now(); let activeChatRoomId = null; let unsubActiveChat = null;
+    
+    // Canvas do Background Animado (SVG/2D Context)
     const canvas = document.getElementById('theme-canvas'); const ctx = canvas.getContext('2d');
-    let particles = []; let animationFrameId;
-    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resizeCanvas); resizeCanvas();
-
+    let particles = []; function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } window.addEventListener('resize', resizeCanvas); resizeCanvas();
     class Particle {
         constructor(theme) { this.theme = theme; this.reset(); this.y = Math.random() * canvas.height; }
-        reset() {
-            this.x = Math.random() * canvas.width; this.y = canvas.height + Math.random() * 100;
-            this.size = Math.random() * 3 + 1; this.alpha = Math.random() * 0.5 + 0.1;
-            if (this.theme === 'theme-void') { this.vx = (Math.random() - 0.5)*0.5; this.vy = -(Math.random()*1 + 0.5); this.color = `rgba(129,140,248,${this.alpha})`; } 
-            else if (this.theme === 'theme-journey') { this.x = Math.random()*canvas.width*1.5 - canvas.width*0.5; this.vx = Math.random()*3 + 1; this.vy = -(Math.random()*1 + 0.5); this.color = `rgba(251,191,36,${this.alpha})`; } 
-            else if (this.theme === 'theme-forest') { this.vy = -(Math.random()*0.5 + 0.2); this.angle = Math.random()*Math.PI*2; this.vx = Math.cos(this.angle); this.color = `rgba(167,243,208,${this.alpha*1.5})`; } 
-            else if (this.theme === 'theme-cloud') { this.size = Math.random()*50 + 20; this.y = Math.random()*canvas.height; this.x = -this.size; this.vx = Math.random()*0.5 + 0.1; this.vy = 0; this.color = `rgba(255,255,255,${this.alpha*0.5})`; }
-            else if (this.theme === 'theme-inferno') { this.vx = (Math.random()-0.5); this.vy = -(Math.random()*3 + 2); this.size = Math.random()*4 + 2; this.color = `rgba(248,113,113,${this.alpha*1.5})`; }
-            else if (this.theme === 'theme-ocean') { this.vy = -(Math.random()*1 + 0.5); this.angle = Math.random()*Math.PI*2; this.color = `rgba(165,243,252,${this.alpha})`; this.size = Math.random()*5 + 2; }
-            else if (this.theme === 'theme-arcane') { this.vx = (Math.random()-0.5)*0.5; this.vy = -(Math.random()*0.5 + 0.2); this.fadeDir = Math.random()>0.5?0.02:-0.02; this.color = `rgba(232,121,249,1)`; }
-        }
-        update() {
-            if (this.theme === 'theme-forest') { this.angle += 0.05; this.x += Math.cos(this.angle)*1.5; } else if (this.theme === 'theme-ocean') { this.angle += 0.1; this.x += Math.sin(this.angle)*0.5; } else { this.x += this.vx; }
-            this.y += this.vy;
-            if(this.theme === 'theme-arcane') { this.alpha += this.fadeDir; if(this.alpha > 1 || this.alpha < 0) this.fadeDir *= -1; this.color = `rgba(232,121,249,${this.alpha})`; }
-            if (this.theme === 'theme-inferno') { this.size *= 0.95; if(this.size < 0.5) this.reset(); }
-            if (this.theme === 'theme-cloud' && this.x > canvas.width + this.size) this.reset();
-            else if (this.theme !== 'theme-cloud' && (this.y < -10 || this.x > canvas.width + 10 || this.x < -10)) this.reset();
-        }
+        reset() { this.x = Math.random() * canvas.width; this.y = canvas.height + Math.random() * 100; this.size = Math.random() * 3 + 1; this.alpha = Math.random() * 0.5 + 0.1; this.vx = (Math.random() - 0.5); this.vy = -(Math.random()*1 + 0.5); this.color = `rgba(255,255,255,${this.alpha})`; }
+        update() { this.x += this.vx; this.y += this.vy; if (this.y < -10) this.reset(); }
         draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = this.color; ctx.fill(); }
     }
-    function initParticles(themeClass) { particles = []; let c = 40; if(themeClass==='theme-cloud') c=10; if(themeClass==='theme-journey') c=80; if(themeClass==='theme-inferno') c=60; for(let i=0; i<c; i++) particles.push(new Particle(themeClass)); }
-    function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); animationFrameId = requestAnimationFrame(animateParticles); }
+    function initParticles(theme) { particles = []; for(let i=0; i<30; i++) particles.push(new Particle(theme)); }
+    function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animateParticles); }
 
-    let pendingElementChoice = null;
-    window.selectInitialElement = (themeClass, element) => { pendingElementChoice = themeClass; document.querySelectorAll('#initial-theme-grid .theme-option').forEach(el => el.classList.remove('active')); element.classList.add('active'); document.body.className = themeClass; initParticles(themeClass); };
-    window.confirmInitialElement = async () => { if (!pendingElementChoice) return alert("Selecione um elemento para continuar!"); if (!currentUser) return; await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: pendingElementChoice, elementChosen: true }); document.getElementById('element-choice-screen').classList.remove('active'); };
-    
     window.switchTab = (tabId, btnElement) => {
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active')); if(btnElement) btnElement.classList.add('active');
-        ['home','inventory','path','skills','shop','community'].forEach(t => document.getElementById(`view-${t}`).classList.add('hidden'));
-        document.getElementById(`view-${tabId}`).classList.remove('hidden');
-        if(tabId === 'skills') setTimeout(renderWheel, 50); if(tabId === 'inventory' || tabId === 'home') renderAvatar(); if(tabId === 'path') renderPath();
+        ['home','inventory','path','skills','shop','community'].forEach(t => { const el = document.getElementById(`view-${t}`); if(el) el.classList.add('hidden'); });
+        const target = document.getElementById(`view-${tabId}`); if(target) target.classList.remove('hidden');
+        
+        // Mover o Canvas 3D para a tela correta
+        if(tabId === 'home') mount3DCanvas('home-avatar-container');
+        if(tabId === 'inventory') mount3DCanvas('inv-avatar-container');
     };
-
-    window.openSettings = () => {
-        const sheet = document.getElementById('settings-sheet'); const backdrop = document.getElementById('settings-backdrop');
-        initialSettingsState = { name: profileData.name||'', desc: profileData.description||'', photo: profileData.customPhotoURL||'' };
-        document.getElementById('input-profile-name').value = initialSettingsState.name; document.getElementById('input-profile-desc').value = initialSettingsState.desc; document.getElementById('input-profile-photo').value = initialSettingsState.photo;
-        if (profileData.isAdmin) { document.getElementById('admin-login-area').classList.add('hidden'); document.getElementById('admin-status-area').classList.remove('hidden'); showAdminThemes(); } else { document.getElementById('input-admin-pass').value = ''; document.getElementById('admin-theme-area').classList.add('hidden'); document.getElementById('admin-login-area').classList.remove('hidden'); document.getElementById('admin-status-area').classList.add('hidden'); }
-        sheet.classList.add('open'); backdrop.classList.add('active');
-    };
-    window.handleCloseSettings = () => { const n = document.getElementById('input-profile-name').value; const d = document.getElementById('input-profile-desc').value; const p = document.getElementById('input-profile-photo').value; const hasChanged = (n !== initialSettingsState.name || d !== initialSettingsState.desc || p !== initialSettingsState.photo); if (hasChanged) { if (confirm("Existem modificações não salvas. Deseja salvar agora?")) { window.saveProfileData(); return; } } closeSettingsUI(); };
-    function closeSettingsUI() { document.getElementById('settings-sheet').classList.remove('open'); document.getElementById('settings-backdrop').classList.remove('active'); }
-
-    window.unlockAdminThemes = async () => { const pass = document.getElementById('input-admin-pass').value; if(pass === 'polimata' || profileData.isAdmin) { if(!profileData.isAdmin && currentUser) await updateDoc(doc(db, userPath, 'profile', 'main'), { isAdmin: true }); document.getElementById('admin-login-area').classList.add('hidden'); document.getElementById('admin-status-area').classList.remove('hidden'); showAdminThemes(); } else { alert("Acesso negado."); } };
-    function showAdminThemes() { document.getElementById('admin-theme-area').classList.remove('hidden'); document.querySelectorAll('#admin-theme-area .theme-option').forEach(el => el.classList.remove('active')); const actBtn = document.querySelector(`#admin-theme-area .theme-option[onclick*="${profileData.theme}"]`); if(actBtn) actBtn.classList.add('active'); }
-    window.setTheme = async (themeClass, element) => { document.body.className = themeClass; document.querySelectorAll('#admin-theme-area .theme-option').forEach(el => el.classList.remove('active')); if(element) element.classList.add('active'); initParticles(themeClass); if (currentUser) { profileData.theme = themeClass; await updateDoc(doc(db, userPath, 'profile', 'main'), { theme: themeClass }).catch(console.error); if(!document.getElementById('view-path').classList.contains('hidden')) renderPath(); } };
-
-    document.getElementById('btn-login-action').onclick = async () => { try { await signInWithPopup(auth, provider); } catch (e) { console.error(e); } };
-    window.handleLogout = () => { if(confirm("Deseja desconectar?")) { signOut(auth); closeSettingsUI(); } };
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
             currentUser = user; userPath = `users/${user.uid}`;
-            document.getElementById('permission-error').style.display = 'none'; document.getElementById('login-screen').classList.remove('active');
-            setTimeout(() => { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('app-container').classList.remove('hidden'); initParticles(document.body.className); animateParticles(); }, 500);
+            document.getElementById('login-screen').classList.remove('active');
+            setTimeout(() => { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('app-container').classList.remove('hidden'); initParticles(document.body.className); animateParticles(); mount3DCanvas('home-avatar-container'); }, 500);
             loadDataAndSync(); 
         } else {
             currentUser = null; document.getElementById('login-screen').classList.remove('hidden'); document.getElementById('login-screen').classList.add('active'); document.getElementById('app-container').classList.add('hidden');
-            cancelAnimationFrame(animationFrameId); if (unsubProfile) unsubProfile(); if (unsubSkills) unsubSkills(); if (unsubQuests) unsubQuests(); if(unsubComm) unsubComm();
         }
     });
 
     async function loadDataAndSync() {
         if (!currentUser) return;
-        try {
-            const profileRef = doc(db, userPath, 'profile', 'main'); const profileSnap = await getDoc(profileRef);
-            if (!profileSnap.exists()) { await setDoc(profileRef, profileData); } else {
-                const initialData = profileSnap.data(); currentLevelState = getLevelInfo(initialData.exp || 0).level;
-                if(!initialData.equipped) initialData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' }; 
-                if(!initialData.unlockedItems) initialData.unlockedItems = [...defaultUnlocked];
-                if(!initialData.claimedNodes) initialData.claimedNodes = []; if(initialData.coins === undefined) initialData.coins = 0;
-                profileData = initialData;
-                if(profileData.elementChosen !== true) document.getElementById('element-choice-screen').classList.add('active');
-                if(initialData.theme) { document.body.className = initialData.theme; initParticles(initialData.theme); }
-            }
-            unsubProfile = onSnapshot(profileRef, (docSnap) => {
-                if (docSnap.exists()) {
-                    profileData = docSnap.data(); 
-                    if(!profileData.equipped) profileData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' };
-                    if(!profileData.unlockedItems) profileData.unlockedItems = [...defaultUnlocked];
-                    if(!profileData.claimedNodes) profileData.claimedNodes = []; if(profileData.coins === undefined) profileData.coins = 0;
-
-                    const newLevel = getLevelInfo(profileData.exp || 0).level;
-                    if (newLevel > currentLevelState) { document.getElementById('new-level-display').innerText = newLevel; document.getElementById('level-up-screen').classList.add('active'); currentLevelState = newLevel; }
-                    if(profileData.elementChosen === true) document.getElementById('element-choice-screen').classList.remove('active');
-                    if(profileData.theme && document.body.className !== profileData.theme) { document.body.className = profileData.theme; initParticles(profileData.theme); }
-                    
-                    updateProfileUI(); renderAvatar(); renderInventoryGrid(); syncToCommunity();
-                    if(document.getElementById('view-path') && !document.getElementById('view-path').classList.contains('hidden')) renderPath();
-                }
-            }, (err) => document.getElementById('permission-error').style.display='block');
-
-            unsubSkills = onSnapshot(collection(db, userPath, 'skills'), (snap) => { skillsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderWheel(); renderSkillList(); renderEditor(); });
-            unsubQuests = onSnapshot(collection(db, userPath, 'quests'), (snap) => { questsData = snap.docs.map(d => ({ id: d.id, ...d.data() })); updateQuestsUI(); });
-            unsubComm = onSnapshot(collection(db, 'community'), (snap) => { communityData = snap.docs.map(d => d.data()); renderCommunityList(); });
-        } catch (error) { document.getElementById('permission-error').style.display='block'; }
+        const profileRef = doc(db, userPath, 'profile', 'main');
+        onSnapshot(profileRef, (docSnap) => {
+            if (docSnap.exists()) {
+                profileData = docSnap.data(); 
+                if(!profileData.equipped) profileData.equipped = { body: 'body_default', head: 'head_none', extra: 'extra_none' };
+                if(!profileData.unlockedItems) profileData.unlockedItems = [...defaultUnlocked];
+                
+                document.getElementById('disp-char-name').innerText = profileData.name || 'Viajante';
+                document.getElementById('disp-char-title').innerText = profileData.description || '';
+                
+                renderInventoryGrid();
+                applyEquipment3D(); // ATUALIZA O 3D
+            } else { setDoc(profileRef, profileData); }
+        });
     }
 
-    async function syncToCommunity() { if (!currentUser) return; try { const pubData = { uid: currentUser.uid, name: profileData.name || 'Viajante', description: profileData.description || 'Despertando...', photoURL: profileData.customPhotoURL || currentUser.photoURL || '', theme: profileData.theme || 'theme-void', level: getLevelInfo(profileData.exp || 0).level }; await setDoc(doc(db, 'community', currentUser.uid), pubData); } catch(e) {} }
-
-    window.handleSearch = () => { renderCommunityList(); };
-    function createCardHTML(userObj, isMe = false, rank = null) { const themeClass = userObj.theme || 'theme-void'; const photo = userObj.photoURL ? `<img src="${userObj.photoURL}" class="comm-photo">` : `<div class="comm-photo" style="background:var(--glass-bg); display:flex; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px; color:var(--text-main);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>`; const chatButton = !isMe ? `<button class="chat-btn-comm" onclick="openChat('${userObj.uid}', '${userObj.name.replace(/'/g, "\\'")}', '${(userObj.photoURL || '').replace(/'/g, "\\'")}')" title="Mensagem Epêmera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>` : ''; const rankBadge = rank ? `<div style="position: absolute; top: -10px; left: -10px; background: var(--accent); color: #fff; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid var(--glass-border); z-index: 10;">#${rank}</div>` : ''; return `<div class="community-card ${themeClass}">${rankBadge}<div class="comm-info">${photo}<div><div style="font-weight:900; font-size:1.1rem; line-height:1.1; margin-bottom:2px;">${userObj.name}</div><div style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">${userObj.description}</div></div></div><div style="display:flex; align-items:center; gap:10px;">${chatButton}<div class="comm-level-badge">${userObj.level}</div></div></div>`; }
-    function renderCommunityList() { const searchTerm = document.getElementById('search-community').value.toLowerCase().trim(); const me = { uid: currentUser.uid, name: profileData.name, description: profileData.description, photoURL: profileData.customPhotoURL || currentUser.photoURL, theme: profileData.theme, level: currentLevelState }; document.getElementById('my-community-card-container').innerHTML = createCardHTML(me, true); const top10Container = document.getElementById('community-top10-list'); const searchContainer = document.getElementById('community-search-list'); const top10Section = document.getElementById('top-10-section'); const searchSection = document.getElementById('search-results-section'); const top10 = [...communityData].sort((a, b) => b.level - a.level).slice(0, 10); if (searchTerm === '') { top10Section.classList.remove('hidden'); searchSection.classList.add('hidden'); top10Container.innerHTML = top10.map((u, index) => createCardHTML(u, u.uid === currentUser.uid, index + 1)).join(''); } else { top10Section.classList.add('hidden'); searchSection.classList.remove('hidden'); const others = communityData.filter(u => u.uid !== currentUser.uid && (u.name.toLowerCase().includes(searchTerm) || u.description.toLowerCase().includes(searchTerm))); if (others.length === 0) searchContainer.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-weight:700; margin-top:2rem;">Nenhum viajante encontrado.</p>`; else searchContainer.innerHTML = others.map(u => createCardHTML(u, false)).join(''); } }
-    window.openChat = (friendUid, friendName, friendPhoto) => { if(!currentUser) return; document.getElementById('chat-header-name').innerText = friendName; const photoHtml = friendPhoto ? `<img src="${friendPhoto}" style="width:100%; height:100%; object-fit:cover;">` : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; color:var(--text-main); margin:8px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`; document.getElementById('chat-header-photo').innerHTML = photoHtml; document.getElementById('chat-modal').classList.add('open'); activeChatRoomId = [currentUser.uid, friendUid].sort().join('_'); if(unsubActiveChat) unsubActiveChat(); const q = query(collection(db, `chats/${activeChatRoomId}/messages`), orderBy('timestamp', 'asc')); unsubActiveChat = onSnapshot(q, (snap) => { const container = document.getElementById('chat-messages-container'); container.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: auto; padding-top: 2rem; margin-bottom: 1rem;">As mensagens trocadas aqui desaparecem assim que você fecha o aplicativo.<br>Apenas no momento presente.</div>`; const messages = snap.docs.map(d => d.data()).filter(m => m.timestamp >= sessionStartTime); messages.forEach(msg => { const isMine = msg.senderId === currentUser.uid; container.innerHTML += `<div class="chat-bubble ${isMine ? 'bubble-mine' : 'bubble-other'}">${msg.text}</div>`; }); container.scrollTop = container.scrollHeight; }); };
-    window.closeChat = () => { document.getElementById('chat-modal').classList.remove('open'); if(unsubActiveChat) { unsubActiveChat(); unsubActiveChat = null; } activeChatRoomId = null; }; window.sendChatMessage = async () => { if(!currentUser || !activeChatRoomId) return; const input = document.getElementById('chat-input-text'); const text = input.value.trim(); if(text === '') return; input.value = ''; await addDoc(collection(db, `chats/${activeChatRoomId}/messages`), { senderId: currentUser.uid, text: text, timestamp: Date.now() }); };
-
-    function getLevelInfo(exp) { return { level: Math.floor(exp / EXP_PER_LEVEL) + 1, currentExp: exp % EXP_PER_LEVEL, progress: ((exp % EXP_PER_LEVEL) / EXP_PER_LEVEL) * 100 }; }
-    window.closeLevelUp = () => { document.getElementById('level-up-screen').classList.remove('active'); };
-    function createFloatingEXP(x, y, amount) { const el = document.createElement('div'); el.className = 'floating-exp'; el.innerText = `+${amount} XP`; el.style.left = `${x}px`; el.style.top = `${y}px`; document.body.appendChild(el); setTimeout(() => el.remove(), 1000); }
-    window.addExp = async (amount) => { if (currentUser) await updateDoc(doc(db, userPath, 'profile', 'main'), { exp: (profileData.exp || 0) + amount }); };
-    window.toggleQuest = async (id, done, exp, event) => { if (!currentUser) return; let cx = event.clientX; let cy = event.clientY; if(event.touches && event.touches.length > 0) { cx = event.touches[0].clientX; cy = event.touches[0].clientY; } if (!done) createFloatingEXP(cx, cy, exp); await updateDoc(doc(db, userPath, 'quests', id), { done: !done }); if (!done) await window.addExp(exp); };
-    window.addRandomQuest = async () => { if (!currentUser) return; const missao = prompt("Novo Hábito a cultivar:"); if (missao && missao.trim() !== "") await addDoc(collection(db, userPath, 'quests'), { title: missao, exp: 30, done: false, createdAt: Date.now() }); };
-    window.saveProfileData = async () => { if (!currentUser) return; const n = document.getElementById('input-profile-name').value; const d = document.getElementById('input-profile-desc').value; const p = document.getElementById('input-profile-photo').value; await updateDoc(doc(db, userPath, 'profile', 'main'), { name: n, description: d, customPhotoURL: p }); closeSettingsUI(); };
-
-    // --- RENDERIZAÇÃO DO CAMINHO 3D ---
-    window.claimReward = async (nodeId, type, rewardValue) => {
-        if(!currentUser) return;
-        const claimed = profileData.claimedNodes || []; const unlocked = profileData.unlockedItems || [...defaultUnlocked]; let newCoins = profileData.coins || 0;
-        if(!claimed.includes(nodeId)) {
-            claimed.push(nodeId); if(type === 'item' && !unlocked.includes(rewardValue)) unlocked.push(rewardValue); if(type === 'coin') newCoins += parseInt(rewardValue);
-            await updateDoc(doc(db, userPath, 'profile', 'main'), { claimedNodes: claimed, unlockedItems: unlocked, coins: newCoins });
-        }
+    // INVENTÁRIO LOGIC
+    window.equipItem = async (itemId, type) => {
+        if (!currentUser) return; 
+        const eq = profileData.equipped || { body: 'body_default', head: 'head_none', extra: 'extra_none' }; 
+        eq[type] = itemId;
+        // Salva no banco. O onSnapshot vai pegar e chamar applyEquipment3D()
+        await updateDoc(doc(db, userPath, 'profile', 'main'), { equipped: eq });
     };
 
-    function generate3DEnvironment(theme, totalWidth) {
-        let svg = '';
-        const loops = Math.ceil(totalWidth / 300);
-
-        if (theme === 'theme-cloud') {
-            for (let i = 0; i < loops; i++) {
-                const bx = i * 300 + Math.random() * 100;
-                svg += `<ellipse cx="${bx}" cy="90%" rx="${Math.random()*80+50}" ry="${Math.random()*40+30}" fill="#ffffff" opacity="0.4"/>`;
-                svg += `<ellipse cx="${bx+40}" cy="85%" rx="${Math.random()*60+40}" ry="${Math.random()*30+20}" fill="#e0f2fe" opacity="0.6"/>`;
-                svg += `<circle cx="${bx+Math.random()*200}" cy="${Math.random()*30+10}%" r="${Math.random()*30+10}" fill="#ffffff" opacity="0.5"/>`;
-            }
-        } else if (theme === 'theme-ocean') {
-            svg += `<path d="M0,80% Q${totalWidth*0.25},70% ${totalWidth*0.5},80% T${totalWidth},80% L${totalWidth},100% L0,100% Z" fill="#06b6d4" opacity="0.3"/>`;
-            svg += `<path d="M0,90% Q${totalWidth*0.25},100% ${totalWidth*0.5},90% T${totalWidth},90% L${totalWidth},100% L0,100% Z" fill="#0891b2" opacity="0.5"/>`;
-            for (let i = 0; i < loops * 3; i++) {
-                svg += `<circle cx="${Math.random()*totalWidth}" cy="${Math.random()*100}%" r="${Math.random()*8+2}" fill="#cffafe" opacity="0.5"/>`;
-                svg += `<path d="M${Math.random()*totalWidth},100% Q${Math.random()*totalWidth+10},80% ${Math.random()*totalWidth-10},60%" stroke="#14b8a6" stroke-width="4" fill="none" opacity="0.6"/>`;
-            }
-        } else if (theme === 'theme-forest') {
-            for (let i = 0; i < loops * 2; i++) {
-                const tx = i * 150 + Math.random() * 50;
-                svg += `<rect x="${tx}" y="40%" width="30" height="60%" fill="#064e3b" opacity="0.7"/>`;
-                svg += `<circle cx="${tx+15}" cy="40%" r="${Math.random()*50+40}" fill="#059669" opacity="0.5"/>`;
-                svg += `<circle cx="${tx-10}" cy="45%" r="${Math.random()*40+30}" fill="#10b981" opacity="0.4"/>`;
-            }
-        } else if (theme === 'theme-inferno') {
-            svg += `<path d="M0,85% L${totalWidth},85% L${totalWidth},100% L0,100% Z" fill="#7f1d1d" opacity="0.8"/>`;
-            for (let i = 0; i < loops * 2; i++) {
-                const rx = i * 150 + Math.random() * 50;
-                svg += `<polygon points="${rx},100% ${rx+30},${60+Math.random()*20}% ${rx+60},100%" fill="#450a0a" opacity="0.8"/>`;
-                svg += `<ellipse cx="${rx+100}" cy="90%" rx="${Math.random()*40+20}" ry="10" fill="#f59e0b" opacity="0.6"/>`;
-                svg += `<circle cx="${rx+Math.random()*100}" cy="${Math.random()*60}%" r="${Math.random()*4+1}" fill="#fca5a5" opacity="0.8"/>`;
-            }
-        } else if (theme === 'theme-journey') {
-            for (let i = 0; i < loops * 2; i++) {
-                const bx = i * 150 + Math.random() * 50; const by = 70 + Math.random() * 20;
-                svg += `<polygon points="${bx},${by}% ${bx+40},${by-10}% ${bx+80},${by}% ${bx+40},${by+10}%" fill="#d97706" opacity="0.5"/>`;
-                svg += `<polygon points="${bx},${by}% ${bx+40},${by+10}% ${bx+40},100% ${bx},100%" fill="#78350f" opacity="0.7"/>`;
-                svg += `<polygon points="${bx+80},${by}% ${bx+40},${by+10}% ${bx+40},100% ${bx+80},100%" fill="#451a03" opacity="0.6"/>`;
-            }
-        } else if (theme === 'theme-void') {
-            for (let i = 0; i < loops * 3; i++) {
-                const bx = Math.random() * totalWidth; const by = Math.random() * 80 + 10; const s = Math.random() * 20 + 10;
-                svg += `<polygon points="${bx},${by}% ${bx+s},${by-s}% ${bx+s*2},${by}% ${bx+s},${by+s}%" fill="#818cf8" opacity="0.4"/>`;
-                svg += `<circle cx="${Math.random()*totalWidth}" cy="${Math.random()*100}%" r="1" fill="#ffffff" opacity="0.6"/>`;
-            }
-        } else if (theme === 'theme-arcane') {
-            for (let i = 0; i < loops; i++) {
-                const px = i * 300 + Math.random() * 100;
-                svg += `<ellipse cx="${px}" cy="80%" rx="${Math.random()*80+40}" ry="${Math.random()*20+10}" fill="none" stroke="#e879f9" stroke-width="2" opacity="0.5"/>`;
-                svg += `<polygon points="${px},30% ${px+20},50% ${px},70% ${px-20},50%" fill="#c026d3" opacity="0.4"/>`;
-            }
-        }
-        return svg;
+    function renderInventoryGrid() {
+        const eq = profileData.equipped || {};
+        const unlocked = profileData.unlockedItems || [...defaultUnlocked];
+        const renderGroup = (type, containerId) => {
+            const c = document.getElementById(containerId); if(!c) return; 
+            const items = itemsDB.filter(i => i.type === type && unlocked.includes(i.id));
+            c.innerHTML = items.map(i => `
+                <div class="inv-slot ${eq[type] === i.id ? 'equipped' : ''}" onclick="equipItem('${i.id}', '${type}')">
+                    <div class="inv-icon">${i.icon}</div>
+                    <div class="inv-name">${i.name}</div>
+                </div>`).join('');
+        };
+        renderGroup('head', 'inv-grid-head'); 
+        renderGroup('body', 'inv-grid-body'); 
+        renderGroup('extra', 'inv-grid-extras');
     }
 
-    function renderPath() {
-        const container = document.getElementById('path-timeline-container'); const wrapper = document.getElementById('path-timeline-wrapper');
-        const envSvg = document.getElementById('path-3d-env'); const elName = document.getElementById('path-element-name');
-        if(!container) return;
-
-        const theme = profileData.theme || 'theme-void';
-        elName.innerText = elementNames[theme] || 'Ascensão';
-
-        const pathNodes = pathsDB[theme] || [];
-        const claimed = profileData.claimedNodes || [];
-        const currentLevel = getLevelInfo(profileData.exp || 0).level;
-
-        // Container Width based on nodes
-        const nodeWidth = 320; // 280px + 40px gap
-        const totalWidth = pathNodes.length * nodeWidth + 100;
-        document.getElementById('path-horizon-line').style.width = `${totalWidth}px`;
-
-        // Render Background Environment SVG
-        envSvg.innerHTML = generate3DEnvironment(theme, totalWidth);
-
-        // Render Nodes
-        container.innerHTML = pathNodes.map(node => {
-            const isClaimed = claimed.includes(node.id);
-            const isUnlocked = currentLevel >= node.reqLvl;
-            const statusClass = isClaimed ? 'claimed' : (isUnlocked ? 'unlocked' : '');
-            
-            let btnHtml = '';
-            if(isClaimed) { btnHtml = `<div style="color: var(--success); font-weight: 800; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; margin-top: 10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Adquirido</div>`; } 
-            else if (isUnlocked) { const callVal = node.type === 'item' ? `'${node.rewardId}'` : node.amount; btnHtml = `<button class="btn-duo" style="padding: 8px 16px; font-size: 0.8rem; width: auto; margin-top: 10px; background: rgba(0,0,0,0.4); border: 1px solid var(--accent); box-shadow: none;" onclick="claimReward('${node.id}', '${node.type}', ${callVal})">Reivindicar</button>`; } 
-            else { btnHtml = `<div style="color: var(--text-muted); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; margin-top: 10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Requer Nível ${node.reqLvl}</div>`; }
-
-            let rewardIcon = '🎁';
-            if (node.type === 'item') { const rewardItem = itemsDB.find(i => i.id === node.rewardId); if (rewardItem) rewardIcon = rewardItem.icon; } else if (node.type === 'coin') { rewardIcon = '🪙'; }
-
-            return `
-                <div class="timeline-item ${statusClass}">
-                    <div class="timeline-connector"></div>
-                    <div class="timeline-dot"></div>
-                    <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); padding: 1rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; z-index: 10; backdrop-filter: blur(10px);">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <div><h4 style="font-weight: 900; font-size: 1rem; color: var(--text-main);">${node.title}</h4><div style="font-size: 0.8rem; color: var(--accent); font-weight: 800; margin-bottom: 4px;">Nível ${node.reqLvl}</div></div>
-                            <div style="font-size: 1.5rem; background: rgba(255,255,255,0.1); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid var(--glass-border); flex-shrink:0;">${rewardIcon}</div>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.3;">${node.desc}</p>
-                        ${btnHtml}
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-        setTimeout(() => {
-            const targetNode = container.querySelector('.timeline-item.unlocked:not(.claimed)') || container.querySelector('.timeline-item:not(.unlocked)');
-            if(wrapper && targetNode) { const scrollPos = targetNode.offsetLeft - (wrapper.offsetWidth / 2) + (targetNode.offsetWidth / 2); wrapper.scrollTo({ left: scrollPos, behavior: 'smooth' }); }
-        }, 100);
-    }
-
-    function renderAvatar() { const eq = profileData.equipped || {}; const getLayer = (id) => itemsDB.find(i => i.id === id)?.render || ''; const html = `<div class="avatar-layer">${getLayer(eq.extra)}</div><div class="avatar-layer">${getLayer(eq.body)}</div><div class="avatar-layer">${getLayer(eq.head)}</div>`; if(document.getElementById('home-avatar-render')) document.getElementById('home-avatar-render').innerHTML = html; if(document.getElementById('inv-avatar-render')) document.getElementById('inv-avatar-render').innerHTML = html; }
-    window.equipItem = async (itemId, type) => { if (!currentUser) return; const eq = profileData.equipped || { body: 'body_default', head: 'head_none', extra: 'extra_none' }; eq[type] = itemId; await updateDoc(doc(db, userPath, 'profile', 'main'), { equipped: eq }); };
-    function renderInventoryGrid() { const eq = profileData.equipped || {}; const unlocked = profileData.unlockedItems || [...defaultUnlocked]; const renderGroup = (type, containerId) => { const c = document.getElementById(containerId); if(!c) return; const items = itemsDB.filter(i => i.type === type && unlocked.includes(i.id)); c.innerHTML = items.map(i => `<div class="inv-slot ${eq[type] === i.id ? 'equipped' : ''}" onclick="equipItem('${i.id}', '${type}')"><div class="inv-icon">${i.icon}</div><div class="inv-name">${i.name}</div></div>`).join(''); }; renderGroup('head', 'inv-grid-head'); renderGroup('body', 'inv-grid-body'); renderGroup('extra', 'inv-grid-extras'); }
-
-    function updateProfileUI() {
-        if (!currentUser) return; const stats = getLevelInfo(profileData.exp || 0); const displayPhotoURL = (profileData.customPhotoURL && profileData.customPhotoURL.trim() !== "") ? profileData.customPhotoURL : currentUser.photoURL; const photoEl = document.getElementById('user-photo'); if(photoEl) { if(displayPhotoURL) { photoEl.src = displayPhotoURL; photoEl.style.display = 'block'; } else { photoEl.style.display = 'none'; } }
-        document.getElementById('disp-char-name').innerText = profileData.name || 'Viajante'; document.getElementById('disp-char-title').innerText = profileData.description || 'Despertando...'; document.getElementById('disp-level').innerText = stats.level; document.getElementById('disp-exp-current').innerText = stats.currentExp; document.getElementById('disp-exp-bar').style.width = `${stats.progress}%`;
-        document.getElementById('disp-coins').innerText = profileData.coins || 0; document.getElementById('shop-disp-coins').innerText = profileData.coins || 0;
-    }
-
-    function updateQuestsUI() { const c = document.getElementById('quests-container'); const sorted = [...questsData].sort((a, b) => (a.done === b.done)? 0 : a.done ? 1 : -1); if(sorted.length === 0) { c.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 1rem 0;">Adicione hábitos no botão +</p>`; return; } c.innerHTML = sorted.map((q, i) => `<div class="quest-item ${q.done ? 'completed' : ''} animate-fade-in" style="animation-delay: ${i*0.05}s" onclick="toggleQuest('${q.id}', ${q.done}, ${q.exp}, event)"><div style="display:flex; align-items:center; gap:1rem;"><div class="checkbox-bouncy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" style="width:14px; opacity:${q.done?1:0};"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div style="color: ${q.done?'var(--text-muted)':'var(--text-main)'}; font-weight:800; font-size:0.95rem; text-decoration:${q.done?'line-through':'none'};">${q.title}</div></div><div class="quest-reward">+${q.exp}XP</div></div>`).join(''); }
-
-    window.openAddPillarModal = () => { document.getElementById('add-pillar-name').value = ''; document.getElementById('add-pillar-element').value = 'void'; document.getElementById('add-pillar-level').value = 1; document.getElementById('add-pillar-level-label').innerText = 'Elevação Inicial: 1%'; document.getElementById('modal-add-pillar').classList.add('active'); }; window.closeAddPillarModal = () => { document.getElementById('modal-add-pillar').classList.remove('active'); }; window.confirmAddPillar = async () => { if (!currentUser) return; const n = document.getElementById('add-pillar-name').value.trim(); const e = document.getElementById('add-pillar-element').value; const l = parseInt(document.getElementById('add-pillar-level').value); const docRef = await addDoc(collection(db, userPath, 'skills'), { name: n === '' ? 'Novo Pilar' : n, element: e, level: l }); if (docRef) { closeAddPillarModal(); selectNode('skill', docRef.id); isEditingPillar = false; renderEditor(); } }; window.handleDeleteSkill = async (id) => { if (confirm("Desmoronar este pilar?")) { await deleteDoc(doc(db, userPath, 'skills', id)); if (selectedNode.id === id) selectNode('main', null); } }; window.updatePillarName = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { name: val }); }; window.updateSkillLevelDB = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { level: parseInt(val) }); }; window.updateSkillElement = async (val) => { if (currentUser && selectedNode.type === 'skill') await updateDoc(doc(db, userPath, 'skills', selectedNode.id), { element: val }); }; window.updateSkillLevelUI = (val) => { const label = document.getElementById('editor-skill-label'); if(label) label.innerText = `Elevação: ${val}%`; }
-    window.selectNode = (type, id) => { selectedNode = { type, id }; isEditingPillar = false; renderWheel(); renderEditor(); renderSkillList(); }; window.toggleEditPillar = () => { isEditingPillar = !isEditingPillar; renderEditor(); };
-
-    function renderWheel() { const wrapper = document.getElementById('iso-wrapper'); const nodesContainer = document.getElementById('iso-nodes'); const svg = document.getElementById('iso-ground'); if (!wrapper || !nodesContainer || document.getElementById('view-skills').classList.contains('hidden')) return; nodesContainer.innerHTML = ''; svg.innerHTML = ''; const wrapperW = wrapper.offsetWidth; const n = skillsData.length; const minRx = Math.max(120, wrapperW * 0.35); const dynamicRx = n > 6 ? minRx + ((n - 6) * 35) : minRx; const dynamicRy = dynamicRx * 0.45; const worldH = Math.max(400, dynamicRy * 2 + 300); const worldW = Math.max(wrapperW, dynamicRx * 2 + 200); const isoWorld = document.getElementById('iso-world'); isoWorld.style.width = `${worldW}px`; isoWorld.style.height = `${worldH}px`; const cx = worldW / 2; const cy = (worldH / 2) + 50; let renderQueue = []; renderQueue.push({ type: 'main', id: null, x: cx, y: cy, zIndex: Math.floor(cy), html: `<div class="iso-pillar-container ${selectedNode.type === 'main' ? 'active' : ''}" style="left:${cx}px; top:${cy}px; z-index:${Math.floor(cy)};" onclick="selectNode('main', null)"><div class="iso-label" style="top:-120px;">A Origem</div><div style="width: 100px; height: 150px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4)); transform-origin: bottom center;"></div></div>` }); skillsData.forEach((s, i) => { const angle = (i * (2*Math.PI))/skillsData.length; const px = cx + dynamicRx * Math.cos(angle); const py = cy + dynamicRy * Math.sin(angle); const isSel = selectedNode.id === s.id; const elStyle = elementStyles[s.element] || elementStyles['void']; const scale = 0.5 + (s.level / 100) * 0.7; const labelTop = -120 * scale - 20; const line = document.createElementNS("http://www.w3.org/2000/svg", "line"); line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", px); line.setAttribute("y2", py); line.setAttribute("stroke", isSel ? elStyle.main : "rgba(255, 255, 255, 0.1)"); line.setAttribute("stroke-width", isSel ? "3" : "1.5"); svg.appendChild(line); renderQueue.push({ type: 'skill', id: s.id, x: px, y: py, zIndex: Math.floor(py), html: `<div class="iso-pillar-container ${isSel ? 'active' : ''}" style="left:${px}px; top:${py}px; z-index:${Math.floor(py)};" onclick="selectNode('skill', '${s.id}')"><div class="iso-label" style="top:${labelTop}px;">${elStyle.icon} ${s.name}</div><div style="width: 80px; height: 120px; background-image: url('pilar 1.svg'); background-size: contain; background-position: bottom center; background-repeat: no-repeat; transform: scale(${scale}); transform-origin: bottom center; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.4));"></div></div>` }); }); renderQueue.sort((a, b) => a.zIndex - b.zIndex).forEach(node => { nodesContainer.innerHTML += node.html; }); if(worldW > wrapperW) { wrapper.scrollLeft = (worldW - wrapperW) / 2; } }
-    function renderEditor() { const card = document.getElementById('editor-card'); if (selectedNode.type === 'main') { card.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding: 1rem;"><h3 style="color:var(--text-main); font-weight:900; font-size:1.5rem; margin-bottom:0.5rem;">O Templo</h3><p style="font-weight:600; font-size:0.9rem;">Toque em um pilar ao redor para visualizar sua sabedoria.</p></div>`; return; } const activeData = skillsData.find(s => s.id === selectedNode.id); if (!activeData) return; let content = `<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;"><span style="font-size:1rem; font-weight:800;">Detalhes do Pilar</span><button onclick="toggleEditPillar()" class="btn-icon-soft" style="width:30px; height:30px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></button></div>`; if (isEditingPillar) { content += `<div class="animate-fade-in" style="display:flex; flex-direction:column;"><label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted);">Nome</label><input type="text" class="input-ios" value="${activeData.name||''}" onchange="updatePillarName(this.value)"><label style="font-size: 0.8rem; font-weight:700; color:var(--text-muted); margin-top:5px;">Elemento de Poder</label><select class="select-ios" onchange="updateSkillElement(this.value)"><option value="void" ${activeData.element === 'void' ? 'selected' : ''}>🌌 O Vazio</option><option value="journey" ${activeData.element === 'journey' ? 'selected' : ''}>⏳ A Jornada</option><option value="forest" ${activeData.element === 'forest' ? 'selected' : ''}>🌿 A Floresta</option><option value="cloud" ${activeData.element === 'cloud' ? 'selected' : ''}>☁️ A Nuvem</option><option value="inferno" ${activeData.element === 'inferno' ? 'selected' : ''}>🔥 Inferno</option><option value="ocean" ${activeData.element === 'ocean' ? 'selected' : ''}>🌊 Oceano</option><option value="arcane" ${activeData.element === 'arcane' ? 'selected' : ''}>✨ Arcano</option></select><div style="display:flex; justify-content:space-between; margin:10px 0 5px;"><label id="editor-skill-label" style="font-size:0.85rem; font-weight:700;">Elevação: ${activeData.level}%</label></div><input type="range" min="0" max="100" value="${activeData.level}" style="width:100%; accent-color:var(--accent);" oninput="updateSkillLevelUI(this.value)" onchange="updateSkillLevelDB(this.value)"><button onclick="toggleEditPillar()" class="btn-duo" style="margin-top:1.5rem; padding:10px;">Aplicar Runas</button></div>`; } else { const elStyle = elementStyles[activeData.element] || elementStyles['void']; content += `<div class="animate-fade-in"><h3 style="font-size:1.5rem; margin-bottom:1rem; font-weight:900; display:flex; align-items:center; gap:8px;">${elStyle.icon} ${activeData.name}</h3><div class="progress-wrapper" style="padding:1rem;"><div style="display:flex; justify-content:space-between; font-weight:800; font-size:1rem;"><span>Construção</span><span>${activeData.level}%</span></div><div class="progress-track" style="height:12px; margin-top:8px;"><div class="progress-fill" style="width:${activeData.level}%; background:${elStyle.main};"></div></div></div></div>`; } card.innerHTML = content; }
-    function renderSkillList() { const list = document.getElementById('skills-list'); document.getElementById('skill-count').innerText = skillsData.length; if (skillsData.length === 0) { list.innerHTML = ''; return; } list.innerHTML = skillsData.map(s => { const elStyle = elementStyles[s.element] || elementStyles['void']; return `<div class="skill-list-item ${selectedNode.id === s.id ? 'active' : ''}" onclick="selectNode('skill', '${s.id}')"><div style="display:flex; align-items:center; gap:12px;"><div style="width:16px; height:16px; border-radius:50%; background:${elStyle.main}; display:flex; align-items:center; justify-content:center; font-size:0.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">${elStyle.icon}</div><div style="font-weight:800; font-size:0.95rem;">${s.name}</div></div><button onclick="event.stopPropagation(); handleDeleteSkill('${s.id}')" class="btn-icon-soft" style="width:26px; height:26px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>` }).join(''); }
+    document.getElementById('btn-login-action').onclick = async () => { try { await signInWithPopup(auth, provider); } catch (e) { console.error(e); } };
+    window.handleLogout = () => { if(confirm("Deseja desconectar?")) signOut(auth); };
 </script>
 </body>
 </html>
