@@ -319,7 +319,7 @@
                 </div>
 
                 <div class="panel hub-header" style="text-align: center; padding-top: 2rem;">
-                    <div class="avatar-2d-container float-gentle"><div class="avatar-character breathe-anim" id="home-avatar-render"></div></div>
+                    <div class="avatar-2d-container float-gentle"><div id="home-avatar-container" style="width: 100%; height: 280px; position: relative; border-radius: 24px; box-shadow: inset 0 0 40px rgba(0,0,0,0.3); overflow: hidden; margin-bottom: 1rem;"></div></div>
                     <div class="progress-wrapper">
                         <div style="display: flex; justify-content: space-between; align-items: flex-end;"><span style="font-size: 1.1rem; font-weight: 800;">Nível <span id="disp-level">1</span></span><span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);"><span id="disp-exp-current">0</span> / 500 XP</span></div>
                         <div class="progress-track"><div id="disp-exp-bar" class="progress-fill" style="width: 0%"></div></div>
@@ -336,7 +336,9 @@
             <section id="view-inventory" class="hidden">
                 <div class="panel" style="text-align: center; padding-bottom: 1rem;">
                     <h2 style="font-weight: 900; margin-bottom: 1rem;">Mochila & Avatar</h2>
-                    <div class="avatar-2d-container" style="margin-bottom: 0;"><div class="avatar-character breathe-anim" id="inv-avatar-render"></div></div>
+                    <div class="avatar-2d-container" style="margin-bottom: 0;"><div id="inv-avatar-container" style="width: 100%; height: 350px; position: relative; border-radius: 24px; box-shadow: inset 0 0 40px rgba(0,0,0,0.3); overflow: hidden; margin-bottom: 1rem; cursor: grab;">
+    <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: var(--text-muted); font-weight: 800; pointer-events: none; background: rgba(0,0,0,0.4); padding: 4px 12px; border-radius: 20px; z-index: 10;">Arraste para girar</div>
+</div></div>
                 </div>
                 <div class="panel">
                     <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; text-align: center;">Evolua no Caminho Elemental para desbloquear novas relíquias.</p>
@@ -473,6 +475,7 @@
     </div>
 
 <script type="module">
+    import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, addDoc, deleteDoc, getDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -490,31 +493,105 @@
 
     const elementNames = { 'theme-void': 'o Vazio', 'theme-journey': 'a Jornada', 'theme-forest': 'a Floresta', 'theme-cloud': 'a Nuvem', 'theme-inferno': 'o Inferno', 'theme-ocean': 'o Oceano', 'theme-arcane': 'o Arcano' };
 
-    const itemsDB = [
-        { id: 'body_default', type: 'body', name: 'Corpo Base', icon: '👤', render: '<svg viewBox="0 0 100 100" fill="#fcd34d"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/></svg>' },
-        { id: 'body_dark', type: 'body', name: 'Corpo Sombrio', icon: '🌑', render: '<svg viewBox="0 0 100 100" fill="#1e293b"><circle cx="50" cy="40" r="25"/><path d="M20 90 Q50 60 80 90 Z"/><circle cx="40" cy="35" r="3" fill="#60a5fa"/><circle cx="60" cy="35" r="3" fill="#60a5fa"/></svg>' },
-        { id: 'head_none', type: 'head', name: 'Nenhum', icon: '❌', render: '' },
-        { id: 'head_hood', type: 'head', name: 'Capuz Rogue', icon: '🥷', render: '<svg viewBox="0 0 100 100" fill="#0f172a"><path d="M25 50 C 25 10, 75 10, 75 50 Q 50 20 25 50 Z"/></svg>' },
-        { id: 'head_hair', type: 'head', name: 'Cabelo Herói', icon: '💇', render: '<svg viewBox="0 0 100 100" fill="#78350f"><path d="M20 40 Q 50 0 80 40 Q 70 20 50 25 Q 30 20 20 40 Z"/></svg>' },
-        { id: 'extra_none', type: 'extra', name: 'Nenhum', icon: '❌', render: '' },
-        { id: 'extra_sword', type: 'extra', name: 'Espada', icon: '⚔️', render: '<svg viewBox="0 0 100 100" fill="#cbd5e1" stroke="#475569" stroke-width="2"><rect x="75" y="40" width="10" height="40" transform="rotate(45 80 60)"/><rect x="65" y="70" width="30" height="5" transform="rotate(45 80 60)" fill="#fbbf24"/></svg>' },
-        { id: 'extra_cloak', type: 'extra', name: 'Capa Azul', icon: '🧥', render: '<svg viewBox="0 0 100 100" fill="#3b82f6" style="z-index: -1; position: absolute;"><path d="M30 50 L20 95 L80 95 L70 50 Z"/></svg>' },
-        
-        { id: 'head_void_halo', type: 'head', name: 'Coroa do Vazio', icon: '👑', render: '<svg viewBox="0 0 100 100"><ellipse cx="50" cy="15" rx="20" ry="5" fill="none" stroke="#818cf8" stroke-width="3" filter="drop-shadow(0 0 5px #818cf8)"/></svg>' },
-        { id: 'extra_void_orbs', type: 'extra', name: 'Orbes Escuros', icon: '🔮', render: '<svg viewBox="0 0 100 100" fill="#4f46e5"><circle cx="20" cy="50" r="8" filter="drop-shadow(0 0 10px #4f46e5)"/><circle cx="80" cy="50" r="8" filter="drop-shadow(0 0 10px #4f46e5)"/></svg>' },
-        { id: 'head_journey_hat', type: 'head', name: 'Chapéu Expedição', icon: '🤠', render: '<svg viewBox="0 0 100 100" fill="#d97706"><path d="M 20 35 Q 50 20 80 35 L 85 40 L 15 40 Z"/><rect x="25" y="25" width="50" height="10" fill="#78350f"/></svg>' },
-        { id: 'extra_journey_pack', type: 'extra', name: 'Mochila Pesada', icon: '🎒', render: '<svg viewBox="0 0 100 100" fill="#78350f" style="z-index: -1; position: absolute;"><rect x="30" y="40" width="40" height="50" rx="10"/><rect x="35" y="50" width="30" height="20" fill="#b45309" rx="5"/></svg>' },
-        { id: 'head_forest_antlers', type: 'head', name: 'Chifres Anciões', icon: '🦌', render: '<svg viewBox="0 0 100 100" stroke="#78350f" stroke-width="4" stroke-linecap="round"><path d="M 40 25 L 30 5 M 35 15 L 20 15 M 60 25 L 70 5 M 65 15 L 80 15"/></svg>' },
-        { id: 'extra_forest_staff', type: 'extra', name: 'Cajado Vital', icon: '🌿', render: '<svg viewBox="0 0 100 100"><line x1="85" y1="20" x2="65" y2="90" stroke="#78350f" stroke-width="5"/><path d="M 85 20 Q 75 10 90 5 Q 95 15 85 20 Z" fill="#34d399"/></svg>' },
-        { id: 'head_cloud_goggles', type: 'head', name: 'Óculos de Voo', icon: '🥽', render: '<svg viewBox="0 0 100 100"><rect x="35" y="30" width="30" height="10" fill="#475569" rx="5"/><circle cx="40" cy="35" r="4" fill="#38bdf8"/><circle cx="60" cy="35" r="4" fill="#38bdf8"/></svg>' },
-        { id: 'extra_cloud_wings', type: 'extra', name: 'Asas de Brisa', icon: '👼', render: '<svg viewBox="0 0 100 100" fill="#fff" opacity="0.8" style="z-index: -1; position: absolute;"><path d="M 50 50 Q 20 30 10 60 Q 30 70 50 50 M 50 50 Q 80 30 90 60 Q 70 70 50 50 Z" filter="drop-shadow(0 0 5px #e0f2fe)"/></svg>' },
-        { id: 'head_inferno_horns', type: 'head', name: 'Chifres de Fogo', icon: '👿', render: '<svg viewBox="0 0 100 100" fill="#dc2626"><path d="M 35 25 Q 25 10 20 5 Q 30 15 45 20 Z"/><path d="M 65 25 Q 75 10 80 5 Q 70 15 55 20 Z"/></svg>' },
-        { id: 'extra_inferno_aura', type: 'extra', name: 'Aura Ardente', icon: '🔥', render: '<svg viewBox="0 0 100 100" fill="#f87171" opacity="0.5" style="z-index: -1; position: absolute;"><path d="M 20 90 Q 50 60 80 90 Q 50 100 20 90 Z" filter="drop-shadow(0 -10px 15px #dc2626)"/></svg>' },
-        { id: 'head_ocean_crown', type: 'head', name: 'Coroa de Coral', icon: '🧜‍♂️', render: '<svg viewBox="0 0 100 100" fill="#0ea5e9"><path d="M 30 20 L 40 30 L 50 15 L 60 30 L 70 20 L 75 35 L 25 35 Z"/></svg>' },
-        { id: 'extra_ocean_trident', type: 'extra', name: 'Tridente Abissal', icon: '🔱', render: '<svg viewBox="0 0 100 100" stroke="#0891b2" stroke-width="3" fill="none"><line x1="80" y1="20" x2="60" y2="90"/><path d="M 70 20 L 80 40 L 90 20 M 80 15 L 80 30"/></svg>' },
-        { id: 'head_arcane_hat', type: 'head', name: 'Chapéu Estelar', icon: '🧙', render: '<svg viewBox="0 0 100 100" fill="#581c87"><path d="M 15 40 L 85 40 L 50 0 Z"/><ellipse cx="50" cy="40" rx="40" ry="10" fill="#3b0764"/></svg>' },
-        { id: 'extra_arcane_book', type: 'extra', name: 'Grimório Flutuante', icon: '📖', render: '<svg viewBox="0 0 100 100" fill="#c026d3"><rect x="10" y="50" width="20" height="25" rx="2" transform="rotate(-15 20 60)" filter="drop-shadow(0 0 10px #e879f9)"/><rect x="12" y="52" width="16" height="21" fill="#fff" transform="rotate(-15 20 60)"/></svg>' }
-    ];
+// --- MOTOR 3D E ITENS ---
+let scene, camera, renderer, avatarGroup;
+let slots = { head: null, extra: null, back: null }; 
+let baseMeshes = { torso: null, leftArm: null, rightArm: null, leftLeg: null, rightLeg: null };
+let currentContainer = null; let isDragging = false, previousMousePosition = { x: 0 }; let targetRotation = 0; let currentSkinColor = 0xfcd34d;
+
+const itemsDB = [
+    { id: 'body_default', type: 'body', name: 'Traje Base', icon: '👤', apply3D: () => setBodyColor(0xfcd34d, 0x3b82f6) },
+    { id: 'body_dark', type: 'body', name: 'Sombrio', icon: '🌑', apply3D: () => setBodyColor(0x1e293b, 0x0f172a) },
+    { id: 'head_none', type: 'head', name: 'Nenhum', icon: '❌', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); return g; } },
+    { id: 'head_hood', type: 'head', name: 'Capuz', icon: '🥷', build3D: () => { const g = new THREE.Group(); const f = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), new THREE.MeshStandardMaterial({color: 0x1e293b})); f.position.y = 0.4; g.add(f); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: 0x0f172a})); h.position.y = 0.45; h.position.z = -0.05; g.add(h); return g; } },
+    { id: 'head_hair', type: 'head', name: 'Cabelo', icon: '💇', build3D: () => { const g = new THREE.Group(); const head = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); head.position.y = 0.45; g.add(head); const hair = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.3, 1.0), new THREE.MeshStandardMaterial({color: 0x78350f})); hair.position.y = 0.95; g.add(hair); return g; } },
+    { id: 'extra_none', type: 'extra', name: 'Nenhum', icon: '❌', build3D: () => new THREE.Group() },
+    { id: 'extra_sword', type: 'extra', name: 'Espada', icon: '⚔️', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.4), new THREE.MeshStandardMaterial({color: 0x78350f})); h.rotation.x = Math.PI/2; g.add(h); const guard = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), new THREE.MeshStandardMaterial({color: 0xfbbf24})); guard.position.z = 0.2; g.add(guard); const blade = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.8, 0.02), new THREE.MeshStandardMaterial({color: 0xcbd5e1, metalness: 0.8})); blade.position.z = 0.6; blade.rotation.x = Math.PI/2; g.add(blade); return g; } },
+    { id: 'extra_cloak', type: 'extra', name: 'Capa', icon: '🧥', isBack: true, build3D: () => { const g = new THREE.Group(); const c = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.8), new THREE.MeshStandardMaterial({color: 0x3b82f6, side: THREE.DoubleSide})); c.position.y = -0.5; c.rotation.x = -0.1; g.add(c); return g; } },
+    { id: 'head_void_halo', type: 'head', name: 'Coroa Vazio', icon: '👑', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const halo = new THREE.Mesh(new THREE.TorusGeometry(0.6, 0.05, 8, 24), new THREE.MeshBasicMaterial({color: 0x818cf8})); halo.position.y = 1.2; halo.rotation.x = Math.PI/2; g.add(halo); return g; }},
+    { id: 'extra_void_orbs', type: 'extra', name: 'Orbes', icon: '🔮', isBack: true, build3D: () => { const g = new THREE.Group(); const orb1 = new THREE.Mesh(new THREE.SphereGeometry(0.2), new THREE.MeshBasicMaterial({color: 0x818cf8})); orb1.position.set(-0.8, 0.5, 0.2); g.add(orb1); const orb2 = new THREE.Mesh(new THREE.SphereGeometry(0.2), new THREE.MeshBasicMaterial({color: 0x818cf8})); orb2.position.set(0.8, 0.5, 0.2); g.add(orb2); return g; }},
+    { id: 'head_journey_hat', type: 'head', name: 'Chapéu', icon: '🤠', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const hat = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.8, 0.2), new THREE.MeshStandardMaterial({color: 0xd97706})); hat.position.y = 1.0; g.add(hat); return g; }},
+    { id: 'extra_journey_pack', type: 'extra', name: 'Mochila', icon: '🎒', isBack: true, build3D: () => { const g = new THREE.Group(); const pack = new THREE.Mesh(new THREE.BoxGeometry(0.8, 1.0, 0.4), new THREE.MeshStandardMaterial({color: 0x78350f})); pack.position.set(0, -0.2, 0); g.add(pack); return g; }},
+    { id: 'head_forest_antlers', type: 'head', name: 'Chifres', icon: '🦌', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const horn = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.6), new THREE.MeshStandardMaterial({color: 0x78350f})); horn.position.set(0.4, 1.2, 0); horn.rotation.z = -0.3; g.add(horn); const horn2 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.6), new THREE.MeshStandardMaterial({color: 0x78350f})); horn2.position.set(-0.4, 1.2, 0); horn2.rotation.z = 0.3; g.add(horn2); return g; }},
+    { id: 'extra_forest_staff', type: 'extra', name: 'Cajado', icon: '🌿', build3D: () => { const g = new THREE.Group(); const s = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.04, 2.0), new THREE.MeshStandardMaterial({color: 0x451a03})); s.rotation.x = Math.PI/2; g.add(s); const gem = new THREE.Mesh(new THREE.OctahedronGeometry(0.2), new THREE.MeshStandardMaterial({color: 0x34d399, emissive: 0x059669})); gem.position.z = 1.1; g.add(gem); return g; }},
+    { id: 'head_cloud_goggles', type: 'head', name: 'Óculos', icon: '🥽', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const glass = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.2, 0.92), new THREE.MeshStandardMaterial({color: 0x475569})); glass.position.y = 0.6; g.add(glass); return g; }},
+    { id: 'extra_cloud_wings', type: 'extra', name: 'Asas', icon: '👼', isBack: true, build3D: () => { const g = new THREE.Group(); const w = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 1.0), new THREE.MeshBasicMaterial({color: 0xffffff, transparent:true, opacity:0.7, side: THREE.DoubleSide})); w.position.y = -0.2; g.add(w); return g; }},
+    { id: 'head_inferno_horns', type: 'head', name: 'Demônio', icon: '👿', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const horn1 = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.4), new THREE.MeshStandardMaterial({color: 0xdc2626})); horn1.position.set(0.3, 1.1, 0); horn1.rotation.z = -0.2; g.add(horn1); const horn2 = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.4), new THREE.MeshStandardMaterial({color: 0xdc2626})); horn2.position.set(-0.3, 1.1, 0); horn2.rotation.z = 0.2; g.add(horn2); return g; }},
+    { id: 'extra_inferno_aura', type: 'extra', name: 'Aura Fogo', icon: '🔥', isBack: true, build3D: () => { const g = new THREE.Group(); const aura = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 2.0), new THREE.MeshBasicMaterial({color: 0xf87171, transparent:true, opacity:0.5, side: THREE.DoubleSide})); aura.position.y = -0.5; g.add(aura); return g; }},
+    { id: 'head_ocean_crown', type: 'head', name: 'Coroa Mar', icon: '🧜‍♂️', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const crown = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.3), new THREE.MeshStandardMaterial({color: 0x0ea5e9})); crown.position.y = 1.0; g.add(crown); return g; }},
+    { id: 'extra_ocean_trident', type: 'extra', name: 'Tridente', icon: '🔱', build3D: () => { const g = new THREE.Group(); const s = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 2.0), new THREE.MeshStandardMaterial({color: 0x0891b2})); s.rotation.x = Math.PI/2; g.add(s); const top = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.1, 0.1), new THREE.MeshStandardMaterial({color: 0x22d3ee})); top.position.z = 1.0; g.add(top); return g; }},
+    { id: 'head_arcane_hat', type: 'head', name: 'Chapéu Mago', icon: '🧙', build3D: () => { const g = new THREE.Group(); const h = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 0.9), new THREE.MeshStandardMaterial({color: currentSkinColor})); h.position.y = 0.45; g.add(h); const hat = new THREE.Mesh(new THREE.ConeGeometry(0.6, 1.2), new THREE.MeshStandardMaterial({color: 0x581c87})); hat.position.y = 1.4; g.add(hat); const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.8, 0.1), new THREE.MeshStandardMaterial({color: 0x3b0764})); brim.position.y = 0.9; g.add(brim); return g; }},
+    { id: 'extra_arcane_book', type: 'extra', name: 'Grimório', icon: '📖', build3D: () => { const g = new THREE.Group(); const book = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.5, 0.1), new THREE.MeshStandardMaterial({color: 0xc026d3})); book.position.set(0, 0, 0.5); g.add(book); return g; }}
+];
+
+function init3DEngine() {
+    scene = new THREE.Scene(); camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio); renderer.shadowMap.enabled = true;
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.6); dirLight.position.set(5, 10, 5); dirLight.castShadow = true; scene.add(dirLight);
+    const backLight = new THREE.DirectionalLight(0x818cf8, 0.4); backLight.position.set(-5, 5, -5); scene.add(backLight); // Luz consertada!
+
+    const pedMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.2, metalness: 0.8 });
+    const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 3, 0.5, 32), pedMat); pedestal.position.y = -0.25; scene.add(pedestal);
+
+    avatarGroup = new THREE.Group(); avatarGroup.position.y = 0; scene.add(avatarGroup);
+    buildBaseBody();
+
+    const animate3D = () => {
+        requestAnimationFrame(animate3D); avatarGroup.rotation.y += (targetRotation - avatarGroup.rotation.y) * 0.1; const time = Date.now() * 0.002;
+        if(baseMeshes.torso) baseMeshes.torso.position.y = 2.5 + Math.sin(time) * 0.05;
+        if(baseMeshes.leftArm) baseMeshes.leftArm.rotation.z = 0.1 + Math.sin(time) * 0.05;
+        if(baseMeshes.rightArm) baseMeshes.rightArm.rotation.z = -0.1 - Math.sin(time) * 0.05;
+        if (currentContainer && currentContainer.offsetWidth > 0) renderer.render(scene, camera);
+    }; animate3D(); setupDragControls();
+}
+
+function buildBaseBody() {
+    const defaultMat = new THREE.MeshStandardMaterial({ color: 0xfcd34d, roughness: 0.7 });
+    baseMeshes.torso = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.5, 0.8), defaultMat); baseMeshes.torso.position.y = 2.5; avatarGroup.add(baseMeshes.torso);
+    baseMeshes.leftLeg = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.8, 0.5), defaultMat); baseMeshes.leftLeg.position.set(-0.35, 0.9, 0); avatarGroup.add(baseMeshes.leftLeg);
+    baseMeshes.rightLeg = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.8, 0.5), defaultMat); baseMeshes.rightLeg.position.set(0.35, 0.9, 0); avatarGroup.add(baseMeshes.rightLeg);
+    baseMeshes.leftArm = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.4, 0.4), defaultMat); baseMeshes.leftArm.position.set(-0.8, 0, 0); baseMeshes.torso.add(baseMeshes.leftArm);
+    baseMeshes.rightArm = new THREE.Mesh(new THREE.BoxGeometry(0.4, 1.4, 0.4), defaultMat); baseMeshes.rightArm.position.set(0.8, 0, 0); baseMeshes.torso.add(baseMeshes.rightArm);
+    slots.head = new THREE.Group(); slots.head.position.set(0, 1.0, 0); baseMeshes.torso.add(slots.head);
+    slots.extra = new THREE.Group(); slots.extra.position.set(0, -0.5, 0.2); baseMeshes.rightArm.add(slots.extra);
+    slots.back = new THREE.Group(); slots.back.position.set(0, 0.5, -0.45); baseMeshes.torso.add(slots.back);
+}
+
+function mount3DCanvas(containerId) {
+    const container = document.getElementById(containerId); if (!container || currentContainer === container) return;
+    currentContainer = container; const w = container.offsetWidth; const h = container.offsetHeight || 300;
+    renderer.setSize(w, h); camera.aspect = w / h;
+    if(containerId === 'home-avatar-container') camera.position.set(0, 4.5, 9); else camera.position.set(0, 3.5, 11);
+    camera.updateProjectionMatrix(); container.innerHTML = ''; container.appendChild(renderer.domElement); targetRotation = 0;
+}
+
+function setupDragControls() {
+    const onDown = (e) => { isDragging = true; previousMousePosition = { x: e.offsetX || e.touches?.[0].clientX }; };
+    const onMove = (e) => { if(!isDragging) return; const curX = e.offsetX || e.touches?.[0].clientX; targetRotation += (curX - previousMousePosition.x) * 0.01; previousMousePosition = { x: curX }; };
+    const onUp = () => { isDragging = false; };
+    document.addEventListener('mousedown', onDown); document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
+    document.addEventListener('touchstart', onDown); document.addEventListener('touchmove', onMove); document.addEventListener('touchend', onUp);
+}
+
+function setBodyColor(skinHex, clothesHex) {
+    currentSkinColor = skinHex;
+    if(baseMeshes.torso) { baseMeshes.torso.material.color.setHex(clothesHex); baseMeshes.leftLeg.material.color.setHex(clothesHex); baseMeshes.rightLeg.material.color.setHex(clothesHex); baseMeshes.leftArm.material.color.setHex(skinHex); baseMeshes.rightArm.material.color.setHex(skinHex); }
+}
+
+function applyEquipment3D() {
+    if(!avatarGroup) return; const eq = profileData.equipped || { body: 'body_default', head: 'head_none', extra: 'extra_none' };
+    const bodyItem = itemsDB.find(i => i.id === eq.body); if(bodyItem && bodyItem.apply3D) bodyItem.apply3D();
+    while(slots.head.children.length > 0) slots.head.remove(slots.head.children[0]);
+    while(slots.extra.children.length > 0) slots.extra.remove(slots.extra.children[0]);
+    while(slots.back.children.length > 0) slots.back.remove(slots.back.children[0]);
+    const headItem = itemsDB.find(i => i.id === eq.head); if(headItem && headItem.build3D) { const m = headItem.build3D(); if(m) slots.head.add(m); }
+    const extraItem = itemsDB.find(i => i.id === eq.extra); if(extraItem && extraItem.build3D) { const m = extraItem.build3D(); if(m) { if(extraItem.isBack) slots.back.add(m); else slots.extra.add(m); } }
+}
+
+init3DEngine();
 
     function generatePathForElement(themeKey, headId, extraId) {
         const path = []; const levels = [2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
@@ -583,7 +660,8 @@
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active')); if(btnElement) btnElement.classList.add('active');
         ['home','inventory','path','skills','shop','community'].forEach(t => document.getElementById(`view-${t}`).classList.add('hidden'));
         document.getElementById(`view-${tabId}`).classList.remove('hidden');
-        if(tabId === 'skills') setTimeout(renderWheel, 50); if(tabId === 'inventory' || tabId === 'home') renderAvatar(); if(tabId === 'path') renderPath();
+        if(tabId === 'skills') setTimeout(renderWheel, 50); if(tabId === 'home') mount3DCanvas('home-avatar-container');
+if(tabId === 'inventory') mount3DCanvas('inv-avatar-container');
     };
 
     window.openSettings = () => {
@@ -607,7 +685,7 @@
         if (user) {
             currentUser = user; userPath = `users/${user.uid}`;
             document.getElementById('permission-error').style.display = 'none'; document.getElementById('login-screen').classList.remove('active');
-            setTimeout(() => { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('app-container').classList.remove('hidden'); initParticles(document.body.className); animateParticles(); }, 500);
+            setTimeout(() => { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('app-container').classList.remove('hidden'); initParticles(document.body.className); animateParticles(); mount3DCanvas('home-avatar-container'); }, 500);
             loadDataAndSync(); 
         } else {
             currentUser = null; document.getElementById('login-screen').classList.remove('hidden'); document.getElementById('login-screen').classList.add('active'); document.getElementById('app-container').classList.add('hidden');
@@ -640,7 +718,7 @@
                     if(profileData.elementChosen === true) document.getElementById('element-choice-screen').classList.remove('active');
                     if(profileData.theme && document.body.className !== profileData.theme) { document.body.className = profileData.theme; initParticles(profileData.theme); }
                     
-                    updateProfileUI(); renderAvatar(); renderInventoryGrid(); syncToCommunity();
+                    updateProfileUI(); applyEquipment3D(); renderInventoryGrid(); syncToCommunity();
                     if(document.getElementById('view-path') && !document.getElementById('view-path').classList.contains('hidden')) renderPath();
                 }
             }, (err) => document.getElementById('permission-error').style.display='block');
@@ -789,7 +867,6 @@
         }, 100);
     }
 
-    function renderAvatar() { const eq = profileData.equipped || {}; const getLayer = (id) => itemsDB.find(i => i.id === id)?.render || ''; const html = `<div class="avatar-layer">${getLayer(eq.extra)}</div><div class="avatar-layer">${getLayer(eq.body)}</div><div class="avatar-layer">${getLayer(eq.head)}</div>`; if(document.getElementById('home-avatar-render')) document.getElementById('home-avatar-render').innerHTML = html; if(document.getElementById('inv-avatar-render')) document.getElementById('inv-avatar-render').innerHTML = html; }
     window.equipItem = async (itemId, type) => { if (!currentUser) return; const eq = profileData.equipped || { body: 'body_default', head: 'head_none', extra: 'extra_none' }; eq[type] = itemId; await updateDoc(doc(db, userPath, 'profile', 'main'), { equipped: eq }); };
     function renderInventoryGrid() { const eq = profileData.equipped || {}; const unlocked = profileData.unlockedItems || [...defaultUnlocked]; const renderGroup = (type, containerId) => { const c = document.getElementById(containerId); if(!c) return; const items = itemsDB.filter(i => i.type === type && unlocked.includes(i.id)); c.innerHTML = items.map(i => `<div class="inv-slot ${eq[type] === i.id ? 'equipped' : ''}" onclick="equipItem('${i.id}', '${type}')"><div class="inv-icon">${i.icon}</div><div class="inv-name">${i.name}</div></div>`).join(''); }; renderGroup('head', 'inv-grid-head'); renderGroup('body', 'inv-grid-body'); renderGroup('extra', 'inv-grid-extras'); }
 
